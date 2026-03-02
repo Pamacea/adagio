@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./apps/web" },
+    { "path": "./apps/api" },
+    { "path": "./apps/mobile" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/theory" },
+    { "path": "./packages/database" },
+    { "path": "./packages/api-client" },
+    { "path": "./packages/types" },
+    { "path": "./packages/config" }
+  ]
+}

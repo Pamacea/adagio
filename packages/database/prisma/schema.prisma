@@ -1,0 +1,274 @@
+// ============================================================================
+// PRISMA SCHEMA - Adagio Database
+// ============================================================================
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["accelerate"]
+  binaryTargets   = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// AUTHENTICATION & USERS
+// ============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  progressions  Progression[]
+  progress      UserProgress[]
+  preferences   UserPreferences?
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================================================
+// USER PREFERENCES & PROGRESS
+// ============================================================================
+
+model UserPreferences {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Display preferences
+  theme           String   @default("midnight")
+  showIntervals   Boolean  @default(true)
+  showNotes       Boolean  @default(true)
+  showDegrees     Boolean  @default(false)
+
+  // Instrument preferences
+  tuning          String   @default("EADGBE")
+  fretCount       Int      @default(24)
+
+  // Audio preferences
+  volume          Float    @default(0.7)
+  metronomeVolume Float    @default(0.5)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("user_preferences")
+}
+
+model UserProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Progress tracking
+  techniqueId     String
+  status          String   @default("locked") // locked, in-progress, learned, mastered
+  xp              Int      @default(0)
+  practiceCount   Int      @default(0)
+  totalPracticeTime Int    @default(0) // in minutes
+  lastPracticed   DateTime?
+  milestonesCompleted Json   // Array of milestone IDs
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, techniqueId])
+  @@map("user_progress")
+}
+
+// ============================================================================
+// MUSIC THEORY CONTENT
+// ============================================================================
+
+model Mode {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String   // ex: "Dorien"
+  intervals   String   @db.Text // JSON array: [1, 2, b3, 4, 5, 6, b7]
+
+  // Emotional mapping
+  character   String   @db.Text // ex: "Aérien / Lumineux"
+  sensation   String   @db.Text // ex: "Jazzy, Chaud"
+  feeling     String?  // ex: "Féerique"
+
+  // Theory
+  greekName   String?  // ex: "Dorian"
+  relativeTo  String?  // ex: "ii in major"
+  axisGroup   String?  // ex: "tonic", "dominant", "subdominant"
+
+  // Advice
+  advice      String?  @db.Text
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("modes")
+}
+
+model Scale {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String   // ex: "Pentatonique Mineure"
+  root        String   // Default root for display
+  intervals   String   @db.Text
+  type        String   // scale, mode
+  quality     String   // major, minor, pentatonic, blues
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("scales")
+}
+
+model Chord {
+  id          String   @id @default(cuid())
+  name        String   // ex: "Cmaj7"
+  root        String   // ex: "C"
+  quality     String   // ex: "maj7", "m7", "7"
+  intervals   String   @db.Text
+  extensions  String?  @db.Text // JSON: ["9", "11"]
+
+  // Fingerings stored as JSON
+  fingerings  Json     // Array of fretboard positions
+
+  // Theory
+  tension     String?  // stable, tense, dominant, dissonant
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([root, quality])
+  @@map("chords")
+}
+
+// ============================================================================
+// PROGRESSIONS & ANALYSIS
+// ============================================================================
+
+model Progression {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String?
+  key         String   // ex: "C"
+  timeSignature String @default("4/4")
+  chords      Json     // Array of chord symbols/degrees
+  analysis    Json?    // Analysis results (suggested scales, etc.)
+
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("progressions")
+}
+
+model HarmonyRule {
+  id          String   @id @default(cuid())
+  degree      String   // ex: "I", "IV", "v"
+  tonality    String   // ex: "major", "minor"
+  sensation   String   @db.Text // ex: "Être content à la maison"
+  advice      String?  @db.Text
+
+  @@unique([degree, tonality])
+  @@map("harmony_rules")
+}
+
+// ============================================================================
+// TECHNIQUES & KNOWLEDGE BASE
+// ============================================================================
+
+model Technique {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String   // ex: "Hammer-on"
+  category    String   // legato, sweep, tapping, etc.
+  difficulty  String   // beginner, intermediate, advanced
+  description String?  @db.Text
+
+  // Visual aids
+  diagramUrl  String?
+  videoUrl    String?
+  audioExample String?
+
+  // Notation & tips
+  notation    String?  @db.Text
+  tips        Json?    // Array of tips
+
+  // Prerequisites
+  prerequisites Json?   // Array of technique IDs
+  relatedTechniques Json? // Array of related technique IDs
+  estimatedPracticeTime Int? // in hours
+
+  // Milestones
+  milestones  Json?    // Array of milestone objects
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("techniques")
+}
+
+// ============================================================================
+// AXIS THEORY
+// ============================================================================
+
+model AxisGroup {
+  id          String   @id @default(cuid())
+  name        String   // tonic, dominant, subdominant
+  notes       Json     // Array of note names
+  description String   @db.Text
+  substitutions Json   // Array of substitution types
+
+  @@unique([name])
+  @@map("axis_groups")
+}

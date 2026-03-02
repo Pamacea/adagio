@@ -24,6 +24,59 @@
 
 ---
 
+## 📂 Structure du Monorepo
+
+```
+adagio/                              ← Repo GitHub
+├── apps/
+│   ├── web/                         ← ✅ DÉPLOYER SUR VERCEL
+│   │   ├── app/                     │   (Next.js 16)
+│   │   ├── public/                  │
+│   │   ├── vercel.json      ← Config Vercel
+│   │   └── package.json             │
+│   │                                │
+│   ├── api/                         ← ✅ DÉPLOYER SUR RAILWAY
+│   │   ├── src/                     │   (NestJS)
+│   │   ├── railway.json      ← Config Railway
+│   │   ├── Dockerfile               │
+│   │   └── package.json             │
+│   │                                │
+│   └── mobile/                      ← ⏳ BUILD AVEC EXPO EAS
+│       ├── app/                     │   (React Native)
+│       ├── eas.json                 │
+│       └── package.json             │
+│                                    │
+├── packages/                        ← ❌ PAS DE DÉPLOIEMENT DIRECT
+│   ├── database/                    │   (Shared code)
+│   ├── types/                       │
+│   ├── ui/                          │
+│   ├── api-client/                  │
+│   ├── theory/                      │
+│   └── config/                      │
+│                                    │
+├── package.json                     │
+├── pnpm-workspace.yaml              │
+└── turbo.json                       │
+```
+
+---
+
+## 🎯 RÉSUMÉ DES DÉPLOIEMENTS
+
+| Platform | Dossier cible | Config file | URL Production |
+|----------|--------------|-------------|----------------|
+| **Vercel** | `apps/web` | `apps/web/vercel.json` | `https://adagio.vercel.app` |
+| **Railway** | `apps/api` | `apps/api/railway.json` | `https://adagio-api.up.railway.app` |
+| **Expo EAS** | `apps/mobile` | `apps/mobile/eas.json` | Build local → Stores |
+
+### ⚠️ Règle d'or
+
+**TOUJOURS spécifier le sous-dossier dans les settings de déploiement :**
+- Railway → Settings → Root Directory: `apps/api`
+- Vercel → Import → Root Directory: `apps/web`
+
+---
+
 ## 1. BASE DE DONNÉES - Neon (PostgreSQL)
 
 ### Création du projet
@@ -55,6 +108,28 @@ pnpm db:seed        # Remplir avec les données initiales
 
 ---
 
+## 🎯 IMPORTANT : MONOREPO - QUELS DOSSIERS DÉPLOYER ?
+
+```
+adagio/                    ← ❌ NE PAS DÉPLOYER LA RACINE
+├── apps/
+│   ├── web/              ← ✅ DÉPLOYER CE DOSSIER SUR VERCEL
+│   ├── api/              ← ✅ DÉPLOYER CE DOSSIER SUR RAILWAY
+│   └── mobile/           ← ⏳ Build avec Expo EAS (localement)
+├── packages/             ← ❌ Shared (pas de déploiement direct)
+└── docs/                 ← ❌ Documentation seulement
+```
+
+### Résumé
+
+| Platform | Dossier à déployer | Fichier de config |
+|----------|-------------------|-------------------|
+| **Railway** | `apps/api` | `apps/api/railway.json` |
+| **Vercel** | `apps/web` | `apps/web/vercel.json` |
+| **Expo EAS** | `apps/mobile` | `apps/mobile/eas.json` |
+
+---
+
 ## 2. BACKEND API - Railway.app
 
 ### Pourquoi Railway ?
@@ -63,7 +138,7 @@ pnpm db:seed        # Remplir avec les données initiales
 - CI/CD depuis GitHub inclus
 - **Free tier généreux** pour les projets open-source
 
-### Processus
+### ⚠️ Configuration CRITIQUE pour Monorepo
 
 #### Étape 1 : Connecter GitHub à Railway
 1. Allez sur [railway.app](https://railway.app)
@@ -71,9 +146,25 @@ pnpm db:seed        # Remplir avec les données initiales
 3. Sélectionne **"Deploy from GitHub repo"**
 4. Autorise Railway et sélectionne le repo `adagio`
 
-#### Étape 2 : Configurer le projet
-1. Sélectionnez **"Apps/api"** comme root
-2. Railway détectera automatiquement le projet NestJS
+#### Étape 2 : Configurer le ROOT DIRECTORY ⚠️
+
+**C'est l'étape la plus importante !**
+
+Dans le formulaire de déploiement Railway :
+
+```
+┌─────────────────────────────────────────┐
+│  Deploy from GitHub                     │
+├─────────────────────────────────────────┤
+│  Repository: adagio                     │
+│  Root Directory: apps/api    ← SAISIR ICI!
+│  Branch: main                          │
+└─────────────────────────────────────────┘
+```
+
+1. **Root Directory** : Saisir `apps/api` (pas la racine !)
+2. Railway utilisera automatiquement le `railway.json` dans ce dossier
+3. Le `buildCommand` sera exécuté depuis `apps/api`
 
 #### Étape 3 : Variables d'environnement
 Ajoutez les variables suivantes dans Railway :
@@ -102,7 +193,7 @@ Cliquez sur **"Deploy"** → Railway va :
 - Build optimisé automatique
 - **Zéro configuration** avec `vercel.json`
 
-### Processus
+### ⚠️ Configuration CRITIQUE pour Monorepo
 
 #### Via Dashboard
 1. Allez sur [vercel.com](https://vercel.com)
@@ -110,11 +201,30 @@ Cliquez sur **"Deploy"** → Railway va :
 3. Sélectionne le dépôt GitHub `adagio`
 4. Importez le projet
 
-#### Configuration
-1. **Root Directory** : `apps/web`
+#### Étape ROOT DIRECTORY ⚠️
+
+**C'est l'étape la plus importante !**
+
+Dans le formulaire de déploiement Vercel :
+
+```
+┌─────────────────────────────────────────┐
+│  Import Git Repository                  │
+├─────────────────────────────────────────┤
+│  Git Repository: adagio                 │
+│  Project Name: adagio-web               │
+│  Root Directory: apps/web    ← SAISIR ICI!
+│  Framework Preset: Next.js              │
+└─────────────────────────────────────────┘
+```
+
+#### Configuration complète
+
+1. **Root Directory** : `apps/web` ← IMPORTANT!
 2. **Framework Preset** : Next.js (auto-détecté)
 3. **Build Command** : `pnpm install && pnpm db:generate`
 4. **Output Directory** : `.next`
+5. **Install Command** : `pnpm install`
 
 #### Variables d'environnement
 
@@ -321,4 +431,4 @@ git push
 
 ---
 
-*Guide de déploiement v1.0 — Dernière mise à jour : 2025-03-02*
+*Guide de déploiement v1.1 — Dernière mise à jour : 2025-03-02*

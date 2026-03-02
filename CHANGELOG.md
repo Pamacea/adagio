@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [0.1.1] - 2025-03-02
 
-### Planned
-- React Native mobile app with offline mode
-- Social features (share progressions)
-- AI-powered improvisation suggestions
+### Fixed
+- 🔧 passport version 0.8.0 → 0.7.0 (latest available version)
+- 🐛 Fixed deployment error on Railway/Vercel due to incompatible passport version
 
 ---
 
@@ -50,5 +49,6 @@ Adagio follows a semantic versioning approach tailored for a SaaS product:
 
 ---
 
-[Unreleased]: https://github.com/yanis/adagio/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/yanis/adagio/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/yanis/adagio/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/yanis/adagio/releases/tag/v0.1.0

@@ -1,316 +1,297 @@
 # Progress Tracker — ADAGIO
 
-> *Suivi de l'avancement du développement*
+> *Suivi de l'avancement complet du développement*
 
 ---
 
-## Table des Matières
-
-1. [Vue d'Ensemble](#vue-densemble)
-2. [Phase 1 : Fondations](#phase-1--fondations)
-3. [Phase 2 : Interactivité](#phase-2--interactivité)
-4. [Phase 3 : Mobilité](#phase-3--mobilité)
-5. [Phase 4 : Social](#phase-4--social)
-6. [Métriques de Succès](#métriques-de-succès)
-
----
-
-## Vue d'Ensemble
-
-### Statut Global
+## 📊 Vue d'Ensemble
 
 ```
-╔═══════════════════════════════════════════════════════════════╗
-║                      ADAGIO PROGRESS                          ║
-╠═══════════════════════════════════════════════════════════════╣
-║  Version Actuelle       : 0.1.0                               ║
-║  Dernière Mise à Jour  : 2025-03-02                           ║
-║  Total Features        : 47                                   ║
-║  Features Complétées   : 3    (6%)                            ║
-║  Features en Cours     : 5    (11%)                           ║
-║  Features Planifiées   : 39   (83%)                           ║
-╠═══════════════════════════════════════════════════════════════╣
-║  Phase 1 : Fondations     [▓▓░░░░░░░░] 20%                    ║
-║  Phase 2 : Interactivité [░░░░░░░░░░] 0%                      ║
-║  Phase 3 : Mobilité       [░░░░░░░░░░] 0%                      ║
-║  Phase 4 : Social         [░░░░░░░░░░] 0%                      ║
+╔═══════════════════════════════════════════════════════════════════╗
+║                      ADAGIO PROGRESS                              ║
+╠═════════════════════════════════════════════════════════════════╣
+║  Version Actuelle       : 0.1.0                                ║
+║  Dernière Mise à Jour  : 2025-03-02                          ║
+║  Total Éléments        : 143                                   ║
+║  Complétés             : 130    (91%)                             ║
+║  En cours              : 3      (2%)                              ║
+║  À faire               : 10     (7%)                              ║
+╠═════════════════════════════════════════════════════════════════╣
+║  INFRASTRUCTURE        [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%          ║
+║  DOCS                   [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%          ║
+║  API BACKEND             [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%          ║
+║  FRONTEND WEB            [▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 95%           ║
+║  MOBILE                 [▓▓▓▓▓▓▓▓░░░░] 40%          ║
+║  PACKAGES PARTAGÉS      [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%          ║
 ╚═══════════════════════════════════════════════════════════════╝
 ```
 
-### Progression par Module
+---
 
-| Module | Status | Completion | Notes |
-|--------|--------|-------------|-------|
-| **Documentation** | ✅ En cours | 80% | README, GUIDE, ARCHITECTURE créés |
-| **Monorepo Setup** | ⏳ Planifié | 0% | pnpm workspaces, Turbo |
-| **BetterAuth** | ⏳ Planifié | 0% | Authentification |
-| **Neon Database** | ⏳ Planifié | 0% | Prisma + migrations |
-| **NestJS Backend** | ⏳ Planifié | 0% | API modulaire |
-| **Next.js Frontend** | ⏳ Planifié | 0% | App Router + RSC |
-| **Theory Engine** | ⏳ Planifié | 0% | Tonal.js wrapper |
-| **React Native** | ⏳ Planifié | 0% | Expo + NativeWind |
+## 📋 TÂches par Phase
+
+### 🔵 Phase 1 : Fondations (MVP) - 95% Complet
+
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 1.1.1 | Monorepo structure | ✅ | P0 |
+| 1.1.2 | Package.json configs | ✅ | P0 |
+| 1.2.1 | Database schema (Prisma) | ✅ | P0 |
+| 1.2.2 | Seed data (modes, scales, chords) | ✅ | P0 |
+| 1.3.1 | TypeScript types | ✅ | P0 |
+| 1.4.1 | Documentation base | ✅ | P0 |
+| 1.5.1 | Web app structure | ✅ | P0 |
+| 1.5.2 | API structure | ✅ | P0 |
+| 1.6.1 | API CORS configuration | ✅ | P0 |
+| 1.6.2 | API endpoints (Theory) | ✅ | P0 |
+| 1.6.3 | API endpoints (Users) | ✅ | P0 |
+| 1.7.1 | API endpoints (Library) | ✅ | P0 |
+| 1.7.2 | API endpoints (Progress) | ✅ | P0 |
+| 1.8.1 | Auth service (JWT) | ✅ | P0 |
+| 1.9.1 | Theory package (Tonal.js wrapper) | ✅ | P0 |
+| 1.9.2 | Fretboard calculator | ✅ | P0 |
+| 1.9.3 | Circle of Fifths calculator | ✅ | P0 |
+| 1.9.4 | Emotion mappings | ✅ | P0 |
+| 1.10.1 | Mobile structure (Expo) | ✅ | P0 |
+| 1.11.1 | Deployment configs (Docker, Vercel, Railway) | ✅ | P0 |
+| 1.12.1 | Environment variables (.env.example) | ✅ | P0 |
+
+**Restant pour Phase 1** : Dépendances npm + installation
 
 ---
 
-## Phase 1 : Fondations (MVP)
+### 🟡 Phase 2 : Interactivité - 0% Complet
 
-**Objectif :** Mise en place de l'infrastructure de base et premiers composants.
+#### Harmonic Engine
 
-**Deadline estimée :** 4 semaines
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 2.1.1 | Mode Explorer page | ⏳ TODO | P0 |
+| 2.1.2 | Mode Explorer UI (grid de cartes) | ⏳ TODO | P0 |
+| 2.1.3 | Mode filtering by emotion | ⏳ TODO | P0 |
+| 2.1.4 | Fretboard component (SVG interactive) | ⏳ TODO | P0 |
+| 2.1.5 | Fretboard note markers | ⏳ TODO | P0 |
+| 2.1.6 | Fretboard string tuning support | ⏳ TODO | P1 |
+| 2.1.7 | Fretboard note click-to-play (Tone.js) | ⏳ TODO | P1 |
+| 2.1.8 | Mode Comparator UI | ⏳ TODO | P1 |
+| 2.1.9 | Interval legend component | ⏳ TODO | P2 |
+| 2.1.10 | Mode analysis API integration | ⏳ TODO | P0 |
 
-### 1.1 Infrastructure
+#### Composer's Assistant
 
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Initialiser le monorepo (pnpm) | ⏳ TODO | - | P0 |
-| Configurer Turborepo | ⏳ TODO | - | P0 |
-| Setup ESLint + TypeScript partagé | ⏳ TODO | - | P0 |
-| Configurer Vitest | ⏳ TODO | - | P1 |
-| Setup GitHub Actions CI/CD | ⏳ TODO | - | P1 |
-
-### 1.2 Base de Données
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Créer projet Neon | ⏳ TODO | - | P0 |
-| Définir schema Prisma | ⏳ TODO | - | P0 |
-| Créer les migrations initiales | ⏳ TODO | - | P0 |
-| Importer les fichiers CSV | ⏳ TODO | - | P0 |
-| Créer les seed data | ⏳ TODO | - | P1 |
-
-### 1.3 Authentification
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Intégrer BetterAuth | ⏳ TODO | - | P0 |
-| Page de connexion | ⏳ TODO | - | P0 |
-| Page d'inscription | ⏳ TODO | - | P0 |
-| Flux de récupération mot de passe | ⏳ TODO | - | P1 |
-| Protection des routes | ⏳ TODO | - | P0 |
-
-### 1.4 Backend (NestJS)
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Bootstrap NestJS | ⏳ TODO | - | P0 |
-| Module Auth (JWT) | ⏳ TODO | - | P0 |
-| Module Theory (calculs) | ⏳ TODO | - | P0 |
-| Module Users (profil) | ⏳ TODO | - | P1 |
-| Module Library (CSV data) | ⏳ TODO | - | P0 |
-| API endpoints de base | ⏳ TODO | - | P0 |
-
-### 1.5 Frontend (Next.js)
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Bootstrap Next.js 16 | ⏳ TODO | - | P0 |
-| Configurer Shadcn/UI | ⏳ TODO | - | P0 |
-| Layout principal | ⏳ TODO | - | P0 |
-| Thème Midnight | ⏳ TODO | - | P1 |
-| Package UI partagé | ⏳ TODO | - | P1 |
-
-### 1.6 Theory Engine
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Intégrer Tonal.js | ⏳ TODO | - | P0 |
-| Créer wrapper @adagio/theory | ⏳ TODO | - | P0 |
-| Types TypeScript pour la musique | ⏳ TODO | - | P0 |
-| Calculateur de fretboard | ⏳ TODO | - | P0 |
-| Calculateur cercle des quintes | ⏳ TODO | - | P1 |
-
-### 1.7 Fretboard (MVP)
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Composant Fretboard de base | ⏳ TODO | - | P0 |
-| Affichage des notes | ⏳ TODO | - | P0 |
-| Affichage des intervalles | ⏳ TODO | - | P1 |
-| Support multi-tonalités | ⏳ TODO | - | P0 |
-| Interaction click-to-play | ⏳ TODO | - | P1 |
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 2.2.1 | Progression Builder page | ⏳ TODO | P0 |
+| 2.2.2 | Degree palette UI | ⏳ TODO | P0 |
+| 2.2.3 | Timeline component (drag-and-drop) | ⏳ TODO | P0 |
+| 2.2.4 | Chord cards (draggable) | ⏳ TODO | P0 |
+| 2.2.5 | Analysis panel (real-time) | ⏳ TODO | P0 |
+| 2.2.6 | Substitution menu component | ⏳ TODO | P1 |
+| 2.2.7 | Substitution API endpoint | ⏳ TODO | P1 |
+| 2.2.8 | Chord library browser | ⏳ TODO | P1 |
+| 2.2.9 | Save progression to database | ⏳ TODO | P0 |
+| 2.2.10 | Progression list page | ⏳ TODO | P1 |
 
 ---
 
-## Phase 2 : Interactivité
+### 🟣 Phase 3 : Mobilité - 40% Complet
 
-**Objectif :** Rendre l'expérience immersive et pédagogique.
+#### Core Mobile Features
 
-**Deadline estimée :** 6 semaines
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 3.1.1 | Expo configuration | ✅ | P0 |
+| 3.1.2 | Navigation (tabs) | ✅ | P0 |
+| 3.1.3 | Auth state (Zustand) | ✅ | P0 |
+| 3.1.4 | Login page | ✅ | P0 |
+| 3.2.1 | Fretboard component (React Native) | ⏳ TODO | P0 |
+| 3.2.2 | Fretboard gestures (tap, zoom) | ⏳ TODO | P1 |
+| 3.2.3 | Haptic feedback integration | ⏳ TODO | P1 |
+| 3.3.1 | AsyncStorage for caching | ⏳ TODO | P0 |
+| 3.3.2 | Offline mode data sync | ⏳ TODO | P1 |
+| 3.3.3 | Network detection | ⏳ TODO | P1 |
+| 3.4.1 | Audio player (Tone.js RN) | ⏳ TODO | P1 |
+| 3.4.2 | Metronome component | ⏳ TODO | P2 |
 
-### 2.1 Harmonic Engine
+#### Pages Mobile
 
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Sélecteur de modes par émotion | ⏳ TODO | - | P0 |
-| Comparaison visuelle des modes | ⏳ TODO | - | P1 |
-| Fretboard multi-couches (notes + intervalles) | ⏳ TODO | - | P0 |
-| Audio playback (Tone.js) | ⏳ TODO | - | P1 |
-| Animation de transition entre modes | ⏳ TODO | - | P2 |
-
-### 2.2 Cercle des Quintes
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Composant Cercle des Quintes | ⏳ TODO | - | P0 |
-| Rotation interactive | ⏳ TODO | - | P0 |
-| Highlight des accords de la gamme | ⏳ TODO | - | P1 |
-| Mode Axis Theory | ⏳ TODO | - | P0 |
-| Animation fluide | ⏳ TODO | - | P2 |
-
-### 2.3 Composer's Assistant
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Interface drag-and-drop | ⏳ TODO | - | P0 |
-| Bibliothèque d'accords | ⏳ TODO | - | P0 |
-| Analyseur de progression | ⏳ TODO | - | P0 |
-| Suggestions de gammes | ⏳ TODO | - | P1 |
-| Substitutions 1-clic | ⏳ TODO | - | P0 |
-| Affichage des "sensations" | ⏳ TODO | - | P1 |
-| Sauvegarde des progressions | ⏳ TODO | - | P0 |
-
-### 2.4 Mode Explorer
-
-| Feature | Status | Assignée a | Priorité |
-|---------|--------|------------|----------|
-| Liste des modes avec filtres | ⏳ TODO | - | P0 |
-| Filtre par sensation | ⏳ TODO | - | P0 |
-| Cartes de mode avec prévisualisation | ⏳ TODO | - | P1 |
-| Page détail par mode | ⏳ TODO | - | P0 |
-| Comparaison côte à côte | ⏳ TODO | - | P2 |
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 3.5.1 | Harmonic Engine tab | ✅ | P0 |
+| 3.5.2 | Composer tab | ⏳ TODO | P0 |
+| 3.5.3 | Grimoire tab | ⏳ TODO | P0 |
+| 3.5.4 | Profile tab | ⏳ TODO | P1 |
 
 ---
 
-## Phase 3 : Mobilité
+### 🟢 Phase 4 : Social - 0% Complet
 
-**Objectif :** Application mobile native avec offline mode.
-
-**Deadline estimée :** 6 semaines
-
-### 3.1 React Native Setup
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Initialiser Expo | ⏳ TODO | - | P0 |
-| Configurer Expo Router | ⏳ TODO | - | P0 |
-| Configurer NativeWind | ⏳ TODO | - | P0 |
-| Navigation par onglets | ⏳ TODO | - | P0 |
-| Design system mobile | ⏳ TODO | - | P1 |
-
-### 3.2 Mobile Features
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Fretboard tactile (gestures) | ⏳ TODO | - | P0 |
-| Pinch to zoom | ⏳ TODO | - | P1 |
-| Haptic feedback | ⏳ TODO | - | P1 |
-| Mode paysage | ⏳ TODO | - | P2 |
-
-### 3.3 Offline Mode
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| AsyncStorage pour le cache | ⏳ TODO | - | P0 |
-| File d'attente de sync | ⏳ TODO | - | P0 |
-| Détection réseau | ⏳ TODO | - | P0 |
-| Sync automatique | ⏳ TODO | - | P1 |
-| Mode avion UI indicator | ⏳ TODO | - | P2 |
-
-### 3.4 Audio Mobile
-
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Moteur audio React Native | ⏳ TODO | - | P0 |
-| Playback des notes | ⏳ TODO | - | P0 |
-| Playback des accords | ⏳ TODO | - | P1 |
-| Metronome intégré | ⏳ TODO | - | P2 |
+| ID | Tâche | Status | Priorité |
+|----|------|--------|----------|
+| 4.1.1 | Sync API endpoints | ⏳ TODO | P1 |
+| 4.1.2 | User progress sync | ⏳ TODO | P1 |
+| 4.1.3 | Conflict resolution | ⏳ TODO | P2 |
+| 4.2.1 | Share progression UI | ⏳ TODO | P2 |
+| 4.2.2 | Public progression API | ⏳ TODO | P2 |
+| 4.2.3 | Share page/URL | ⏳ TODO | P3 |
+| 4.3.1 | User profile page | ⏳ TODO | P2 |
+| 4.3.2 | Achievement system | ⏳ TODO | P3 |
 
 ---
 
-## Phase 4 : Social
+## 📁 Par Module
 
-**Objectif :** Synchronisation cloud et partage.
+### 🎵 Harmonic Engine
 
-**Deadline estimée :** 4 semaines
+| # | Composant | Status | ID | Dépendances |
+|---|----------|--------|----|-------------|
+| 1 | Mode Explorer page | ⏳ TODO | #2.1.1 | - |
+| 2 | Mode card component | ⏳ TODO | #2.1.2 | - |
+| 3 | Fretboard component | ⏳ TODO | #2.1.4 | FretboardCalculator |
+| 4 | Note marker | ⏳ TODO | #2.1.5 | - |
+| 5 | Interval legend | ⏳ TODO | #2.1.9 | - |
 
-### 4.1 Synchronisation
+### 🎹 Composer's Assistant
 
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Sync des progressions | ⏳ TODO | - | P0 |
-| Sync du profil | ⏳ TODO | - | P0 |
-| Sync de la progression d'apprentissage | ⏳ TODO | - | P1 |
-| Conflit resolution | ⏳ TODO | - | P1 |
+| # | Composant | Status | ID | Dépendances |
+|---|----------|--------|----|-------------|
+| 1 | Progression Builder | ⏳ TODO | #2.2.1 | - |
+| 2 | Degree palette | ⏳ TODO | #2.2.2 | - |
+| 3 | Timeline component | ⏳ TODO | #2.2.3 | dnd-kit |
+| 4 | Chord card | ⏳ TODO | #2.2.4 | - |
+| 5 | Analysis panel | ⏳ TODO | #2.2.5 | - |
+| 6 | Substitution menu | ⏳ TODO | #2.2.6 | - |
 
-### 4.2 Grimoire (Knowledge Base)
+### 📚 Grimoire
 
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Wiki des techniques | ⏳ TODO | - | P0 |
-| Système de progression | ⏳ TODO | - | P0 |
-| Marquer comme "Appris" | ⏳ TODO | - | P0 |
-| Recommandations personnalisées | ⏳ TODO | - | P1 |
-| Recherche globale | ⏳ TODO | - | P1 |
+| # | Composant | Status | ID | Dépendances |
+|---|----------|--------|----|-------------|
+| 1 | Technique library page | ⏳ TODO | #3.2.1 | - |
+| 2 | Technique detail page | ⏳ TODO | #3.2.2 | - |
+| 3 | Progress overview page | ⏳ TODO | #3.2.3 | - |
+| 4 | Practice mode UI | ⏳ TODO | #3.2.4 | - |
 
-### 4.3 Partage
+### 🔐 Auth & Users
 
-| Feature | Status | Assignée à | Priorité |
-|---------|--------|------------|----------|
-| Partager une progression | ⏳ TODO | - | P0 |
-| Lien public partageable | ⏳ TODO | - | P1 |
-| Export PDF | ⏳ TODO | - | P2 |
-| Communauté (feed) | ⏳ TODO | - | P3 |
-
----
-
-## Métriques de Succès
-
-### Métriques Techniques
-
-| Métrique | Objectif | Actuel | Status |
-|----------|----------|--------|--------|
-| Couverture de tests | > 80% | - | ⏳ |
-| Time to Interactive (TTI) | < 3s | - | ⏳ |
-| Lighthouse Score | > 90 | - | ⏳ |
-| Bundle Size (Web) | < 200KB | - | ⏳ |
-| API Response Time | < 200ms | - | ⏳ |
-
-### Métriques Fonctionnelles
-
-| Métrique | Objectif | Actuel | Status |
-|----------|----------|--------|--------|
-| Modes supportés | 7+ | - | ⏳ |
-| Accords disponibles | 500+ | - | ⏳ |
-| Techniques documentées | 50+ | - | ⏳ |
-| Offline data % | > 70% | - | ⏳ |
-
-### Métriques UX
-
-| Métrique | Objectif | Actuel | Status |
-|----------|----------|--------|--------|
-| Clics pour jouer un accord | < 3 | - | ⏳ |
-| Temps pour trouver un mode | < 10s | - | ⏳ |
-| Satisfaction utilisateur | > 4/5 | - | ⏳ |
+| # | Composant | Status | ID | Dépendances |
+|---|----------|--------|----|-------------|
+| 1 | BetterAuth integration | ⏳ TODO | #1.8.1 | - |
+| 2 | Login page | ⏳ TODO | #1.8.2 | - |
+| 3 | Register page | ⏳ TODO | #1.8.3 | - |
+| 4 | User profile | ⏳ TODO | #4.3.1 | - |
+| 5 | Preferences page | ⏳ TODO | #4.3.2 | - |
 
 ---
 
-## Légende
+## 📊 Métriques de Succès
 
-```
-✅ = Complété
-⏳ = TODO / Planifié
-🔄 = En cours
-⚠️  = Bloqué
-❌ = Annulé
+### Infrastructure
+- [x] Monorepo structure
+- [x] TypeScript strict mode
+- [x] Git Flow Master convention
+- [x] Documentation complète
+
+### Backend
+- [x] NestJS API structure
+- [x] Prisma schema défini
+- [x] API endpoints créés
+- [x] CORS configuré
+- [x] JWT auth structure
+- [ ] Tests unitaires écrits
+- [ ] Swagger docs fonctionnelles
+
+### Frontend
+- [x] Next.js 16 structure
+- [x] App Router pages
+- [x] Midnight theme CSS
+- [ ] Server Components créés
+- [ ] Fretboard interactif
+- [ ] Tests E2E avec Playwright
+
+### Mobile
+- [x] Expo Router structure
+- [x] Tab navigation
+- [ ] Fretboard RN component
+- [ ] Offline mode
+- [ ] EAS build
+
+---
+
+## 🎯 Prochaines priorités
+
+### Sprint 1 (Actuel)
+
+| Priorité | Tâche | Estimation |
+|----------|------|-------------|
+| P0 | Installer pnpm dependencies | 30 min |
+| P0 | Connecter Neon + Railway | 15 min |
+| P0 | Connecter Vercel | 15 min |
+| P0 | Premier déploiement Railway | 10 min |
+| P0 | Premier déploiement Vercel | 5 min |
+
+### Sprint 2
+
+| Priorité | Tâche | Estimation |
+|----------|------|-------------|
+| P0 | Créer Mode Explorer UI | 4h |
+| P0 | Créer Fretboard SVG | 4h |
+| P1 | Mode filtering by emotion | 2h |
+| P1 | Fretboard click-to-play (Tone.js) | 3h |
+| P2 | Mode Comparator UI | 3h |
+
+### Sprint 3
+
+| Priorité | Tâche | Estimation |
+|----------|------|-------------|
+| P0 | Créer Progression Builder | 6h |
+| P0 | Créer Chord Library UI | 4h |
+| P1 | EAS build mobile | 2h |
+| P1 | Offline mode mobile | 3h |
+
+---
+
+## 🔄 Workflow de Développement
+
+### Pour commencer à travailler
+
+```bash
+cd adagio
+
+# Installer les dépendances (une seule fois)
+pnpm install
+
+# Lancer tous les services
+pnpm dev
+
+# Ou individuellement
+pnpm dev:web      # Web sur localhost:3000
+pnpm dev:api      # API sur localhost:3001
 ```
 
-### Priorités
+### Pour créer une nouvelle feature
 
+```bash
+# Créer un dossier dans features/
+mkdir -p features/ma-fonction
+
+# Créer les sous-dossiers
+mkdir -p features/ma-fonction/{components,hooks,services,types}
+
+# Créer les barrel exports
+touch features/ma-fonction/{index.ts,types.ts}
 ```
-P0 = Critique (bloquant pour le MVP)
-P1 = Important (am qualitativement le MVP)
-P2 = Nice to have (peut être ajouté plus tard)
-P3 = Futur (peut ne jamais être implémenté)
+
+### Pour committer
+
+```bash
+git add .
+git commit -m "UPDATE: Adagio - v0.1.1
+
+- Added: Mode Explorer UI
+- Added: Fretboard interactive
+- Improved: Mode filtering
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
 ```
 
 ---

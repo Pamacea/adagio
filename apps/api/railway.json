@@ -1,0 +1,15 @@
+# ============================================================================
+# RAILWAY.JSON - Deployment configuration for Railway
+# ============================================================================
+{
+  "$schema": "https://schema.railway.app/railway.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "pnpm install && pnpm build",
+    "watch": false
+  },
+  "deploy": {
+    "startCommand": "node dist/main.js",
+    "healthcheckPath": "/api/v1/theory/modes"
+  }
+}

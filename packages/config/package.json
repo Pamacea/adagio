@@ -1,0 +1,12 @@
+{
+  "name": "@adagio/config",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "eslint-base.js",
+    "eslint-next.js",
+    "eslint-react.js",
+    "eslint-nest.js",
+    "tsconfig.base.json"
+  ]
+}

@@ -1,0 +1,27 @@
+Accord(47.),APPRENTISSAGE (  ⭕  ❌ ),DESCRIPTION,NOTES,LIENS
+Majeur 7,⭕,—,1 3 5 7,cf.
+Mineur 7,⭕,—,1 ♭3 5 ♭7,cf.
+7,⭕,—,1 3 5 ♭7,cf.
+Mineur 7 ♭5,⭕,—,1 ♭3 ♭5 7,cf.
+7 Diminué,⭕,—,1 ♭3 ♭5 ♭♭7,cf.
+Majeur 9,⭕,—,1 2 3 4 5 6 7 9,cf.
+Mineur 9,⭕,—,1 2 ♭3 4 5 6 ♭7 9,cf.
+9,⭕,—,1 2 3 4 5 6 ♭7 9,cf.
+Majeur 11,⭕,—,1 2 3 4 5 6 7 9 11,cf.
+Mineur 11,⭕,—,1 2 ♭3 4 5 6 ♭7 9 11,cf.
+11,⭕,—,1 2 3 4 5 6 ♭7 9 11,cf.
+Majeur 13,⭕,—,1 2 3 4 5 6 7 9 11 13,cf.
+Mineur 13,⭕,—,1 2 ♭3 4 5 6 ♭7 9 11 13,cf.
+13,⭕,—,1 2 3 4 5 6 ♭7 9 11 13,cf.
+.Suspendu,⭕,"Les accords SUS sont des accords à 3 notes, dans lesquels la tierce a été remplacée par une autre note(seconde ou quarte).",1 2 5 | 1 4 5,cf.
+.Blues,⭕,"Ici particulièrement x5 et x6 avec la tonique sur corde Mi g et La ainsi x9, x13 et x13maj sur corde Mi g.",1 – 3 – 5 – ♭7 – 9 – 11 – 13,cf.
+.Power Chords,⭕,x5,1 – 5  ou  1 – 5 – 1,cf.
+"
+Aug ",⭕,triade avec quinte augmenté,1 – 3 – #5 1 – 5  ou  1 – 3 – #5 – 1,cf.
+Add2,⭕,triade +2,1 – 3 – 5 – 2 ,cf. AntiSèche
+Add4,⭕,triade + 4e,  1 – 3 – 5 – 4 ,cf. AntiSèche
+Add9,⭕,triade + 2 à l'octave,1 – 3 – 5 – 9,cf. AntiSèche
+6m,⭕,Accord de sixte mineur,1 – ♭3 – 5 – 6,cf. AntiSèche
+6,⭕,—,1 – 3 – 5 – 6,cf. AntiSèche
+6/9,⭕,—,1 – 3 – 5 – 6 – 9,cf. AntiSèche
+6dim7,⭕,—,1 – ♭3 – ♭5 – 6(ou ♭♭7),cf. AntiSèche

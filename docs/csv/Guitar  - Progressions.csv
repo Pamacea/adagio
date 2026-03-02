@@ -1,0 +1,55 @@
+DEGRÉS FONCTIONNELS,,,,NOTES
+Tonique(stabilité),Pré-dominant(tension préparatoire),Dominant(tension maximale),Résolution(relâchement de la tension),"1. Fonction tonale
+
+I : stabilité
+II / IV : préparation
+V : tension / résolution
+VI : couleur mineure stable
+III : couleur mineure flottante"
+ (I – III – VI),(II – IV),(V – VII),(I - VI),
+I,IIm,V7,I,
+I6,IIm7,V9,Imaj7,"Conserver note commune entre accords
+Déplacement par demi-ton (chromatisme)
+Mélodie d’accords = priorité"
+Imaj7,IIm9,V11,Imaj9,
+Imaj9,IIm11,V13,Imaj13,
+Imaj13,IIm7b5,V7b9,I6,"2. Variations harmoniques
+
+Sub V : V → ♭II7
+Modal interchange : I → ♭VII → IV
+Relative mineure : Imaj → VI-7
+Cycle : III-7 → VI-7 → II-7 → V7"
+Iadd9,II6/9,V7#9,Iadd9,
+I6/9,IV,V7b13,I6/9,
+Imaj6/9,IVmaj7,VIIm7b5,bVImaj7,
+Im6 (tonique mineure empruntée),IVmaj9,V7#11,Imaj7(#11),"3. Variations de motif
+
+Garder la même progression → changer le riff
+Garder le riff → changer l’accord dessous
+Varier : rythme, registre, articulation"
+Im7 (tonique modale),IVmaj13,V7alt (b9/#9/#11/b13),Im6 (résolution douce),
+Im9,IVadd9,V7sus4 → V7,Im9,
+Im11,IV6/9,Vdim7 (VII° fonctionnelle),Imaj9,"4. Texture
+
+Voicings courts (2–3 notes)
+Drop-2 / Drop-3 pour l’ouverture
+Doubler la basse ou la soprano selon l’effet recherché
+
+5. Structure
+A → A’ (variante) → B (modulation / couleur) → A
+Retour du thème pour cohérence"
+IIIm7,IIIm7b5 (couleur sombre),V7(#5),Imaj7(♯5),
+IIIadd9,VIm9,V7(b5),VIm7 (cadence trompeuse),
+III7sus2,IV(#11) lydien,V7/#V7 triton-sub,Imaj7,
+III7,II7sus4(add9),VII7,bIIImaj9,Imaj / IV est une superposition de deux accords. On peut superposer deux accords pour former un superposition.
+III7b9,IV7sus4,V / bII,VI9,
+VIm7,IVmMaj7,V / II,VImaj7,
+VIm9,IVm6/9,V7 / bVII,VImaj9,
+VIadd9,II / V,,VI13,
+VI7sus4,IV / II,,Iadd4,
+VI11,IVm / bVI,,Isus2 -> I,
+VI6/9sus2,II13,,VI7sus4,
+Iadd4,,,I / V,
+I5add9,,,Imaj / bVI,
+Isus2(add6),,,VI / I,
+Imaj/IV,,,,

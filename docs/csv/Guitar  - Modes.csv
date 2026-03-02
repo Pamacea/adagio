@@ -1,0 +1,10 @@
+MODE — GAMME,INTERVALLES,DEGRÉS ALTERÉS,Accord,NOTES                                                                     (Tonique Do),Exemple en Do,CARACTERE
+Ionien,1 – 2 – 3 – 4 – 5 – 6 – 7,—,M7,C – D – E – F – G – A – B,C–D–E–F–G–A–B–C,Gamme “majeure classique”
+Dorien,1 – 2 – ♭3 – 4 – 5 – 6 – ♭7,"♭3, ♭7",m7,D – E – F – G – A – B – C,C–D–Eb–F–G–A–Bb–C,Mode mineur “chaud / jazzy”
+Phrygien,1 – ♭2 – ♭3 – 4 – 5 – ♭6 – ♭7,"♭2, ♭3, ♭6, ♭7",m7,E – F – G – A – B – C – D,C–Db–Eb–F–G–Ab–Bb–C,Mode “espagnol / sombre”
+Phrygien dominant,1 – ♭2 – 3 – 4 – 5 – ♭6 – ♭7,"♭2, ♭6, ♭7",,—,—,"Mode ""oriental / espagnol"""
+Lydien,1 – 2 – 3 – ♯4 – 5 – 6 – 7,♯4,M7,F – G – A – B – C – D – E,C–D–E–F#–G–A–B–C,Mode “aérien / lumineux”
+Mixolydien,1 – 2 – 3 – 4 – 5 – 6 – ♭7,♭7,7,G – A – B – C – D – E – F,C–D–E–F–G–A–Bb–C,Mode majeur “bluesy / rock”
+Éolioen(Mineure Naturel),1 – 2 – ♭3 – 4 – 5 – ♭6 – ♭7,"♭3, ♭6, ♭7",m7,A – B – C – D – E – F – G,C–D–Eb–F–G–Ab–Bb–C,Son mineur “classique”
+Locrien,1 – ♭2 – ♭3 – 4 – ♭5 – ♭6 – ♭7,"♭2, ♭3, ♭5, ♭6, ♭7",m7b5,B – C – D – E – F – G – A,C–Db–Eb–F–Gb–Ab–Bb–C,"Mode très instable, m7♭5"
+Lydien Augmenté,1 – 2 – 3 – ♯4 – ♯5 – 6 – 7,"♯4, ♯5",,C – D – E – F# – G# – A – B,C – D – E – F# – G# – A – B,Mode “aérien / lumineux”

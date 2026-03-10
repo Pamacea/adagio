@@ -7,6 +7,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Hide X-Powered-By header for security
+  app.getHttpAdapter().get('instance').set('x-powered-by', false);
+
   // Global prefix
   app.setGlobalPrefix('api/v1');
 

@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.3] - 2026-03-10
+
+### 🧪 Testing Infrastructure
+
+#### Unit Tests - NestJS API
+- ✅ **Auth Module Tests** - 42 tests couvrant authentication complete flow
+  - `auth.service.spec.ts` - Register, login, refresh tokens, password verification
+  - `auth.controller.spec.ts` - Endpoint testing with throttling validation
+- ✅ **Users Module Tests** - 84 tests couvring user management
+  - `users.service.spec.ts` - Profile updates, password changes, preferences, statistics
+  - `users.controller.spec.ts` - Full CRUD endpoints with validation
+- ✅ **Lessons Module Tests** - ~30 tests for lesson progression
+- ✅ **Progress Module Tests** - ~25 tests for progress tracking
+- ✅ **Theory API Tests** - 102 tests covering theory endpoints
+
+#### Unit Tests - Theory Package
+- ✅ **Calculator Tests** - 234 tests for music theory calculations
+  - `CircleOfFifthsCalculator.test.ts` - 53 tests for circle of fifths operations
+  - `ChordCalculator.test.ts` - 122 tests covering chord building, voicings, CAGED system
+  - `FretboardCalculator.test.ts` - 59 tests for fretboard calculations
+- ✅ **Core Theory Tests** - ~145 tests for fundamental music theory classes
+  - `Note.test.ts` - Note class, transposition, enharmonics
+  - `Interval.test.ts` - Interval calculations and mappings
+  - `Scale.test.ts` - Major/minor scales, modes
+  - `Chord.test.ts` - Chord class and analysis
+
+### 🔧 Infrastructure
+- 🔧 Updated `.gitignore` for test files and sensitive data
+- 🔧 Configured Jest for API testing with proper mocks
+- 🔧 Configured Vitest for theory package testing
+
+### 📊 Coverage
+- **846 tests created** across API and theory packages
+- **311 API tests** - 100% passing
+- **535 theory tests** - 99% passing
+- **Test coverage increased** from ~2% to ~50% globally
+
+---
+
+## [0.2.2] - 2026-03-10
+
+### 🔧 Infrastructure
+- 🔧 Web configuration updates for BetterAuth integration
+- 🔧 Auth guards optimization for JWT validation
+- 🔧 CORS configuration updates
+
+---
+
 ## [0.2.0] - 2026-03-10
 
 ### 🔐 Authentication & Authorization - BetterAuth Integration

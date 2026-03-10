@@ -8,7 +8,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Hide X-Powered-By header for security
-  app.getHttpAdapter().get('instance').set('x-powered-by', false);
+  const httpAdapter = app.getHttpAdapter();
+  if (httpAdapter.getInstance) {
+    const instance = httpAdapter.getInstance();
+    instance.disable('x-powered-by');
+  }
 
   // Global prefix
   app.setGlobalPrefix('api/v1');

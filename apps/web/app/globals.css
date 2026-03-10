@@ -2,143 +2,353 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * ADAGIO - METAL BRUTAL DESIGN
+ * Style: Metallica / Steve Vai
+ * Noir dominant, boutons polygonaux, icons SVG
+ */
+
+/* ============================================
+   FONTS IMPORT
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap');
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 @layer base {
   :root {
-    --background: 224 71% 4%;
-    --foreground: 60 9.1% 97%;
-    --card: 224 71% 4%;
-    --card-foreground: 60 9.1% 97%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 60 9.1% 97%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 60 9.1% 97%;
-    --muted: 224 71% 4%;
-    --muted-foreground: 60 9.1% 63%;
-    --accent: 217 32% 17%;
-    --accent-foreground: 60 9.1% 97%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 217 91% 60%;
-    --radius: 0.5rem;
-  }
-}
+    --font-archivo: 'Archivo Black', 'Impact', sans-serif;
+    --font-space: 'Space Mono', 'Courier New', monospace;
 
-@layer base {
+    --color-abyss: #000000;
+    --color-void: #010101;
+    --color-blackness: #020202;
+    --color-toxic: #0a0f0a;
+    --color-circuit: #0d130d;
+    --color-blood: #8b1a1a;
+    --color-rust: #b84a1a;
+    --color-steel: #2a2a2a;
+    --color-white: #e0e0e0;
+    --color-gray: #666666;
+  }
+
   * {
-    @apply border-border;
+    border-color: var(--color-steel);
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-midnight-950 text-midnight-50;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: var(--color-abyss);
+    color: var(--color-white);
+    font-family: var(--font-space);
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar sombre */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-abyss);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-steel);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray);
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--color-blood);
+    color: var(--color-white);
   }
 }
 
+/* ============================================
+   BRUTAL UTILITIES
+   ============================================ */
+@layer utilities {
+  /* Bordure fine */
+  .brutal-border {
+    border: 2px solid var(--color-steel);
+  }
+
+  /* Bordure accent sang */
+  .blood-border {
+    border-color: var(--color-blood);
+  }
+
+  /* Container style album */
+  .album-frame {
+    border: 2px solid var(--color-steel);
+    position: relative;
+    background: var(--color-void);
+  }
+
+  .album-frame::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px solid var(--color-toxic);
+    pointer-events: none;
+  }
+
+  /* Text shadow brutal léger */
+  .brutal-text {
+    text-shadow: 2px 2px 0 var(--color-toxic);
+  }
+
+  /* Métal shine subtil */
+  .metal-shine {
+    background: linear-gradient(
+      180deg,
+      var(--color-blackness) 0%,
+      var(--color-steel) 50%,
+      var(--color-blackness) 100%
+    );
+  }
+
+  /* Polygone cut */
+  .poly-left {
+    clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .poly-right {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
+  }
+
+  .poly-both {
+    clip-path: polygon(
+      8px 0, calc(100% - 8px) 0,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 8px
+    );
+  }
+
+  .poly-shard {
+    clip-path: polygon(
+      0 0, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 4px) 100%,
+      0 100%
+    );
+  }
+}
+
+/* ============================================
+   BRUTAL COMPONENTS
+   ============================================ */
 @layer components {
-  /* Button styles */
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+  /* Bouton polygone - base styles, la taille est gérée par Tailwind */
+  .btn-poly {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-blackness);
+    border: 2px solid var(--color-steel);
+    color: var(--color-white);
+    font-family: var(--font-space);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
   }
 
-  .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  .btn-poly.poly-left {
+    clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%);
   }
 
-  .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  .btn-poly:hover {
+    background: var(--color-toxic);
+    border-color: var(--color-blood);
+    transform: translate(-1px, -1px);
   }
 
-  .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground;
+  .btn-poly:active {
+    transform: translate(0, 0);
   }
 
-  .btn-outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  /* Bouton sanglant */
+  .btn-blood {
+    background: var(--color-blood);
+    border-color: var(--color-blood);
+    color: var(--color-white);
   }
 
-  /* Card styles */
-  .card {
-    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  .btn-blood:hover {
+    background: var(--color-rust);
+    border-color: var(--color-rust);
   }
 
-  .card-header {
-    @apply flex flex-col space-y-1.5 p-6;
+  /* Section frame */
+  .section-frame {
+    border: 2px solid var(--color-steel);
+    background: linear-gradient(
+      180deg,
+      var(--color-abyss) 0%,
+      var(--color-blackness) 100%
+    );
+    position: relative;
   }
 
-  .card-title {
-    @apply text-2xl font-semibold leading-none tracking-tight;
+  /* Navigation link */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
   }
 
-  .card-description {
-    @apply text-sm text-muted-foreground;
+  .nav-link:hover {
+    color: var(--color-white);
+    border-left-color: var(--color-blood);
+    background: var(--color-blackness);
+    padding-left: 1.25rem;
   }
 
-  .card-content {
-    @apply p-6 pt-0;
+  .nav-link.active {
+    color: var(--color-white);
+    border-left-color: var(--color-blood);
+    background: linear-gradient(90deg, var(--color-toxic), transparent);
   }
 
-  .card-footer {
-    @apply flex items-center p-6 pt-0;
+  /* Icon container */
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid var(--color-steel);
+    background: var(--color-blackness);
   }
 
-  /* Input styles */
-  .input {
-    @apply flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  .icon-box:hover {
+    border-color: var(--color-blood);
+  }
+
+  /* Notation française */
+  .note {
+    font-weight: 700;
+  }
+
+  .note-do { color: var(--color-white); }
+  .note-re { color: var(--color-rust); }
+  .note-mi { color: var(--color-circuit); }
+  .note-fa { color: var(--color-toxic); }
+  .note-sol { color: var(--color-slime); }
+  .note-la { color: var(--color-steel); }
+  .note-si { color: var(--color-gray); }
+
+  /* Accord display */
+  .accord {
+    display: inline-flex;
+    gap: 2px;
+    font-family: var(--font-space);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .accord .fond {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color-blood);
   }
 }
 
-/* Fretboard styles */
-.fretboard {
-  @apply w-full h-auto select-none;
+/* Animation des notes */
+@keyframes note-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
 }
 
-.fret {
-  @apply stroke-midnight-600 stroke-1;
+.note {
+  animation: note-pulse 3s ease-in-out infinite;
 }
 
-.fret-active {
-  @apply stroke-midnight-500 stroke-[2px];
-}
+.note-delay-0 { animation-delay: 0s; }
+.note-delay-1 { animation-delay: 0.3s; }
+.note-delay-2 { animation-delay: 0.6s; }
+.note-delay-3 { animation-delay: 0.9s; }
+.note-delay-4 { animation-delay: 1.2s; }
+.note-delay-5 { animation-delay: 1.5s; }
+.note-delay-6 { animation-delay: 1.8s; }
 
-.string {
-  @apply stroke-midnight-400 stroke-[0.5px];
-}
+/* ============================================
+   CUSTOM TEXT SIZES
+   ============================================ */
+@layer utilities {
+  .text-massive {
+    font-size: clamp(4rem, 20vw, 12rem);
+    line-height: 0.9;
+  }
 
-.note-marker {
-  @apply transition-all duration-200 ease-out cursor-pointer;
-}
+  .text-giant {
+    font-size: clamp(2rem, 8vw, 5rem);
+    line-height: 1;
+  }
 
-.note-marker:hover {
-  @apply scale-110;
-}
+  .font-metal {
+    font-family: var(--font-archivo);
+  }
 
-.note-marker.root {
-  @apply fill-interval-root;
-}
+  /* Color shortcuts */
+  .bg-abyss { background-color: var(--color-abyss); }
+  .bg-void { background-color: var(--color-void); }
+  .bg-blackness { background-color: var(--color-blackness); }
+  .bg-toxic { background-color: var(--color-toxic); }
+  .bg-circuit { background-color: var(--color-circuit); }
 
-.note-marker.third {
-  @apply fill-interval-third;
-}
+  .text-blood { color: var(--color-blood); }
+  .text-rust { color: var(--color-rust); }
+  .text-steel { color: var(--color-steel); }
+  .text-white { color: var(--color-white); }
+  .text-gray { color: var(--color-gray); }
+  .text-toxic { color: #1a2f1a; }
 
-.note-marker.fifth {
-  @apply fill-interval-fifth;
-}
+  .border-blood { border-color: var(--color-blood); }
+  .border-rust { border-color: var(--color-rust); }
+  .border-steel { border-color: var(--color-steel); }
+  .border-toxic { border-color: var(--color-toxic); }
+  .border-circuit { border-color: var(--color-circuit); }
 
-.note-marker.seventh {
-  @apply fill-interval-seventh;
-}
-
-.note-marker.extension {
-  @apply fill-interval-ninth;
-}
-
-.note-marker.altered {
-  @apply fill-interval-altered;
-}
-
-.note-marker.inactive {
-  @apply fill-midnight-700 opacity-30;
+  /* Line clamp */
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
 }

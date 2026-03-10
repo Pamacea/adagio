@@ -8,7 +8,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@adagio/types": "workspace:*"
+    "@adagio/auth": "workspace:*",
+    "@adagio/types": "workspace:*",
+    "better-auth": "^1.5.1"
   },
   "devDependencies": {
     "@adagio/config": "workspace:*",

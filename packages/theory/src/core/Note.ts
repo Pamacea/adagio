@@ -4,6 +4,16 @@
 
 import type { NoteName } from '@adagio/types';
 
+const NOTE_INDICES: Record<NoteName, number> = {
+  'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
+  'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8,
+  'A': 9, 'A#': 10, 'Bb': 10, 'B': 11,
+};
+
+const CHROMATIC_SCALE: NoteName[] = [
+  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
+];
+
 export class Note {
   constructor(
     public readonly name: NoteName,
@@ -14,13 +24,7 @@ export class Note {
    * Get the MIDI note number (C4 = 60)
    */
   get midi(): number {
-    const noteIndices: Record<NoteName, number> = {
-      'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
-      'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8,
-      'A': 9, 'A#': 10, 'Bb': 10, 'B': 11,
-    };
-
-    return this.octave * 12 + noteIndices[this.name];
+    return this.octave * 12 + NOTE_INDICES[this.name];
   }
 
   /**
@@ -29,7 +33,7 @@ export class Note {
   frequency(a4 = 440): number {
     // A4 is MIDI note 69
     const a4Midi = 69;
-    const semitones = this.midi() - a4Midi;
+    const semitones = this.midi - a4Midi;
     return a4 * Math.pow(2, semitones / 12);
   }
 
@@ -37,16 +41,17 @@ export class Note {
    * Transpose by semitones
    */
   transpose(semitones: number): Note {
-    const NOTES: NoteName[] = [
-      'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
-    ];
-
-    const currentMidi = this.midi();
+    const currentMidi = this.midi;
     const newMidi = currentMidi + semitones;
     const newOctave = Math.floor(newMidi / 12);
     const newNoteIndex = ((newMidi % 12) + 12) % 12; // Handle negative values
 
-    return new Note(NOTES[newNoteIndex], newOctave);
+    const noteName = CHROMATIC_SCALE[newNoteIndex];
+    if (!noteName) {
+      throw new Error(`Invalid note index: ${newNoteIndex}`);
+    }
+
+    return new Note(noteName, newOctave);
   }
 
   /**
@@ -72,8 +77,23 @@ export class Note {
 
   /**
    * Check if two notes are equal (including enharmonic)
+   * Ignores octave for comparison (same note name in any octave)
    */
   equals(other: Note): boolean {
+    // Same note name (ignoring octave)
+    if (this.name === other.name) {
+      return true;
+    }
+
+    // Check enharmonic (ignoring octave)
+    const enharmonic = this.getEnharmonic();
+    return enharmonic !== null && enharmonic.name === other.name;
+  }
+
+  /**
+   * Check if two notes are exactly the same (including octave)
+   */
+  equalsWithOctave(other: Note): boolean {
     if (this.name === other.name && this.octave === other.octave) {
       return true;
     }
@@ -93,13 +113,14 @@ export class Note {
    * Create a Note from MIDI number
    */
   static fromMidi(midi: number): Note {
-    const NOTES: NoteName[] = [
-      'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
-    ];
-
     const octave = Math.floor(midi / 12);
     const noteIndex = midi % 12;
 
-    return new Note(NOTES[noteIndex], octave);
+    const noteName = CHROMATIC_SCALE[noteIndex];
+    if (!noteName) {
+      throw new Error(`Invalid note index: ${noteIndex}`);
+    }
+
+    return new Note(noteName, octave);
   }
 }

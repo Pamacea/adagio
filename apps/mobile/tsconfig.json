@@ -5,7 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2020"],
     "jsx": "react-native",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "strict": true,
     "noEmit": true,
@@ -13,7 +13,16 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/components": ["./components"],
+      "@/theme": ["./theme"],
+      "@/features": ["./features"],
+      "@/lib": ["./lib"],
+      "@/utils": ["./utils"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "exclude": ["node_modules"]

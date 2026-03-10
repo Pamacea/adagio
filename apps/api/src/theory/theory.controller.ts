@@ -67,4 +67,47 @@ export class TheoryController {
   getAxisTheory() {
     return this.theoryService.getAxisTheory();
   }
+
+  @Get('harmony-rules')
+  @ApiOperation({ summary: 'Get harmony rules for Axis Theory' })
+  @ApiQuery({ name: 'tonality', required: false, example: 'major' })
+  getHarmonyRules(@Query('tonality') tonality?: string) {
+    return this.theoryService.getHarmonyRules(tonality);
+  }
+
+  @Get('harmony-rules/:degree')
+  @ApiOperation({ summary: 'Get harmony rule for specific degree' })
+  @ApiParam({ name: 'degree', example: 'I' })
+  @ApiQuery({ name: 'tonality', required: false, example: 'major' })
+  getHarmonyRuleByDegree(
+    @Param('degree') degree: string,
+    @Query('tonality') tonality?: string,
+  ) {
+    return this.theoryService.getHarmonyRuleByDegree(degree, tonality);
+  }
+
+  @Get('techniques')
+  @ApiOperation({ summary: 'Get all techniques' })
+  @ApiQuery({ name: 'category', required: false })
+  @ApiQuery({ name: 'difficulty', required: false })
+  getTechniques(
+    @Query('category') category?: string,
+    @Query('difficulty') difficulty?: string,
+  ) {
+    return this.theoryService.getTechniques(category, difficulty);
+  }
+
+  @Get('techniques/:slug')
+  @ApiOperation({ summary: 'Get technique details by slug' })
+  @ApiParam({ name: 'slug', example: 'hammer-on' })
+  getTechniqueBySlug(@Param('slug') slug: string) {
+    return this.theoryService.getTechniqueBySlug(slug);
+  }
+
+  @Get('scales/:slug')
+  @ApiOperation({ summary: 'Get scale details by slug' })
+  @ApiParam({ name: 'slug', example: 'major-pentatonic' })
+  getScaleBySlug(@Param('slug') slug: string) {
+    return this.theoryService.getScaleBySlug(slug);
+  }
 }

@@ -1,31 +1,41 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Archivo_Black, Space_Mono } from 'next/font/google';
+import { AuthProvider } from '@/lib/auth';
+import { Providers } from './providers';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const archivoBlack = Archivo_Black({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-archivo',
+  display: 'swap',
+});
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-space',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Adagio - L\'atlas harmonique intelligent pour guitaristes',
-  description: 'Explorez la théorie musicale par l\'émotion et la visualisation interactive.',
-  keywords: ['guitare', 'théorie musicale', 'harmonie', 'modes', 'gammes', 'accords'],
-  authors: [{ name: 'Adagio' }],
-  openGraph: {
-    title: 'Adagio - L\'atlas harmonique intelligent',
-    description: 'Ne joue pas des notes, joue des intentions.',
-    type: 'website',
-    locale: 'fr_FR',
-  },
+  title: 'ADAGIO - Théorie Musicale Brutale',
+  description: 'Maîtrise la théorie musicale. Pas de dashboard. Pas de SaaS. Juste du métal.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="fr" className={inter.variable}>
-      <body className="min-h-screen antialiased">
-        {children}
+    <html lang="fr" className="dark">
+      <body className={`${archivoBlack.variable} ${spaceMono.variable}`}>
+        <Providers>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

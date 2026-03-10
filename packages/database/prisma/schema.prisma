@@ -4,7 +4,6 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["accelerate"]
   binaryTargets   = ["native", "darwin-arm64"]
 }
 
@@ -20,58 +19,71 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
-  emailVerified DateTime?
-  name          String?
+  emailVerified Boolean   @default(false)
+  password      String?   // For credential authentication
+  name          String    @default("")
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  accounts      Account[]
-  sessions      Session[]
-  progressions  Progression[]
-  progress      UserProgress[]
-  preferences   UserPreferences?
+  accounts         Account[]
+  sessions         Session[]
+  progressions     Progression[]
+  progress         UserProgress[]
+  preferences      UserPreferences?
+  userAchievements UserAchievement[]
+  lessonProgress   LessonProgress[]
+  practiceSessions PracticeSession[]
+  syncLogs         SyncLog[]
 
   @@map("users")
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  id                      String   @id @default(cuid())
+  userId                  String
+  providerId              String
+  accountId               String
+  accessToken             String?  @db.Text
+  refreshToken            String?  @db.Text
+  idToken                 String?  @db.Text
+  accessTokenExpiresAt    DateTime?
+  refreshTokenExpiresAt   DateTime?
+  scope                   String?
+  password                String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+  @@unique([providerId, accountId])
   @@map("accounts")
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(cuid())
+  token     String    @unique
+  userId    String
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+// Better-auth compatible verification model
+model verification {
+  id         String    @id @default(cuid())
+  identifier String    @unique
+  value      String    @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
-  @@unique([identifier, token])
   @@map("verification_tokens")
 }
 
@@ -98,6 +110,10 @@ model UserPreferences {
   volume          Float    @default(0.7)
   metronomeVolume Float    @default(0.5)
 
+  // Gamification
+  totalXP         Int      @default(0)
+  level           Int      @default(1)
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -111,6 +127,7 @@ model UserProgress {
 
   // Progress tracking
   techniqueId     String
+  technique       Technique @relation(fields: [techniqueId], references: [id], onDelete: Cascade)
   status          String   @default("locked") // locked, in-progress, learned, mastered
   xp              Int      @default(0)
   practiceCount   Int      @default(0)
@@ -255,6 +272,9 @@ model Technique {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  // Relations
+  progress    UserProgress[]
+
   @@map("techniques")
 }
 
@@ -271,4 +291,156 @@ model AxisGroup {
 
   @@unique([name])
   @@map("axis_groups")
+}
+
+// ============================================================================
+// ACHIEVEMENTS & GAMIFICATION
+// ============================================================================
+
+model SyncLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Sync details
+  deviceType  String   // web, mobile
+  deviceId    String?
+  action      String   // pull, push, full
+  status      String   // success, conflict, error
+
+  // Items synced
+  itemsCount  Int      @default(0)
+
+  // Timestamps
+  syncedAt    DateTime @default(now())
+
+  @@index([userId, syncedAt])
+  @@map("sync_logs")
+}
+
+// ============================================================================
+// ACHIEVEMENTS SYSTEM
+// ============================================================================
+
+model Achievement {
+  id          String   @id @default(cuid())
+  slug        String   @unique // ex: 'first-riff', 'streak-7'
+  title       String   // ex: 'Premier Riff', 'Semaine de Fer'
+  description String   @db.Text
+  category    String   // progression, discovery, practice, mastery, social, milestone
+  xp          Int      @default(0)
+  target      Int      // Target value to unlock
+  rarity      String   @default("common") // common, rare, epic, legendary
+  icon        String?  // Icon name or emoji
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  userAchievements UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  // Progress tracking
+  progress      Int      @default(0)
+  target        Int
+  unlockedAt    DateTime?
+  completedAt   DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@map("user_achievements")
+}
+
+// ============================================================================
+// LESSONS & LEARNING
+// ============================================================================
+
+model Lesson {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String?  @db.Text
+  category    String   // THEORY, FRETBOARD, CHORDS, NOTATION, PROGRESSIONS, COMPOSITION
+  level       String   // BEGINNER, INTERMEDIATE, ADVANCED
+  duration    Int      // in minutes
+  xp          Int      @default(0)
+
+  // Content stored as JSON for flexibility
+  topics      Json?    // Array of topic strings
+  content     Json?    // Structured lesson content
+
+  // Metadata
+  isPublished Boolean  @default(true)
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  progress    LessonProgress[]
+
+  @@map("lessons")
+}
+
+model LessonProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  // Progress tracking
+  status      String   @default("not-started") // not-started, in-progress, completed
+  completedSections Json // Array of completed section IDs
+  currentSection Int  @default(0)
+  xp          Int      @default(0)
+
+  // Timestamps
+  startedAt   DateTime?
+  completedAt DateTime?
+  lastAccessed DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@map("lesson_progress")
+}
+
+// ============================================================================
+// PRACTICE SESSIONS
+// ============================================================================
+
+model PracticeSession {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Session details
+  date        DateTime @default(now())
+  duration    Int      // in minutes
+  techniqueId String?
+
+  // Metrics
+  averageBPM  Int?
+  quality     String?  // needs-work, good, excellent
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, date])
+  @@map("practice_sessions")
 }

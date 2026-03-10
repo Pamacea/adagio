@@ -54,6 +54,10 @@ targets:
       - "$VITE_PLUGINS_ANALYTICS_ID"
       - "$BETTER_AUTH_SECRET"
       - "$BETTER_AUTH_URL"
+      - "$DISCORD_CLIENT_ID"
+      - "$DISCORD_CLIENT_SECRET"
+      - "$GITHUB_CLIENT_ID"
+      - "$GITHUB_CLIENT_SECRET"
 
 # ================================
 # IMPORTANT: Configuration Required

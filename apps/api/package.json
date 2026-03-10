@@ -20,7 +20,9 @@
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
+    "@adagio/auth": "workspace:*",
     "@adagio/database": "workspace:*",
+    "@adagio/theory": "workspace:*",
     "@adagio/types": "workspace:*",
     "@nestjs/common": "^10.4.7",
     "@nestjs/config": "^4.0.2",
@@ -29,6 +31,7 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.4.7",
     "@nestjs/swagger": "^8.0.1",
+    "@nestjs/throttler": "^6.5.0",
     "@prisma/client": "^5.22.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
@@ -41,7 +44,7 @@
   "devDependencies": {
     "@adagio/config": "workspace:*",
     "@nestjs/cli": "^10.4.7",
-    "@nestjs/schematics": "^10.4.7",
+    "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^10.4.7",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
@@ -61,13 +64,19 @@
     "typescript": "^5.7.2"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": ["**/*.(t|j)s"],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }

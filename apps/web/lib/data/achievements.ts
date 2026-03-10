@@ -1,0 +1,353 @@
+// ============================================================================
+// ACHIEVEMENTS DATA - Fallback data for achievements page
+// ============================================================================
+
+import type { AchievementCategory, AchievementRarity } from '@adagio/types';
+
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  category: AchievementCategory;
+  rarity: AchievementRarity;
+  xp: number;
+  unlocked: boolean;
+  unlockedAt?: Date;
+  progress?: number;
+  maxProgress?: number;
+  icon: string;
+}
+
+// Categories avec labels et couleurs
+export const ACHIEVEMENT_CATEGORY_LABELS = {
+  progression: { label: 'Progression', color: 'text-toxic' },
+  discovery: { label: 'Decouverte', color: 'text-rust' },
+  practice: { label: 'Pratique', color: 'text-blood' },
+  mastery: { label: 'Maîtrise', color: 'text-toxic' },
+  social: { label: 'Social', color: 'text-rust' },
+  milestone: { label: 'Jalon', color: 'text-blood' },
+} as const;
+
+// Rarete avec labels et couleurs
+export const ACHIEVEMENT_RARITY_LABELS = {
+  common: { label: 'Commun', color: 'text-gray', bg: 'bg-steel', border: 'border-gray' },
+  rare: { label: 'Rare', color: 'text-toxic', bg: 'bg-toxic', border: 'border-toxic' },
+  epic: { label: 'Epic', color: 'text-rust', bg: 'bg-rust', border: 'border-rust' },
+  legendary: { label: 'Legendaire', color: 'text-blood', bg: 'bg-blood', border: 'border-blood' },
+} as const;
+
+// 20+ achievements definis
+export const ACHIEVEMENTS_DATA: Achievement[] = [
+  // === PROGRESSION ===
+  {
+    id: 'first-riff',
+    title: 'Premier Riff',
+    description: 'Completer votre premiere session de pratique',
+    category: 'progression',
+    rarity: 'common',
+    xp: 50,
+    unlocked: true,
+    unlockedAt: new Date('2024-01-15'),
+    icon: '🎸',
+  },
+  {
+    id: 'streak-7',
+    title: 'Semenne de Fer',
+    description: 'Pratiquer pendant 7 jours consecutifs',
+    category: 'progression',
+    rarity: 'rare',
+    xp: 150,
+    unlocked: true,
+    unlockedAt: new Date('2024-01-22'),
+    icon: '🔥',
+  },
+  {
+    id: 'streak-30',
+    title: 'Mois Ininterrompu',
+    description: 'Pratiquer pendant 30 jours consecutifs',
+    category: 'progression',
+    rarity: 'epic',
+    xp: 500,
+    unlocked: false,
+    progress: 12,
+    maxProgress: 30,
+    icon: '⚡',
+  },
+  {
+    id: 'xp-1000',
+    title: 'Millefeuille XP',
+    description: 'Gagner 1000 XP au total',
+    category: 'progression',
+    rarity: 'common',
+    xp: 100,
+    unlocked: true,
+    unlockedAt: new Date('2024-02-01'),
+    icon: '📊',
+  },
+  {
+    id: 'xp-10000',
+    title: 'Maître XP',
+    description: 'Gagner 10,000 XP au total',
+    category: 'progression',
+    rarity: 'legendary',
+    xp: 1000,
+    unlocked: false,
+    progress: 3420,
+    maxProgress: 10000,
+    icon: '👑',
+  },
+
+  // === DISCOVERY ===
+  {
+    id: 'discover-all-modes',
+    title: 'Explorateur de Modes',
+    description: 'Decouvrir tous les 7 modes grecs',
+    category: 'discovery',
+    rarity: 'rare',
+    xp: 200,
+    unlocked: false,
+    progress: 5,
+    maxProgress: 7,
+    icon: '🗺️',
+  },
+  {
+    id: 'discover-all-scales',
+    title: 'Collectionneur de Gamme',
+    description: 'Decouvrir 10 gammes differentes',
+    category: 'discovery',
+    rarity: 'epic',
+    xp: 300,
+    unlocked: false,
+    progress: 6,
+    maxProgress: 10,
+    icon: '🎼',
+  },
+  {
+    id: 'circle-master',
+    title: 'Maître du Cercle',
+    description: 'Naviguer le cercle des quintes dans les deux sens',
+    category: 'discovery',
+    rarity: 'common',
+    xp: 75,
+    unlocked: true,
+    unlockedAt: new Date('2024-01-20'),
+    icon: '⭕',
+  },
+  {
+    id: 'chord-library',
+    title: 'Bibliothécaire d\'Accords',
+    description: 'Decouvrir 50 types d\'accords differents',
+    category: 'discovery',
+    rarity: 'epic',
+    xp: 350,
+    unlocked: false,
+    progress: 23,
+    maxProgress: 50,
+    icon: '📚',
+  },
+
+  // === PRACTICE ===
+  {
+    id: 'practice-1h',
+    title: 'Heure de Pratique',
+    description: 'Pratiquer pendant 1 heure en une session',
+    category: 'practice',
+    rarity: 'common',
+    xp: 50,
+    unlocked: true,
+    unlockedAt: new Date('2024-01-18'),
+    icon: '⏱️',
+  },
+  {
+    id: 'practice-10h-total',
+    title: 'Dix Heures',
+    description: 'Atteindre 10 heures de pratique totale',
+    category: 'practice',
+    rarity: 'rare',
+    xp: 150,
+    unlocked: true,
+    unlockedAt: new Date('2024-02-10'),
+    icon: '🎯',
+  },
+  {
+    id: 'practice-100h-total',
+    title: 'Centenaire',
+    description: 'Atteindre 100 heures de pratique totale',
+    category: 'practice',
+    rarity: 'legendary',
+    xp: 1000,
+    unlocked: false,
+    progress: 47,
+    maxProgress: 100,
+    icon: '💯',
+  },
+  {
+    id: 'metronome-master',
+    title: 'Metronome Perfection',
+    description: 'Jouer a 200 BPM avec precision',
+    category: 'practice',
+    rarity: 'epic',
+    xp: 400,
+    unlocked: false,
+    icon: '🎵',
+  },
+
+  // === MASTERY ===
+  {
+    id: 'modes-master',
+    title: 'Theoricien',
+    description: 'Maîtriser les 7 modes grecs (100% sur les quiz)',
+    category: 'mastery',
+    rarity: 'rare',
+    xp: 250,
+    unlocked: true,
+    unlockedAt: new Date('2024-02-05'),
+    icon: '🧠',
+  },
+  {
+    id: 'ear-training-expert',
+    title: 'Oreille Absolue',
+    description: 'Identifier tous les intervalles a l\'oreille',
+    category: 'mastery',
+    rarity: 'epic',
+    xp: 500,
+    unlocked: false,
+    progress: 70,
+    maxProgress: 100,
+    icon: '👂',
+  },
+  {
+    id: 'sight-reading',
+    title: 'Lecture a Vue',
+    description: 'Lire une partition simple sans erreur',
+    category: 'mastery',
+    rarity: 'rare',
+    xp: 200,
+    unlocked: false,
+    icon: '👀',
+  },
+  {
+    id: 'improvisation-master',
+    title: 'Improvisateur',
+    description: 'Completer 10 sessions d\'improvisation',
+    category: 'mastery',
+    rarity: 'epic',
+    xp: 450,
+    unlocked: false,
+    progress: 4,
+    maxProgress: 10,
+    icon: '🎹',
+  },
+
+  // === SOCIAL ===
+  {
+    id: 'first-share',
+    title: 'Partageur',
+    description: 'Partager votre progression pour la premiere fois',
+    category: 'social',
+    rarity: 'common',
+    xp: 50,
+    unlocked: false,
+    icon: '📤',
+  },
+  {
+    id: 'community-10',
+    title: 'Sociable',
+    description: 'Avoir 10 amis sur ADAGIO',
+    category: 'social',
+    rarity: 'rare',
+    xp: 150,
+    unlocked: false,
+    progress: 3,
+    maxProgress: 10,
+    icon: '👥',
+  },
+  {
+    id: 'mentor',
+    title: 'Mentor',
+    description: 'Aider 5 autres musiciens',
+    category: 'social',
+    rarity: 'epic',
+    xp: 300,
+    unlocked: false,
+    icon: '🤝',
+  },
+  {
+    id: 'band-leader',
+    title: 'Chef de Groupe',
+    description: 'Creer un groupe de pratique et completer 10 sessions ensemble',
+    category: 'social',
+    rarity: 'legendary',
+    xp: 800,
+    unlocked: false,
+    icon: '🎤',
+  },
+
+  // === MILESTONE ===
+  {
+    id: 'level-5',
+    title: 'Apprenti Confirmé',
+    description: 'Atteindre le niveau 5',
+    category: 'milestone',
+    rarity: 'common',
+    xp: 100,
+    unlocked: true,
+    unlockedAt: new Date('2024-01-25'),
+    icon: '⭐',
+  },
+  {
+    id: 'level-10',
+    title: 'Musicien',
+    description: 'Atteindre le niveau 10',
+    category: 'milestone',
+    rarity: 'rare',
+    xp: 200,
+    unlocked: false,
+    progress: 42,
+    maxProgress: 100,
+    icon: '🌟',
+  },
+  {
+    id: 'level-25',
+    title: 'Expert',
+    description: 'Atteindre le niveau 25',
+    category: 'milestone',
+    rarity: 'epic',
+    xp: 500,
+    unlocked: false,
+    icon: '💎',
+  },
+  {
+    id: 'level-50',
+    title: 'Maître',
+    description: 'Atteindre le niveau 50',
+    category: 'milestone',
+    rarity: 'legendary',
+    xp: 1500,
+    unlocked: false,
+    icon: '🏆',
+  },
+  {
+    id: 'all-beginner-lessons',
+    title: 'Fondations Solides',
+    description: 'Completer toutes les leçons debutant',
+    category: 'milestone',
+    rarity: 'epic',
+    xp: 600,
+    unlocked: false,
+    progress: 7,
+    maxProgress: 12,
+    icon: '🏛️',
+  },
+  {
+    id: 'perfect-score',
+    title: 'Perfection',
+    description: 'Obtenir 100% sur un quiz difficile',
+    category: 'milestone',
+    rarity: 'rare',
+    xp: 200,
+    unlocked: true,
+    unlockedAt: new Date('2024-02-15'),
+    icon: '💯',
+  },
+];

@@ -24,6 +24,14 @@ const ENHARMONICS: Record<string, NoteName> = {
   'A#': 'Bb',
 };
 
+function getNoteAtIndex(index: number): NoteName {
+  const note = CIRCLE_OF_FIFTHS[index];
+  if (!note) {
+    throw new Error(`Invalid circle index: ${index}`);
+  }
+  return note;
+}
+
 /**
  * Get the circle of fifths centered on a note
  */
@@ -39,7 +47,7 @@ export function getCircleOfFifths(center: NoteName = 'C') {
   for (let i = 0; i < 12; i++) {
     const index = (centerIndex + i) % 12;
     circle.push({
-      note: CIRCLE_OF_FIFTHS[index],
+      note: getNoteAtIndex(index),
       interval: (i * 7) % 12, // Perfect fifth = 7 semitones
     });
   }
@@ -57,7 +65,7 @@ export function getCircleOfFifths(center: NoteName = 'C') {
 export function getPerfectFifth(note: NoteName): NoteName {
   const index = CIRCLE_OF_FIFTHS.indexOf(note);
   if (index === -1) throw new Error(`Invalid note: ${note}`);
-  return CIRCLE_OF_FIFTHS[(index + 1) % 12];
+  return getNoteAtIndex((index + 1) % 12);
 }
 
 /**
@@ -66,7 +74,7 @@ export function getPerfectFifth(note: NoteName): NoteName {
 export function getPerfectFourth(note: NoteName): NoteName {
   const index = CIRCLE_OF_FIFTHS.indexOf(note);
   if (index === -1) throw new Error(`Invalid note: ${note}`);
-  return CIRCLE_OF_FIFTHS[(index + 11) % 12]; // -1 semitone = 11 semitones
+  return getNoteAtIndex((index + 11) % 12); // -1 semitone = 11 semitones
 }
 
 /**
@@ -76,7 +84,7 @@ export function getRelativeMinor(majorKey: NoteName): NoteName {
   const index = CIRCLE_OF_FIFTHS.indexOf(majorKey);
   if (index === -1) throw new Error(`Invalid note: ${majorKey}`);
   // Minor is 3 semitones below major
-  return CIRCLE_OF_FIFTHS[(index + 9) % 12];
+  return getNoteAtIndex((index + 9) % 12);
 }
 
 /**
@@ -86,7 +94,7 @@ export function getRelativeMajor(minorKey: NoteName): NoteName {
   const index = CIRCLE_OF_FIFTHS.indexOf(minorKey);
   if (index === -1) throw new Error(`Invalid note: ${minorKey}`);
   // Major is 3 semitones above minor
-  return CIRCLE_OF_FIFTHS[(index + 3) % 12];
+  return getNoteAtIndex((index + 3) % 12);
 }
 
 /**
@@ -96,5 +104,5 @@ export function getTritoneSubstitution(dominant: NoteName): NoteName {
   // Tritone is augmented fourth (6 semitones) from root
   const index = CIRCLE_OF_FIFTHS.indexOf(dominant);
   if (index === -1) throw new Error(`Invalid note: ${dominant}`);
-  return CIRCLE_OF_FIFTHS[(index + 6) % 12];
+  return getNoteAtIndex((index + 6) % 12);
 }

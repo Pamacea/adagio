@@ -10,3 +10,6 @@ export * from './user';
 
 // Technique types
 export * from './technique';
+
+// Achievement types
+export * from './achievement';

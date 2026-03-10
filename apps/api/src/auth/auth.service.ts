@@ -1,12 +1,15 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { prisma } from '@adagio/database';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
+import { LoginDto, RegisterDto } from './dto';
+
+const SALT_ROUNDS = 10;
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(private readonly jwtService: JwtService) {}
 
   async register(registerDto: RegisterDto) {
@@ -21,18 +24,19 @@ export class AuthService {
       throw new ConflictException('User already exists');
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password with bcrypt
+    const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
-    // Create user
+    // Create user with hashed password
     const user = await prisma.user.create({
       data: {
         email,
         name,
-        // In production, store hashed password in a separate table or use a proper auth system
-        // For now, we'll use a simple approach
+        password: passwordHash,
       },
     });
+
+    this.logger.log(`User registered: ${user.id}`);
 
     // Generate tokens
     const tokens = await this.generateTokens(user.id, user.email);
@@ -59,8 +63,19 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // In production, verify password here
-    // For now, we'll skip this for simplicity
+    // Verify password with bcrypt
+    if (!user.password) {
+      throw new UnauthorizedException('Account uses OAuth or has no password set');
+    }
+
+    const isPasswordValid = await this.verifyPassword(password, user.password);
+
+    if (!isPasswordValid) {
+      this.logger.warn(`Failed login attempt for email: ${email}`);
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    this.logger.log(`User logged in: ${user.id}`);
 
     // Generate tokens
     const tokens = await this.generateTokens(user.id, user.email);
@@ -70,9 +85,23 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.name,
+        image: user.image,
+        emailVerified: user.emailVerified,
       },
       tokens,
     };
+  }
+
+  /**
+   * Verify a password against a hash using bcrypt
+   */
+  private async verifyPassword(password: string, hash: string): Promise<boolean> {
+    try {
+      return await bcrypt.compare(password, hash);
+    } catch (error) {
+      this.logger.error('Password verification error', error);
+      return false;
+    }
   }
 
   async refreshTokens(refreshToken: string) {

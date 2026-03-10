@@ -2,6 +2,8 @@
 // TECHNIQUE TYPES - Guitar techniques and learning system
 // ============================================================================
 
+import type { ProgressStatus } from './user';
+
 /**
  * Technique categories
  */
@@ -110,9 +112,3 @@ export interface TechniqueFilter {
   search?: string;
   status?: ProgressStatus;
 }
-
-export type ProgressStatus =
-  | 'locked'
-  | 'in-progress'
-  | 'learned'
-  | 'mastered';

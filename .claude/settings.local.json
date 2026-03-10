@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "WebSearch",
+      "Bash(head:*)",
+      "Bash(true:*)",
+      "Bash(grep:*)",
+      "Bash(tail:*)",
+      "Bash(ls:*)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__web-search-prime__web_search_prime",
+      "mcp__web-reader__webReader",
+      "Bash(cat:*)"
+    ]
+  }
+}

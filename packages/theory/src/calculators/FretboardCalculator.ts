@@ -35,7 +35,9 @@ export function calculateFretboard(options: FretboardOptions = {}): FretboardNot
   // Generate notes for each string and fret
   for (let string = 0; string < 6; string++) {
     // Open string note (at fret 0)
-    const openNote = new Note(tuning[string], 4); // Assume octave 4 for open strings
+    const tuningNote = tuning[string];
+    if (!tuningNote) continue; // Skip if tuning is incomplete
+    const openNote = new Note(tuningNote, 4); // Assume octave 4 for open strings
 
     for (let fret = 0; fret <= fretCount; fret++) {
       const note = openNote.transpose(fret);
@@ -59,9 +61,10 @@ export function calculateFretboard(options: FretboardOptions = {}): FretboardNot
  */
 export function getFretboardNotesForKey(
   key: NoteName,
-  scale: Interval[]
+  scale: Interval[],
+  fretCount?: number
 ): FretboardNote[] {
-  const notes = calculateFretboard({ key, scale });
+  const notes = calculateFretboard({ key, scale, fretCount });
 
   // Add interval information
   const rootNote = new Note(key, 4);
@@ -75,7 +78,11 @@ export function getFretboardNotesForKey(
 
     // Find interval from root
     for (let i = 0; i < scaleIntervals.length; i++) {
-      const scaleNote = rootNote.transpose(INTERVAL_SEMITONES[scaleIntervals[i]]);
+      const currentInterval = scaleIntervals[i];
+      const semitones = INTERVAL_SEMITONES[currentInterval as Interval];
+      if (semitones === undefined) continue;
+
+      const scaleNote = rootNote.transpose(semitones);
       if (noteObj.equals(scaleNote)) {
         interval = scaleIntervals[i];
         degree = (i + 1).toString();
@@ -101,20 +108,21 @@ export function getIntervalColor(interval?: Interval): string {
     '2': '#a855f7',
     'b3': '#3b82f6', // Blue - Minor third
     '3': '#3b82f6', // Blue - Major third
-    '4': '#22c55e',
-    '#4': '#22c55e', // Green - Perfect fourth
-    '#5': '#22c55e', // Green - Perfect fifth
-    '#5': '#22c55e',
+    '4': '#22c55e', // Green - Perfect fourth
+    '5': '#22c55e', // Green - Perfect fifth
     'b6': '#a855f7',
     '6': '#a855f7',
     'bb7': '#a855f7',
     'b7': '#eab308', // Yellow - Minor seventh
     '7': '#eab308', // Yellow - Major seventh
-    '9': '#f97316', // Orange - Ninth
-    '11': '#f97316',
-    '13': '#f97316',
-    '#4': '#a855f7', // Purple - Altered fourth
-    'b5': '#a855f7',
+    // Extensions (not in Interval type but used for display)
+    'b9': '#f97316',
+    '9': '#f97316', // Ninth
+    '#9': '#f97316',
+    '11': '#f97316', // Eleventh
+    '#11': '#f97316',
+    'b13': '#f97316',
+    '13': '#f97316', // Thirteenth
   };
 
   return interval ? colors[interval] || '#6b7280' : '#6b7280';

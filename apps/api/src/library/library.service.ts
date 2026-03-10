@@ -1,6 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { prisma } from '@adagio/database';
 
+// Helper function to safely parse JSON fields
+function parseJsonField<T>(value: unknown): T {
+  if (value === null || value === undefined) {
+    return [] as T;
+  }
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      return [] as T;
+    }
+  }
+  // Already an object/array
+  return (value as T) ?? ([] as T);
+}
+
 @Injectable()
 export class LibraryService {
   async getTechniques(category?: string, difficulty?: string) {
@@ -25,11 +41,11 @@ export class LibraryService {
       videoUrl: tech.videoUrl,
       audioExample: tech.audioExample,
       notation: tech.notation,
-      tips: tech.tips ? JSON.parse(tech.tips) : [],
-      prerequisites: tech.prerequisites ? JSON.parse(tech.prerequisites) : [],
-      relatedTechniques: tech.relatedTechniques ? JSON.parse(tech.relatedTechniques) : [],
+      tips: parseJsonField<string[]>(tech.tips),
+      prerequisites: parseJsonField<string[]>(tech.prerequisites),
+      relatedTechniques: parseJsonField<string[]>(tech.relatedTechniques),
       estimatedPracticeTime: tech.estimatedPracticeTime,
-      milestones: tech.milestones ? JSON.parse(tech.milestones) : [],
+      milestones: parseJsonField<string[]>(tech.milestones),
     }));
   }
 
@@ -53,32 +69,46 @@ export class LibraryService {
       videoUrl: technique.videoUrl,
       audioExample: technique.audioExample,
       notation: technique.notation,
-      tips: technique.tips ? JSON.parse(technique.tips) : [],
-      prerequisites: technique.prerequisites ? JSON.parse(technique.prerequisites) : [],
-      relatedTechniques: technique.relatedTechniques ? JSON.parse(technique.relatedTechniques) : [],
+      tips: parseJsonField<string[]>(technique.tips),
+      prerequisites: parseJsonField<string[]>(technique.prerequisites),
+      relatedTechniques: parseJsonField<string[]>(technique.relatedTechniques),
       estimatedPracticeTime: technique.estimatedPracticeTime,
-      milestones: technique.milestones ? JSON.parse(technique.milestones) : [],
+      milestones: parseJsonField<string[]>(technique.milestones),
     };
   }
 
   async markAsLearned(userId: string, techniqueId: string) {
-    return prisma.userProgress.upsert({
+    // Check if progress already exists
+    const existing = await prisma.userProgress.findUnique({
       where: {
         userId_techniqueId: { userId, techniqueId },
       },
-      create: {
-        userId,
-        techniqueId,
-        status: 'learned',
-        xp: 100,
-        practiceCount: 1,
-        totalPracticeTime: 0,
-      },
-      update: {
-        status: 'learned',
-        xp: { increment: 10 },
-        practiceCount: { increment: 1 },
-      },
     });
+
+    if (existing) {
+      // Update existing progress
+      return prisma.userProgress.update({
+        where: {
+          userId_techniqueId: { userId, techniqueId },
+        },
+        data: {
+          status: 'learned',
+          xp: { increment: 10 },
+          practiceCount: { increment: 1 },
+        },
+      });
+    } else {
+      // Create new progress
+      return prisma.userProgress.create({
+        data: {
+          userId,
+          techniqueId,
+          status: 'learned',
+          xp: 100,
+          practiceCount: 1,
+          totalPracticeTime: 0,
+        },
+      } as any);
+    }
   }
 }

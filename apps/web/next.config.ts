@@ -2,8 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  transpilePackages: ['@adagio/ui', '@adagio/theory', '@adagio/types'],
+  transpilePackages: ['@adagio/ui', '@adagio/theory', '@adagio/types', '@adagio/api-client'],
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },

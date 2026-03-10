@@ -34,6 +34,8 @@ export interface Note {
 
 /**
  * Interval names (semitones from root)
+ * Includes basic intervals (1-7) and extensions (9, 11, 13)
+ * Plus rare intervals for exotic scales (diminished, augmented, chromatic)
  */
 export type Interval =
   | '1'
@@ -48,9 +50,24 @@ export type Interval =
   | '#5'
   | 'b6'
   | '6'
+  | '#6'
+  | 'bb6'
   | 'bb7'
   | 'b7'
-  | '7';
+  | '7'
+  | 'b4'
+  // Chromatic intervals (rare)
+  | '#1'
+  | '#2'
+  | '#3'
+  // Extensions (above octave)
+  | 'b9'
+  | '9'
+  | '#9'
+  | '11'
+  | '#11'
+  | 'b13'
+  | '13';
 
 /**
  * Scale quality
@@ -292,6 +309,148 @@ export type SubstitutionType =
   | 'diminished';
 
 // ============================================================================
+// CHORD TYPES - Extended types for chord analysis
+// ============================================================================
+
+/**
+ * Scale degrees with alterations
+ * Used for harmonic analysis and chord identification
+ */
+export type ChordDegree =
+  | 'I'
+  | 'bI'
+  | '#I'
+  | 'II'
+  | 'bII'
+  | '#II'
+  | 'III'
+  | 'bIII'
+  | '#III'
+  | 'IV'
+  | 'bIV'
+  | '#IV'
+  | 'V'
+  | 'bV'
+  | '#V'
+  | 'VI'
+  | 'bVI'
+  | '#VI'
+  | 'VII'
+  | 'bVII'
+  | '#VII';
+
+/**
+ * Harmonic function of a chord in a key
+ * Based on functional harmony theory
+ */
+export type ChordFunction =
+  | 'tonic'           // I, vi, iii - stability/rest
+  | 'subdominant'     // IV, ii - preparation/departure
+  | 'dominant'        // V, vii - tension/resolution
+  | 'substitute-dominant' // bII, tritone substitution
+  | 'modal-interchange'   // Borrowed from parallel tonality
+  | 'secondary-dominant'  // V/x - dominant of another chord
+  | 'passing'         // Passing chord
+  | 'augmented-sixth'  // German/French/Italian sixth
+  | 'neapolitan';     // bII
+
+/**
+ * Chord inversion position
+ */
+export type ChordPosition =
+  | 'root'      // Root in bass (e.g., C/E for 1st inversion)
+  | 'first'     // 3rd in bass
+  | 'second'    // 5th in bass
+  | 'third';    // 7th in bass (for 7th chords)
+
+/**
+ * CAGED system shapes for guitar
+ * Each letter represents the open chord shape that can be moved up the neck
+ */
+export type ChordShape = 'C' | 'A' | 'G' | 'E' | 'D' | 'none';
+
+/**
+ * Note position in a chord voicing
+ */
+export interface VoicingNote {
+  note: NoteName;
+  octave: number;
+  string: number; // 0-5 (high E to low E)
+  fret: number;
+  interval: Interval; // 3, 5, b7, 9, etc.
+  finger?: number; // 1-4 for fingering
+}
+
+/**
+ * Complete chord voicing on guitar
+ */
+export interface ChordVoicing {
+  id: string;
+  name: string;
+  notes: VoicingNote[];
+  position: ChordPosition;
+  shape?: ChordShape;
+  fretRange: [number, number]; // [minFret, maxFret]
+  difficulty: 'easy' | 'medium' | 'hard';
+  muteStrings?: number[]; // Strings to mute
+}
+
+/**
+ * Complete chord library entry
+ */
+export interface ChordLibraryEntry {
+  id: string;
+  name: string; // e.g., "Cmaj7", "Am9"
+  root: NoteName;
+  quality: ChordQuality;
+  extensions?: Interval[]; // 9, 11, 13, etc.
+  intervals: Interval[]; // All intervals in chord
+  aliases?: string[]; // Alternative names
+  symbols?: string[]; // Common jazz symbols (e.g., Δ, -7, +7)
+  voicings: ChordVoicing[];
+  theory: {
+    function?: ChordFunction;
+    stability: 'stable' | 'tense' | 'dissonant' | 'ambiguous';
+    tendency?: NoteName[]; // Tendency tones (notes that want to resolve)
+    description: string;
+  };
+  emotional: {
+    feeling: string;
+    moods: string[];
+    styles: string[]; // jazz, classical, rock, etc.
+  };
+  substitutions?: string[]; // Chords that can substitute this one
+}
+
+/**
+ * Chords available for each degree in a key
+ */
+export interface DegreeChords {
+  degree: ChordDegree;
+  function: ChordFunction;
+  diatonic: string[]; // Diatonic chords (e.g., ['C', 'Cmaj7'])
+  secondaryDominants?: string[]; // V/x chords
+  modalInterchange?: string[]; // Borrowed chords
+  commonExtensions?: string[]; // 9, 11, 13 variations
+  voicings?: string[]; // Common voicing IDs
+  advice: string;
+}
+
+/**
+ * All chords available for a key
+ */
+export interface KeyChordLibrary {
+  key: NoteName;
+  tonality: 'major' | 'minor';
+  degrees: Record<ChordDegree, DegreeChords>;
+  commonProgressions: {
+    name: string;
+    degrees: ChordDegree[];
+    description: string;
+  }[];
+}
+
+// ============================================================================
 // VALIDATION WITH ZOD
 // ============================================================================
 
@@ -330,9 +489,24 @@ export const IntervalSchema = z.enum([
   '#5',
   'b6',
   '6',
+  '#6',
+  'bb6',
   'bb7',
   'b7',
   '7',
+  'b4',
+  // Chromatic intervals (rare)
+  '#1',
+  '#2',
+  '#3',
+  // Extensions (above octave)
+  'b9',
+  '9',
+  '#9',
+  '11',
+  '#11',
+  'b13',
+  '13',
 ]);
 
 export const ModeNameSchema = z.enum([
@@ -438,4 +612,97 @@ export const ChordProgressionSchema = z.object({
   key: NoteNameSchema,
   timeSignature: z.string().default('4/4'),
   chords: z.array(ProgressionChordSchema),
+});
+
+// Zod schemas for new chord types
+export const ChordDegreeSchema = z.enum([
+  'I', 'bI', '#I',
+  'II', 'bII', '#II',
+  'III', 'bIII', '#III',
+  'IV', 'bIV', '#IV',
+  'V', 'bV', '#V',
+  'VI', 'bVI', '#VI',
+  'VII', 'bVII', '#VII',
+]);
+
+export const ChordFunctionSchema = z.enum([
+  'tonic',
+  'subdominant',
+  'dominant',
+  'substitute-dominant',
+  'modal-interchange',
+  'secondary-dominant',
+  'passing',
+  'augmented-sixth',
+  'neapolitan',
+]);
+
+export const ChordPositionSchema = z.enum(['root', 'first', 'second', 'third']);
+
+export const ChordShapeSchema = z.enum(['C', 'A', 'G', 'E', 'D', 'none']);
+
+export const VoicingNoteSchema = z.object({
+  note: NoteNameSchema,
+  octave: z.number().int().min(0).max(8),
+  string: z.number().int().min(0).max(5),
+  fret: z.number().int().min(0).max(24),
+  interval: IntervalSchema,
+  finger: z.number().int().min(1).max(4).optional(),
+});
+
+export const ChordVoicingSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  notes: z.array(VoicingNoteSchema),
+  position: ChordPositionSchema,
+  shape: ChordShapeSchema.optional(),
+  fretRange: z.tuple([z.number(), z.number()]),
+  difficulty: z.enum(['easy', 'medium', 'hard']),
+  muteStrings: z.array(z.number()).optional(),
+});
+
+export const ChordLibraryEntrySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  root: NoteNameSchema,
+  quality: ChordQualitySchema,
+  extensions: z.array(IntervalSchema).optional(),
+  intervals: z.array(IntervalSchema),
+  aliases: z.array(z.string()).optional(),
+  symbols: z.array(z.string()).optional(),
+  voicings: z.array(ChordVoicingSchema),
+  theory: z.object({
+    function: ChordFunctionSchema.optional(),
+    stability: z.enum(['stable', 'tense', 'dissonant', 'ambiguous']),
+    tendency: z.array(NoteNameSchema).optional(),
+    description: z.string(),
+  }),
+  emotional: z.object({
+    feeling: z.string(),
+    moods: z.array(z.string()),
+    styles: z.array(z.string()),
+  }),
+  substitutions: z.array(z.string()).optional(),
+});
+
+export const DegreeChordsSchema = z.object({
+  degree: ChordDegreeSchema,
+  function: ChordFunctionSchema,
+  diatonic: z.array(z.string()),
+  secondaryDominants: z.array(z.string()).optional(),
+  modalInterchange: z.array(z.string()).optional(),
+  commonExtensions: z.array(z.string()).optional(),
+  voicings: z.array(z.string()).optional(),
+  advice: z.string(),
+});
+
+export const KeyChordLibrarySchema = z.object({
+  key: NoteNameSchema,
+  tonality: z.enum(['major', 'minor']),
+  degrees: z.record(z.string(), DegreeChordsSchema),
+  commonProgressions: z.array(z.object({
+    name: z.string(),
+    degrees: z.array(ChordDegreeSchema),
+    description: z.string(),
+  })),
 });

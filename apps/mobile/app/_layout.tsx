@@ -1,31 +1,55 @@
-import { Slot } from 'expo-router';
+// ============================================================================
+// ROOT LAYOUT - Main layout for Adagio Mobile
+// Design Metal/Brutal - ADAGIO
+// ============================================================================
+
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { useColorScheme as useRNColorScheme, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Colors } from '../theme';
+
+// Wrapper around React Native's useColorScheme
+function useColorScheme() {
+  return useRNColorScheme();
+}
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    regular: require('../assets/fonts/Inter-Regular.ttf'),
-    medium: require('../assets/fonts/Inter-Medium.ttf'),
-    bold: require('../assets/fonts/Inter-Bold.ttf'),
-  });
-
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const colorScheme = useColorScheme();
 
   return (
-    <>
-      <StatusBar style="light" />
-      <Slot />
-    </>
+    <SafeAreaProvider>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: Colors.black,
+          },
+        }}
+      >
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="achievements"
+          options={{
+            headerShown: true,
+            headerTitle: 'SUCCÈS',
+            headerBackTitle: 'Retour',
+            headerStyle: {
+              backgroundColor: Colors.black,
+            },
+            headerTintColor: Colors.acidGreen,
+          }}
+        />
+        <Stack.Screen
+          name="warning"
+          options={{
+            headerShown: false,
+            presentation: 'fullScreenModal',
+          }}
+        />
+      </Stack>
+    </SafeAreaProvider>
   );
 }

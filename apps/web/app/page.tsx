@@ -1,77 +1,78 @@
+/**
+ * ADAGIO - Page d'accueil Metallica / Steve Vai Style
+ * Noir dominant, navbar fixe, icons SVG custom
+ */
+
+'use client';
+
 import Link from 'next/link';
+import { MetalNav, MetalFooter, MetalLink } from '@/components';
+
+const frenchNotes = ['DO', 'RE', 'MI', 'FA', 'SOL', 'LA', 'SI'];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-midnight-950 via-midnight-900 to-midnight-800">
-      <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-        {/* Logo / Title */}
-        <div className="space-y-4">
-          <h1 className="text-7xl md:text-8xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-midnight-100 via-midnight-50 to-midnight-100">
+    <div className="min-h-screen flex flex-col bg-abyss">
+      <MetalNav />
+
+      {/* CONTENU PRINCIPAL */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-24 mt-16">
+        {/* Titre massif */}
+        <div className="text-center relative z-10">
+          <h2 className="text-massive font-metal text-white tracking-tighter mb-6">
             ADAGIO
-          </h1>
-          <p className="text-xl md:text-2xl text-midnight-300 font-light">
-            L&apos;atlas harmonique intelligent pour guitaristes
-          </p>
-          <p className="text-midnight-400 max-w-2xl mx-auto">
-            Ne joue pas des notes, joue des intentions. Explorez la théorie musicale par
-            l&apos;émotion et la visualisation interactive.
-          </p>
-        </div>
+          </h2>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-          <Link
-            href="/harmonic-engine"
-            className="btn btn-primary px-8 py-3 text-lg rounded-full hover:scale-105 transition-transform"
-          >
-            Explorer le Harmonic Engine
-          </Link>
-          <Link
-            href="/composer-assistant"
-            className="btn btn-outline px-8 py-3 text-lg rounded-full border-midnight-600 hover:bg-midnight-800"
-          >
-            Composer Assistant
-          </Link>
-        </div>
-
-        {/* Feature Preview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 text-left">
-          <div className="card p-6 hover:scale-105 transition-transform">
-            <div className="text-4xl mb-4">🎵</div>
-            <h3 className="text-xl font-semibold text-midnight-100 mb-2">
-              Harmonic Engine
-            </h3>
-            <p className="text-midnight-400 text-sm">
-              Explorez les modes et gammes par leurs émotions. Visualisez chaque note sur un manche de guitare interactif.
+          {/* Sous-titre */}
+          <div className="section-frame inline-block px-8 py-4 mb-8">
+            <p className="text-sm text-gray font-mono tracking-widest uppercase">
+              Theorie Musicale • Notation Francaise • Metal
             </p>
           </div>
 
-          <div className="card p-6 hover:scale-105 transition-transform">
-            <div className="text-4xl mb-4">🎹</div>
-            <h3 className="text-xl font-semibold text-midnight-100 mb-2">
-              Composer&apos;s Assistant
-            </h3>
-            <p className="text-midnight-400 text-sm">
-              Créez des progressions d&apos;accords avec suggestions intelligentes et analyse des sensations.
-            </p>
-          </div>
-
-          <div className="card p-6 hover:scale-105 transition-transform">
-            <div className="text-4xl mb-4">📚</div>
-            <h3 className="text-xl font-semibold text-midnight-100 mb-2">
-              The Grimoire
-            </h3>
-            <p className="text-midnight-400 text-sm">
-              Une base de connaissances techniques avec un système de progression pour suivre votre apprentissage.
-            </p>
+          {/* Notes francaises */}
+          <div className="flex gap-6 text-giant font-metal mt-12">
+            {frenchNotes.map((note, i) => (
+              <span
+                key={note}
+                className={`note note-${note.toLowerCase()} ${
+                  i === 0 ? 'note-delay-0' : ''
+                } ${i === 1 ? 'note-delay-1' : ''} ${
+                  i === 2 ? 'note-delay-2' : ''
+                } ${i === 3 ? 'note-delay-3' : ''} ${
+                  i === 4 ? 'note-delay-4' : ''
+                } ${i === 5 ? 'note-delay-5' : ''} ${
+                  i === 6 ? 'note-delay-6' : ''
+                }`}
+              >
+                {note}
+              </span>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <footer className="absolute bottom-8 text-midnight-500 text-sm">
-        <p>Nous ne vendons pas la connaissance, nous la transmettons.</p>
-      </footer>
+        {/* Boutons d'action */}
+        <div className="mt-16 flex flex-col sm:flex-row gap-4 z-10">
+          <MetalLink href="/theory/modes" variant="primary" shape="left" size="lg">
+            COMMENCER
+          </MetalLink>
+          <MetalLink href="/warning" variant="blood" shape="right" size="lg">
+            AVERTISSEMENT
+          </MetalLink>
+        </div>
+
+        {/* Diagramme decoratif */}
+        <div className="absolute bottom-64 right-8 w-48 h-48 border-2 border-circuit opacity-20 hidden lg:block">
+          <div className="w-full h-full border border-steel m-2 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-4xl font-metal text-gray">5</div>
+              <div className="text-xs text-gray font-mono mt-1">CIRCLE</div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <MetalFooter />
     </div>
   );
 }

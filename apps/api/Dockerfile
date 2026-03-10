@@ -49,7 +49,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
 # Copy Prisma files for database migrations
-COPY prisma ../../packages/database/prisma ./prisma
+COPY packages/database/prisma ./prisma
 COPY packages/database/package.json ./packages/database/package.json
 
 # Set permissions

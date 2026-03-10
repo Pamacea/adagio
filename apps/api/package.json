@@ -2,6 +2,9 @@
   "name": "@adagio/api",
   "version": "0.1.1",
   "private": true,
+  "prisma": {
+    "schema": "../packages/database/prisma/schema.prisma"
+  },
   "scripts": {
     "build": "nest build",
     "build:turbo": "turbo run build --filter=@adagio/api...",

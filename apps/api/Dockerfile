@@ -52,6 +52,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY packages/database/prisma ./prisma
 COPY packages/database/package.json ./packages/database/package.json
 
+# Create symlink for Prisma to find schema at default location
+RUN ln -s /app/prisma/schema.prisma /app/schema.prisma
+
 # Set permissions
 RUN chown -R nodejs:nodejs /app
 USER nodejs

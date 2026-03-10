@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo_Black, Space_Mono } from 'next/font/google';
 import { AuthProvider } from '@/lib/auth';
 import { Providers } from './providers';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const archivoBlack = Archivo_Black({
@@ -36,6 +37,7 @@ export default function RootLayout({
             {children}
           </AuthProvider>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

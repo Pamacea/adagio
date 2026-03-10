@@ -29,6 +29,7 @@
     "@adagio/ui": "workspace:*",
     "@tanstack/react-form": "^1.0.0",
     "@tanstack/react-query": "^5.62.11",
+    "@vercel/analytics": "^1.6.1",
     "beta": "^0.0.1",
     "better-auth": "^1.5.1",
     "class-variance-authority": "^0.7.1",

@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MetalNav, MetalFooter, MetalCard, StatCard, Icons, MetalButton } from '@/components';
 import Link from 'next/link';
 import { useSessions, useSessionsStats, useUserProfile } from '@/lib';
@@ -30,34 +30,23 @@ export default function SessionsPage() {
   const [selectedLevel, setSelectedLevel] = useState('ALL');
   const [filterCompleted, setFilterCompleted] = useState<'all' | 'completed' | 'pending'>('all');
 
-  // Si pas connecté, afficher le bouton de connexion
-  if (!authLoading && !isAuthenticated) {
+  // Rediriger vers login si pas connecté
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [authLoading, isAuthenticated, router]);
+
+  // Afficher un état de chargement pendant la vérification
+  if (authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col bg-abyss">
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
           <div className="max-w-2xl mx-auto text-center">
             <div className="section-frame p-12 border-2 border-steel">
-              <Icons.Sessions size="lg" className="mx-auto mb-6" />
-              <h1 className="text-3xl font-metal text-white uppercase mb-4">
-                Connexion Requise
-              </h1>
-              <p className="text-gray mb-8">
-                Vous devez être connecté pour accéder à vos sessions d'apprentissage et suivre votre progression.
-              </p>
-              <div className="flex gap-4 justify-center">
-                <MetalButton
-                  onClick={() => router.push('/login')}
-                >
-                  SE CONNECTER
-                </MetalButton>
-                <MetalButton
-                  onClick={() => router.push('/register')}
-                  variant="outline"
-                >
-                  S'INSCRIRE
-                </MetalButton>
-              </div>
+              <Icons.Sessions size="lg" className="mx-auto mb-6 animate-pulse" />
+              <p className="text-gray">Vérification de la connexion...</p>
             </div>
           </div>
         </main>

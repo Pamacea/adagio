@@ -3,7 +3,8 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "build": "nest build",
+    "build": "turbo run build --filter=@adagio/api...",
+    "build:nest": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@adagio/config": "workspace:*",
+    "turbo": "^2.3.3",
     "@nestjs/cli": "^10.4.7",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^10.4.7",

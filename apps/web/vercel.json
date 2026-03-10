@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm install && pnpm db:generate",
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=@adagio/web...",
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": "nextjs",
@@ -10,15 +10,9 @@
       "branches": ["main", "develop"]
     }
   },
-  "env": {
-    "NEXT_PUBLIC_API_URL": {
-      "description": "API URL for production (Railway/Render)",
-      "value": "https://adagio-api-production.up.railway.app/api/v1"
-    }
-  },
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "@adagio-api-production-url"
+      "NEXT_PUBLIC_API_URL": "https://adagio-api-production.up.railway.app/api/v1"
     }
   }
 }

@@ -151,6 +151,9 @@ importers:
       tsconfig-paths:
         specifier: ^4.2.0
         version: 4.2.0
+      turbo:
+        specifier: ^2.3.3
+        version: 2.8.12
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -265,7 +268,7 @@ importers:
         version: 0.0.1
       better-auth:
         specifier: ^1.5.1
-        version: 1.5.1(@prisma/client@5.22.0(prisma@5.22.0))(drizzle-orm@0.45.1(@neondatabase/serverless@0.10.4)(@prisma/client@5.22.0(prisma@5.22.0))(@types/pg@8.11.6)(kysely@0.28.11)(prisma@5.22.0))(mongodb@7.1.0)(next@15.5.12(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(prisma@5.22.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@2.1.9(@types/node@22.19.13)(happy-dom@20.8.3)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.46.0))
+        version: 1.5.1(@prisma/client@5.22.0(prisma@5.22.0))(drizzle-orm@0.45.1(@neondatabase/serverless@0.10.4)(@prisma/client@5.22.0(prisma@5.22.0))(@types/pg@8.11.6)(kysely@0.28.11)(prisma@5.22.0))(mongodb@7.1.0)(next@15.5.12(@babel/core@7.29.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(prisma@5.22.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@2.1.9(@types/node@22.19.13)(happy-dom@20.8.3)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.46.0))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1769,7 +1772,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {node: '>=0.10.0'}
+    engines: {'0': node >=0.10.0}
 
   '@expo/cli@0.22.28':
     resolution: {integrity: sha512-lvt72KNitGuixYD2l3SZmRKVu2G4zJpmg5V7WfUBNpmUU5oODBw/6qmiJ6kSLAlfDozscUk+BBGknBBzxUrwrA==}
@@ -11819,7 +11822,7 @@ snapshots:
 
   beta@0.0.1: {}
 
-  better-auth@1.5.1(@prisma/client@5.22.0(prisma@5.22.0))(drizzle-orm@0.45.1(@neondatabase/serverless@0.10.4)(@prisma/client@5.22.0(prisma@5.22.0))(@types/pg@8.11.6)(kysely@0.28.11)(prisma@5.22.0))(mongodb@7.1.0)(next@15.5.12(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(prisma@5.22.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@2.1.9(@types/node@22.19.13)(happy-dom@20.8.3)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.46.0)):
+  better-auth@1.5.1(@prisma/client@5.22.0(prisma@5.22.0))(drizzle-orm@0.45.1(@neondatabase/serverless@0.10.4)(@prisma/client@5.22.0(prisma@5.22.0))(@types/pg@8.11.6)(kysely@0.28.11)(prisma@5.22.0))(mongodb@7.1.0)(next@15.5.12(@babel/core@7.29.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(prisma@5.22.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@2.1.9(@types/node@22.19.13)(happy-dom@20.8.3)(jsdom@25.0.1)(lightningcss@1.27.0)(terser@5.46.0)):
     dependencies:
       '@better-auth/core': 1.5.1(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.1)
       '@better-auth/drizzle-adapter': 1.5.1(@better-auth/core@1.5.1(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.1))(@better-auth/utils@0.3.1)(drizzle-orm@0.45.1(@neondatabase/serverless@0.10.4)(@prisma/client@5.22.0(prisma@5.22.0))(@types/pg@8.11.6)(kysely@0.28.11)(prisma@5.22.0))

@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-03-10T13:00:00Z",
+  "project": "Adagio",
+  "version": "0.2.2",
+  "profile": "storytelling",
+  "outputs": {
+    "contrapoints": "01-contrapoints-script.md",
+    "linkedin": "02-linkedin-post.md",
+    "reels": "03-reel-scripts.md",
+    "twitter": "04-twitter-thread.md",
+    "blog": "05-blog-post.md"
+  },
+  "sessionMetrics": {
+    "duration": "~45 minutes",
+    "filesGenerated": 5,
+    "wordCount": "~4500 words",
+    "platforms": ["YouTube", "LinkedIn", "TikTok", "Instagram", "Twitter/X", "Dev.to", "Hashnode", "Medium"]
+  },
+  "contentSummary": {
+    "mainThemes": [
+      "Music theory made emotional and intuitive",
+      "Monorepo deployment challenges (Vercel + Railway)",
+      "Build in public journey",
+      "Developer tools and lessons learned"
+    ],
+    "targetAudience": [
+      "Guitarists and musicians",
+      "Fullstack developers",
+      "Indie hackers and founders",
+      "Tech Twitter and LinkedIn"
+    ],
+    "callToActions": [
+      "Try Adagio at adagio.music",
+      "Follow for more indie dev content",
+      "Share deployment stories"
+    ]
+  },
+  "hashtags": [
+    "#musictheory",
+    "#guitar",
+    "#webdev",
+    "#nextjs",
+    "#railway",
+    "#vercel",
+    "#monorepo",
+    "#buildinpublic",
+    "#sidproject",
+    "#programming"
+  ]
+}

@@ -3,8 +3,8 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=@adagio/api...",
-    "build:nest": "nest build",
+    "build": "nest build",
+    "build:turbo": "turbo run build --filter=@adagio/api...",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",

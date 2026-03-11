@@ -11,6 +11,7 @@ import { auth } from '@adagio/auth/server';
  *
  * This controller proxies all Better Auth requests to the Better Auth handler.
  * All auth endpoints are available under /api/v1/auth/*
+ * (global prefix 'api/v1' + controller path 'auth')
  *
  * Endpoints include:
  * - POST   /api/v1/auth/sign-up/email     - Register with email/password
@@ -20,7 +21,7 @@ import { auth } from '@adagio/auth/server';
  * - POST   /api/v1/auth/reset-password    - Request password reset
  * - GET    /api/v1/auth/oauth/*           - OAuth flows
  */
-@Controller('v1/auth')
+@Controller('auth')
 export class BetterAuthController {
   private readonly logger = new Logger(BetterAuthController.name);
 
@@ -75,6 +76,10 @@ export class BetterAuthController {
       // Convert Express request to Web Standard request
       const webRequest = this.toWebRequest(req);
 
+      // Log request details for debugging
+      this.logger.debug(`Request URL: ${webRequest.url}`);
+      this.logger.debug(`Request body: ${JSON.stringify(req.body)}`);
+
       // Call Better Auth handler
       const webResponse = await auth.handler(webRequest);
 
@@ -83,11 +88,13 @@ export class BetterAuthController {
         res.setHeader(key, value);
       });
 
-      // Set status
-      res.status(webResponse.status);
-
       // Send body
       const body = await webResponse.text();
+      this.logger.debug(`Response status: ${webResponse.status}`);
+      this.logger.debug(`Response body: ${body}`);
+
+      // Set status
+      res.status(webResponse.status);
       res.send(body);
 
       return res;

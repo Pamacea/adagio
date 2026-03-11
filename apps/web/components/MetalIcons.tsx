@@ -93,6 +93,26 @@ export const Icons = {
     </svg>
   ),
 
+  Triads: (props: IconProps) => (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className={`${sizeClasses[props.size || 'md']} ${props.className || ''}`}
+      {...props}
+    >
+      {/* 3 notes in triangle formation */}
+      <circle cx="12" cy="5" r="2.5" fill="currentColor" />
+      <circle cx="6" cy="17" r="2.5" fill="currentColor" />
+      <circle cx="18" cy="17" r="2.5" fill="currentColor" />
+      {/* Connecting lines */}
+      <line x1="10" y1="7" x2="7.5" y2="14" />
+      <line x1="14" y1="7" x2="16.5" y2="14" />
+      <line x1="8" y1="16" x2="16" y2="16" />
+    </svg>
+  ),
+
   Modes: (props: IconProps) => (
     <svg
       viewBox="0 0 24 24"

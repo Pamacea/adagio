@@ -1,6 +1,6 @@
 {
   "name": "adagio",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "description": "Adagio - L'atlas harmonique intelligent pour guitaristes",
   "scripts": {

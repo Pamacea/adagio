@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.0] - 2026-03-11
+
+### 🚀 Deployment - Railway Build Fix
+
+#### Production Build
+- ✅ Fixed Prisma client generation in Docker build
+- ✅ Added `postinstall` script to auto-generate Prisma client
+- ✅ Railway/Nixpacks build now works correctly
+
+---
+
 ## [0.2.3] - 2026-03-10
 
 ### 🧪 Testing Infrastructure

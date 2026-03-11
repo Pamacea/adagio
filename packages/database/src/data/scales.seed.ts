@@ -180,7 +180,7 @@ export const SCALES_SEED = [
   // === GAMMES DIMINUÉES ===
   {
     slug: 'whole-half-diminished',
-    name: 'Diminée Ton/Demi-ton',
+    name: 'Diminué Ton/Demi-ton',
     root: 'C',
     intervals: JSON.stringify([0, 2, 3, 5, 6, 8, 9, 11]),
     type: 'scale',

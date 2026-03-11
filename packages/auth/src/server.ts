@@ -105,6 +105,7 @@ export const auth = betterAuth({
  * ```
  */
 export const handler = auth.handler;
+export const authHandler = auth.handler;
 
 // ============================================================================
 // TYPE EXPORTS

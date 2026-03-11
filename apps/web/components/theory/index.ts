@@ -9,3 +9,4 @@ export * from './fretboard';
 export * from './circle';
 export * from './notation';
 export * from './compose';
+export * from './triads';

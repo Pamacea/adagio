@@ -1,17 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd:*)",
-      "WebSearch",
-      "Bash(head:*)",
-      "Bash(true:*)",
-      "Bash(grep:*)",
       "Bash(tail:*)",
+      "Bash(cd:*)",
+      "Bash(cd \"C:/Users/Yanis/Projects/-web/adagio/apps/api\" && pnpm exec nest build --verbose 2>&1)",
+      "Bash(cd \"C:/Users/Yanis/Projects/-web/adagio/apps/api\" && pnpm exec tsc 2>&1)",
       "Bash(ls:*)",
-      "mcp__chrome-devtools__list_pages",
-      "mcp__web-search-prime__web_search_prime",
-      "mcp__web-reader__webReader",
-      "Bash(cat:*)"
+      "Bash(true:*)",
+      "Bash(head:*)",
+      "Bash(rm:*)"
     ]
   }
 }

@@ -22,16 +22,12 @@ import { createAuthClient } from 'better-auth/react';
 /**
  * Better Auth client instance for Adagio
  *
- * Uses relative URL on client-side for same-origin requests,
- * and falls back to environment variables on server-side.
+ * Better Auth automatically uses /api/auth as the default base path.
+ * The client makes requests to /api/auth/* which are handled by Next.js API routes.
  */
 export const authClient = createAuthClient({
-  baseURL: (() => {
-    // @ts-ignore - window exists in web environments
-    return typeof window !== 'undefined'
-      ? '' // Use relative path on client
-      : process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-  })(),
+  // No baseURL needed - Better Auth uses /api/auth by default
+  // and window.location.origin for the full URL
 });
 
 // Export commonly used methods and hooks for convenience

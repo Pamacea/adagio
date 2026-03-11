@@ -19,6 +19,7 @@ interface NavItem {
 const mainNav: NavItem[] = [
   { label: 'COMPOSE', href: '/compose', icon: Icons.Compose },
   { label: 'ACCORDS', href: '/theory/chords', icon: Icons.Chords },
+  { label: 'TRIADES', href: '/theory/triades', icon: Icons.Triads },
   { label: 'MODES', href: '/theory/modes', icon: Icons.Modes },
   { label: 'GAMMES', href: '/theory/scales', icon: Icons.Scales },
   { label: 'CERCLE', href: '/theory/circle', icon: Icons.Circle },

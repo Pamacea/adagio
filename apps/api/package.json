@@ -2,9 +2,6 @@
   "name": "@adagio/api",
   "version": "0.1.1",
   "private": true,
-  "prisma": {
-    "schema": "../packages/database/prisma/schema.prisma"
-  },
   "scripts": {
     "build": "nest build",
     "build:turbo": "turbo run build --filter=@adagio/api...",
@@ -66,6 +63,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.2"
   },
   "jest": {

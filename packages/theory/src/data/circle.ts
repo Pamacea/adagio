@@ -63,7 +63,7 @@ export const MAJOR_FROM_MINOR: Record<string, string> = {
 
 /**
  * Mapping pour les accords diminués (VII degré)
- * Chaque note mappe vers l'accord diminé construit sur sa septième majeure
+ * Chaque note mappe vers l'accord diminué construit sur sa septième majeure
  */
 export const DIM_MAP: Record<string, string> = {
   // Côté dièses du cercle (C, G, D, A, E, B, F#)

@@ -5,6 +5,6 @@
     "buildCommand": "pnpm turbo run build --filter=@adagio/api..."
   },
   "deploy": {
-    "startCommand": "cd apps/api && pnpm prisma generate && pnpm start:prod"
+    "startCommand": "cd apps/api && pnpm start:prod"
   }
 }

@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { Module, Global } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BetterAuthController } from './better-auth.controller';
 
 /**
@@ -14,6 +14,7 @@ import { BetterAuthController } from './better-auth.controller';
  */
 @Global()
 @Module({
+  imports: [ConfigModule],
   controllers: [BetterAuthController],
   providers: [
     {

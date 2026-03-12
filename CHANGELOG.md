@@ -38,6 +38,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.6] - 2026-03-12
+
+### 🐛 Bug Fixes
+- ✅ Fixed Railway deployment crash - Added missing `ConfigModule` import in `AuthModule`
+  - `JwtStrategy` was failing with "Cannot read properties of undefined (reading 'get')"
+  - ConfigService is now properly injected and available
+- ✅ Fixed database package exports - Pointing to compiled `dist/` instead of source `.ts`
+  - Node.js was trying to execute TypeScript directly without transpilation
+  - Added `build` script and updated `postinstall` to compile package
+- ✅ Fixed ESM/CommonJS conflict - Using `tsx` to run API in production
+  - Prisma Client is ESM-only and was incompatible with CommonJS build
+  - Changed `start:prod` from `node dist/main` to `tsx src/main.ts`
+
+### 🔧 Configuration
+- ✅ Added `NESTJS_API_URL` environment variable
+- ✅ Updated `.env.example` with new variable
+- ✅ Updated `project.yaml` with Railway secret configuration
+
+---
+
 ## [0.3.0] - 2026-03-11
 
 ### 🚀 Deployment - Railway Build Fix

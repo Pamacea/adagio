@@ -58,6 +58,7 @@ targets:
       - "$DISCORD_CLIENT_SECRET"
       - "$GITHUB_CLIENT_ID"
       - "$GITHUB_CLIENT_SECRET"
+      - "$NESTJS_API_URL"
 
 # ================================
 # IMPORTANT: Configuration Required

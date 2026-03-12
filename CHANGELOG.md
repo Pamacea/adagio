@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.5] - 2026-03-12
+
+### 🚀 Next.js 16 Migration - Proxy Architecture
+
+#### Framework Upgrade
+- ✅ **Next.js 15.5.12 → 16.1.6** - Dernière version stable
+- ✅ **React 19.2.4** - Dernière version avec tous les correctifs
+- ✅ **Turbopack** - Build optimisé avec le nouveau compilateur
+
+#### Middleware → Proxy Transformation
+- ✅ **Remplacement de `middleware.ts` par `proxy.js`**
+  - Authentification et protection des routes (better-auth)
+  - Proxy transparent vers le backend NestJS (`/api/v1/*`)
+  - Headers de sécurité centralisés (X-Frame-Options, CSP)
+- ✅ **Architecture unifiée** - Un seul fichier pour toutes les interceptions
+
+#### API Client Optimization
+- ✅ **Proxy local** - Les appels API passent par `/api/v1` au lieu de `localhost:3001`
+- ✅ **Same-origin** - Plus de CORS, meilleur gestion des cookies
+- ✅ **Auto-détection environnement** - Web (proxy) vs Mobile (direct)
+
+#### CSS Fixes
+- ✅ Suppression de l'import Google Fonts (déjà géré par `next/font`)
+- ✅ Correction des variables CSS manquantes
+
+#### Breaking Changes
+- 🔄 **proxy.js remplace middleware.ts** - Même fonctionnalité, nouveau nom
+- 🔄 **API_BASE_URL** - Change de `http://localhost:3001/api/v1` à `/api/v1` (web)
+
+---
+
 ## [0.3.0] - 2026-03-11
 
 ### 🚀 Deployment - Railway Build Fix

@@ -2,7 +2,29 @@
 // API CLIENT - Typed HTTP client for Adagio API
 // ============================================================================
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+/**
+ * Détermine l'URL de base de l'API en fonction de l'environnement
+ *
+ * - Web (Next.js): Utilise le proxy local via proxy.js (Next.js 16)
+ * - Mobile: Utilise le backend direct via EXPO_PUBLIC_API_URL
+ * - Fallback: Backend direct sur localhost:3001
+ */
+const getBaseUrl = () => {
+  // Environnement Web (Next.js) - utiliser le proxy local
+  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL === undefined) {
+    return '/api/v1'; // Proxy via Next.js 16 proxy.js
+  }
+
+  // Environnement serveur Next.js - utiliser le backend direct
+  if (typeof window === 'undefined') {
+    return process.env.NESTJS_API_URL || 'http://localhost:3001/api/v1';
+  }
+
+  // Environnement Mobile ou URL explicite
+  return process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+};
+
+const API_BASE_URL = getBaseUrl();
 
 export interface ApiClientConfig {
   baseUrl?: string;

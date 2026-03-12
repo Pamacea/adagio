@@ -6,12 +6,9 @@
  * ADAGIO - METAL BRUTAL DESIGN
  * Style: Metallica / Steve Vai
  * Noir dominant, boutons polygonaux, icons SVG
+ *
+ * Fonts: Chargées via next/font dans layout.tsx
  */
-
-/* ============================================
-   FONTS IMPORT
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap');
 
 /* ============================================
    BASE STYLES
@@ -261,7 +258,7 @@
   .note-re { color: var(--color-rust); }
   .note-mi { color: var(--color-circuit); }
   .note-fa { color: var(--color-toxic); }
-  .note-sol { color: var(--color-slime); }
+  .note-sol { color: var(--color-blood); }
   .note-la { color: var(--color-steel); }
   .note-si { color: var(--color-gray); }
 

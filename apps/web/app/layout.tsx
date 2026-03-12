@@ -20,7 +20,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ADAGIO - Théorie Musicale Brutale',
+  title: 'Adagio',
   description: 'Maîtrise la théorie musicale. Pas de dashboard. Pas de SaaS. Juste du métal.',
   icons: {
     icon: [

@@ -8,3 +8,7 @@ export * from './circle';
 export * from './degrees';
 export * from './notation';
 export * from './compose';
+export * from './cheatsheet';
+export * from './lessons-content';
+export * from './chord-variants';
+export * from './harmonic-suggestions';

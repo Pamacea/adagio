@@ -11,6 +11,8 @@ export * from './mappings/chord-feelings';
 export * from './mappings/emotion-mapping';
 export * from './mappings/chord-mapping';
 export * from './data';
+export * from './data/chord-variants';
+export * from './data/harmonic-suggestions';
 
 // FretboardCalculator exports - use explicit exports to avoid conflicts
 export {

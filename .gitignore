@@ -20,8 +20,6 @@ dist/
 .DS_Store
 *.pem
 
-.ex-g-se/
-
 # Debug
 npm-debug.log*
 yarn-debug.log*
@@ -56,3 +54,8 @@ pnpm-debug.log*
 
 # OS
 Thumbs.db
+
+# Oalacea
+.smite/
+.claude/
+.ex-g-se/nul

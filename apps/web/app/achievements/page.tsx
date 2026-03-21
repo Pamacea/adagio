@@ -8,6 +8,7 @@
 
 import { useState, useMemo } from 'react';
 import { MetalNav, MetalFooter, MetalCard, StatCard, Icons } from '@/components';
+import { AchievementIcon } from '@/components/AchievementIcons';
 import { useAchievements, useAchievementStats, useUserAchievements } from '@/lib';
 import Link from 'next/link';
 import type { AchievementCategory, AchievementRarity } from '@adagio/types';
@@ -271,7 +272,11 @@ export default function AchievementsPage() {
                     <div className="flex items-start gap-3 mb-3">
                       {/* Icon */}
                       <div className={`w-12 h-12 flex items-center justify-center text-2xl border-2 ${achievement.unlocked ? rarity.bg + ' ' + rarity.border : 'border-steel bg-blackness'}`}>
-                        {achievement.unlocked ? achievement.icon : '🔒'}
+                        {achievement.unlocked ? (
+                          <AchievementIcon name={achievement.icon} size={24} className="text-current" />
+                        ) : (
+                          <Icons.Lock size="sm" />
+                        )}
                       </div>
 
                       {/* Info */}

@@ -19,6 +19,9 @@ export type { BadgeProps, BadgeVariant } from './atoms/Badge';
 export { ModeIcon } from './atoms/ModeIcon';
 export type { ModeIconProps } from './atoms/ModeIcon';
 
+export { HelpButton } from './atoms/HelpButton';
+export type { HelpButtonProps, HelpButtonSize, HelpButtonVariant } from './atoms/HelpButton';
+
 // Molecules
 export { Card } from './molecules/Card';
 export type { CardProps } from './molecules/Card';
@@ -31,6 +34,11 @@ export type { ChordCardProps } from './molecules/ChordCard';
 
 export { RootSelector } from './molecules/RootSelector';
 export type { RootSelectorProps } from './molecules/RootSelector';
+
+export { HelpTooltip } from './molecules/HelpTooltip';
+export type { HelpTooltipProps, TooltipPosition, HelpTooltipVariant } from './molecules/HelpTooltip';
+
+export { HelpModal, type HelpTopic, type HelpRelatedTopic } from './molecules/HelpModal';
 
 // Organisms
 export { Fretboard } from './organisms/Fretboard';

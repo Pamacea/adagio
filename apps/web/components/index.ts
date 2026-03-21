@@ -10,5 +10,6 @@ export { MetalCard, MetalCardWithHeader, MetalCardGrid, CompactCard, StatCard } 
 export { Icons } from './MetalIcons';
 export { AchievementBadge, AchievementBadgeList, AchievementCompact } from './AchievementBadge';
 export * from './theory';
+export * from './notes';
 export { PreferencesSection } from './profile/PreferencesSection';
 export { AccountActions } from './profile/AccountActions';

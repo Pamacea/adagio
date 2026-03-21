@@ -297,14 +297,16 @@ export function useChordPage(): UseChordPageReturn {
   const getFingeringFromVoicing = useCallback((voicing?: ChordVoicing) => {
     if (!voicing) return [];
 
+    // Standard tuning for diagram (E A D G B E - low to high, displayed left to right)
     const openNotes: NoteName[] = ['E', 'A', 'D', 'G', 'B', 'E'];
     const chordRoot = voicing.name.charAt(0) as NoteName;
     const qualityMatch = voicing.name.slice(1).match(/^(maj7|m7|7|m|6|m6|dim|aug|sus|add|7sus4|maj9|m9|m11|m13|9|11|13)/);
     const quality = (qualityMatch ? qualityMatch[0] : '') as ChordQuality;
     const chordNotes = buildChord(chordRoot, quality);
 
+    // CORRIGÉ: Mapping intervalles complet
     const getIntervalForNote = (note: NoteName): Interval | undefined => {
-      const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', '6', 'b7', '7'];
+      const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', 'bb7', 'b7', '7'];
       const semitones: Record<string, number> = {
         'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5,
         'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
@@ -324,6 +326,12 @@ export function useChordPage(): UseChordPageReturn {
       interval?: Interval;
     }> = [];
 
+    /**
+     * CONVENTIONS:
+     * - diagramString: 0 = E (basse/gauche), 5 = E (aigu/droite)
+     * - voicing.notes[].string: 0 = E (aigu), 5 = E (basse)
+     * Donc: voicingString = 5 - diagramString
+     */
     for (let diagramString = 0; diagramString <= 5; diagramString++) {
       const voicingString = 5 - diagramString;
       const playedNote = voicing.notes.find(n => n.string === voicingString);

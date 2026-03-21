@@ -8,6 +8,7 @@
 'use client';
 
 import { MetalNav, MetalFooter } from '@/components';
+import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { ChordsSidebar } from '@/features/chords';
 import { useChordPage } from './hooks';
 import { ChordLibrarySidebar, ChordDisplayMain } from './components';
@@ -65,6 +66,20 @@ export default function ChordsPage() {
 
         {/* Main content - Affichage de l'accord */}
         <main className="flex-1 p-8 overflow-y-auto bg-gradient-to-br from-abyss via-void to-abyss">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-metal text-white">ACCORDS</h1>
+            <div className="flex gap-2">
+              <HelpTooltip topicId="chords.caged">
+                <HelpButton topicId="chords.caged" useModal size="md" variant="subtle" />
+              </HelpTooltip>
+              <HelpTooltip topicId="chords.voicings">
+                <HelpButton topicId="chords.voicings" useModal size="md" variant="subtle" />
+              </HelpTooltip>
+              <HelpTooltip topicId="chords.inversions">
+                <HelpButton topicId="chords.inversions" useModal size="md" variant="subtle" />
+              </HelpTooltip>
+            </div>
+          </div>
           <ChordDisplayMain
             chordToDisplay={chordToDisplay}
             currentRoot={currentRoot}

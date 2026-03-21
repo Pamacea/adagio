@@ -4,6 +4,7 @@
  */
 
 import { Icons } from './MetalIcons';
+import { AchievementIcon } from './AchievementIcons';
 
 interface AchievementBadgeProps {
   title: string;
@@ -88,9 +89,13 @@ export function AchievementBadge({
         `}
       >
         {unlocked ? (
-          <span className={sizeStyle.icon}>{icon || <Icons.Check />}</span>
+          <span className={sizeStyle.icon}>
+            {icon ? <AchievementIcon name={icon} size={size === 'sm' ? 16 : size === 'md' ? 24 : 32} className="text-current" /> : <Icons.Check />}
+          </span>
         ) : (
-          <span className={`${sizeStyle.icon} text-gray`}>🔒</span>
+          <span className={`${sizeStyle.icon} text-gray`}>
+            <Icons.Lock size={size === 'sm' ? 'sm' : 'md'} />
+          </span>
         )}
       </div>
 
@@ -191,7 +196,7 @@ interface AchievementCompactProps {
 
 export function AchievementCompact({
   title,
-  icon = '🏆',
+  icon = 'trophy',
   unlocked = true,
   onClick,
 }: AchievementCompactProps) {
@@ -203,7 +208,13 @@ export function AchievementCompact({
         ${unlocked ? 'border-toxic bg-toxic/10 hover:bg-toxic/20' : 'border-steel bg-blackness opacity-50'}
       `}
     >
-      <span className="text-lg">{unlocked ? icon : '🔒'}</span>
+      <span className="text-lg">
+        {unlocked ? (
+          <AchievementIcon name={icon} size={18} className="text-current" />
+        ) : (
+          <Icons.Lock size="sm" />
+        )}
+      </span>
       <span className={`text-xs font-bold uppercase ${unlocked ? 'text-white' : 'text-gray'}`}>
         {title}
       </span>

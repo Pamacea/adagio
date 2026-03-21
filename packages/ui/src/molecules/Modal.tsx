@@ -21,9 +21,9 @@ const modalVariants = cva(
       size: {
         sm: 'max-w-sm',
         md: 'max-w-md',
-        lg: 'max-w-lg',
-        xl: 'max-w-xl',
-        '2xl': 'max-w-2xl',
+        lg: 'max-w-2xl',
+        xl: 'max-w-3xl',
+        '2xl': 'max-w-4xl',
         fullscreen: 'max-w-screen-lg h-screen-lg rounded-none',
       },
       variant: {

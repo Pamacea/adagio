@@ -246,14 +246,14 @@ export function calculateExtensionChords(
  * @returns Interval or undefined if not found
  */
 export function getIntervalInChord(chordRoot: NoteName, note: NoteName): Interval | undefined {
-  // Semitone values for notes
+  // Semitone values for notes (enharmonic equivalents)
   const semitones: Record<NoteName, number> = {
     'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5,
     'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
   };
 
-  // Interval mapping by semitone difference
-  const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', '6', 'b7', '7'];
+  // Interval mapping by semitone difference (CORRIGÉ)
+  const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', 'bb7', 'b7', '7'];
 
   const rootSemitone = semitones[chordRoot];
   const noteSemitone = semitones[note];
@@ -459,7 +459,7 @@ export interface DiagramPosition {
 }
 
 export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPosition[] {
-  // Standard tuning for diagram (E A D G B E - bass to treble)
+  // Standard tuning for diagram (E A D G B E - low to high, displayed left to right)
   const openNotes: NoteName[] = ['E', 'A', 'D', 'G', 'B', 'E'];
 
   // Extract root and quality from voicing name
@@ -472,10 +472,17 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
 
   const positions: DiagramPosition[] = [];
 
-  // For each string in the diagram (0=E bass left, 5=E treble right)
+  /**
+   * CONVENTIONS:
+   * - diagramString: 0 = E (basse/gauche), 5 = E (aigu/droite)
+   * - voicing.notes[].string: 0 = E (aigu), 5 = E (basse)
+   *
+   * Donc: voicingString = 5 - diagramString
+   */
+
+  // For each string in the diagram (left to right = low to high)
   for (let diagramString = 0; diagramString <= 5; diagramString++) {
-    // Find corresponding note in voicing
-    // voicing.notes[].string: 0=high E, 5=low E
+    // Find corresponding note in voicing (inverted string numbering)
     const voicingString = 5 - diagramString;
     const playedNote = voicing.notes.find(n => n.string === voicingString);
 
@@ -489,7 +496,7 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
         interval: playedNote.interval || getIntervalInChord(chordRoot, playedNote.note),
       });
     } else {
-      // String is not played in voicing
+      // String is not played in voicing - check if open string should be played
       const openNote = openNotes[diagramString];
 
       if (openNote && chordNotes.includes(openNote)) {

@@ -29,7 +29,7 @@ export function VoicingSelector({ voicings, selectedIndex, onSelect, className }
         Positions
         <span className="text-sm text-gray-400">({voicings.length})</span>
       </h3>
-      <div className="space-y-3 max-h-72 overflow-y-auto pr-2">
+      <div className="space-y-3 max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
         {voicings.map((voicing, index) => (
           <button
             key={index}

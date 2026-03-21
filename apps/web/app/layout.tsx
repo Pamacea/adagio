@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo_Black, Space_Mono } from 'next/font/google';
 import { AuthProvider } from '@/lib/auth';
+import { HelpProvider } from '@/components/HelpProvider';
 import { Providers } from './providers';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
@@ -43,7 +44,9 @@ export default function RootLayout({
       <body className={`${archivoBlack.variable} ${spaceMono.variable}`}>
         <Providers>
           <AuthProvider>
-            {children}
+            <HelpProvider>
+              {children}
+            </HelpProvider>
           </AuthProvider>
         </Providers>
         <Analytics />

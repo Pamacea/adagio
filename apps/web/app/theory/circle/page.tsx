@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
+import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { DEGREE_COLORS } from '@adagio/theory';
 import {
   CircleOfFifths,
@@ -38,9 +39,14 @@ export default function CirclePage() {
         <div className="max-w-2xl mx-auto">
           {/* En-tête */}
           <div className="mb-6 text-center">
-            <h1 className="text-3xl lg:text-4xl font-metal text-white tracking-tighter mb-2">
-              CIRCLE OF FIFTHS
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <h1 className="text-3xl lg:text-4xl font-metal text-white tracking-tighter">
+                CIRCLE OF FIFTHS
+              </h1>
+              <HelpTooltip topicId="circle.fifths">
+                <HelpButton topicId="circle.fifths" useModal size="md" variant="subtle" />
+              </HelpTooltip>
+            </div>
             <p className="text-xs text-gray uppercase tracking-widest">
               Cercle des Quintes
             </p>

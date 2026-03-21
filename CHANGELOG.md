@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0] - 2026-03-21
+
+### Chord System Overhaul
+
+#### Chord Voicings Engine
+- **20+ nouvelles qualités d'accords** : maj9, maj13, 6/9, m6/9, 7alt, 7b9, 7#9, 7b5, 7#5, 7#11, 7b13, 13sus4, 7sus2, mMaj7, m7b5b9, m7b5b11, m7b11, add4, 5add9, 6add9
+- **Déduplication des voicings** : suppression des positions identiques
+- **Validation des voicings** : toutes les notes de l'accord doivent être présentes (C6 ne ressemble plus à C majeur)
+- **Variations enrichies par degré** basées sur le CSV Guitar - Progressions
+
+#### Chord Diagram (page accords)
+- Numéros de frettes toujours visibles (pas seulement en position haute)
+- Conteneur VoicingSelector adaptatif (`max-h-[calc(100vh-300px)]`)
+
+#### Compose Page
+- **Nouveau diagramme vertical pro** : même style que la page accords (gradient sombre, sillet rouge, cercles avec gradient radial)
+- **Suppression de l'éditeur de tablature** et de la section export
+- **Footer pleine largeur** (déplacé hors du conteneur `w-3/4`)
+- **Sélecteur de variations** amélioré (chevron SVG custom, plus d'espacement)
+
+### Lessons System
+- **Fallback statique** : les leçons s'affichent même sans API backend (20 leçons dans `LESSONS_DATA`)
+- **Pages de leçons fonctionnelles** : liens par slug, page détail avec fallback "contenu en préparation"
+- **Navigation corrigée** : utilisation du slug au lieu de l'ID numérique
+
+### UI Cleanup
+- **Emojis retirés** de la page Notes (remplacés par icônes SVG MetalIcons)
+- **Emojis retirés** des symboles musicaux (page accords, profil)
+- **Icône Lock** ajoutée aux MetalIcons
+- **manifest.json** ajouté (plus de 404)
+- **Prisma generate** intégré au workflow
+
+### Bug Fixes
+- Fix type `DemoEvent` (conflit entre `@adagio/theory` et `InteractiveDemo`)
+- Fix `Icons.Target` → `Icons.Fire` (composant inexistant)
+- Fix import `TablatureState` (chemin incorrect)
+- Fix `topic.content` type guard (ReactNode vs string)
+- Fix `cell` possibly undefined dans TablatureGrid
+- Fix `Icons.Check`/`Icons.Lightbulb` size `"xs"` inexistant → `"sm"`
+- Fix `readonly` degrees array dans composition export
+
+---
+
 ## [0.3.5] - 2026-03-12
 
 ### 🚀 Next.js 16 Migration - Proxy Architecture

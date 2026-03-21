@@ -112,7 +112,27 @@ export type ChordQuality =
   | '11'
   | 'm11'
   | '13'
-  | 'm13';
+  | 'm13'
+  | 'maj9'
+  | 'maj13'
+  | '6add9'
+  | '6/9'
+  | 'm6/9'
+  | 'add4'
+  | '5add9'
+  | '7alt'
+  | '7b9'
+  | '7#9'
+  | '7b5'
+  | '7#5'
+  | '7#11'
+  | '7b13'
+  | '13sus4'
+  | '7sus2'
+  | 'mMaj7'
+  | 'm7b5b9'
+  | 'm7b5b11'
+  | 'm7b11';
 
 /**
  * Scale representation
@@ -543,6 +563,26 @@ export const ChordQualitySchema = z.enum([
   'm11',
   '13',
   'm13',
+  'maj9',
+  'maj13',
+  '6add9',
+  '6/9',
+  'm6/9',
+  'add4',
+  '5add9',
+  '7alt',
+  '7b9',
+  '7#9',
+  '7b5',
+  '7#5',
+  '7#11',
+  '7b13',
+  '13sus4',
+  '7sus2',
+  'mMaj7',
+  'm7b5b9',
+  'm7b5b11',
+  'm7b11',
 ]);
 
 export const NoteSchema = z.object({

@@ -144,7 +144,7 @@ export function PreferencesSection() {
       {isOfflineMode && (
         <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
           <p className="text-xs text-amber-500">
-            ⚠️ Mode hors ligne : Les préférences sont sauvegardées localement et seront synchronisées when you reconnect.
+            <span className="font-bold">[ATTENTION]</span> Mode hors ligne : Les préférences sont sauvegardées localement et seront synchronisées à la reconnexion.
           </p>
         </div>
       )}

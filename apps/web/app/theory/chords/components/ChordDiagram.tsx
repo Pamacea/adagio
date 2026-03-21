@@ -434,26 +434,24 @@ export function ChordDiagram({
           ))}
         </g>
 
-        {/* Numéros de frettes sur le côté (pour positions hautes) */}
-        {startFret > 1 && (
-          <g
-            transform={`translate(${MARGIN_LEFT + STRING_SPACING * 5 + 12}, ${MARGIN_TOP})`}
-          >
-            {Array.from({ length: NUM_FRETS }, (_, i) => (
-              <text
-                key={`fret-num-${i}`}
-                x={0}
-                y={i * FRET_HEIGHT + FRET_HEIGHT / 2 + 4}
-                fill="#555"
-                fontSize={11}
-                fontWeight="500"
-                textAnchor="start"
-              >
-                {startFret + i}
-              </text>
-            ))}
-          </g>
-        )}
+        {/* Numéros de frettes sur le côté */}
+        <g
+          transform={`translate(${MARGIN_LEFT + STRING_SPACING * 5 + 12}, ${MARGIN_TOP})`}
+        >
+          {Array.from({ length: NUM_FRETS }, (_, i) => (
+            <text
+              key={`fret-num-${i}`}
+              x={0}
+              y={i * FRET_HEIGHT + FRET_HEIGHT / 2 + 4}
+              fill="#555"
+              fontSize={11}
+              fontWeight="500"
+              textAnchor="start"
+            >
+              {startFret + i}
+            </text>
+          ))}
+        </g>
       </svg>
     </div>
   );

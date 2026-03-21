@@ -54,25 +54,58 @@ export const DEGREE_FUNCTIONS: Record<string, ChordFunction> = {
 
 /**
  * Obtenir l'indice chromatique d'une note
+ * Gère les dièses (#) et bémols (b) de manière cohérente
  */
 function getNoteIndex(note: NoteName): number {
   const index = CHROMATIC_SCALE.indexOf(note);
   if (index !== -1) return index;
 
-  // Gérer les bémols
-  const flatMap: Record<string, number> = {
-    'Db': 1, 'Eb': 3, 'Gb': 6, 'Ab': 8, 'Bb': 10,
+  // Gérer les bémols - conversion enharmonique
+  const flatToSharp: Record<string, number> = {
+    'Db': 1,  // C#
+    'Eb': 3,  // D#
+    'Gb': 6,  // F#
+    'Ab': 8,  // G#
+    'Bb': 10, // A#
   };
-  return flatMap[note] ?? 0;
+  return flatToSharp[note] ?? 0;
 }
 
 /**
  * Transpose une note par un certain nombre de demi-tons
+ * Retourne toujours la version en dièse pour la cohérence interne
+ * (L'affichage gérera la conversion enharmonique si nécessaire)
  */
 function transposeNote(note: NoteName, semitones: number): NoteName {
   const index = getNoteIndex(note);
   const newIndex = ((index + semitones) % 12 + 12) % 12;
   return CHROMATIC_SCALE[newIndex] as NoteName;
+}
+
+/**
+ * Convertit une note en bémol si approprié (pour l'affichage)
+ * Par exemple: C# → Db, F# → Gb dans certains contextes
+ */
+export function toFlatIfAppropriate(note: NoteName, context?: NoteName): NoteName {
+  const flatMap: Record<string, NoteName> = {
+    'C#': 'Db',
+    'D#': 'Eb',
+    'F#': 'Gb',
+    'G#': 'Ab',
+    'A#': 'Bb',
+  };
+
+  // Si la note a un équivalent bémol
+  if (flatMap[note]) {
+    // Utiliser le contexte si fourni (ex: tonalité) pour décider
+    // Par défaut, utiliser le bémol pour certaines tonalités clés
+    const flatKeys = ['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb'];
+    if (context && flatKeys.includes(context as string)) {
+      return flatMap[note];
+    }
+  }
+
+  return note;
 }
 
 /**
@@ -133,6 +166,26 @@ export function buildChord(root: NoteName, quality: ChordQuality, extensions?: I
     'm13': ['1', 'b3', '5', 'b7', '9', '11', '13'],
     'add9': ['1', '3', '5', '9'],
     'madd9': ['1', 'b3', '5', '9'],
+    'maj9': ['1', '3', '5', '7', '9'],
+    'maj13': ['1', '3', '5', '7', '9', '13'],
+    '6add9': ['1', '3', '5', '6', '9'],
+    '6/9': ['1', '3', '5', '6', '9'],
+    'm6/9': ['1', 'b3', '5', '6', '9'],
+    'add4': ['1', '3', '4', '5'],
+    '5add9': ['1', '5', '9'],
+    '7alt': ['1', '3', 'b5', 'b7', '#9'],
+    '7b9': ['1', '3', '5', 'b7', 'b9'],
+    '7#9': ['1', '3', '5', 'b7', '#9'],
+    '7b5': ['1', '3', 'b5', 'b7'],
+    '7#5': ['1', '3', '#5', 'b7'],
+    '7#11': ['1', '3', '5', 'b7', '#11'],
+    '7b13': ['1', '3', '5', 'b7', 'b13'],
+    '13sus4': ['1', '4', '5', 'b7', '13'],
+    '7sus2': ['1', '2', '5', 'b7'],
+    'mMaj7': ['1', 'b3', '5', '7'],
+    'm7b5b9': ['1', 'b3', 'b5', 'b7', 'b9'],
+    'm7b5b11': ['1', 'b3', 'b5', 'b7', '11'],
+    'm7b11': ['1', 'b3', '5', 'b7', '11'],
   };
 
   const base = qualityIntervals[quality] || qualityIntervals[''];
@@ -353,13 +406,17 @@ export function getTendencyTones(chordRoot: NoteName, quality: ChordQuality): No
 /**
  * Obtenir les positions d'un accord sur le manche
  * Calcule les voicings possibles pour un accord donné
+ *
+ * IMPORTANT: Convention de numérotation des cordes:
+ * - GUITAR_TUNING = ['E', 'A', 'D', 'G', 'B', 'E'] (grave → aigu)
+ * - VoicingNote.string: 0 = high E (aigu), 5 = low E (grave)
  */
 export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fretCount = 12): ChordVoicing[] {
   const voicings: ChordVoicing[] = [];
   const chordNotes = buildChord(chordRoot, quality);
+  const seenFingerprints = new Set<string>();
 
   // Générer des positions sur tout le manche
-  // On va jusqu'à fretCount - 4 pour avoir au moins 4 frettes disponibles
   const maxStartFret = Math.max(7, fretCount - 4);
 
   for (let startFret = 0; startFret <= maxStartFret; startFret++) {
@@ -367,7 +424,7 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
     let minFret = 24;
     let maxFret = 0;
 
-    // Trouver les notes sur chaque corde
+    // GUITAR_TUNING est [E(low), A, D, G, B, E(high)]
     for (let stringIdx = 0; stringIdx < 6; stringIdx++) {
       const openNote = GUITAR_TUNING[stringIdx] as NoteName;
       const openNoteIndex = getNoteIndex(openNote);
@@ -378,11 +435,13 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
         const note = CHROMATIC_SCALE[noteIndex] as NoteName | undefined;
 
         if (note && chordNotes.includes(note)) {
-          const octave = 4 + Math.floor((openNoteIndex + fret) / 12);
+          const voicingString = 5 - stringIdx;
+          const octave = 4 + Math.floor((openNoteIndex + fret) / 12) - (stringIdx >= 2 ? 1 : 0);
+
           voicingNotes.push({
             note,
             octave,
-            string: 5 - stringIdx, // 0 = high E, 5 = low E
+            string: voicingString,
             fret,
             interval: getIntervalInChord(chordRoot, note, quality),
           });
@@ -394,16 +453,32 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
       }
     }
 
-    // Ajouter seulement si on a au moins 3 notes jouées
-    if (voicingNotes.length >= 3) {
-      voicings.push({
-        id: `${chordRoot}${quality}-${startFret}`,
-        name: `${chordRoot}${quality}`,
-        notes: voicingNotes,
-        position: 'root',
-        fretRange: [minFret, maxFret],
-        difficulty: maxFret - minFret > 4 ? 'hard' : 'easy',
-      });
+    // Vérifier que le voicing contient toutes les notes distinctes de l'accord
+    // (pas seulement 3 notes quelconques - sinon C6 ressemble à C majeur)
+    const uniqueNotesInVoicing = new Set(voicingNotes.map(n => n.note));
+    const hasAllChordNotes = chordNotes.every(n => uniqueNotesInVoicing.has(n));
+
+    // Accepter si toutes les notes sont présentes, ou au moins 3 notes pour les triades
+    const isValid = hasAllChordNotes || (chordNotes.length <= 3 && voicingNotes.length >= 3);
+
+    if (isValid && voicingNotes.length >= 3) {
+      // Dédupliquer : créer une empreinte basée sur les frettes jouées par corde
+      const fingerprint = voicingNotes
+        .sort((a, b) => b.string - a.string)
+        .map(n => `${n.string}:${n.fret}`)
+        .join('|');
+
+      if (!seenFingerprints.has(fingerprint)) {
+        seenFingerprints.add(fingerprint);
+        voicings.push({
+          id: `${chordRoot}${quality}-${startFret}`,
+          name: `${chordRoot}${quality}`,
+          notes: voicingNotes,
+          position: 'root',
+          fretRange: [minFret, maxFret],
+          difficulty: maxFret - minFret > 4 ? 'hard' : 'easy',
+        });
+      }
     }
   }
 
@@ -412,12 +487,14 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
 
 /**
  * Obtenir l'intervalle d'une note dans un accord
+ * Mapping complet des demi-tons vers les intervalles
  */
 function getIntervalInChord(root: NoteName, note: NoteName, _quality: ChordQuality): Interval {
   const rootIndex = getNoteIndex(root);
   const noteIndex = getNoteIndex(note);
   const semitones = ((noteIndex - rootIndex) + 12) % 12;
 
+  // Mapping complet demi-tons → intervalles
   const semitoneToInterval: Record<number, Interval> = {
     0: '1',
     1: 'b2',
@@ -429,8 +506,8 @@ function getIntervalInChord(root: NoteName, note: NoteName, _quality: ChordQuali
     7: 'b5',
     8: '5',
     9: '#5',
-    10: 'b6',
-    11: '6',
+    10: 'b7',  // Corrigé: 10 demi-tons = b7 (7ème mineure)
+    11: '7',   // Corrigé: 11 demi-tons = 7 (7ème majeure)
   };
 
   return semitoneToInterval[semitones] ?? '1';

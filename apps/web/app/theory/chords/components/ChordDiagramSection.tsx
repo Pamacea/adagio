@@ -46,13 +46,13 @@ export function ChordDiagramSection({
             <span className="w-2.5 h-2.5 rounded-none bg-toxic"></span>
             Diagramme
           </h3>
-          <div className="flex justify-center py-6">
+          <div className="py-4">
             <ChordDiagram
               name={chordName}
               positions={getFingeringFromVoicing(selectedVoicing)}
               position={selectedVoicingIndex + 1}
               totalPositions={allVoicings.length}
-              className="w-72"
+              className="w-full max-w-2xl mx-auto"
             />
           </div>
         </div>

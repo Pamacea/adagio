@@ -1,5 +1,5 @@
 // ============================================================================
-// LESSONS HOOK - TanStack Query - NO FALLBACK
+// LESSONS HOOK - TanStack Query with static fallback
 // ============================================================================
 
 'use client';
@@ -7,19 +7,23 @@
 import { useLessonsQuery, useLessonQuery, useUpdateLessonProgressMutation } from './use-query';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@adagio/api-client';
-import { type Lesson } from '../data';
+import { type Lesson, LESSONS_DATA } from '../data';
 
 /**
  * Hook pour récupérer les leçons
- * Pas de fallback - utilise l'API
+ * Fallback sur les données statiques si l'API échoue ou retourne vide
  */
 export function useLessons() {
   const query = useLessonsQuery();
 
+  const data = (query.data && query.data.length > 0)
+    ? query.data as Lesson[]
+    : LESSONS_DATA;
+
   return {
     ...query,
-    data: query.data as Lesson[] | undefined,
-    isLoading: query.isLoading,
+    data,
+    isLoading: query.isLoading && !LESSONS_DATA.length,
     hasError: query.isError,
   };
 }
@@ -45,50 +49,72 @@ export function useUpdateLessonProgress() {
 
 /**
  * Hook pour récupérer les sessions (leçons avec progression)
- * Format compatible avec la page sessions
- * Pas de fallback - utilise l'API
+ * Fallback sur les données statiques
  */
 export function useSessions(category?: string, level?: string) {
   return useQuery({
     queryKey: ['lessons', 'with-progress', category, level],
     queryFn: async () => {
-      // Récupérer les leçons filtrées
-      const lessons = await apiClient.get<{
-        id: string;
-        slug: string;
-        title: string;
-        description?: string;
-        category: string;
-        level: string;
-        duration: number;
-        xp: number;
-        progress?: {
-          status: string;
-          currentSection: number;
-          completedSections: string[];
+      try {
+        const lessons = await apiClient.get<{
+          id: string;
+          slug: string;
+          title: string;
+          description?: string;
+          category: string;
+          level: string;
+          duration: number;
           xp: number;
-          startedAt?: string;
-          completedAt?: string;
-          lastAccessed?: string;
-        } | null;
-      }[]>(`/lessons${category ? `?category=${category}` : ''}${level ? `&level=${level}` : ''}`);
+          progress?: {
+            status: string;
+            currentSection: number;
+            completedSections: string[];
+            xp: number;
+            startedAt?: string;
+            completedAt?: string;
+            lastAccessed?: string;
+          } | null;
+        }[]>(`/lessons${category ? `?category=${category}` : ''}${level ? `&level=${level}` : ''}`);
 
-      // Transformer au format attendu par la page sessions
-      return lessons.map((lesson) => ({
-        id: lesson.id,
-        title: lesson.title,
-        category: lesson.category,
-        level: lesson.level,
-        duration: `${lesson.duration} min`,
-        xp: lesson.xp,
-        completed: lesson.progress?.status === 'completed',
-        progress: lesson.progress?.status === 'completed'
-          ? 100
-          : lesson.progress?.status === 'in-progress'
-            ? Math.round((lesson.progress.currentSection / 5) * 100) // Estimation
-            : 0,
-        lastAccessed: lesson.progress?.lastAccessed,
-      }));
+        if (lessons.length > 0) {
+          return lessons.map((lesson) => ({
+            id: lesson.id,
+            title: lesson.title,
+            category: lesson.category,
+            level: lesson.level,
+            duration: `${lesson.duration} min`,
+            xp: lesson.xp,
+            completed: lesson.progress?.status === 'completed',
+            progress: lesson.progress?.status === 'completed'
+              ? 100
+              : lesson.progress?.status === 'in-progress'
+                ? Math.round((lesson.progress.currentSection / 5) * 100)
+                : 0,
+            lastAccessed: lesson.progress?.lastAccessed,
+          }));
+        }
+      } catch {
+        // Fallback below
+      }
+
+      // Fallback sur les données statiques
+      return LESSONS_DATA
+        .filter(l => (!category || l.category === category) && (!level || l.level === level))
+        .map(l => ({
+          id: l.id,
+          title: l.title,
+          category: l.category,
+          level: l.level,
+          duration: `${l.duration} min`,
+          xp: l.xp,
+          completed: l.progress?.status === 'completed' || false,
+          progress: l.progress?.status === 'completed'
+            ? 100
+            : l.progress?.status === 'in-progress'
+              ? Math.round(((l.progress?.currentSection ?? 0) / 5) * 100)
+              : 0,
+          lastAccessed: l.progress?.lastAccessed,
+        }));
     },
     staleTime: 1000 * 60 * 5,
   });

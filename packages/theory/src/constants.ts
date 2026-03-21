@@ -26,13 +26,30 @@ export const NOTE_FR: Record<string, string> = {
 
 /**
  * Accordage standard de la guitare (du plus grave au plus aigu)
+ * Utilisé pour les calculs de fretboard et positions d'accords
+ * Index: 0=E(low), 1=A, 2=D, 3=G, 4=B, 5=E(high)
  */
 export const GUITAR_TUNING: readonly NoteName[] = ['E', 'A', 'D', 'G', 'B', 'E'] as const;
 
 /**
  * Accordage de la guitare pour l'affichage (du plus aigu au plus grave)
+ * Utilisé pour l'affichage des diagrammes et vues utilisateur
+ * Ordre visuel: corde la plus aiguë à gauche, plus grave à droite
  */
 export const GUITAR_TUNING_DISPLAY: readonly NoteName[] = ['E', 'B', 'G', 'D', 'A', 'E'] as const;
+
+/**
+ * IMPORTANT: Convention de numérotation des cordes dans le code
+ *
+ * VoicingNote.string (types):
+ *   - 0 = E (aigu/high E)
+ *   - 5 = E (grave/low E)
+ *
+ * Diagramme d'affichage (ChordDiagram):
+ *   - string: 0 = E (basse/gauche), 5 = E (aigu/droite)
+ *
+ * Conversion: voicingString = 5 - diagramString
+ */
 
 // ============================================================================
 // DEGREE CHORD QUALITIES (ChordCalculator format)
@@ -76,13 +93,13 @@ export const MINOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
  * Note: Utilise string[] au lieu de ChordQuality[] pour inclure des variations UI non-standard
  */
 export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
-  'I': ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
-  'II': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'III': ['m', 'm7', 'm6', 'm9', 'madd9'],
-  'IV': ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
-  'V': ['7', '9', '11', '13', '7sus4', '13sus4'],
-  'VI': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'VII': ['m7b5', 'm7b5b9', 'm7b11'],
+  'I': ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13', 'sus2', 'add4', '5add9'],
+  'II': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4'],
+  'III': ['m', 'm7', 'm6', 'm9', 'madd9', '7', '7sus2', '7b9', 'add9'],
+  'IV': ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13'],
+  'V': ['7', '9', '11', '13', '7sus4', '13sus4', '7b9', '7#9', '7b13', '7#11', '7alt', '7b5'],
+  'VI': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4', '11', '6/9sus2', 'add9'],
+  'VII': ['m7b5', 'm7b5b9', 'm7b11', 'dim7', '7'],
 };
 
 /**
@@ -91,11 +108,11 @@ export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
  */
 export const MINOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
   'I': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'II': ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11'],
-  'III': ['', 'maj7', '6', 'add9'],
-  'IV': ['m', 'm7', 'm6', 'm9', 'm11'],
-  'V': ['7', '7alt', '7#11', '7#9'],
-  'VI': ['', 'maj7', '6', 'add9', '6add9'],
+  'II': ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11', '13'],
+  'III': ['', 'maj7', '6', 'add9', 'maj9'],
+  'IV': ['m', 'm7', 'm6', 'm9', 'm11', 'mMaj7', 'm6/9', 'add9', '6/9', '7sus4'],
+  'V': ['7', '7alt', '7#11', '7#9', '7b9', '7#5', '7b13', '7sus4', 'dim7'],
+  'VI': ['', 'maj7', '6', 'add9', '6add9', '9'],
   'VII': ['', '7', 'maj7'],
 };
 
@@ -104,5 +121,6 @@ export const MINOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
  */
 export const EXTENSION_QUALITIES: string[] = [
   'aug', 'aug7', 'dim', 'dim7', 'sus2', 'sus4', '7sus4',
-  '11', 'm11', '13', 'm13'
+  '9', 'm9', 'maj9', '11', 'm11', '13', 'm13', 'maj13',
+  '6', 'm6', '6/9', 'add9', 'add4', '7alt', '7b9', '7#9', '7b5', '7#5', '7#11', '7b13',
 ];

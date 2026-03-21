@@ -36,7 +36,7 @@ export const ACHIEVEMENT_RARITY_LABELS = {
   legendary: { label: 'Legendaire', color: 'text-blood', bg: 'bg-blood', border: 'border-blood' },
 } as const;
 
-// 20+ achievements definis
+// 20+ achievements definis - utilise des noms d'icônes SVG
 export const ACHIEVEMENTS_DATA: Achievement[] = [
   // === PROGRESSION ===
   {
@@ -48,7 +48,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 50,
     unlocked: true,
     unlockedAt: new Date('2024-01-15'),
-    icon: '🎸',
+    icon: 'guitar',
   },
   {
     id: 'streak-7',
@@ -59,7 +59,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 150,
     unlocked: true,
     unlockedAt: new Date('2024-01-22'),
-    icon: '🔥',
+    icon: 'fire',
   },
   {
     id: 'streak-30',
@@ -71,7 +71,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 12,
     maxProgress: 30,
-    icon: '⚡',
+    icon: 'bolt',
   },
   {
     id: 'xp-1000',
@@ -82,7 +82,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 100,
     unlocked: true,
     unlockedAt: new Date('2024-02-01'),
-    icon: '📊',
+    icon: 'chart',
   },
   {
     id: 'xp-10000',
@@ -94,7 +94,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 3420,
     maxProgress: 10000,
-    icon: '👑',
+    icon: 'crown',
   },
 
   // === DISCOVERY ===
@@ -108,7 +108,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 5,
     maxProgress: 7,
-    icon: '🗺️',
+    icon: 'map',
   },
   {
     id: 'discover-all-scales',
@@ -120,7 +120,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 6,
     maxProgress: 10,
-    icon: '🎼',
+    icon: 'music_sheet',
   },
   {
     id: 'circle-master',
@@ -131,7 +131,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 75,
     unlocked: true,
     unlockedAt: new Date('2024-01-20'),
-    icon: '⭕',
+    icon: 'circle',
   },
   {
     id: 'chord-library',
@@ -143,7 +143,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 23,
     maxProgress: 50,
-    icon: '📚',
+    icon: 'book',
   },
 
   // === PRACTICE ===
@@ -156,7 +156,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 50,
     unlocked: true,
     unlockedAt: new Date('2024-01-18'),
-    icon: '⏱️',
+    icon: 'timer',
   },
   {
     id: 'practice-10h-total',
@@ -167,7 +167,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 150,
     unlocked: true,
     unlockedAt: new Date('2024-02-10'),
-    icon: '🎯',
+    icon: 'target',
   },
   {
     id: 'practice-100h-total',
@@ -179,7 +179,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 47,
     maxProgress: 100,
-    icon: '💯',
+    icon: 'hundred',
   },
   {
     id: 'metronome-master',
@@ -189,7 +189,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'epic',
     xp: 400,
     unlocked: false,
-    icon: '🎵',
+    icon: 'music_note',
   },
 
   // === MASTERY ===
@@ -202,7 +202,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 250,
     unlocked: true,
     unlockedAt: new Date('2024-02-05'),
-    icon: '🧠',
+    icon: 'brain',
   },
   {
     id: 'ear-training-expert',
@@ -214,7 +214,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 70,
     maxProgress: 100,
-    icon: '👂',
+    icon: 'ear',
   },
   {
     id: 'sight-reading',
@@ -224,7 +224,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'rare',
     xp: 200,
     unlocked: false,
-    icon: '👀',
+    icon: 'eye',
   },
   {
     id: 'improvisation-master',
@@ -236,7 +236,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 4,
     maxProgress: 10,
-    icon: '🎹',
+    icon: 'piano',
   },
 
   // === SOCIAL ===
@@ -248,7 +248,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'common',
     xp: 50,
     unlocked: false,
-    icon: '📤',
+    icon: 'send',
   },
   {
     id: 'community-10',
@@ -260,7 +260,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 3,
     maxProgress: 10,
-    icon: '👥',
+    icon: 'people',
   },
   {
     id: 'mentor',
@@ -270,7 +270,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'epic',
     xp: 300,
     unlocked: false,
-    icon: '🤝',
+    icon: 'handshake',
   },
   {
     id: 'band-leader',
@@ -280,7 +280,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'legendary',
     xp: 800,
     unlocked: false,
-    icon: '🎤',
+    icon: 'mic',
   },
 
   // === MILESTONE ===
@@ -293,7 +293,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 100,
     unlocked: true,
     unlockedAt: new Date('2024-01-25'),
-    icon: '⭐',
+    icon: 'star',
   },
   {
     id: 'level-10',
@@ -305,7 +305,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 42,
     maxProgress: 100,
-    icon: '🌟',
+    icon: 'star_bright',
   },
   {
     id: 'level-25',
@@ -315,7 +315,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'epic',
     xp: 500,
     unlocked: false,
-    icon: '💎',
+    icon: 'gem',
   },
   {
     id: 'level-50',
@@ -325,7 +325,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     rarity: 'legendary',
     xp: 1500,
     unlocked: false,
-    icon: '🏆',
+    icon: 'trophy',
   },
   {
     id: 'all-beginner-lessons',
@@ -337,7 +337,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     unlocked: false,
     progress: 7,
     maxProgress: 12,
-    icon: '🏛️',
+    icon: 'temple',
   },
   {
     id: 'perfect-score',
@@ -348,6 +348,6 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     xp: 200,
     unlocked: true,
     unlockedAt: new Date('2024-02-15'),
-    icon: '💯',
+    icon: 'hundred',
   },
 ];

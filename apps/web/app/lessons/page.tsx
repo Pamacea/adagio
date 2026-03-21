@@ -255,7 +255,7 @@ export default function LessonsPage() {
             {sortedLessons.map(lesson => (
               <Link
                 key={lesson.id}
-                href={`/lessons/${lesson.id}`}
+                href={`/lessons/${lesson.slug || lesson.id}`}
                 className="block"
               >
                 <MetalCard hover className={`${isLessonCompleted(lesson) ? 'border-toxic' : ''} ${lesson.progress?.status === 'in-progress' ? 'border-rust' : ''}`}>

@@ -252,8 +252,8 @@ export function getIntervalInChord(chordRoot: NoteName, note: NoteName): Interva
     'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
   };
 
-  // Interval mapping by semitone difference (CORRIGÉ)
-  const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', 'bb7', 'b7', '7'];
+  // Interval mapping by semitone difference (12 elements = 12 semitones)
+  const intervals: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', 'b5', '5', '#5', 'b6', 'b7', '7'];
 
   const rootSemitone = semitones[chordRoot];
   const noteSemitone = semitones[note];

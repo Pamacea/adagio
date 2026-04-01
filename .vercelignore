@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+.next
+out
+build
+
+# Testing
+coverage
+playwright-report
+test-results
+
+# Development
+.vscode
+.idea
+*.log
+.env
+.env.*
+!.env.example
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+.tsbuildinfo
+
+# Documentation
+docs
+README.md
+CHANGELOG.md
+LICENSE

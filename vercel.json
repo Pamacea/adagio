@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm turbo run build --filter=@adagio/web... --filter=@adagio/api...",
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "outputDirectory": "apps/web/.next",
+  "git": {
+    "deployOnPush": {
+      "branches": ["main", "develop"]
+    }
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_API_URL": "/api/v1",
+      "DATABASE_URL": "@database_url",
+      "BETTER_AUTH_SECRET": "@better_auth_secret",
+      "BETTER_AUTH_URL": "@better_auth_url"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/api/docs",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/apps/web/$1"
+    }
+  ],
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ]
+}

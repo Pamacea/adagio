@@ -2,7 +2,6 @@
  * ADAGIO - Components Export
  */
 
-export { DashboardNav } from './dashboard-nav';
 export { MetalNav, LocalNav } from './MetalNav';
 export { MetalButton, MetalLink, ButtonGroup } from './MetalButton';
 export { MetalFooter, MetalFooterCompact } from './MetalFooter';

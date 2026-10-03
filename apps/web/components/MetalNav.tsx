@@ -9,31 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Icons } from './MetalIcons';
-
-interface NavItem {
-  label: string;
-  href: string;
-  icon: React.ComponentType<{ className?: string; size?: 'sm' | 'md' | 'lg' }>;
-}
-
-const mainNav: NavItem[] = [
-  { label: 'COMPOSE', href: '/compose', icon: Icons.Compose },
-  { label: 'ACCORDS', href: '/theory/chords', icon: Icons.Chords },
-  { label: 'NOTES', href: '/notes', icon: Icons.Notes },
-  { label: 'LEÇONS', href: '/lessons', icon: Icons.Lessons },
-  { label: 'TRIADES', href: '/theory/triades', icon: Icons.Triads },
-  { label: 'MODES', href: '/theory/modes', icon: Icons.Modes },
-  { label: 'GAMMES', href: '/theory/scales', icon: Icons.Scales },
-  { label: 'CERCLE', href: '/theory/circle', icon: Icons.Circle },
-  { label: 'MANCHE', href: '/fretboard', icon: Icons.Fretboard },
-  { label: 'NOTATION', href: '/notation', icon: Icons.Notation },
-];
-
-const bottomNav: NavItem[] = [
-  { label: 'WARNING', href: '/warning', icon: Icons.Warning },
-  { label: 'SESSIONS', href: '/sessions', icon: Icons.Sessions },
-  { label: 'PROFILE', href: '/profile', icon: Icons.User },
-];
+import { MAIN_NAV, ACCOUNT_NAV, type NavLink } from '@/lib/navigation';
 
 export function MetalNav() {
   const pathname = usePathname();
@@ -65,7 +41,7 @@ export function MetalNav() {
 
         {/* Navigation desktop */}
         <div className="hidden lg:flex items-center gap-0">
-          {mainNav.map((item) => (
+          {MAIN_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -79,7 +55,7 @@ export function MetalNav() {
 
         {/* User section desktop */}
         <div className="hidden lg:flex items-center gap-0">
-          {bottomNav.map((item) => (
+          {ACCOUNT_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -105,7 +81,7 @@ export function MetalNav() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t-2 border-steel bg-blackness">
           <div className="flex flex-col py-2">
-            {[...mainNav, ...bottomNav].map((item) => (
+            {[...MAIN_NAV, ...ACCOUNT_NAV].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -127,7 +103,7 @@ export function MetalNav() {
  * Navigation locale pour les pages avec sous-sections
  */
 interface LocalNavProps {
-  items: NavItem[];
+  items: NavLink[];
   title: string;
 }
 

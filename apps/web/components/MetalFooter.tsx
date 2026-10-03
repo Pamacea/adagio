@@ -4,6 +4,7 @@
  */
 
 import Link from 'next/link';
+import { MAIN_NAV, ACCOUNT_NAV } from '@/lib/navigation';
 
 export function MetalFooter() {
   return (
@@ -30,22 +31,16 @@ export function MetalFooter() {
               <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
                 Navigation
               </h4>
-              <div className="flex flex-col gap-1">
-                <Link href="/theory/modes" className="text-xs text-gray hover:text-white transition-colors">
-                  Modes Grecs
-                </Link>
-                <Link href="/theory/scales" className="text-xs text-gray hover:text-white transition-colors">
-                  Gammes
-                </Link>
-                <Link href="/theory/circle" className="text-xs text-gray hover:text-white transition-colors">
-                  Cercle des Quintes
-                </Link>
-                <Link href="/fretboard" className="text-xs text-gray hover:text-white transition-colors">
-                  Manche de Guitare
-                </Link>
-                <Link href="/notation" className="text-xs text-gray hover:text-white transition-colors">
-                  Notation
-                </Link>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                {MAIN_NAV.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-xs text-gray hover:text-white transition-colors"
+                  >
+                    {item.label.charAt(0) + item.label.slice(1).toLowerCase()}
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -55,12 +50,15 @@ export function MetalFooter() {
                 Compte
               </h4>
               <div className="flex flex-col gap-1">
-                <Link href="/sessions" className="text-xs text-gray hover:text-white transition-colors">
-                  Sessions
-                </Link>
-                <Link href="/profile" className="text-xs text-gray hover:text-white transition-colors">
-                  Profil
-                </Link>
+                {ACCOUNT_NAV.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-xs text-gray hover:text-white transition-colors"
+                  >
+                    {item.label.charAt(0) + item.label.slice(1).toLowerCase()}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

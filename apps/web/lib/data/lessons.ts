@@ -1,5 +1,8 @@
 // ============================================================================
-// LESSONS DATA - Fallback data for lessons page
+// LESSONS DATA - Catalogue de métadonnées des leçons (fallback API)
+// Rôle : liste /filtres de la page /lessons quand l'API est indisponible.
+// NE PAS confondre avec @adagio/theory > lessons-content (LESSONS_CONTENT) :
+// ce dernier contient le contenu interactif (blocs texte/démo/quiz/exercice).
 // ============================================================================
 
 export interface Lesson {
@@ -375,6 +378,19 @@ export const LESSONS_DATA: Lesson[] = [
     description: 'Les secrets des melodies qui accrochent. Motifs, repetition, variation.',
     topics: ['Motifs melodiques', 'Question-reponse', 'Contour melodique', 'Rythme de la melodie'],
     order: 19,
+    progress: null,
+  },
+  {
+    id: '20',
+    slug: 'maths-musique',
+    title: 'Les Maths de la Musique',
+    category: 'THEORY',
+    level: 'BEGINNER',
+    duration: 30,
+    xp: 100,
+    description: 'Comprenez les fondements mathematiques de la musique: frequences, intervalles et harmoniques.',
+    topics: ['Frequences', 'Ratios harmoniques', 'Serie harmonique', 'Temperament'],
+    order: 20,
     progress: null,
   },
 ];

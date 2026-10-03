@@ -11,7 +11,7 @@ import {
   parseChordName,
   getFrenchNoteName,
 } from '../chordCalculations';
-import type { NoteName, ChordQuality } from '@adagio/types';
+import type { NoteName, ChordQuality, ChordVoicing } from '@adagio/types';
 import { buildChord } from '@adagio/theory';
 
 describe('chordCalculations - getIntervalInChord', () => {
@@ -76,7 +76,7 @@ describe('chordCalculations - getIntervalInChord', () => {
 describe('chordCalculations - voicingToDiagramPositions', () => {
   it('should convert voicing to diagram positions correctly', () => {
     // Mock C major voicing at open position
-    const mockVoicing = {
+    const mockVoicing: ChordVoicing = {
       id: 'C-open',
       name: 'C',
       notes: [
@@ -109,7 +109,7 @@ describe('chordCalculations - voicingToDiagramPositions', () => {
   });
 
   it('should handle higher fret positions', () => {
-    const mockVoicing = {
+    const mockVoicing: ChordVoicing = {
       id: 'D-5',
       name: 'D',
       notes: [
@@ -238,7 +238,7 @@ describe('chordCalculations - Regression Tests', () => {
 
   it('BUG FIX: String numbering consistency', () => {
     // Vérifier la cohérence de la numérotation des cordes
-    const mockVoicing = {
+    const mockVoicing: ChordVoicing = {
       id: 'test',
       name: 'C',
       notes: [

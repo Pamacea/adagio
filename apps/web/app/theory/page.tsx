@@ -3,6 +3,7 @@
  */
 
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { ROUTES } from '@/lib/constants';
 import {
   Circle,
@@ -12,6 +13,11 @@ import {
   Sparkles,
   BookOpen,
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Théorie',
+  description: 'Hub théorie musicale : cercle des quintes, modes, progressions et concepts essentiels.',
+};
 
 const theoryCategories = [
   {
@@ -31,7 +37,7 @@ const theoryCategories = [
   {
     title: 'Chord Progressions',
     description: 'Analyze and understand common progressions',
-    href: ROUTES.PROGRESSIONS,
+    href: ROUTES.COMPOSE,
     icon: Guitar,
     color: 'bg-green-500/10 text-green-500',
   },
@@ -47,7 +53,7 @@ export default function TheoryPage() {
           <span className="text-sm font-medium text-primary">Music Theory</span>
         </div>
         <h1 className="text-3xl font-bold mb-2">Theory Hub</h1>
-        <p className="text-muted-foreground max-w-2xl">
+        <p className="text-muted-foreground">
           Explore the fundamental concepts of music theory through interactive visualizations
           and explanations.
         </p>

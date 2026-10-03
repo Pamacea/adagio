@@ -19,8 +19,6 @@ export const ROUTES = {
   LESSONS: '/lessons',
   ACHIEVEMENTS: '/achievements',
   PROFILE: '/profile',
-  GRIMOIRE: '/grimoire',
-  SETTINGS: '/settings',
   LOGIN: '/login',
   REGISTER: '/register',
 
@@ -29,5 +27,4 @@ export const ROUTES = {
   MODES: '/theory/modes',
   SCALES: '/theory/scales',
   CHORDS: '/theory/chords',
-  PROGRESSIONS: '/theory/progressions',
 } as const;

@@ -11,11 +11,7 @@ import { useState } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
 import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { DEGREE_COLORS } from '@adagio/theory';
-import {
-  CircleOfFifths,
-  ChordDisplay,
-  RelativeKey,
-} from '@/components/theory/circle';
+import { CircleOfFifths, ChordDisplay, RelativeKey } from '@/components/theory/circle';
 import { useCircleState } from '@/features/theory/hooks';
 
 export default function CirclePage() {
@@ -47,11 +43,12 @@ export default function CirclePage() {
                 <HelpButton topicId="circle.fifths" useModal size="md" variant="subtle" />
               </HelpTooltip>
             </div>
-            <p className="text-xs text-gray uppercase tracking-widest">
-              Cercle des Quintes
-            </p>
+            <p className="text-xs text-gray uppercase tracking-widest">Cercle des Quintes</p>
             <p className="text-sm text-gray-300 mt-2">
-              Tonique: <span className="font-bold" style={{ color: tonicColor }}>{selectedKey}</span>
+              Tonique:{' '}
+              <span className="font-bold" style={{ color: tonicColor }}>
+                {selectedKey}
+              </span>
             </p>
           </div>
 
@@ -64,10 +61,7 @@ export default function CirclePage() {
           />
 
           {/* Accords diatoniques */}
-          <ChordDisplay
-            chords={circleData.chords}
-            label={`${selectedKey} - ACCORDS`}
-          />
+          <ChordDisplay chords={circleData.chords} label={`${selectedKey} - ACCORDS`} />
 
           {/* Tonalité relative */}
           <RelativeKey

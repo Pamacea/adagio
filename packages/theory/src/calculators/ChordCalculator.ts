@@ -25,26 +25,26 @@ import {
  * Fonction harmonique de chaque degré
  */
 export const DEGREE_FUNCTIONS: Record<string, ChordFunction> = {
-  'I': 'tonic',
-  'i': 'tonic',
-  'II': 'subdominant',
-  'ii': 'subdominant',
-  'III': 'tonic',
-  'iii': 'tonic',
-  'IV': 'subdominant',
-  'iv': 'subdominant',
-  'V': 'dominant',
-  'v': 'dominant',
-  'VI': 'tonic',
-  'vi': 'tonic',
-  'VII': 'dominant',
-  'vii': 'dominant',
-  'bII': 'substitute-dominant',
-  'bIII': 'modal-interchange',
-  'bIV': 'modal-interchange',
-  'bV': 'modal-interchange',
-  'bVI': 'modal-interchange',
-  'bVII': 'modal-interchange',
+  I: 'tonic',
+  i: 'tonic',
+  II: 'subdominant',
+  ii: 'subdominant',
+  III: 'tonic',
+  iii: 'tonic',
+  IV: 'subdominant',
+  iv: 'subdominant',
+  V: 'dominant',
+  v: 'dominant',
+  VI: 'tonic',
+  vi: 'tonic',
+  VII: 'dominant',
+  vii: 'dominant',
+  bII: 'substitute-dominant',
+  bIII: 'modal-interchange',
+  bIV: 'modal-interchange',
+  bV: 'modal-interchange',
+  bVI: 'modal-interchange',
+  bVII: 'modal-interchange',
   '#IV': 'modal-interchange',
 };
 
@@ -62,11 +62,11 @@ function getNoteIndex(note: NoteName): number {
 
   // Gérer les bémols - conversion enharmonique
   const flatToSharp: Record<string, number> = {
-    'Db': 1,  // C#
-    'Eb': 3,  // D#
-    'Gb': 6,  // F#
-    'Ab': 8,  // G#
-    'Bb': 10, // A#
+    Db: 1, // C#
+    Eb: 3, // D#
+    Gb: 6, // F#
+    Ab: 8, // G#
+    Bb: 10, // A#
   };
   return flatToSharp[note] ?? 0;
 }
@@ -78,7 +78,7 @@ function getNoteIndex(note: NoteName): number {
  */
 export function transposeNote(note: NoteName, semitones: number): NoteName {
   const index = getNoteIndex(note);
-  const newIndex = ((index + semitones) % 12 + 12) % 12;
+  const newIndex = (((index + semitones) % 12) + 12) % 12;
   return CHROMATIC_SCALE[newIndex] as NoteName;
 }
 
@@ -115,7 +115,7 @@ function getMajorScaleNotes(root: NoteName): NoteName[] {
   const majorIntervals = [0, 2, 4, 5, 7, 9, 11]; // T T S T T T S
   const rootIndex = getNoteIndex(root);
 
-  return majorIntervals.map(interval => {
+  return majorIntervals.map((interval) => {
     const noteIndex = (rootIndex + interval) % 12;
     return CHROMATIC_SCALE[noteIndex] as NoteName;
   });
@@ -128,7 +128,7 @@ function getMinorScaleNotes(root: NoteName): NoteName[] {
   const minorIntervals = [0, 2, 3, 5, 7, 8, 10]; // T S T T S T T
   const rootIndex = getNoteIndex(root);
 
-  return minorIntervals.map(interval => {
+  return minorIntervals.map((interval) => {
     const noteIndex = (rootIndex + interval) % 12;
     return CHROMATIC_SCALE[noteIndex] as NoteName;
   });
@@ -141,37 +141,41 @@ function getMinorScaleNotes(root: NoteName): NoteName[] {
 /**
  * Construire un accord à partir de sa fondamentale et sa qualité
  */
-export function buildChord(root: NoteName, quality: ChordQuality, extensions?: Interval[]): NoteName[] {
+export function buildChord(
+  root: NoteName,
+  quality: ChordQuality,
+  extensions?: Interval[]
+): NoteName[] {
   const qualityIntervals: Record<ChordQuality, Interval[]> = {
     '': ['1', '3', '5'],
-    'm': ['1', 'b3', '5'],
+    m: ['1', 'b3', '5'],
     '7': ['1', '3', '5', 'b7'],
-    'm7': ['1', 'b3', '5', 'b7'],
-    'maj7': ['1', '3', '5', '7'],
-    'dim': ['1', 'b3', 'b5'],
-    'dim7': ['1', 'b3', 'b5', 'bb7'],
-    'm7b5': ['1', 'b3', 'b5', 'b7'],
-    'aug': ['1', '3', '#5'],
-    'aug7': ['1', '3', '#5', 'b7'],
-    'sus2': ['1', '2', '5'],
-    'sus4': ['1', '4', '5'],
+    m7: ['1', 'b3', '5', 'b7'],
+    maj7: ['1', '3', '5', '7'],
+    dim: ['1', 'b3', 'b5'],
+    dim7: ['1', 'b3', 'b5', 'bb7'],
+    m7b5: ['1', 'b3', 'b5', 'b7'],
+    aug: ['1', '3', '#5'],
+    aug7: ['1', '3', '#5', 'b7'],
+    sus2: ['1', '2', '5'],
+    sus4: ['1', '4', '5'],
     '7sus4': ['1', '4', '5', 'b7'],
     '6': ['1', '3', '5', '6'],
-    'm6': ['1', 'b3', '5', '6'],
+    m6: ['1', 'b3', '5', '6'],
     '9': ['1', '3', '5', 'b7', '9'],
-    'm9': ['1', 'b3', '5', 'b7', '9'],
+    m9: ['1', 'b3', '5', 'b7', '9'],
     '11': ['1', '3', '5', 'b7', '9', '11'],
-    'm11': ['1', 'b3', '5', 'b7', '9', '11'],
+    m11: ['1', 'b3', '5', 'b7', '9', '11'],
     '13': ['1', '3', '5', 'b7', '9', '11', '13'],
-    'm13': ['1', 'b3', '5', 'b7', '9', '11', '13'],
-    'add9': ['1', '3', '5', '9'],
-    'madd9': ['1', 'b3', '5', '9'],
-    'maj9': ['1', '3', '5', '7', '9'],
-    'maj13': ['1', '3', '5', '7', '9', '13'],
+    m13: ['1', 'b3', '5', 'b7', '9', '11', '13'],
+    add9: ['1', '3', '5', '9'],
+    madd9: ['1', 'b3', '5', '9'],
+    maj9: ['1', '3', '5', '7', '9'],
+    maj13: ['1', '3', '5', '7', '9', '13'],
     '6add9': ['1', '3', '5', '6', '9'],
     '6/9': ['1', '3', '5', '6', '9'],
     'm6/9': ['1', 'b3', '5', '6', '9'],
-    'add4': ['1', '3', '4', '5'],
+    add4: ['1', '3', '4', '5'],
     '5add9': ['1', '5', '9'],
     '7alt': ['1', '3', 'b5', 'b7', '#9'],
     '7b9': ['1', '3', '5', 'b7', 'b9'],
@@ -182,16 +186,16 @@ export function buildChord(root: NoteName, quality: ChordQuality, extensions?: I
     '7b13': ['1', '3', '5', 'b7', 'b13'],
     '13sus4': ['1', '4', '5', 'b7', '13'],
     '7sus2': ['1', '2', '5', 'b7'],
-    'mMaj7': ['1', 'b3', '5', '7'],
-    'm7b5b9': ['1', 'b3', 'b5', 'b7', 'b9'],
-    'm7b5b11': ['1', 'b3', 'b5', 'b7', '11'],
-    'm7b11': ['1', 'b3', '5', 'b7', '11'],
+    mMaj7: ['1', 'b3', '5', '7'],
+    m7b5b9: ['1', 'b3', 'b5', 'b7', 'b9'],
+    m7b5b11: ['1', 'b3', 'b5', 'b7', '11'],
+    m7b11: ['1', 'b3', '5', 'b7', '11'],
   };
 
   const base = qualityIntervals[quality] || qualityIntervals[''];
   const allIntervals = [...base, ...(extensions || [])];
 
-  return allIntervals.map(interval => {
+  return allIntervals.map((interval) => {
     const semitones = INTERVAL_SEMITONES[interval];
     return transposeNote(root, semitones);
   });
@@ -200,7 +204,11 @@ export function buildChord(root: NoteName, quality: ChordQuality, extensions?: I
 /**
  * Obtenir le nom complet d'un accord
  */
-export function getChordName(root: NoteName, quality: ChordQuality, extensions?: Interval[]): string {
+export function getChordName(
+  root: NoteName,
+  quality: ChordQuality,
+  extensions?: Interval[]
+): string {
   const ext = extensions && extensions.length > 0 ? extensions.join('/') : '';
   return `${root}${quality}${ext ? '(' + ext + ')' : ''}`;
 }
@@ -212,7 +220,11 @@ export function getChordName(root: NoteName, quality: ChordQuality, extensions?:
 /**
  * Obtenir la note racine d'un degré dans une tonalité
  */
-export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'major' | 'minor'): NoteName {
+export function getDegreeNote(
+  key: NoteName,
+  degree: ChordDegree,
+  tonality: 'major' | 'minor'
+): NoteName {
   const scaleNotes = tonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
 
   // Gérer les altérations (b, #) : abaissent/haussent la note DU degré d'un demi-ton
@@ -221,7 +233,13 @@ export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'maj
   const alteration = degree.startsWith('b') ? -1 : degree.startsWith('#') ? 1 : 0;
 
   const degreeIndexMap: Record<string, number> = {
-    'I': 0, 'II': 1, 'III': 2, 'IV': 3, 'V': 4, 'VI': 5, 'VII': 6,
+    I: 0,
+    II: 1,
+    III: 2,
+    IV: 3,
+    V: 4,
+    VI: 5,
+    VII: 6,
   };
 
   const index = degreeIndexMap[baseDegree] ?? 0;
@@ -234,7 +252,11 @@ export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'maj
   if (alteration === -1) {
     // Nommer en bémol quand la transposition donne un dièse (D-1 = C# → Db)
     const toFlat: Partial<Record<NoteName, NoteName>> = {
-      'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb',
+      'C#': 'Db',
+      'D#': 'Eb',
+      'F#': 'Gb',
+      'G#': 'Ab',
+      'A#': 'Bb',
     };
     return toFlat[altered] ?? altered;
   }
@@ -246,14 +268,18 @@ export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'maj
  * Obtenir les accords diatoniques pour chaque degré d'une tonalité
  * Renommée pour éviter le conflit avec chord-mapping.ts
  */
-export function getDiatonicChordsByDegree(key: NoteName, tonality: 'major' | 'minor'): DegreeChords[] {
+export function getDiatonicChordsByDegree(
+  key: NoteName,
+  tonality: 'major' | 'minor'
+): DegreeChords[] {
   const qualities = tonality === 'major' ? MAJOR_DEGREE_QUALITIES : MINOR_DEGREE_QUALITIES;
 
-  const degrees: ChordDegree[] = tonality === 'major'
-    ? ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
-    : ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+  const degrees: ChordDegree[] =
+    tonality === 'major'
+      ? ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
+      : ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 
-  return degrees.map(degree => {
+  return degrees.map((degree) => {
     const rootNote = getDegreeNote(key, degree, tonality);
     const baseQuality = qualities[degree];
     const chordFunction = DEGREE_FUNCTIONS[degree] || 'tonic';
@@ -288,29 +314,40 @@ export function getDiatonicChordsByDegree(key: NoteName, tonality: 'major' | 'mi
 /**
  * Obtenir les dominants secondaires pour une tonalité
  */
-export function getSecondaryDominants(key: NoteName, tonality: 'major' | 'minor'): Record<string, string[]> {
+export function getSecondaryDominants(
+  key: NoteName,
+  tonality: 'major' | 'minor'
+): Record<string, string[]> {
   const scaleNotes = tonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
   const secondaryDominants: Record<string, string[]> = {};
 
   // Pour chaque degré diatonique
-  const targetDegrees = tonality === 'major'
-    ? ['I', 'II', 'III', 'IV', 'V', 'VI']
-    : ['I', 'III', 'IV', 'V', 'VI', 'VII'];
+  const targetDegrees =
+    tonality === 'major'
+      ? ['I', 'II', 'III', 'IV', 'V', 'VI']
+      : ['I', 'III', 'IV', 'V', 'VI', 'VII'];
 
-  targetDegrees.forEach(targetDeg => {
-    const degreeNum = targetDeg === 'I' ? 0
-      : targetDeg === 'II' ? 1
-      : targetDeg === 'III' ? 2
-      : targetDeg === 'IV' ? 3
-      : targetDeg === 'V' ? 4
-      : targetDeg === 'VI' ? 5
-      : 6;
+  targetDegrees.forEach((targetDeg) => {
+    const degreeNum =
+      targetDeg === 'I'
+        ? 0
+        : targetDeg === 'II'
+          ? 1
+          : targetDeg === 'III'
+            ? 2
+            : targetDeg === 'IV'
+              ? 3
+              : targetDeg === 'V'
+                ? 4
+                : targetDeg === 'VI'
+                  ? 5
+                  : 6;
 
     const targetNote = scaleNotes[degreeNum] ?? key;
     // Le dominant est une quinte au-dessus (7 demi-tons)
     const dominantRoot = transposeNote(targetNote, 7);
     secondaryDominants[targetDeg] = [
-      `${dominantRoot}7`,  // V7/x
+      `${dominantRoot}7`, // V7/x
       `${dominantRoot}7b9`, // V7b9/x (plus coloré)
     ];
   });
@@ -323,7 +360,8 @@ export function getSecondaryDominants(key: NoteName, tonality: 'major' | 'minor'
  */
 export function getModalInterchangeChords(key: NoteName, tonality: 'major' | 'minor'): string[] {
   const parallelTonality = tonality === 'major' ? 'minor' : 'major';
-  const parallelScale = parallelTonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
+  const parallelScale =
+    parallelTonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
 
   const chords: string[] = [];
 
@@ -354,7 +392,11 @@ export function getModalInterchangeChords(key: NoteName, tonality: 'major' | 'mi
 /**
  * Analyser la fonction harmonique d'un accord dans une tonalité
  */
-export function analyzeChordFunction(chordRoot: NoteName, key: NoteName, tonality: 'major' | 'minor'): ChordFunction {
+export function analyzeChordFunction(
+  chordRoot: NoteName,
+  key: NoteName,
+  tonality: 'major' | 'minor'
+): ChordFunction {
   const scaleNotes = tonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
   const chordIndex = scaleNotes.indexOf(chordRoot);
 
@@ -377,7 +419,9 @@ export function analyzeChordFunction(chordRoot: NoteName, key: NoteName, tonalit
 /**
  * Obtenir la tension d'un accord
  */
-export function getChordTension(quality: ChordQuality): 'stable' | 'tense' | 'dissonant' | 'ambiguous' {
+export function getChordTension(
+  quality: ChordQuality
+): 'stable' | 'tense' | 'dissonant' | 'ambiguous' {
   const stable: ChordQuality[] = ['', 'm', '6', 'm6', 'add9', 'madd9'];
   const tense: ChordQuality[] = ['7', 'm7', '9', 'm9', '13', 'm13', 'sus2', 'sus4'];
   const dissonant: ChordQuality[] = ['dim', 'dim7', 'm7b5', 'aug'];
@@ -396,7 +440,14 @@ export function getTendencyTones(chordRoot: NoteName, quality: ChordQuality): No
   const tendencyNotes: NoteName[] = [];
 
   // La 7ème et la 4ème créent des tensions
-  if (quality === '7' || quality === '9' || quality === '13' || quality === 'm7' || quality === 'm9' || quality === 'm13') {
+  if (
+    quality === '7' ||
+    quality === '9' ||
+    quality === '13' ||
+    quality === 'm7' ||
+    quality === 'm9' ||
+    quality === 'm13'
+  ) {
     tendencyNotes.push(transposeNote(chordRoot, 10)); // b7
   }
   if (quality === 'maj7' || quality === '9') {
@@ -473,8 +524,8 @@ export function getChordVoicings(
 
     // Vérifier que le voicing contient toutes les notes distinctes de l'accord
     // (pas seulement 3 notes quelconques - sinon C6 ressemble à C majeur)
-    const uniqueNotesInVoicing = new Set(voicingNotes.map(n => n.note));
-    const hasAllChordNotes = chordNotes.every(n => uniqueNotesInVoicing.has(n));
+    const uniqueNotesInVoicing = new Set(voicingNotes.map((n) => n.note));
+    const hasAllChordNotes = chordNotes.every((n) => uniqueNotesInVoicing.has(n));
 
     // Accepter si toutes les notes sont présentes, ou au moins 3 notes pour les triades
     const isValid = hasAllChordNotes || (chordNotes.length <= 3 && voicingNotes.length >= 3);
@@ -483,7 +534,7 @@ export function getChordVoicings(
       // Dédupliquer : créer une empreinte basée sur les frettes jouées par corde
       const fingerprint = voicingNotes
         .sort((a, b) => b.string - a.string)
-        .map(n => `${n.string}:${n.fret}`)
+        .map((n) => `${n.string}:${n.fret}`)
         .join('|');
 
       if (!seenFingerprints.has(fingerprint)) {
@@ -510,10 +561,11 @@ export function getChordVoicings(
 function getIntervalInChord(root: NoteName, note: NoteName, quality: ChordQuality): Interval {
   const rootIndex = getNoteIndex(root);
   const noteIndex = getNoteIndex(note);
-  const semitones = ((noteIndex - rootIndex) + 12) % 12;
+  const semitones = (noteIndex - rootIndex + 12) % 12;
 
   // Selon la qualité de l'accord, 6 et 9 demi-tons se nomment autrement
-  if (semitones === 6 && (quality === 'dim' || quality === 'dim7' || quality === 'm7b5')) return 'b5';
+  if (semitones === 6 && (quality === 'dim' || quality === 'dim7' || quality === 'm7b5'))
+    return 'b5';
   if (semitones === 9 && (quality === 'aug' || quality === 'aug7')) return '#5';
 
   // Mapping complet demi-tons → intervalles
@@ -542,7 +594,9 @@ function getIntervalInChord(root: NoteName, note: NoteName, quality: ChordQualit
 /**
  * Obtenir la forme CAGED d'un accord
  */
-export function getCAGEDShape(chordRoot: NoteName): { shape: 'C' | 'A' | 'G' | 'E' | 'D'; rootFret: number }[] {
+export function getCAGEDShape(
+  chordRoot: NoteName
+): { shape: 'C' | 'A' | 'G' | 'E' | 'D'; rootFret: number }[] {
   // Positions racines pour chaque forme CAGED
   const cagedSystem = [
     { shape: 'C' as const, rootNotes: ['C', 'F', 'Bb', 'Eb', 'G#'], startFret: 0 },
@@ -643,7 +697,7 @@ export function getCommonProgressions(tonality: 'major' | 'minor') {
  */
 function getDegreeAdvice(degree: ChordDegree, tonality: 'major' | 'minor'): string {
   const advices: Record<string, string> = {
-    'I-major': 'Tonique - stabilité, repos, point de départ et d\'arrivée.',
+    'I-major': "Tonique - stabilité, repos, point de départ et d'arrivée.",
     'II-major': 'Prédominant - prépare le V, mouvement doux.',
     'III-major': 'Tonique faible - peut remplacer le I, couleur mineure.',
     'IV-major': 'Sous-dominant - départ, éloignement de la tonique.',
@@ -669,7 +723,7 @@ export function getKeyChordLibrary(key: NoteName, tonality: 'major' | 'minor'): 
   const degrees = getDiatonicChordsByDegree(key, tonality);
   const degreeMap: Record<ChordDegree, DegreeChords> = {} as Record<ChordDegree, DegreeChords>;
 
-  degrees.forEach(d => {
+  degrees.forEach((d) => {
     degreeMap[d.degree as ChordDegree] = {
       ...d,
       secondaryDominants: getSecondaryDominants(key, tonality)[d.degree],

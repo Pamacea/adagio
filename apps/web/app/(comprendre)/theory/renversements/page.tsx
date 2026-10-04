@@ -53,8 +53,8 @@ export default function RenversementsPage() {
             </h2>
             <ul className="text-sm text-gray-300 space-y-2">
               <li>
-                <span className="text-white font-bold">Fondamentale en bas</span> → l’accord
-                « sonne » comme indiqué (I, IV, V…)
+                <span className="text-white font-bold">Fondamentale en bas</span> → l’accord « sonne
+                » comme indiqué (I, IV, V…)
               </li>
               <li>
                 <span className="text-white font-bold">3è en bas</span> → sixte (6) : plus doux,

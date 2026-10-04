@@ -44,10 +44,7 @@ export function FretboardLegend() {
       {LEGEND_ITEMS.map(({ id, title, description, borderColor, bgColor }) => (
         <div key={id} className="section-frame p-4">
           <div className="flex items-center gap-3 mb-2">
-            <div
-              className={`w-4 h-4 border-2 ${borderColor} ${bgColor}`}
-              aria-hidden="true"
-            />
+            <div className={`w-4 h-4 border-2 ${borderColor} ${bgColor}`} aria-hidden="true" />
             <p className="text-sm text-white font-bold">{title}</p>
           </div>
           <p className="text-xs text-gray">{description}</p>

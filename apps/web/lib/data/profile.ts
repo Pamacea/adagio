@@ -56,12 +56,42 @@ export const USER_STATS_DATA: UserStats[] = [
 
 // Accomplissements - utilise des noms d'icônes SVG
 export const USER_ACHIEVEMENTS_DATA: UserAchievement[] = [
-  { id: 1, title: 'Premier Riff', description: 'Completez votre premiere session', unlocked: true, icon: 'guitar' },
-  { id: 2, title: 'Theoricien', description: 'Maitrisez les 7 modes grecs', unlocked: true, icon: 'book' },
-  { id: 3, title: 'Circle Master', description: 'Naviguez le cercle des quintes', unlocked: true, icon: 'circle' },
-  { id: 4, title: 'Fretboard Explorer', description: 'Decouvrez toutes les positions', unlocked: false, icon: 'map' },
+  {
+    id: 1,
+    title: 'Premier Riff',
+    description: 'Completez votre premiere session',
+    unlocked: true,
+    icon: 'guitar',
+  },
+  {
+    id: 2,
+    title: 'Theoricien',
+    description: 'Maitrisez les 7 modes grecs',
+    unlocked: true,
+    icon: 'book',
+  },
+  {
+    id: 3,
+    title: 'Circle Master',
+    description: 'Naviguez le cercle des quintes',
+    unlocked: true,
+    icon: 'circle',
+  },
+  {
+    id: 4,
+    title: 'Fretboard Explorer',
+    description: 'Decouvrez toutes les positions',
+    unlocked: false,
+    icon: 'map',
+  },
   { id: 5, title: 'Jazz Cat', description: 'Maitrisez le ii-V-I', unlocked: false, icon: 'jazz' },
-  { id: 6, title: 'Metal God', description: 'Atteignez le niveau maximum', unlocked: false, icon: 'metal' },
+  {
+    id: 6,
+    title: 'Metal God',
+    description: 'Atteignez le niveau maximum',
+    unlocked: false,
+    icon: 'metal',
+  },
 ];
 
 // Preferences disponibles (fallback data)

@@ -54,10 +54,7 @@ export default function ExtensionsPage() {
           {/* Principes */}
           <div className="grid gap-4 md:grid-cols-3 mb-8">
             {PRINCIPES.map((p) => (
-              <div
-                key={p.titre}
-                className="border-2 border-steel/30 bg-blackness/80 p-5"
-              >
+              <div key={p.titre} className="border-2 border-steel/30 bg-blackness/80 p-5">
                 <h2 className="text-sm font-metal text-toxic uppercase tracking-tight mb-2">
                   {p.titre}
                 </h2>

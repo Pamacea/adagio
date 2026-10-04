@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Query,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AchievementsService } from './achievements.service';
@@ -20,10 +12,7 @@ export class AchievementsController {
   @ApiOperation({ summary: 'Get all achievements' })
   @ApiQuery({ name: 'category', required: false })
   @ApiQuery({ name: 'rarity', required: false })
-  async getAchievements(
-    @Query('category') category?: string,
-    @Query('rarity') rarity?: string,
-  ) {
+  async getAchievements(@Query('category') category?: string, @Query('rarity') rarity?: string) {
     return this.achievementsService.getAchievements(category, rarity);
   }
 
@@ -44,10 +33,7 @@ export class AchievementsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get current user achievements' })
   @ApiQuery({ name: 'category', required: false })
-  async getUserAchievements(
-    @Request() req,
-    @Query('category') category?: string,
-  ) {
+  async getUserAchievements(@Request() req, @Query('category') category?: string) {
     return this.achievementsService.getUserAchievements(req.user.userId, category);
   }
 
@@ -81,15 +67,7 @@ export class AchievementsController {
   @ApiOperation({ summary: 'Update achievement progress' })
   @ApiParam({ name: 'id', example: 'clxxx...' })
   @ApiQuery({ name: 'delta', required: true, example: '1' })
-  async updateProgress(
-    @Request() req,
-    @Param('id') id: string,
-    @Query('delta') delta: string,
-  ) {
-    return this.achievementsService.updateProgress(
-      req.user.userId,
-      id,
-      parseInt(delta, 10) || 1,
-    );
+  async updateProgress(@Request() req, @Param('id') id: string, @Query('delta') delta: string) {
+    return this.achievementsService.updateProgress(req.user.userId, id, parseInt(delta, 10) || 1);
   }
 }

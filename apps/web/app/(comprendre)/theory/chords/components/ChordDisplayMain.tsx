@@ -56,7 +56,11 @@ export function ChordDisplayMain({
   className,
 }: ChordDisplayMainProps) {
   if (!chordToDisplay || chordToDisplay.notes.length === 0) {
-    return <div className={className}><EmptyState /></div>;
+    return (
+      <div className={className}>
+        <EmptyState />
+      </div>
+    );
   }
 
   return (

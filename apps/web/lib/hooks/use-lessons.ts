@@ -14,9 +14,7 @@ import { type Lesson, LESSONS_DATA } from '../data';
 export function useLessons() {
   const query = useLessonsQuery();
 
-  const data = (query.data && query.data.length > 0)
-    ? query.data as Lesson[]
-    : LESSONS_DATA;
+  const data = query.data && query.data.length > 0 ? (query.data as Lesson[]) : LESSONS_DATA;
 
   return {
     ...query,

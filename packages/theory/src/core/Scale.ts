@@ -34,7 +34,7 @@ export class Scale {
    */
   contains(note: Note): boolean {
     const scaleNotes = this.getNotes(note.octave);
-    return scaleNotes.some(scaleNote => scaleNote.equals(note));
+    return scaleNotes.some((scaleNote) => scaleNote.equals(note));
   }
 
   /**

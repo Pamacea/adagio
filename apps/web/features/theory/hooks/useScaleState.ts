@@ -9,15 +9,26 @@ import type { NoteName } from '@adagio/types';
 
 // Import ScaleType from @adagio/theory data
 type ScaleType =
-  | 'major' | 'minor'
-  | 'harmonicMajor' | 'harmonicMinor'
-  | 'melodicMajor' | 'melodicMinor'
-  | 'pentatonicMajor' | 'pentatonicMinor'
+  | 'major'
+  | 'minor'
+  | 'harmonicMajor'
+  | 'harmonicMinor'
+  | 'melodicMajor'
+  | 'melodicMinor'
+  | 'pentatonicMajor'
+  | 'pentatonicMinor'
   | 'blues'
-  | 'dorian' | 'phrygian' | 'lydian' | 'mixolydian' | 'locrian'
-  | 'napolitanMajor' | 'napolitanMinor'
-  | 'augmentedMajor' | 'augmentedMinor'
-  | 'wholeTone' | 'diminished'
+  | 'dorian'
+  | 'phrygian'
+  | 'lydian'
+  | 'mixolydian'
+  | 'locrian'
+  | 'napolitanMajor'
+  | 'napolitanMinor'
+  | 'augmentedMajor'
+  | 'augmentedMinor'
+  | 'wholeTone'
+  | 'diminished'
   | 'chromatic';
 
 export interface ScaleState {
@@ -65,7 +76,7 @@ export function useScaleState(options: UseScaleStateOptions = {}): UseScaleState
   const [showAllNotes, setShowAllNotes] = useState(initialShowAllNotes);
 
   const toggleShowAllNotes = () => {
-    setShowAllNotes(prev => !prev);
+    setShowAllNotes((prev) => !prev);
   };
 
   return {

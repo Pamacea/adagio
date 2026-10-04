@@ -179,7 +179,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
           ],
           [
             "Triades Augmentées",
-            "F – 3 – 5♯",
+            "F – 3 – ♯5",
             "♯5",
             "—",
             "—"
@@ -216,7 +216,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "cf."
           ],
           [
-            "2è renversement",
+            "2e renversement",
             "5–T–3 ou 5–3–T",
             "Accord de sixte et quarte (6/4)",
             "—"
@@ -329,7 +329,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "Diminuée(2POS)",
             "⭕",
             "—",
-            "T – T – S – T – T – T – S",
+            "T – S – T – S – T – S – T – S",
             "cf."
           ],
           [
@@ -384,7 +384,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "Mineur 7 ♭5",
             "⭕",
             "—",
-            "1 ♭3 ♭5 7",
+            "1 ♭3 ♭5 ♭7",
             "cf."
           ],
           [
@@ -460,7 +460,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
           [
             "Suspendu",
             "⭕",
-            "Les accords SUS sont des accords à 3 notes, dans lesquels la tierce a été remplacée par une autre note(seconde ou quarte).",
+            "Les accords SUS sont des accords à 3 notes, dans lesquels la tierce a été remplacée par une autre note (seconde ou quarte).",
             "1 2 5 | 1 4 5",
             "cf."
           ],
@@ -481,7 +481,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
           [
             "Aug",
             "⭕",
-            "triade avec quinte augmenté",
+            "triade avec quinte augmentée",
             "1 – 3 – #5 1 – 5  ou  1 – 3 – #5 – 1",
             "cf."
           ],
@@ -565,7 +565,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "(I – III – VI)",
             "(II – IV)",
             "(V – VII)",
-            "(I - VI)",
+            "(I – VI)",
             ""
           ],
           [
@@ -678,7 +678,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "II7sus4(add9)",
             "VII7",
             "bIIImaj9",
-            "Imaj / IV est une superposition de deux accords. On peut superposer deux accords pour former un superposition."
+            "Imaj / IV est une superposition de deux accords. On peut superposer deux accords pour former une superposition."
           ],
           [
             "III7b9",
@@ -719,7 +719,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "VI11",
             "IVm / bVI",
             "",
-            "Isus2 -> I",
+            "Isus2 → I",
             ""
           ],
           [
@@ -911,7 +911,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "cf."
           ],
           [
-            "Harmoniques artificielles(pinch)",
+            "Harmoniques artificielles (pinch)",
             "⭕",
             "– générées avec le pouce du médiator (sons aigus, criards).",
             "—",
@@ -1409,7 +1409,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "Pentatonique majeure",
             "Même positions que la pentatonique mineure, seule la tonique change.",
             "Extensions",
-            "2/4/6 équivalent à 9/11/13."
+            "2/4/6 équivalents à 9/11/13."
           ],
           [
             "Modes relatifs",
@@ -1467,7 +1467,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
           ],
           [
             "Substitution tritonique",
-            "Deux accords 7e distants d’un triton(trois ton au dessus ou dessous)",
+            "Deux accords 7e distants d’un triton (trois tons au-dessus ou au-dessous)",
             "Tonalité via penta",
             "Penta donne la relative."
           ],
@@ -1481,7 +1481,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
             "Substitution fonctionnelle",
             "Tonique : Cmaj7 ↔ Am7, etc.",
             "Choisir la gamme en impro",
-            "Si l'accord est majeure, jouer la penta majeure de l'accord. Et inversement."
+            "Si l'accord est majeur, jouer la penta majeure de l'accord. Et inversement."
           ],
           [
             "Accords 7e",
@@ -1527,7 +1527,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
           ],
           [
             "Retrouvez les triades d'une tonalité",
-            "Vous pouvez former des triades à partir d'une tonalité.. I -> 1 - 3 - 5; II -> 2 - 4 - 6...",
+            "Vous pouvez former des triades à partir d'une tonalité. I -> 1 - 3 - 5; II -> 2 - 4 - 6...",
             "—",
             "—"
           ],
@@ -1564,7 +1564,7 @@ export const SHEET_CONTENT: Record<SheetTabId, SheetTabData> = {
         "headers": [],
         "rows": [
           [
-            "1(Majeur) : Etre content à la maison.",
+            "1(Majeur) : Être content à la maison.",
             "4(Majeur) : Partir à l'aventure.",
             "5(Majeur) : Le besoin de revenir à la maison"
           ],

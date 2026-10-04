@@ -117,7 +117,7 @@ describe('ChordCalculator - getChordVoicings', () => {
     expect(voicings.length).toBeGreaterThan(0);
 
     // Chaque voicing doit avoir au moins 3 notes
-    voicings.forEach(voicing => {
+    voicings.forEach((voicing) => {
       expect(voicing.notes.length).toBeGreaterThanOrEqual(3);
       expect(voicing.name).toBe('C');
       expect(voicing.fretRange[0]).toBeLessThanOrEqual(voicing.fretRange[1]);
@@ -129,7 +129,7 @@ describe('ChordCalculator - getChordVoicings', () => {
     expect(voicings.length).toBeGreaterThan(0);
 
     // Les notes doivent être en dièses en interne
-    voicings.forEach(voicing => {
+    voicings.forEach((voicing) => {
       expect(voicing.notes.length).toBeGreaterThanOrEqual(3);
       // Db devient C# en interne
       expect(voicing.notes[0]?.note).toMatch(/^(C#|D#|F#|G#|A#|E|G|B)$/);
@@ -141,8 +141,8 @@ describe('ChordCalculator - getChordVoicings', () => {
     expect(voicings.length).toBeGreaterThan(0);
 
     // Vérifier que les cordes sont entre 0 et 5
-    voicings.forEach(voicing => {
-      voicing.notes.forEach(note => {
+    voicings.forEach((voicing) => {
+      voicing.notes.forEach((note) => {
         expect(note.string).toBeGreaterThanOrEqual(0);
         expect(note.string).toBeLessThanOrEqual(5);
       });
@@ -155,10 +155,10 @@ describe('ChordCalculator - getChordVoicings', () => {
 
     // Pour un C7, on doit avoir les intervalles 1, 3, 5, b7
     const expectedIntervals = ['1', '3', '5', 'b7'];
-    voicings.forEach(voicing => {
-      const intervals = voicing.notes.map(n => n.interval);
+    voicings.forEach((voicing) => {
+      const intervals = voicing.notes.map((n) => n.interval);
       // Chaque intervalle doit être dans la liste attendue
-      intervals.forEach(interval => {
+      intervals.forEach((interval) => {
         expect(expectedIntervals).toContain(interval);
       });
     });
@@ -170,23 +170,43 @@ describe('ChordCalculator - Edge Cases', () => {
     const roots: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flatRoots: NoteName[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 
-    roots.forEach(root => {
+    roots.forEach((root) => {
       expect(() => buildChord(root, 'm7')).not.toThrow();
     });
 
-    flatRoots.forEach(root => {
+    flatRoots.forEach((root) => {
       expect(() => buildChord(root, 'm7')).not.toThrow();
     });
   });
 
   it('should handle all chord qualities', () => {
     const qualities: ChordQuality[] = [
-      '', 'm', '7', 'm7', 'maj7', 'dim', 'dim7', 'm7b5',
-      'aug', 'aug7', 'sus2', 'sus4', '7sus4', 'add9', 'madd9',
-      '6', 'm6', '9', 'm9', '11', 'm11', '13', 'm13'
+      '',
+      'm',
+      '7',
+      'm7',
+      'maj7',
+      'dim',
+      'dim7',
+      'm7b5',
+      'aug',
+      'aug7',
+      'sus2',
+      'sus4',
+      '7sus4',
+      'add9',
+      'madd9',
+      '6',
+      'm6',
+      '9',
+      'm9',
+      '11',
+      'm11',
+      '13',
+      'm13',
     ];
 
-    qualities.forEach(quality => {
+    qualities.forEach((quality) => {
       expect(() => buildChord('C', quality)).not.toThrow();
     });
   });

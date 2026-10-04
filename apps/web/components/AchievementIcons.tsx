@@ -698,7 +698,16 @@ export const ACHIEVEMENT_ICONS: Record<string, React.FC<AchievementIconProps>> =
 };
 
 // Composant wrapper pour récupérer l'icône par nom
-export function AchievementIcon({ name, size = 24, className = '', ...props }: { name: string; size?: number; className?: string }) {
+export function AchievementIcon({
+  name,
+  size = 24,
+  className = '',
+  ...props
+}: {
+  name: string;
+  size?: number;
+  className?: string;
+}) {
   const IconComponent = ACHIEVEMENT_ICONS[name] || StarIcon;
   return <IconComponent size={size} className={className} {...props} />;
 }

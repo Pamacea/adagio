@@ -26,9 +26,9 @@ const MODE_COLORS: Record<ModeName, string> = {
 
 // Retourne les notes du mode pour une tonique donnée
 function getModeNotes(root: string, mode: ModeName): string[] {
-  const rootIndex = CHROMATIC.indexOf(root as typeof CHROMATIC[number]);
+  const rootIndex = CHROMATIC.indexOf(root as (typeof CHROMATIC)[number]);
   const intervals = MODE_INTERVALS[mode];
-  return intervals.map(i => {
+  return intervals.map((i) => {
     const noteIndex = (rootIndex + i) % 12;
     return CHROMATIC[noteIndex]!;
   });
@@ -53,14 +53,7 @@ function getDynamicDegrees(mode: ModeName): string[] {
 
 export default function ModesPage() {
   // État de la page via hook personnalisé
-  const {
-    root,
-    selectedMode,
-    showCircle,
-    setRoot,
-    setSelectedMode,
-    toggleView,
-  } = useModeState();
+  const { root, selectedMode, showCircle, setRoot, setSelectedMode, toggleView } = useModeState();
 
   // Données du mode sélectionné
   const modeInfo = getEmotionForMode(selectedMode);
@@ -97,17 +90,9 @@ export default function ModesPage() {
 
           {/* Mode display - Liste ou Cercle (composants) */}
           {showCircle ? (
-            <ModeCircle
-              modes={MODE_ORDER}
-              selectedMode={selectedMode}
-              onSelect={setSelectedMode}
-            />
+            <ModeCircle modes={MODE_ORDER} selectedMode={selectedMode} onSelect={setSelectedMode} />
           ) : (
-            <ModeList
-              modes={MODE_ORDER}
-              selectedMode={selectedMode}
-              onSelect={setSelectedMode}
-            />
+            <ModeList modes={MODE_ORDER} selectedMode={selectedMode} onSelect={setSelectedMode} />
           )}
 
           {/* Détail du mode sélectionné (composant) */}
@@ -130,7 +115,7 @@ export default function ModesPage() {
               Reference Rapide
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
-              {MODE_ORDER.map(mode => {
+              {MODE_ORDER.map((mode) => {
                 const info = getEmotionForMode(mode);
                 const isActive = mode === selectedMode;
                 return (

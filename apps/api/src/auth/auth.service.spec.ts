@@ -206,10 +206,7 @@ describe('AuthService', () => {
         image: mockUser.image,
         emailVerified: mockUser.emailVerified,
       });
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        loginDto.password,
-        mockUser.password
-      );
+      expect(bcrypt.compare).toHaveBeenCalledWith(loginDto.password, mockUser.password);
     });
 
     it('should throw UnauthorizedException if user not found', async () => {

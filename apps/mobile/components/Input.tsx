@@ -3,14 +3,7 @@
 // ============================================================================
 
 import React from 'react';
-import {
-  TextInput,
-  Text,
-  View,
-  StyleSheet,
-  TextInputProps,
-  ViewStyle,
-} from 'react-native';
+import { TextInput, Text, View, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
 
 export interface InputProps extends Omit<TextInputProps, 'style'> {
   label?: string;
@@ -37,11 +30,7 @@ export function Input({
       <View style={[styles.inputContainer, error && styles.inputContainerError]}>
         {leftIcon && <Text style={styles.icon}>{leftIcon}</Text>}
 
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#6b7280"
-          {...textInputProps}
-        />
+        <TextInput style={styles.input} placeholderTextColor="#6b7280" {...textInputProps} />
 
         {rightIcon && (
           <Text

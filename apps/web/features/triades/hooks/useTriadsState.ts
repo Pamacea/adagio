@@ -60,7 +60,12 @@ export interface UseTriadsStateReturn {
   displayInterval: (interval: string) => string;
 }
 
-export const TRIAD_QUALITIES: TriadQuality[] = ['major', 'minor', 'augmented', 'diminished'] as const;
+export const TRIAD_QUALITIES: TriadQuality[] = [
+  'major',
+  'minor',
+  'augmented',
+  'diminished',
+] as const;
 
 export const TRIAD_QUALITY_LABELS: Record<TriadQuality, string> = {
   major: 'Majeur',
@@ -69,7 +74,15 @@ export const TRIAD_QUALITY_LABELS: Record<TriadQuality, string> = {
   diminished: 'Diminué',
 };
 
-export const TRIAD_EXTENSIONS: ExtensionConfig['extension'][] = ['2', '4', '6', '7', '9', '11', '13'] as const;
+export const TRIAD_EXTENSIONS: ExtensionConfig['extension'][] = [
+  '2',
+  '4',
+  '6',
+  '7',
+  '9',
+  '11',
+  '13',
+] as const;
 
 export const TRIAD_EXTENSION_LABELS: Record<TriadExtension, string> = {
   '2': 'Seconde',
@@ -82,15 +95,22 @@ export const TRIAD_EXTENSION_LABELS: Record<TriadExtension, string> = {
 };
 
 export const AVAILABLE_NOTES: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
 ] as const;
 
 export function useTriadsState(options: UseTriadsStateOptions = {}): UseTriadsStateReturn {
-  const {
-    initialRoot = 'C',
-    initialQuality = 'major',
-    initialFretCount = 12,
-  } = options;
+  const { initialRoot = 'C', initialQuality = 'major', initialFretCount = 12 } = options;
 
   // État de base
   const [root, setRoot] = useState<NoteName>(initialRoot);
@@ -117,38 +137,38 @@ export function useTriadsState(options: UseTriadsStateOptions = {}): UseTriadsSt
 
   // Extensions actives (Set pour recherche rapide)
   const activeExtensions = useMemo<Set<TriadExtension>>(() => {
-    return new Set(extensions.map(e => e.extension));
+    return new Set(extensions.map((e) => e.extension));
   }, [extensions]);
 
   // Toggle une extension avec son altération
-  const toggleExtension = useCallback((
-    extension: TriadExtension,
-    alteration: ExtensionConfig['alteration']
-  ) => {
-    setExtensions(prev => {
-      const existingIndex = prev.findIndex(e => e.extension === extension);
+  const toggleExtension = useCallback(
+    (extension: TriadExtension, alteration: ExtensionConfig['alteration']) => {
+      setExtensions((prev) => {
+        const existingIndex = prev.findIndex((e) => e.extension === extension);
 
-      if (existingIndex !== -1) {
-        // Si l'extension existe déjà avec la même altération, on la retire
-        if (prev[existingIndex]?.alteration === alteration) {
-          return prev.filter(e => e.extension !== extension);
+        if (existingIndex !== -1) {
+          // Si l'extension existe déjà avec la même altération, on la retire
+          if (prev[existingIndex]?.alteration === alteration) {
+            return prev.filter((e) => e.extension !== extension);
+          }
+          // Sinon on met à jour l'altération
+          const updated = [...prev];
+          if (updated[existingIndex]) {
+            updated[existingIndex] = { extension, alteration };
+          }
+          return updated;
         }
-        // Sinon on met à jour l'altération
-        const updated = [...prev];
-        if (updated[existingIndex]) {
-          updated[existingIndex] = { extension, alteration };
-        }
-        return updated;
-      }
 
-      // Ajouter la nouvelle extension
-      return [...prev, { extension, alteration }];
-    });
-  }, []);
+        // Ajouter la nouvelle extension
+        return [...prev, { extension, alteration }];
+      });
+    },
+    []
+  );
 
   // Retirer une extension
   const removeExtension = useCallback((extension: TriadExtension) => {
-    setExtensions(prev => prev.filter(e => e.extension !== extension));
+    setExtensions((prev) => prev.filter((e) => e.extension !== extension));
   }, []);
 
   // Vider toutes les extensions
@@ -157,14 +177,20 @@ export function useTriadsState(options: UseTriadsStateOptions = {}): UseTriadsSt
   }, []);
 
   // Vérifier si une extension est active
-  const hasExtension = useCallback((extension: TriadExtension) => {
-    return activeExtensions.has(extension);
-  }, [activeExtensions]);
+  const hasExtension = useCallback(
+    (extension: TriadExtension) => {
+      return activeExtensions.has(extension);
+    },
+    [activeExtensions]
+  );
 
   // Obtenir l'altération d'une extension
-  const getExtensionAlteration = useCallback((extension: TriadExtension) => {
-    return extensions.find(e => e.extension === extension)?.alteration;
-  }, [extensions]);
+  const getExtensionAlteration = useCallback(
+    (extension: TriadExtension) => {
+      return extensions.find((e) => e.extension === extension)?.alteration;
+    },
+    [extensions]
+  );
 
   // Fonctions d'affichage
   const displayNote = useCallback((note: string) => {

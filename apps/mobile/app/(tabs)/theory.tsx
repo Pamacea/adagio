@@ -4,14 +4,7 @@
 // ============================================================================
 
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   getCircleOfFifths,
@@ -32,7 +25,7 @@ import {
   ChevronRightIcon as _ChevronRightIcon,
   ModeIcon,
   CircleIcon,
-  ScaleIcon
+  ScaleIcon,
 } from '../../components';
 import { Colors, Spacing, Typography, FontWeights, BorderRadius, toFrenchNote } from '../../theme';
 
@@ -60,7 +53,7 @@ function getMajorScale(key: NoteName): NoteName[] {
   const chromatic: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   const keyIndex = chromatic.indexOf(key);
   const intervals = [0, 2, 4, 5, 7, 9, 11];
-  return intervals.map(i => chromatic[(keyIndex + i) % 12]!);
+  return intervals.map((i) => chromatic[(keyIndex + i) % 12]!);
 }
 
 // Get minor scale notes (natural minor)
@@ -74,13 +67,13 @@ function getMinorScale(root: NoteName): NoteName[] {
 function getMajorChords(key: NoteName): string[] {
   const scale = getMajorScale(key);
   return [
-    scale[0]!,           // I
-    scale[1]! + 'm',     // ii
-    scale[2]! + 'm',     // iii
-    scale[3]!,           // IV
-    scale[4]!,           // V
-    scale[5]! + 'm',     // vi
-    scale[6]! + 'dim',   // vii°
+    scale[0]!, // I
+    scale[1]! + 'm', // ii
+    scale[2]! + 'm', // iii
+    scale[3]!, // IV
+    scale[4]!, // V
+    scale[5]! + 'm', // vi
+    scale[6]! + 'dim', // vii°
   ];
 }
 
@@ -88,13 +81,13 @@ function getMajorChords(key: NoteName): string[] {
 function _getMinorChords(root: NoteName): string[] {
   const scale = getMinorScale(root);
   return [
-    scale[0]! + 'm',     // i
-    scale[1]! + 'dim',   // ii°
-    scale[2]!,           // III
-    scale[3]! + 'm',     // iv
-    scale[4]! + 'm',     // v
-    scale[5]!,           // VI
-    scale[6]!,           // VII
+    scale[0]! + 'm', // i
+    scale[1]! + 'dim', // ii°
+    scale[2]!, // III
+    scale[3]! + 'm', // iv
+    scale[4]! + 'm', // v
+    scale[5]!, // VI
+    scale[6]!, // VII
   ];
 }
 
@@ -126,9 +119,15 @@ export default function TheoryScreen() {
             style={[styles.tab, activeTab === tab && styles.activeTab]}
             onPress={() => setActiveTab(tab)}
           >
-            {tab === 'modes' && <ModeIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />}
-            {tab === 'circle' && <CircleIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />}
-            {tab === 'scales' && <ScaleIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />}
+            {tab === 'modes' && (
+              <ModeIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />
+            )}
+            {tab === 'circle' && (
+              <CircleIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />
+            )}
+            {tab === 'scales' && (
+              <ScaleIcon size={20} color={activeTab === tab ? Colors.black : Colors.gray400} />
+            )}
             <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>
               {tab === 'modes' ? 'MODES' : tab === 'circle' ? 'CERCLE' : 'GAMMES'}
             </Text>
@@ -179,9 +178,7 @@ function ModesContent() {
               </Text>
             </View>
             <Text style={styles.modeSensation}>{emotionInfo.sensation}</Text>
-            {emotionInfo.feeling && (
-              <Text style={styles.modeFeeling}>{emotionInfo.feeling}</Text>
-            )}
+            {emotionInfo.feeling && <Text style={styles.modeFeeling}>{emotionInfo.feeling}</Text>}
           </MetalCardWithHeader>
         );
       })}
@@ -239,9 +236,7 @@ function CircleContent({
 
       {/* Diatonic Chords with Emotional Colors */}
       <Text style={styles.subsectionTitle}>ACCORDS DIATONIQUES</Text>
-      <Text style={styles.sectionSubtitle}>
-        Couleurs basées sur l&apos;émotion de chaque degré
-      </Text>
+      <Text style={styles.sectionSubtitle}>Couleurs basées sur l&apos;émotion de chaque degré</Text>
       <View style={styles.chordsContainer}>
         {majorChords.map((chord, index) => {
           const colorInfo = getDegreeColor(index, 'major');
@@ -261,15 +256,24 @@ function CircleContent({
             >
               {/* Roman numeral with emotional color */}
               <View style={[styles.chordRomanContainer, { backgroundColor: colorInfo.primary }]}>
-                <Text style={[styles.chordRoman, { color: getContrastTextColor(colorInfo.primary) }]}>
+                <Text
+                  style={[styles.chordRoman, { color: getContrastTextColor(colorInfo.primary) }]}
+                >
                   {roman}
                 </Text>
               </View>
 
               {/* Chord quality indicator */}
               {chordStyle.icon && (
-                <View style={[styles.chordQualityBadge, { backgroundColor: chordStyle.borderColor }]}>
-                  <Text style={[styles.chordQualityIcon, { color: getContrastTextColor(chordStyle.borderColor) }]}>
+                <View
+                  style={[styles.chordQualityBadge, { backgroundColor: chordStyle.borderColor }]}
+                >
+                  <Text
+                    style={[
+                      styles.chordQualityIcon,
+                      { color: getContrastTextColor(chordStyle.borderColor) },
+                    ]}
+                  >
                     {chordStyle.icon}
                   </Text>
                 </View>

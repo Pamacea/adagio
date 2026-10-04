@@ -38,7 +38,7 @@ export function ChordHero({ name, root, notes, className }: ChordHeroProps) {
                 </h2>
               </div>
               <p className="text-base text-gray-300 font-medium">
-                {notes.map(n => NOTE_FR[n] || n).join(' • ')}
+                {notes.map((n) => NOTE_FR[n] || n).join(' • ')}
               </p>
             </div>
             <div className="flex gap-3">

@@ -168,7 +168,13 @@ export function useSignOut() {
  */
 export function useSocialSignIn() {
   return useMutation({
-    mutationFn: async ({ provider, callbackURL }: { provider: 'github' | 'discord'; callbackURL?: string }) => {
+    mutationFn: async ({
+      provider,
+      callbackURL,
+    }: {
+      provider: 'github' | 'discord';
+      callbackURL?: string;
+    }) => {
       const response = await authClient.signIn.social({
         provider,
         callbackURL: callbackURL || window.location.href,

@@ -8,21 +8,30 @@
 import type { NoteName } from '@adagio/types';
 
 // Liste des notes pour le sélecteur de tonique
-const NOTES: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-];
+const NOTES: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 // Types de gammes disponibles
 export type ScaleType =
-  | 'major' | 'minor'
-  | 'harmonicMajor' | 'harmonicMinor'
-  | 'melodicMajor' | 'melodicMinor'
-  | 'pentatonicMajor' | 'pentatonicMinor'
+  | 'major'
+  | 'minor'
+  | 'harmonicMajor'
+  | 'harmonicMinor'
+  | 'melodicMajor'
+  | 'melodicMinor'
+  | 'pentatonicMajor'
+  | 'pentatonicMinor'
   | 'blues'
-  | 'dorian' | 'phrygian' | 'lydian' | 'mixolydian' | 'locrian'
-  | 'napolitanMajor' | 'napolitanMinor'
-  | 'augmentedMajor' | 'augmentedMinor'
-  | 'wholeTone' | 'diminished'
+  | 'dorian'
+  | 'phrygian'
+  | 'lydian'
+  | 'mixolydian'
+  | 'locrian'
+  | 'napolitanMajor'
+  | 'napolitanMinor'
+  | 'augmentedMajor'
+  | 'augmentedMinor'
+  | 'wholeTone'
+  | 'diminished'
   | 'chromatic';
 
 export interface ScaleDefinition {
@@ -67,11 +76,9 @@ export function ScaleSelector({
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
       {/* Sélecteur de tonique */}
       <div className="section-frame p-4">
-        <label className="text-xs text-gray uppercase tracking-wider mb-3 block">
-          TONIQUE
-        </label>
+        <label className="text-xs text-gray uppercase tracking-wider mb-3 block">TONIQUE</label>
         <div className="grid grid-cols-6 gap-2">
-          {NOTES.map(note => (
+          {NOTES.map((note) => (
             <button
               key={note}
               onClick={() => onRootChange(note)}
@@ -93,12 +100,12 @@ export function ScaleSelector({
           TYPE DE GAMME ({scales.length})
         </label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {scaleCategories.map(category => (
+          {scaleCategories.map((category) => (
             <div key={category.name}>
               <p className="text-xs text-gray uppercase mb-2">{category.name}</p>
               <div className="flex flex-wrap gap-2">
-                {category.ids.map(scaleId => {
-                  const scaleDef = scales.find(s => s.id === scaleId);
+                {category.ids.map((scaleId) => {
+                  const scaleDef = scales.find((s) => s.id === scaleId);
                   if (!scaleDef) return null;
                   return (
                     <button
@@ -125,11 +132,9 @@ export function ScaleSelector({
         <div className="flex flex-col md:flex-row gap-4 md:items-end">
           {/* Fret count */}
           <div className="flex-1">
-            <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-              FRETTES
-            </label>
+            <label className="text-xs text-gray uppercase tracking-wider block mb-2">FRETTES</label>
             <div className="flex gap-1">
-              {([12, 15, 17, 19, 21, 24] as const).map(f => (
+              {([12, 15, 17, 19, 21, 24] as const).map((f) => (
                 <button
                   key={f}
                   onClick={() => onFretCountChange(f)}

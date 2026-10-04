@@ -51,7 +51,9 @@ export function AccountActions() {
       setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
       // TODO: Show success toast
     } catch (error) {
-      setPasswordError((error as { message?: string })?.message || 'Erreur lors du changement de mot de passe');
+      setPasswordError(
+        (error as { message?: string })?.message || 'Erreur lors du changement de mot de passe'
+      );
     }
   };
 
@@ -81,16 +83,16 @@ export function AccountActions() {
       // Account deleted, redirect to home will happen automatically
       window.location.href = '/';
     } catch (error) {
-      setDeleteError((error as { message?: string })?.message || 'Erreur lors de la suppression du compte');
+      setDeleteError(
+        (error as { message?: string })?.message || 'Erreur lors de la suppression du compte'
+      );
     }
   };
 
   return (
     <>
       <div className="section-frame p-6">
-        <h3 className="text-lg font-metal text-white uppercase mb-4">
-          Compte
-        </h3>
+        <h3 className="text-lg font-metal text-white uppercase mb-4">Compte</h3>
 
         <div className="space-y-3">
           <button
@@ -118,9 +120,7 @@ export function AccountActions() {
 
       {/* Danger Zone */}
       <div className="section-frame p-6 border-2 border-blood">
-        <h3 className="text-lg font-metal text-blood uppercase mb-4">
-          Zone de Danger
-        </h3>
+        <h3 className="text-lg font-metal text-blood uppercase mb-4">Zone de Danger</h3>
         <p className="text-sm text-gray mb-4">
           Cette action est irréversible. Toutes vos données seront définitivement supprimées.
         </p>
@@ -148,7 +148,9 @@ export function AccountActions() {
                 <input
                   type="password"
                   value={passwordForm.currentPassword}
-                  onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordForm({ ...passwordForm, currentPassword: e.target.value })
+                  }
                   className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
                   required
                 />
@@ -161,7 +163,9 @@ export function AccountActions() {
                 <input
                   type="password"
                   value={passwordForm.newPassword}
-                  onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordForm({ ...passwordForm, newPassword: e.target.value })
+                  }
                   className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
                   required
                 />
@@ -174,15 +178,15 @@ export function AccountActions() {
                 <input
                   type="password"
                   value={passwordForm.confirmPassword}
-                  onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })
+                  }
                   className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
                   required
                 />
               </div>
 
-              {passwordError && (
-                <p className="text-sm text-blood">{passwordError}</p>
-              )}
+              {passwordError && <p className="text-sm text-blood">{passwordError}</p>}
 
               <div className="flex gap-2 pt-2">
                 <button
@@ -213,9 +217,7 @@ export function AccountActions() {
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="section-frame p-6 max-w-md w-full border-2 border-blood">
-            <h3 className="text-xl font-metal text-blood uppercase mb-4">
-              Supprimer le compte
-            </h3>
+            <h3 className="text-xl font-metal text-blood uppercase mb-4">Supprimer le compte</h3>
 
             <p className="text-sm text-gray mb-4">
               Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
@@ -235,9 +237,7 @@ export function AccountActions() {
                 />
               </div>
 
-              {deleteError && (
-                <p className="text-sm text-blood">{deleteError}</p>
-              )}
+              {deleteError && <p className="text-sm text-blood">{deleteError}</p>}
 
               <div className="flex gap-2 pt-2">
                 <button

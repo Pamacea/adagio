@@ -18,8 +18,8 @@ export function CAGEDInfo({ className = '' }: CAGEDInfoProps) {
         Formes de Positions
       </h3>
       <p className="text-sm text-gray mb-4">
-        Pour jouer ce mode sur tout le manche, connectez les 5 formes du système CAGED.
-        Chaque forme commence sur une note tonique différente.
+        Pour jouer ce mode sur tout le manche, connectez les 5 formes du système CAGED. Chaque forme
+        commence sur une note tonique différente.
       </p>
       <div className="flex gap-2 flex-wrap">
         {CAGED_FORMS.map((form) => (

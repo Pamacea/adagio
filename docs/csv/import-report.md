@@ -29,7 +29,7 @@ Généré par `pnpm sheet:import` — 2026-10-04
 - Absents du Sheet : Gamme Mineure Naturelle, Mineure Harmonique, Dorien, Phrygien, Lydien, Mixolydien, Jazz Mineur Mélodique, Lydien Dominant, Locrien, Double Harmonique, Phrygien Dominant, Enigmatique, Pentatonique Japonaise, Pentatonique Égyptienne, Diminué Ton/Demi-ton, Demi-ton/Ton Diminuée, Octatonique
 
 ### Techniques (CSV: 34 | seed: 11)
-- Absents du seed DB : Down picking, Finger picking, Chicken picking, Raking, Directional picking, Slap picking, Legato, Harmoniques naturelles, Harmoniques artificielles(pinch), Tapped harmonics, Harmoniques à la main droite (touch harmonics), Feedback, Palm mute, Muted strumming, Tremolo picking, Dead notes / ghost notes, Whammy bar techniques, Volume swells, Strumming patterns, Syncopation, Chugging
+- Absents du seed DB : Down picking, Finger picking, Chicken picking, Raking, Directional picking, Slap picking, Legato, Harmoniques naturelles, Harmoniques artificielles (pinch), Tapped harmonics, Harmoniques à la main droite (touch harmonics), Feedback, Palm mute, Muted strumming, Tremolo picking, Dead notes / ghost notes, Whammy bar techniques, Volume swells, Strumming patterns, Syncopation, Chugging
 
 > Note : le tab Accords n'est pas comparé (seed DB indexée root/quality, Sheet indexée par nom d'accord).
 > Note : le tab Harmonie est partiellement modélisé (Axis/Coltrane en DB, sections restantes en contenu statique).

@@ -38,9 +38,9 @@ export function getChordQuality(chord: string): 'major' | 'minor' | 'diminished'
  * Obtient la couleur associée à une qualité d'accord
  */
 export function getChordQualityColor(quality: 'major' | 'minor' | 'diminished'): string {
-  if (quality === 'major') return '#F59E0B';    // Gold
-  if (quality === 'minor') return '#3B82F6';    // Bleu
-  return '#64748B';                            // Gris foncé
+  if (quality === 'major') return '#F59E0B'; // Gold
+  if (quality === 'minor') return '#3B82F6'; // Bleu
+  return '#64748B'; // Gris foncé
 }
 
 /**
@@ -56,18 +56,10 @@ export function getChordQualitySymbol(quality: 'major' | 'minor' | 'diminished')
 // COMPONENT
 // ============================================================================
 
-export function ChordDisplay({
-  chords,
-  degreeColors = DEGREE_COLORS,
-  label,
-}: ChordDisplayProps) {
+export function ChordDisplay({ chords, degreeColors = DEGREE_COLORS, label }: ChordDisplayProps) {
   return (
     <div className="my-8">
-      {label && (
-        <p className="text-sm text-gray uppercase mb-2 text-center">
-          {label}
-        </p>
-      )}
+      {label && <p className="text-sm text-gray uppercase mb-2 text-center">{label}</p>}
       <div className="flex justify-center items-center gap-3 flex-wrap">
         {chords.map((chord, i) => {
           if (!chord) return null;

@@ -11,7 +11,14 @@ import { MetalNav, MetalFooter } from '@/components';
 import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { useComposeState, SCALE_TYPES } from '@/features/theory';
 import { ScaleNotesDisplay, FretboardChord, getContrastColor } from '@/components/theory/compose';
-import { FRENCH_NOTE_NAMES as NOTE_FR, DEGREE_COLORS, DEGREE_EMOTIONS, ROMAN_NUMERALS_MAJOR, ROMAN_NUMERALS_MINOR, MAJOR_KEYS } from '@adagio/theory';
+import {
+  FRENCH_NOTE_NAMES as NOTE_FR,
+  DEGREE_COLORS,
+  DEGREE_EMOTIONS,
+  ROMAN_NUMERALS_MAJOR,
+  ROMAN_NUMERALS_MINOR,
+  MAJOR_KEYS,
+} from '@adagio/theory';
 import type { NoteName } from '@adagio/types';
 
 // ============================================================================
@@ -80,9 +87,7 @@ export default function ComposePage() {
           {/* Key selector */}
           <div className="section-frame p-4 mb-8">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-gray uppercase tracking-wider">
-                TONALITÉ
-              </p>
+              <p className="text-xs text-gray uppercase tracking-wider">TONALITÉ</p>
               {/* Mode toggle */}
               <div className="flex gap-1 border-2 border-steel rounded overflow-hidden">
                 <button
@@ -108,7 +113,7 @@ export default function ComposePage() {
               </div>
             </div>
             <div className="flex flex-wrap justify-center gap-2">
-              {MAJOR_KEYS.map(key => {
+              {MAJOR_KEYS.map((key) => {
                 const isSelected = selectedKey === key;
                 return (
                   <button
@@ -128,11 +133,7 @@ export default function ComposePage() {
           </div>
 
           {/* Scale notes display */}
-          <ScaleNotesDisplay
-            scaleNotes={scaleNotes}
-            keyMode={keyMode}
-            selectedKey={selectedKey}
-          />
+          <ScaleNotesDisplay scaleNotes={scaleNotes} keyMode={keyMode} selectedKey={selectedKey} />
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left: Degrees circle */}
@@ -155,7 +156,7 @@ export default function ComposePage() {
                     const isSelected = selectedDegree === i;
                     const variations = chordVariations[i] || [];
                     const selectedVariation = selectedVariations[i] || 'basic';
-                    const currentVariation = variations.find(v => v.id === selectedVariation);
+                    const currentVariation = variations.find((v) => v.id === selectedVariation);
                     const displayChord = currentVariation?.symbol || basicChord;
 
                     return (
@@ -172,14 +173,18 @@ export default function ComposePage() {
                               backgroundColor: color,
                               color: getContrastColor(color),
                               borderColor: isSelected ? '#8b1a1a' : '#2a2a2a',
-                              boxShadow: isSelected ? `0 0 20px ${color}80` : undefined
+                              boxShadow: isSelected ? `0 0 20px ${color}80` : undefined,
                             }}
                           >
                             {i + 1}
                           </div>
                           <span className="text-xs text-gray mt-1">{numeral}</span>
-                          <span className={`text-xs font-bold mt-1 ${isSelected ? 'text-toxic' : 'text-white'}`}>
-                            {displayChord.length > 6 ? displayChord.slice(0, 5) + '…' : displayChord}
+                          <span
+                            className={`text-xs font-bold mt-1 ${isSelected ? 'text-toxic' : 'text-white'}`}
+                          >
+                            {displayChord.length > 6
+                              ? displayChord.slice(0, 5) + '…'
+                              : displayChord}
                           </span>
                         </button>
                       </div>
@@ -244,51 +249,64 @@ export default function ComposePage() {
                   </h2>
 
                   {/* Variation selector */}
-                  {selectedDegree !== null && chordVariations[selectedDegree] && chordVariations[selectedDegree].length > 1 && (
-                    <div className="mb-4">
-                      <p className="text-xs text-gray uppercase tracking-wider mb-3">
-                        Variation d'accord
-                      </p>
-                      <div className="relative">
-                        <select
-                          value={selectedVariations[selectedDegree] || 'basic'}
-                          onChange={(e) => handleVariationChange(selectedDegree, e.target.value)}
-                          className="w-full text-sm bg-blackness border-2 border-steel text-gray p-3 pr-10 rounded appearance-none hover:border-toxic transition-all cursor-pointer"
-                        >
-                          {chordVariations[selectedDegree].map((v) => (
-                            <option key={v.id} value={v.id}>
-                              {v.name}
-                            </option>
-                          ))}
-                        </select>
-                        <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="m6 9 6 6 6-6" />
-                        </svg>
+                  {selectedDegree !== null &&
+                    chordVariations[selectedDegree] &&
+                    chordVariations[selectedDegree].length > 1 && (
+                      <div className="mb-4">
+                        <p className="text-xs text-gray uppercase tracking-wider mb-3">
+                          Variation d'accord
+                        </p>
+                        <div className="relative">
+                          <select
+                            value={selectedVariations[selectedDegree] || 'basic'}
+                            onChange={(e) => handleVariationChange(selectedDegree, e.target.value)}
+                            className="w-full text-sm bg-blackness border-2 border-steel text-gray p-3 pr-10 rounded appearance-none hover:border-toxic transition-all cursor-pointer"
+                          >
+                            {chordVariations[selectedDegree].map((v) => (
+                              <option key={v.id} value={v.id}>
+                                {v.name}
+                              </option>
+                            ))}
+                          </select>
+                          <svg
+                            className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray pointer-events-none"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {/* Chord header */}
                   <div className="section-frame p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-4xl font-metal text-white">
-                            {selectedChord}
-                          </p>
-                          {selectedVariationDetails && selectedVariationDetails.category !== 'basic' && (
-                            <span className={`text-xs px-2 py-1 rounded ${
-                              selectedVariationDetails.category === 'extension' ? 'bg-toxic text-white' :
-                              selectedVariationDetails.category === 'substitution' ? 'bg-circuit text-white' :
-                              selectedVariationDetails.category === 'modal' ? 'bg-rust text-white' :
-                              'bg-void text-gray'
-                            }`}>
-                              {selectedVariationDetails.category}
-                            </span>
-                          )}
+                          <p className="text-4xl font-metal text-white">{selectedChord}</p>
+                          {selectedVariationDetails &&
+                            selectedVariationDetails.category !== 'basic' && (
+                              <span
+                                className={`text-xs px-2 py-1 rounded ${
+                                  selectedVariationDetails.category === 'extension'
+                                    ? 'bg-toxic text-white'
+                                    : selectedVariationDetails.category === 'substitution'
+                                      ? 'bg-circuit text-white'
+                                      : selectedVariationDetails.category === 'modal'
+                                        ? 'bg-rust text-white'
+                                        : 'bg-void text-gray'
+                                }`}
+                              >
+                                {selectedVariationDetails.category}
+                              </span>
+                            )}
                         </div>
                         <p className="text-sm text-gray">
-                          {numerals[selectedDegree]} de {selectedKey} {keyMode === 'major' ? 'Majeur' : 'Mineur'}
+                          {numerals[selectedDegree]} de {selectedKey}{' '}
+                          {keyMode === 'major' ? 'Majeur' : 'Mineur'}
                         </p>
                         {selectedVariationDetails && selectedVariationDetails.description && (
                           <p className="text-xs text-gray mt-1">
@@ -317,7 +335,9 @@ export default function ComposePage() {
                         {chordDetails.notes.map((note, i) => (
                           <div key={i} className="text-center">
                             <div className="px-4 py-3 border-2 border-blood bg-toxic mb-1">
-                              <span className="text-lg font-bold text-white">{NOTE_FR[note] || note}</span>
+                              <span className="text-lg font-bold text-white">
+                                {NOTE_FR[note] || note}
+                              </span>
                             </div>
                             <span className="text-xs text-gray">{chordDetails.intervals[i]}</span>
                           </div>
@@ -358,11 +378,15 @@ export default function ComposePage() {
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
-                                <span className={`text-xs px-2 py-1 rounded ${
-                                  sub.type === 'extension' ? 'bg-toxic text-white' :
-                                  sub.type === 'substitution' ? 'bg-circuit text-white' :
-                                  'bg-void text-gray'
-                                }`}>
+                                <span
+                                  className={`text-xs px-2 py-1 rounded ${
+                                    sub.type === 'extension'
+                                      ? 'bg-toxic text-white'
+                                      : sub.type === 'substitution'
+                                        ? 'bg-circuit text-white'
+                                        : 'bg-void text-gray'
+                                  }`}
+                                >
                                   {sub.type}
                                 </span>
                                 <div>
@@ -406,7 +430,9 @@ export default function ComposePage() {
                   onClick={() => {
                     const firstDegree = prog.degrees[0];
                     if (!firstDegree) return;
-                    const degreeIndex = ROMAN_NUMERALS_MAJOR.indexOf(firstDegree as typeof ROMAN_NUMERALS_MAJOR[number]);
+                    const degreeIndex = ROMAN_NUMERALS_MAJOR.indexOf(
+                      firstDegree as (typeof ROMAN_NUMERALS_MAJOR)[number]
+                    );
                     if (degreeIndex >= 0) setSelectedDegree(degreeIndex);
                   }}
                 >
@@ -418,7 +444,9 @@ export default function ComposePage() {
                   {/* Degree visualization */}
                   <div className="flex gap-1 mb-3">
                     {prog.degrees.map((deg, j) => {
-                      const degreeIndex = ROMAN_NUMERALS_MAJOR.indexOf(deg as typeof ROMAN_NUMERALS_MAJOR[number]);
+                      const degreeIndex = ROMAN_NUMERALS_MAJOR.indexOf(
+                        deg as (typeof ROMAN_NUMERALS_MAJOR)[number]
+                      );
                       const color = degreeIndex >= 0 ? DEGREE_COLORS[degreeIndex] : '#3a3a3a';
 
                       return (
@@ -439,7 +467,7 @@ export default function ComposePage() {
 
                   {/* Genre tags */}
                   <div className="flex flex-wrap gap-1">
-                    {prog.genre.map(g => (
+                    {prog.genre.map((g) => (
                       <span key={g} className="text-xs px-2 py-1 bg-void text-gray">
                         {g}
                       </span>
@@ -473,7 +501,10 @@ export default function ComposePage() {
                 </h3>
                 <div className="space-y-2">
                   {SCALE_TYPES.map((scaleDef) => {
-                    const isCompatible = scaleDef.id === keyMode || scaleDef.id === 'dorian' || scaleDef.id === 'mixolydian';
+                    const isCompatible =
+                      scaleDef.id === keyMode ||
+                      scaleDef.id === 'dorian' ||
+                      scaleDef.id === 'mixolydian';
 
                     return (
                       <button
@@ -485,7 +516,9 @@ export default function ComposePage() {
                             <p className="text-sm font-bold text-white">{scaleDef.nameFr}</p>
                             <p className="text-xs text-gray">{scaleDef.intervals.join(' - ')}</p>
                           </div>
-                          <span className={`text-xs px-2 py-1 ${isCompatible ? 'bg-toxic' : 'bg-void'}`}>
+                          <span
+                            className={`text-xs px-2 py-1 ${isCompatible ? 'bg-toxic' : 'bg-void'}`}
+                          >
                             {scaleDef.intervals.join('')}
                           </span>
                         </div>
@@ -505,10 +538,15 @@ export default function ComposePage() {
                   {/* Secondary dominants */}
                   <div className="border-2 border-steel bg-blackness p-3">
                     <p className="text-xs text-toxic font-bold mb-2">DOMINANTES SECONDAIRES</p>
-                    <p className="text-xs text-gray mb-2">Créez une tension temporaire vers chaque degré</p>
+                    <p className="text-xs text-gray mb-2">
+                      Créez une tension temporaire vers chaque degré
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {chords.slice(1, 6).map((chord, i) => (
-                        <button key={i} className="px-3 py-1 text-xs border-2 border-steel bg-abyss hover:border-toxic transition-all">
+                        <button
+                          key={i}
+                          className="px-3 py-1 text-xs border-2 border-steel bg-abyss hover:border-toxic transition-all"
+                        >
                           {chord.replace('m', '')}7
                         </button>
                       ))}
@@ -538,7 +576,9 @@ export default function ComposePage() {
                   {/* Parallel scales */}
                   <div className="border-2 border-steel bg-blackness p-3">
                     <p className="text-xs text-purple font-bold mb-2">TONALITÉS PARALLÈLES</p>
-                    <p className="text-xs text-gray mb-2">Changez la tonalité en gardant la même note tonique</p>
+                    <p className="text-xs text-gray mb-2">
+                      Changez la tonalité en gardant la même note tonique
+                    </p>
                     <div className="grid grid-cols-4 gap-2">
                       <button
                         onClick={() => handleModulation(scaleNotes[3]!)}
@@ -547,13 +587,19 @@ export default function ComposePage() {
                         {scaleNotes[3]} Majeur
                       </button>
                       <button
-                        onClick={() => { handleModulation(scaleNotes[4]!); setKeyMode('major'); }}
+                        onClick={() => {
+                          handleModulation(scaleNotes[4]!);
+                          setKeyMode('major');
+                        }}
                         className="px-2 py-1 text-xs border-2 border-steel bg-abyss hover:border-blood transition-all"
                       >
                         {scaleNotes[4]} Majeur
                       </button>
                       <button
-                        onClick={() => { handleModulation(scaleNotes[5]!); setKeyMode('minor'); }}
+                        onClick={() => {
+                          handleModulation(scaleNotes[5]!);
+                          setKeyMode('minor');
+                        }}
                         className="px-2 py-1 text-xs border-2 border-steel bg-abyss hover:border-blood transition-all"
                       >
                         {scaleNotes[5]} Mineur
@@ -568,7 +614,10 @@ export default function ComposePage() {
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray">Relative mineure:</span>
                         <button
-                          onClick={() => { handleModulation(scaleNotes[5]!); setKeyMode('minor'); }}
+                          onClick={() => {
+                            handleModulation(scaleNotes[5]!);
+                            setKeyMode('minor');
+                          }}
                           className="px-2 py-1 text-xs border-2 border-steel bg-abyss hover:border-toxic transition-all"
                         >
                           {scaleNotes[5]}m
@@ -577,7 +626,10 @@ export default function ComposePage() {
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray">Parallèle majeure:</span>
                         <button
-                          onClick={() => { handleModulation(scaleNotes[5]!); setKeyMode('major'); }}
+                          onClick={() => {
+                            handleModulation(scaleNotes[5]!);
+                            setKeyMode('major');
+                          }}
                           className="px-2 py-1 text-xs border-2 border-steel bg-abyss hover:border-toxic transition-all"
                         >
                           {scaleNotes[5]}
@@ -589,7 +641,6 @@ export default function ComposePage() {
               </div>
             </div>
           </div>
-
         </div>
       </main>
 

@@ -30,7 +30,7 @@ describe('Chord', () => {
     it('should accept any valid note name as root', () => {
       const roots: NoteName[] = ['C', 'C#', 'Db', 'D', 'F#', 'Bb'];
 
-      roots.forEach(root => {
+      roots.forEach((root) => {
         const chord = new Chord(root, '');
         expect(chord.root).toBe(root);
       });
@@ -39,7 +39,7 @@ describe('Chord', () => {
     it('should accept any valid chord quality', () => {
       const qualities: ChordQuality[] = ['', 'm', '7', 'm7', 'maj7', 'dim', 'dim7', 'aug'];
 
-      qualities.forEach(quality => {
+      qualities.forEach((quality) => {
         const chord = new Chord('C', quality);
         expect(chord.quality).toBe(quality);
       });
@@ -384,14 +384,14 @@ describe('Chord', () => {
       expect(notes[0]?.toString()).toBe('C4');
       expect(notes[1]?.toString()).toBe('D#4'); // Code uses sharps
       expect(notes[2]?.toString()).toBe('F#4'); // Code uses sharps
-      expect(notes[3]?.toString()).toBe('A4');  // bb7 is A
+      expect(notes[3]?.toString()).toBe('A4'); // bb7 is A
     });
 
     it('should return Note instances', () => {
       const chord = new Chord('C', 'm7');
       const notes = chord.getNotes();
 
-      notes.forEach(note => {
+      notes.forEach((note) => {
         expect(note).toBeInstanceOf(Note);
       });
     });
@@ -507,8 +507,8 @@ describe('Chord', () => {
       const cMajor = new Chord('C', '');
       const aMinor = new Chord('A', 'm');
 
-      const cNotes = cMajor.getNotes(4).map(n => n.name);
-      const aNotes = aMinor.getNotes(4).map(n => n.name);
+      const cNotes = cMajor.getNotes(4).map((n) => n.name);
+      const aNotes = aMinor.getNotes(4).map((n) => n.name);
 
       // A minor should be like C major but starting on A
       // C major: C, E, G
@@ -526,8 +526,8 @@ describe('Chord', () => {
 
       expect(cMajor.root).toBe(cMinor.root);
 
-      const majorNotes = cMajor.getNotes(4).map(n => n.name);
-      const minorNotes = cMinor.getNotes(4).map(n => n.name);
+      const majorNotes = cMajor.getNotes(4).map((n) => n.name);
+      const minorNotes = cMinor.getNotes(4).map((n) => n.name);
 
       // Only the 3rd should differ
       expect(majorNotes).toContain('E');
@@ -545,7 +545,7 @@ describe('Chord', () => {
       const notes = chord.getNotes(4);
 
       // The 9 chord in this implementation is add9 (no 7th)
-      expect(notes.map(n => n.name)).toEqual(['D', 'F#', 'A', 'E']);
+      expect(notes.map((n) => n.name)).toEqual(['D', 'F#', 'A', 'E']);
     });
 
     it('should handle 11th chord correctly', () => {
@@ -558,7 +558,7 @@ describe('Chord', () => {
       expect(notes[1]?.name).toBe('B');
       expect(notes[2]?.name).toBe('D');
       expect(notes[3]?.name).toBe('F#'); // Major 7th
-      expect(notes[4]?.name).toBe('C');   // 11th
+      expect(notes[4]?.name).toBe('C'); // 11th
     });
 
     it('should handle add9 (no 7th)', () => {
@@ -582,13 +582,32 @@ describe('Chord', () => {
   describe('Edge cases', () => {
     it('should handle all valid qualities', () => {
       const qualities: ChordQuality[] = [
-        '', 'm', '7', 'm7', 'maj7', 'dim', 'dim7', 'm7b5',
-        'aug', 'aug7', 'sus2', 'sus4', '7sus4',
-        '6', 'm6', '9', 'm9', '11', 'm11', '13', 'm13',
-        'add9', 'madd9',
+        '',
+        'm',
+        '7',
+        'm7',
+        'maj7',
+        'dim',
+        'dim7',
+        'm7b5',
+        'aug',
+        'aug7',
+        'sus2',
+        'sus4',
+        '7sus4',
+        '6',
+        'm6',
+        '9',
+        'm9',
+        '11',
+        'm11',
+        '13',
+        'm13',
+        'add9',
+        'madd9',
       ];
 
-      qualities.forEach(quality => {
+      qualities.forEach((quality) => {
         const chord = new Chord('C', quality);
         expect(chord.getIntervals().length).toBeGreaterThan(0);
       });

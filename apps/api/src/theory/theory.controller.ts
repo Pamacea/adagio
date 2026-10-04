@@ -79,10 +79,7 @@ export class TheoryController {
   @ApiOperation({ summary: 'Get harmony rule for specific degree' })
   @ApiParam({ name: 'degree', example: 'I' })
   @ApiQuery({ name: 'tonality', required: false, example: 'major' })
-  getHarmonyRuleByDegree(
-    @Param('degree') degree: string,
-    @Query('tonality') tonality?: string,
-  ) {
+  getHarmonyRuleByDegree(@Param('degree') degree: string, @Query('tonality') tonality?: string) {
     return this.theoryService.getHarmonyRuleByDegree(degree, tonality);
   }
 
@@ -90,10 +87,7 @@ export class TheoryController {
   @ApiOperation({ summary: 'Get all techniques' })
   @ApiQuery({ name: 'category', required: false })
   @ApiQuery({ name: 'difficulty', required: false })
-  getTechniques(
-    @Query('category') category?: string,
-    @Query('difficulty') difficulty?: string,
-  ) {
+  getTechniques(@Query('category') category?: string, @Query('difficulty') difficulty?: string) {
     return this.theoryService.getTechniques(category, difficulty);
   }
 

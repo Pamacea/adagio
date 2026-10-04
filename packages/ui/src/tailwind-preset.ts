@@ -63,42 +63,42 @@ const config: Omit<Config, 'content'> = {
 
         // Modes - Greek mode colors for emotional mapping
         mode: {
-          ionian: '#f7c948',    // Bright, major - yellow
-          dorian: '#8eb8f0',    // Jazzy, cool - blue
-          phrygian: '#f08b8b',  // Spanish, passionate - red
-          lydian: '#b8a3f0',    // Dreamy, ethereal - lavender
-          mixolydian: '#a3d9a5',// Bluesy, dominant - green
-          aeolian: '#8f9aaa',   // Natural minor - gray-blue
-          locrian: '#d4a57c',   // Tense, dark - bronze
+          ionian: '#f7c948', // Bright, major - yellow
+          dorian: '#8eb8f0', // Jazzy, cool - blue
+          phrygian: '#f08b8b', // Spanish, passionate - red
+          lydian: '#b8a3f0', // Dreamy, ethereal - lavender
+          mixolydian: '#a3d9a5', // Bluesy, dominant - green
+          aeolian: '#8f9aaa', // Natural minor - gray-blue
+          locrian: '#d4a57c', // Tense, dark - bronze
         },
 
         // Scale degrees color coding
         degree: {
-          I: '#1a69e1',      // Tonic - primary blue
-          ii: '#8eb8f0',     // Supertonic - light blue
-          iii: '#a3d9a5',    // Mediant - green
-          IV: '#f7c948',     // Subdominant - yellow
-          V: '#f088ad',      // Dominant - rose
-          vi: '#8f9aaa',     // Submediant - gray
-          vii: '#d4a57c',    // Leading tone - bronze
+          I: '#1a69e1', // Tonic - primary blue
+          ii: '#8eb8f0', // Supertonic - light blue
+          iii: '#a3d9a5', // Mediant - green
+          IV: '#f7c948', // Subdominant - yellow
+          V: '#f088ad', // Dominant - rose
+          vi: '#8f9aaa', // Submediant - gray
+          vii: '#d4a57c', // Leading tone - bronze
         },
 
         // Neutral - Score paper aesthetic
         neutral: {
-          50: '#f9f8f6',     // Cream paper
-          100: '#f0ede8',    // Warm white
+          50: '#f9f8f6', // Cream paper
+          100: '#f0ede8', // Warm white
           150: '#e8e4da',
-          200: '#ddd6c7',    // Light parchment
+          200: '#ddd6c7', // Light parchment
           250: '#d1c9b5',
-          300: '#c5bcad',    // Warm gray
+          300: '#c5bcad', // Warm gray
           400: '#a89d8d',
-          500: '#8b7f70',    // Taupe
+          500: '#8b7f70', // Taupe
           600: '#6e6156',
           700: '#51463c',
-          800: '#342b25',    // Dark coffee
+          800: '#342b25', // Dark coffee
           850: '#261e1a',
-          900: '#18110f',    // Almost black
-          950: '#0c0808',    // Deep black
+          900: '#18110f', // Almost black
+          950: '#0c0808', // Deep black
         },
 
         // Semantic
@@ -166,13 +166,7 @@ const config: Omit<Config, 'content'> = {
           'Roboto',
           'sans-serif',
         ],
-        serif: [
-          'var(--font-merriweather)',
-          'Georgia',
-          'Cambria',
-          'Times New Roman',
-          'serif',
-        ],
+        serif: ['var(--font-merriweather)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         mono: [
           'var(--font-jetbrains-mono)',
           'ui-monospace',
@@ -199,29 +193,29 @@ const config: Omit<Config, 'content'> = {
 
       borderRadius: {
         // Musical instrument inspired
-        'lg': '0.75rem',
-        'xl': '1rem',
+        lg: '0.75rem',
+        xl: '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
         // Guitar curve
-        'guitar': '50% 50% 50% 50% / 60% 60% 40% 40%',
+        guitar: '50% 50% 50% 50% / 60% 60% 40% 40%',
         // Pick shape
-        'pick': '50% 50% 50% 50% / 60% 60% 40% 40%',
+        pick: '50% 50% 50% 50% / 60% 60% 40% 40%',
       },
 
       boxShadow: {
         // Musical instrument depth
-        'guitar': '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-        'piano': '0 2px 10px rgba(0, 0, 0, 0.2)',
-        'note': '0 2px 8px rgba(26, 105, 225, 0.3)',
-        'glow': '0 0 20px rgba(236, 182, 5, 0.5)',
+        guitar: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+        piano: '0 2px 10px rgba(0, 0, 0, 0.2)',
+        note: '0 2px 8px rgba(26, 105, 225, 0.3)',
+        glow: '0 0 20px rgba(236, 182, 5, 0.5)',
       },
 
       animation: {
         // Music-themed animations
-        'strum': 'strum 0.3s ease-in-out',
+        strum: 'strum 0.3s ease-in-out',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'vibrate': 'vibrate 0.1s linear infinite',
+        vibrate: 'vibrate 0.1s linear infinite',
         'note-float': 'noteFloat 3s ease-in-out infinite',
       },
 
@@ -263,12 +257,12 @@ const config: Omit<Config, 'content'> = {
 
       // Z-index for layered interfaces
       zIndex: {
-        'staff': '1',
-        'note': '10',
-        'fretboard': '20',
-        'modal': '100',
-        'tooltip': '200',
-        'notification': '300',
+        staff: '1',
+        note: '10',
+        fretboard: '20',
+        modal: '100',
+        tooltip: '200',
+        notification: '300',
       },
     },
   },

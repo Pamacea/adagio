@@ -64,7 +64,7 @@ export function TriadsControls({
           Note racine
         </label>
         <div className="grid grid-cols-6 gap-1.5">
-          {AVAILABLE_NOTES.map(note => (
+          {AVAILABLE_NOTES.map((note) => (
             <button
               key={note}
               onClick={() => onRootChange(note)}
@@ -115,7 +115,7 @@ export function TriadsControls({
           Nombre de frettes
         </label>
         <div className="flex gap-1.5">
-          {FRET_OPTIONS.map(frets => (
+          {FRET_OPTIONS.map((frets) => (
             <button
               key={frets}
               onClick={() => onFretCountChange(frets)}

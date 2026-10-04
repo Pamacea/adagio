@@ -188,7 +188,8 @@ Dans cette leçon, nous allons explorer les 7 modes et comment les utiliser pour
         type: 'demo',
         component: 'fretboard',
         title: 'Visualisez sur le Manche',
-        description: 'Voyez comment les notes du mode se positionnent sur le manche de guitare. Changez de mode pour voir la différence.',
+        description:
+          'Voyez comment les notes du mode se positionnent sur le manche de guitare. Changez de mode pour voir la différence.',
         config: {
           fretboard: {
             root: 'C',
@@ -249,7 +250,7 @@ Dans cette leçon, nous allons explorer les 7 modes et comment les utiliser pour
           'Enregistrez un accord de LA MINEUR sur 4 mesures',
           'Jouez la gamme de LA DORIEN sur cet accord (LA SI DO RÉ MI FA# SOL LA)',
           'Puis jouez la gamme de LA ÉOLIEN sur le même accord (LA SI DO RÉ MI FA SOL LA)',
-          'Comparez comment la simple note FA# vs FA change complètement l\'ambiance!',
+          "Comparez comment la simple note FA# vs FA change complètement l'ambiance!",
         ],
         tips: [
           'Le Dorien a une 6te majeure (FA#) qui le rend plus "optimiste"',
@@ -267,7 +268,7 @@ Dans cette leçon, nous allons explorer les 7 modes et comment les utiliser pour
       level: 'BEGINNER',
       duration: '20 min',
       xp: 75,
-      description: 'Maîtrisez l\'outil le plus puissant pour comprendre les relations harmoniques.',
+      description: "Maîtrisez l'outil le plus puissant pour comprendre les relations harmoniques.",
       topics: ['Cycle des quintes', 'Tonalités voisines', 'Armure', 'Modulation'],
     },
     blocks: [
@@ -285,7 +286,7 @@ Dans cette leçon, nous allons explorer les 7 modes et comment les utiliser pour
         type: 'demo',
         component: 'circle',
         title: 'Explorez le Cercle des Quintes',
-        description: 'Cliquez sur chaque tonalité pour voir les accords diatoniques s\'afficher.',
+        description: "Cliquez sur chaque tonalité pour voir les accords diatoniques s'afficher.",
         config: {
           circle: {
             selectedKey: 'C',
@@ -350,7 +351,7 @@ Dans cette leçon, nous allons explorer les 7 modes et comment les utiliser pour
       level: 'BEGINNER',
       duration: '25 min',
       xp: 80,
-      description: 'Comprenez et identifiez tous les intervalles. La base de l\'oreille musicale.',
+      description: "Comprenez et identifiez tous les intervalles. La base de l'oreille musicale.",
       topics: ['Intervalles simples', 'Intervalles composés', 'Renversement', 'Oreille relative'],
     },
     blocks: [
@@ -386,7 +387,8 @@ Comprendre les intervalles vous permettra de:
         type: 'demo',
         component: 'fretboard',
         title: 'Visualisez les Intervalles',
-        description: 'Le manche de guitare avec les intervalles de la gamme. Les tierces et quintes sont les plus importantes.',
+        description:
+          'Le manche de guitare avec les intervalles de la gamme. Les tierces et quintes sont les plus importantes.',
         config: {
           fretboard: {
             root: 'C',
@@ -398,7 +400,7 @@ Comprendre les intervalles vous permettra de:
       },
       {
         type: 'exercise',
-        title: 'EXERCICE D\'OREILLE',
+        title: "EXERCICE D'OREILLE",
         instructions: 'Entrainez votre oreille à reconnaître les intervalles.',
         steps: [
           'Sur votre guitare/clavier, jouez DO puis MI (tierce majeure)',
@@ -407,7 +409,7 @@ Comprendre les intervalles vous permettra de:
           'Jouez DO puis SOL (quinte juste) et écoutez la stabilité',
         ],
         tips: [
-          'Utilisez une app d\'entraînement oreille (comme Perfect Ear) quotidiennement',
+          "Utilisez une app d'entraînement oreille (comme Perfect Ear) quotidiennement",
           'Commencez par la tierce (majeure vs mineure) et la quinte',
           'Associez chaque intervalle à une chanson connue',
         ],
@@ -427,7 +429,7 @@ Comprendre les intervalles vous permettra de:
             question: 'Quel intervalle est le plus consonant?',
             options: ['Seconde', 'Tierce', 'Quinte', 'Septième'],
             correctAnswer: 2,
-            explanation: 'La quinte juste (7 demi-tons) est l\'intervalle le plus consonant',
+            explanation: "La quinte juste (7 demi-tons) est l'intervalle le plus consonant",
           },
           {
             id: 'q3',
@@ -450,7 +452,8 @@ Comprendre les intervalles vous permettra de:
       level: 'BEGINNER',
       duration: '30 min',
       xp: 100,
-      description: 'Comprenez les fondements mathématiques de la musique: fréquences, intervalles et harmoniques.',
+      description:
+        'Comprenez les fondements mathématiques de la musique: fréquences, intervalles et harmoniques.',
       topics: ['Fréquences', 'Ratios harmoniques', 'Série harmonique', 'Tempérament'],
     },
     blocks: [
@@ -587,40 +590,43 @@ C'est la base physique de la consonance et dissonance!`,
             question: 'Quelle est la fréquence du La4 (une octave au-dessus du La3 à 440 Hz)?',
             options: ['550 Hz', '660 Hz', '880 Hz', '1760 Hz'],
             correctAnswer: 2,
-            explanation: 'Monter d\'une octave = doubler la fréquence. 440 × 2 = 880 Hz',
+            explanation: "Monter d'une octave = doubler la fréquence. 440 × 2 = 880 Hz",
           },
           {
             id: 'q2',
             question: 'Quel ratio harmonique correspond à la quinte juste?',
             options: ['2:1', '3:2', '4:3', '5:4'],
             correctAnswer: 1,
-            explanation: 'La quinte juste correspond au ratio 3:2, la 2e harmonique après l\'octave',
+            explanation: "La quinte juste correspond au ratio 3:2, la 2e harmonique après l'octave",
           },
           {
             id: 'q3',
             question: 'Dans le tempérament égal, combien de demi-tons dans une octave?',
             options: ['10', '11', '12', '14'],
             correctAnswer: 2,
-            explanation: 'Le tempérament égal divise l\'octave en 12 demi-tons égaux (2^(1/12) chacun)',
+            explanation:
+              "Le tempérament égal divise l'octave en 12 demi-tons égaux (2^(1/12) chacun)",
           },
           {
             id: 'q4',
             question: 'Pourquoi la quinte sonne-elle si consonante?',
             options: [
-              'C\'est une tradition culturelle',
-              'C\'est le ratio 3:2, présent dans la série harmonique',
-              'C\'est le plus grand intervalle',
-              'C\'est une découverte récente',
+              "C'est une tradition culturelle",
+              "C'est le ratio 3:2, présent dans la série harmonique",
+              "C'est le plus grand intervalle",
+              "C'est une découverte récente",
             ],
             correctAnswer: 1,
-            explanation: 'La quinte (ratio 3:2) est la 2e harmonique naturelle après l\'octave, donc notre cerveau la reconnaît facilement',
+            explanation:
+              "La quinte (ratio 3:2) est la 2e harmonique naturelle après l'octave, donc notre cerveau la reconnaît facilement",
           },
           {
             id: 'q5',
             question: 'Quel intervalle correspond au ratio 5:4?',
             options: ['Quarte', 'Quinte', 'Tierce majeure', 'Tierce mineure'],
             correctAnswer: 2,
-            explanation: 'Le ratio 5:4 correspond à la tierce majeure, qui donne le caractère "heureux" aux accords',
+            explanation:
+              'Le ratio 5:4 correspond à la tierce majeure, qui donne le caractère "heureux" aux accords',
           },
         ],
         passingScore: 70,
@@ -631,7 +637,7 @@ C'est la base physique de la consonance et dissonance!`,
         instructions: 'Utilisez une guitare pour entendre la série harmonique.',
         steps: [
           'Jouez la corde de La (5e corde) à vide',
-          'Effleurez doucement la corde au-dessus de la 12e frette et jouez - vous entendez l\'octave (harmonique 2)',
+          "Effleurez doucement la corde au-dessus de la 12e frette et jouez - vous entendez l'octave (harmonique 2)",
           'Effleurez au-dessus de la 7e frette - vous entendez la quinte (harmonique 3)',
           'Effleurez au-dessus de la 5e frette - vous entendez la double octave (harmonique 4)',
           'Comparez: ces harmoniques sont toutes "contenues" dans une seule note à vide!',
@@ -661,23 +667,19 @@ export function getLesson(id: string): Lesson | null {
  * Récupère toutes les métadonnées des leçons
  */
 export function getAllLessonsMetadata(): LessonMetadata[] {
-  return Object.values(LESSONS_CONTENT).map(lesson => lesson.metadata);
+  return Object.values(LESSONS_CONTENT).map((lesson) => lesson.metadata);
 }
 
 /**
  * Récupère les leçons par catégorie
  */
 export function getLessonsByCategory(category: LessonMetadata['category']): Lesson[] {
-  return Object.values(LESSONS_CONTENT).filter(
-    lesson => lesson.metadata.category === category
-  );
+  return Object.values(LESSONS_CONTENT).filter((lesson) => lesson.metadata.category === category);
 }
 
 /**
  * Récupère les leçons par niveau
  */
 export function getLessonsByLevel(level: LessonMetadata['level']): Lesson[] {
-  return Object.values(LESSONS_CONTENT).filter(
-    lesson => lesson.metadata.level === level
-  );
+  return Object.values(LESSONS_CONTENT).filter((lesson) => lesson.metadata.level === level);
 }

@@ -30,7 +30,7 @@ export class LibraryService {
       orderBy: [{ difficulty: 'asc' }, { name: 'asc' }],
     });
 
-    return techniques.map(tech => ({
+    return techniques.map((tech) => ({
       id: tech.id,
       slug: tech.slug,
       name: tech.name,

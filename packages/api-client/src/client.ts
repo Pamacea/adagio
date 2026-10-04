@@ -21,7 +21,11 @@ const getBaseUrl = () => {
   }
 
   // Environnement Mobile ou URL explicite
-  return process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+  return (
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.EXPO_PUBLIC_API_URL ||
+    'http://localhost:3001/api/v1'
+  );
 };
 
 const API_BASE_URL = getBaseUrl();
@@ -31,7 +35,10 @@ export interface ApiClientConfig {
 }
 
 export class ApiError extends Error {
-  constructor(message: string, public statusCode?: number) {
+  constructor(
+    message: string,
+    public statusCode?: number
+  ) {
     super(message);
     this.name = 'ApiError';
   }
@@ -48,15 +55,12 @@ export class ApiClient {
   // PRIVATE METHODS
   // ------------------------------------------------------------------
 
-  private async request<T>(
-    endpoint: string,
-    options?: RequestInit
-  ): Promise<T> {
+  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...(options?.headers as Record<string, string> || {}),
+      ...((options?.headers as Record<string, string>) || {}),
     };
 
     const response = await fetch(url, {
@@ -67,7 +71,10 @@ export class ApiClient {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'Unknown error' }));
-      throw new ApiError((error as { message?: string }).message || 'API request failed', response.status);
+      throw new ApiError(
+        (error as { message?: string }).message || 'API request failed',
+        response.status
+      );
     }
 
     return response.json() as Promise<T>;

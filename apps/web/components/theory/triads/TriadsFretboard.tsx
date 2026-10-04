@@ -39,10 +39,7 @@ export function calculateTriadFretPositions(fretCount: number): number[] {
 }
 
 function formatInterval(interval: Interval): string {
-  return interval
-    .replace(/#/g, '♯')
-    .replace(/b/g, '♭')
-    .replace(/bb/g, '♭♭');
+  return interval.replace(/#/g, '♯').replace(/b/g, '♭').replace(/bb/g, '♭♭');
 }
 
 interface TriadsFretboardProps {
@@ -51,11 +48,7 @@ interface TriadsFretboardProps {
   displayNote: (note: string) => string;
 }
 
-export function TriadsFretboard({
-  fretboardNotes,
-  fretCount,
-  displayNote,
-}: TriadsFretboardProps) {
+export function TriadsFretboard({ fretboardNotes, fretCount, displayNote }: TriadsFretboardProps) {
   const fretPositions = useMemo(() => calculateTriadFretPositions(fretCount), [fretCount]);
   const lastFretPosition = fretPositions[fretPositions.length - 1] ?? 800;
   const SVG_WIDTH = Math.max(lastFretPosition + 30, 800);
@@ -80,7 +73,13 @@ export function TriadsFretboard({
           preserveAspectRatio="xMidYMid meet"
         >
           {/* Background */}
-          <rect x="0" y="0" width={SVG_WIDTH} height={TRIAD_FRET_CONSTANTS.SVG_HEIGHT} fill="#010101" />
+          <rect
+            x="0"
+            y="0"
+            width={SVG_WIDTH}
+            height={TRIAD_FRET_CONSTANTS.SVG_HEIGHT}
+            fill="#010101"
+          />
 
           {/* Strings */}
           {GUITAR_STRINGS.map((_, i) => {
@@ -115,7 +114,7 @@ export function TriadsFretboard({
           })}
 
           {/* Fret markers (dots) */}
-          {[3, 5, 7, 9].map(fret => {
+          {[3, 5, 7, 9].map((fret) => {
             if (fret > fretCount) return null;
             const currentFret = fretPositions[fret];
             const prevFret = fretPositions[fret - 1];
@@ -200,14 +199,17 @@ export function TriadsFretboard({
           {fretboardNotes.map((noteData) => {
             const stringIndex = noteData.string;
             const y = 40 + stringIndex * TRIAD_FRET_CONSTANTS.STRING_SPACING;
-            const x = noteData.fret === 0
-              ? (TRIAD_FRET_CONSTANTS.NUT_POSITION - 20)
-              : ((fretPositions[noteData.fret - 1] ?? 0) + (fretPositions[noteData.fret] ?? 0)) / 2;
+            const x =
+              noteData.fret === 0
+                ? TRIAD_FRET_CONSTANTS.NUT_POSITION - 20
+                : ((fretPositions[noteData.fret - 1] ?? 0) + (fretPositions[noteData.fret] ?? 0)) /
+                  2;
 
             const colors = getNoteColors(noteData);
-            const fretWidth = noteData.fret === 0
-              ? TRIAD_FRET_CONSTANTS.FRET_WIDTH
-              : (fretPositions[noteData.fret] ?? 0) - (fretPositions[noteData.fret - 1] ?? 0);
+            const fretWidth =
+              noteData.fret === 0
+                ? TRIAD_FRET_CONSTANTS.FRET_WIDTH
+                : (fretPositions[noteData.fret] ?? 0) - (fretPositions[noteData.fret - 1] ?? 0);
             const noteRadius = Math.max(16, Math.min(28, Math.floor(fretWidth * 0.42)));
 
             return (

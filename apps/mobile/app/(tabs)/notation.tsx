@@ -4,13 +4,7 @@
 // ============================================================================
 
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Svg, Line, Ellipse, Path, G, Circle, Text as SvgText } from 'react-native-svg';
 import {
@@ -50,23 +44,23 @@ function StaffSvg({ notes }: { notes: NoteEvent[] }) {
   const getNoteYPosition = (note: NoteName, octave: number): number => {
     // Middle C (C4) = 105 (ledger line)
     const noteOffsets: Partial<Record<NoteName, number>> = {
-      'C': 0,   // DO
-      'D': 15,  // RE
-      'E': 30,  // MI
-      'F': 45,  // FA
-      'G': 60,  // SOL
-      'A': 75,  // LA
-      'B': 90,  // SI
+      C: 0, // DO
+      D: 15, // RE
+      E: 30, // MI
+      F: 45, // FA
+      G: 60, // SOL
+      A: 75, // LA
+      B: 90, // SI
       'C#': 7.5,
-      'Db': 7.5,
+      Db: 7.5,
       'D#': 22.5,
-      'Eb': 22.5,
+      Eb: 22.5,
       'F#': 37.5,
-      'Gb': 37.5,
+      Gb: 37.5,
       'G#': 52.5,
-      'Ab': 52.5,
+      Ab: 52.5,
       'A#': 67.5,
-      'Bb': 67.5,
+      Bb: 67.5,
     };
 
     // Base position from C4
@@ -93,15 +87,7 @@ function StaffSvg({ notes }: { notes: NoteEvent[] }) {
     <Svg viewBox="0 0 500 180" height={180} width="100%">
       {/* Staff lines */}
       {[30, 45, 60, 75, 90].map((y, i) => (
-        <Line
-          key={`line-${i}`}
-          x1="80"
-          y1={y}
-          x2="450"
-          y2={y}
-          stroke="#2a2a2a"
-          strokeWidth="2"
-        />
+        <Line key={`line-${i}`} x1="80" y1={y} x2="450" y2={y} stroke="#2a2a2a" strokeWidth="2" />
       ))}
 
       {/* Treble clef */}
@@ -131,24 +117,10 @@ function StaffSvg({ notes }: { notes: NoteEvent[] }) {
         <G key={`${note}-${x}`}>
           {/* Ledger line if needed */}
           {needsLedger && y >= 105 && (
-            <Line
-              x1={x - 20}
-              y1={y}
-              x2={x + 20}
-              y2={y}
-              stroke="#3a3a3a"
-              strokeWidth="2.5"
-            />
+            <Line x1={x - 20} y1={y} x2={x + 20} y2={y} stroke="#3a3a3a" strokeWidth="2.5" />
           )}
           {needsLedger && y <= 15 && (
-            <Line
-              x1={x - 20}
-              y1={y}
-              x2={x + 20}
-              y2={y}
-              stroke="#3a3a3a"
-              strokeWidth="2.5"
-            />
+            <Line x1={x - 20} y1={y} x2={x + 20} y2={y} stroke="#3a3a3a" strokeWidth="2.5" />
           )}
 
           {/* Note head */}
@@ -162,14 +134,7 @@ function StaffSvg({ notes }: { notes: NoteEvent[] }) {
           />
 
           {/* Note stem */}
-          <Line
-            x1={x + 8}
-            y1={y - 2}
-            x2={x + 8}
-            y2={y - 38}
-            stroke="#e0e0e0"
-            strokeWidth="2"
-          />
+          <Line x1={x + 8} y1={y - 2} x2={x + 8} y2={y - 38} stroke="#e0e0e0" strokeWidth="2" />
         </G>
       ))}
 
@@ -278,10 +243,7 @@ export default function NotationScreen() {
             style={[styles.viewTab, activeView === view && styles.viewTabActive]}
             onPress={() => setActiveView(view)}
           >
-            <NoteIcon
-              size={18}
-              color={activeView === view ? Colors.black : Colors.gray400}
-            />
+            <NoteIcon size={18} color={activeView === view ? Colors.black : Colors.gray400} />
             <Text style={[styles.viewTabText, activeView === view && styles.viewTabTextActive]}>
               {view === 'staff' ? 'PORTEE' : view === 'tabs' ? 'TABLATURE' : 'ACCORDS'}
             </Text>
@@ -297,10 +259,7 @@ export default function NotationScreen() {
             {NOTES.map((note) => (
               <TouchableOpacity
                 key={note}
-                style={[
-                  styles.noteButton,
-                  selectedKey === note && styles.noteButtonActive,
-                ]}
+                style={[styles.noteButton, selectedKey === note && styles.noteButtonActive]}
                 onPress={() => setSelectedKey(note)}
               >
                 <Text
@@ -330,10 +289,12 @@ export default function NotationScreen() {
                 onPress={() => setSelectedDuration(duration)}
               >
                 <DurationSymbol type={duration} />
-                <Text style={[
-                  styles.durationButtonText,
-                  selectedDuration === duration && styles.durationButtonTextActive
-                ]}>
+                <Text
+                  style={[
+                    styles.durationButtonText,
+                    selectedDuration === duration && styles.durationButtonTextActive,
+                  ]}
+                >
                   {DURATION_LABELS[duration]}
                 </Text>
               </TouchableOpacity>
@@ -342,17 +303,12 @@ export default function NotationScreen() {
         </View>
 
         {/* Staff Display */}
-        <MetalCardWithHeader
-          title={`PORTEE - ${toFrenchNote(selectedKey)} MAJEUR`}
-          variant="dark"
-        >
+        <MetalCardWithHeader title={`PORTEE - ${toFrenchNote(selectedKey)} MAJEUR`} variant="dark">
           <View style={styles.staffContainer}>
             {notes.length === 0 ? (
               <View style={styles.emptyState}>
                 <NoteIcon size={32} color={Colors.gray600} />
-                <Text style={styles.emptyText}>
-                  Appuyez sur les notes pour créer votre mélodie
-                </Text>
+                <Text style={styles.emptyText}>Appuyez sur les notes pour créer votre mélodie</Text>
               </View>
             ) : (
               <>
@@ -367,7 +323,9 @@ export default function NotationScreen() {
                       <Text style={styles.noteListText}>
                         {index + 1}. {toFrenchNote(noteEvent.note)} ({noteEvent.octave})
                       </Text>
-                      <Text style={styles.noteListDuration}>{DURATION_LABELS[noteEvent.duration]}</Text>
+                      <Text style={styles.noteListDuration}>
+                        {DURATION_LABELS[noteEvent.duration]}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>

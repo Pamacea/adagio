@@ -12,15 +12,26 @@ import type { Interval } from '@adagio/types';
  * Types de gammes disponibles
  */
 export type ScaleType =
-  | 'major' | 'minor'
-  | 'harmonicMajor' | 'harmonicMinor'
-  | 'melodicMajor' | 'melodicMinor'
-  | 'pentatonicMajor' | 'pentatonicMinor'
+  | 'major'
+  | 'minor'
+  | 'harmonicMajor'
+  | 'harmonicMinor'
+  | 'melodicMajor'
+  | 'melodicMinor'
+  | 'pentatonicMajor'
+  | 'pentatonicMinor'
   | 'blues'
-  | 'dorian' | 'phrygian' | 'lydian' | 'mixolydian' | 'locrian'
-  | 'napolitanMajor' | 'napolitanMinor'
-  | 'augmentedMajor' | 'augmentedMinor'
-  | 'wholeTone' | 'diminished'
+  | 'dorian'
+  | 'phrygian'
+  | 'lydian'
+  | 'mixolydian'
+  | 'locrian'
+  | 'napolitanMajor'
+  | 'napolitanMinor'
+  | 'augmentedMajor'
+  | 'augmentedMinor'
+  | 'wholeTone'
+  | 'diminished'
   | 'chromatic';
 
 /**
@@ -60,9 +71,9 @@ export const SCALE_INTERVALS: Record<ScaleType, Interval[]> = {
   napolitanMinor: ['1', 'b2', 'b3', '4', '5', 'b6', '7'],
   // Gammes augmentées et spéciales
   augmentedMajor: ['1', '2', '3', '#4', '5', '#6', '7'], // Lydien #5
-  augmentedMinor: ['1', '2', 'b3', '4', '#5', '6', '7'],   // Mineure #5
-  wholeTone: ['1', '2', '3', '#4', '#5', '#6', 'b7'],      // Gamme par tons
-  diminished: ['1', 'b2', 'b3', 'b4', 'b5', 'bb6', 'bb7'],  // Diminuée (symétrique)
+  augmentedMinor: ['1', '2', 'b3', '4', '#5', '6', '7'], // Mineure #5
+  wholeTone: ['1', '2', '3', '#4', '#5', '#6', 'b7'], // Gamme par tons
+  diminished: ['1', 'b2', 'b3', 'b4', 'b5', 'bb6', 'bb7'], // Diminuée (symétrique)
   chromatic: ['1', '#1', '2', '#2', '3', '#3', '4', '#4', '5', '#5', '6', '#6'], // 12 demi-tons
   // Pentatoniques & Blues
   pentatonicMajor: ['1', '2', '3', '5', '6'],
@@ -240,9 +251,27 @@ export const SCALES: ScaleDefinition[] = [
  * Organisation des gammes par catégorie pour l'UI
  */
 export const SCALE_CATEGORIES = [
-  { name: 'Majeures', ids: ['major', 'lydian', 'mixolydian', 'harmonicMajor', 'melodicMajor'] as ScaleType[] },
-  { name: 'Mineures', ids: ['minor', 'dorian', 'phrygian', 'harmonicMinor', 'melodicMinor', 'locrian'] as ScaleType[] },
+  {
+    name: 'Majeures',
+    ids: ['major', 'lydian', 'mixolydian', 'harmonicMajor', 'melodicMajor'] as ScaleType[],
+  },
+  {
+    name: 'Mineures',
+    ids: ['minor', 'dorian', 'phrygian', 'harmonicMinor', 'melodicMinor', 'locrian'] as ScaleType[],
+  },
   { name: 'Napolitaines', ids: ['napolitanMajor', 'napolitanMinor'] as ScaleType[] },
-  { name: 'Pentatoniques & Blues', ids: ['pentatonicMajor', 'pentatonicMinor', 'blues'] as ScaleType[] },
-  { name: 'Symétriques & Spéciales', ids: ['wholeTone', 'diminished', 'augmentedMajor', 'augmentedMinor', 'chromatic'] as ScaleType[] },
+  {
+    name: 'Pentatoniques & Blues',
+    ids: ['pentatonicMajor', 'pentatonicMinor', 'blues'] as ScaleType[],
+  },
+  {
+    name: 'Symétriques & Spéciales',
+    ids: [
+      'wholeTone',
+      'diminished',
+      'augmentedMajor',
+      'augmentedMinor',
+      'chromatic',
+    ] as ScaleType[],
+  },
 ] as const;

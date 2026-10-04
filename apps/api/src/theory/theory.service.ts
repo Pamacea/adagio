@@ -23,7 +23,7 @@ export class TheoryService {
   private readonly NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
   getAllKeys() {
-    return this.NOTES.map(note => ({ name: note }));
+    return this.NOTES.map((note) => ({ name: note }));
   }
 
   async getModes(feeling?: string) {
@@ -42,7 +42,7 @@ export class TheoryService {
       orderBy: { name: 'asc' },
     });
 
-    return modes.map(mode => ({
+    return modes.map((mode) => ({
       id: mode.id,
       slug: mode.slug,
       name: mode.name,
@@ -87,7 +87,7 @@ export class TheoryService {
     });
 
     // For each mode, calculate the notes in the key
-    return modes.map(mode => ({
+    return modes.map((mode) => ({
       ...mode,
       notes: this.getNotesForKeyAndMode(key, parseJsonField<string[]>(mode.intervals)),
     }));
@@ -98,7 +98,7 @@ export class TheoryService {
       orderBy: { name: 'asc' },
     });
 
-    return scales.map(scale => ({
+    return scales.map((scale) => ({
       id: scale.id,
       slug: scale.slug,
       name: scale.name,
@@ -120,7 +120,7 @@ export class TheoryService {
       orderBy: [{ root: 'asc' }, { quality: 'asc' }],
     });
 
-    return chords.map(chord => ({
+    return chords.map((chord) => ({
       id: chord.id,
       name: chord.name,
       root: chord.root,
@@ -135,18 +135,20 @@ export class TheoryService {
   async analyzeProgression(dto: AnalyzeProgressionDto) {
     const { key, chords } = dto;
 
-    const analysis = await Promise.all(chords.map(async (chord) => {
-      const harmonyRule = await this.getHarmonyRule(chord.degree, 'major');
-      const suggestedModes = this.getSuggestedModesForChord(chord);
+    const analysis = await Promise.all(
+      chords.map(async (chord) => {
+        const harmonyRule = await this.getHarmonyRule(chord.degree, 'major');
+        const suggestedModes = this.getSuggestedModesForChord(chord);
 
-      return {
-        chord: chord,
-        scale: suggestedModes[0] || null,
-        feeling: harmonyRule?.sensation || '',
-        tension: this.getTensionForDegree(chord.degree),
-        advice: harmonyRule?.advice || '',
-      };
-    }));
+        return {
+          chord: chord,
+          scale: suggestedModes[0] || null,
+          feeling: harmonyRule?.sensation || '',
+          tension: this.getTensionForDegree(chord.degree),
+          advice: harmonyRule?.advice || '',
+        };
+      })
+    );
 
     const overallFeeling = this.getOverallFeeling(analysis);
 
@@ -185,7 +187,7 @@ export class TheoryService {
   async getAxisTheory() {
     const axisGroups = await prisma.axisGroup.findMany();
 
-    return axisGroups.map(group => ({
+    return axisGroups.map((group) => ({
       name: group.name,
       notes: parseJsonField<string[]>(group.notes),
       description: group.description,
@@ -196,11 +198,24 @@ export class TheoryService {
   private getNotesForKeyAndMode(key: string, intervals: string[]) {
     const keyIndex = this.NOTES.indexOf(key);
     const intervalSemitones: Record<string, number> = {
-      '1': 0, 'b2': 1, '2': 2, 'b3': 3, '3': 4, '4': 5, '#4': 6,
-      'b5': 6, '5': 7, '#5': 8, 'b6': 8, '6': 9, 'bb7': 9, 'b7': 10, '7': 11
+      '1': 0,
+      b2: 1,
+      '2': 2,
+      b3: 3,
+      '3': 4,
+      '4': 5,
+      '#4': 6,
+      b5: 6,
+      '5': 7,
+      '#5': 8,
+      b6: 8,
+      '6': 9,
+      bb7: 9,
+      b7: 10,
+      '7': 11,
     };
 
-    return intervals.map(interval => {
+    return intervals.map((interval) => {
       const semitones = intervalSemitones[interval] || 0;
       const noteIndex = (keyIndex + semitones) % 12;
       return this.NOTES[noteIndex];
@@ -323,20 +338,20 @@ export class TheoryService {
   private async getHarmonyRule(degree: string, tonality: string) {
     return prisma.harmonyRule.findUnique({
       where: {
-        degree_tonality: { degree, tonality }
-      }
+        degree_tonality: { degree, tonality },
+      },
     });
   }
 
   private getSuggestedModesForChord(chord: any) {
     // Simplified logic - in production, use Tonal.js
     const modeMap: Record<string, string[]> = {
-      'I': ['Ionien', 'Lydien'],
-      'ii': ['Dorien'],
-      'iii': ['Phrygien'],
-      'IV': ['Lydien', 'Ionien'],
-      'V': ['Mixolydien', 'Phrygien Dominant'],
-      'vi': ['Éolien'],
+      I: ['Ionien', 'Lydien'],
+      ii: ['Dorien'],
+      iii: ['Phrygien'],
+      IV: ['Lydien', 'Ionien'],
+      V: ['Mixolydien', 'Phrygien Dominant'],
+      vi: ['Éolien'],
       'vii°': ['Locrien'],
     };
 
@@ -345,12 +360,12 @@ export class TheoryService {
 
   private getTensionForDegree(degree: string): 'stable' | 'tense' | 'restless' {
     const tense: Record<string, 'stable' | 'tense' | 'restless'> = {
-      'I': 'stable',
-      'ii': 'restless',
-      'iii': 'restless',
-      'IV': 'restless',
-      'V': 'tense',
-      'vi': 'stable',
+      I: 'stable',
+      ii: 'restless',
+      iii: 'restless',
+      IV: 'restless',
+      V: 'tense',
+      vi: 'stable',
       'vii°': 'tense',
     };
 
@@ -358,8 +373,8 @@ export class TheoryService {
   }
 
   private getOverallFeeling(analysis: any[]) {
-    const tenseCount = analysis.filter(a => a.tension === 'tense').length;
-    const stableCount = analysis.filter(a => a.tension === 'stable').length;
+    const tenseCount = analysis.filter((a) => a.tension === 'tense').length;
+    const stableCount = analysis.filter((a) => a.tension === 'stable').length;
 
     if (tenseCount > stableCount) {
       return 'Tense, dramatique';

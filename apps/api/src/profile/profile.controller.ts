@@ -25,10 +25,7 @@ export class ProfileController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update current user profile (alias for /users/me)' })
-  async updateProfile(
-    @Request() req,
-    @Body() updateProfileDto: UpdateProfileDto,
-  ) {
+  async updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
     return this.usersService.updateProfile(req.user.userId, updateProfileDto);
   }
 

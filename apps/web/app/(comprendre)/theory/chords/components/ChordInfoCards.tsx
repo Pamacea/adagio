@@ -41,7 +41,14 @@ export function ChordInfoCards({
     },
     {
       label: 'Tension',
-      value: tension === 'stable' ? 'Stable' : tension === 'tense' ? 'Tendu' : tension === 'dissonant' ? 'Dissonant' : 'Ambigu',
+      value:
+        tension === 'stable'
+          ? 'Stable'
+          : tension === 'tense'
+            ? 'Tendu'
+            : tension === 'dissonant'
+              ? 'Dissonant'
+              : 'Ambigu',
       detail: 'caractère',
       color: 'amber',
       dotColor: 'bg-amber-500',
@@ -82,7 +89,9 @@ export function ChordInfoCards({
           >
             <div className="flex items-center gap-2 mb-3">
               <span className={cn('w-2 h-2 rounded-none', card.dotColor)}></span>
-              <h4 className="text-sm font-bold text-white uppercase tracking-wider">{card.label}</h4>
+              <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                {card.label}
+              </h4>
             </div>
             <p className="text-3xl font-bold text-white mb-2">{card.value}</p>
             <p className="text-sm text-gray-400">{card.detail}</p>

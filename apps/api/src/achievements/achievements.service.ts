@@ -100,11 +100,7 @@ export class AchievementsService {
     }));
   }
 
-  async updateProgress(
-    userId: string,
-    achievementId: string,
-    progressDelta: number,
-  ) {
+  async updateProgress(userId: string, achievementId: string, progressDelta: number) {
     // Check if achievement exists
     const achievement = await prisma.achievement.findUnique({
       where: { id: achievementId },
@@ -234,16 +230,19 @@ export class AchievementsService {
     const level = userPreferences?.level || 1;
 
     // Group by category
-    const byCategory = userAchievements.reduce((acc, ua) => {
-      const cat = ua.achievement.category;
-      if (!acc[cat]) {
-        acc[cat] = { unlocked: 0, total: 0, inProgress: 0 };
-      }
-      acc[cat].total++;
-      if (ua.unlockedAt) acc[cat].unlocked++;
-      else if (ua.progress > 0) acc[cat].inProgress++;
-      return acc;
-    }, {} as Record<string, { unlocked: number; total: number; inProgress: number }>);
+    const byCategory = userAchievements.reduce(
+      (acc, ua) => {
+        const cat = ua.achievement.category;
+        if (!acc[cat]) {
+          acc[cat] = { unlocked: 0, total: 0, inProgress: 0 };
+        }
+        acc[cat].total++;
+        if (ua.unlockedAt) acc[cat].unlocked++;
+        else if (ua.progress > 0) acc[cat].inProgress++;
+        return acc;
+      },
+      {} as Record<string, { unlocked: number; total: number; inProgress: number }>
+    );
 
     // Get total achievements per category
     const categoryTotals = await prisma.achievement.groupBy({

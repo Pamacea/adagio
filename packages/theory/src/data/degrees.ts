@@ -42,8 +42,8 @@ export const OFF_SCALE_COLOR = '#3a3a3a';
  * Note: CHORD_QUALITY_COLORS dans emotion-mapping.ts est la version principale
  */
 export const CHORD_DEGREE_COLORS: Record<'major' | 'minor' | 'diminished', string> = {
-  major: '#F59E0B',    // Gold/Orange
-  minor: '#3B82F6',    // Blue
+  major: '#F59E0B', // Gold/Orange
+  minor: '#3B82F6', // Blue
   diminished: '#64748B', // Dark gray
 };
 

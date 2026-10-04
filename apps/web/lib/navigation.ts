@@ -54,9 +54,7 @@ export const PILLARS: NavPillar[] = [
     label: 'APPRENDRE',
     href: '/lessons',
     icon: Icons.Lessons,
-    children: [
-      { label: 'LEÇONS', href: '/lessons', icon: Icons.Lessons },
-    ],
+    children: [{ label: 'LEÇONS', href: '/lessons', icon: Icons.Lessons }],
   },
 ];
 

@@ -20,10 +20,13 @@ export function QuizBlock({ questions, passingScore = 70, onComplete }: QuizBloc
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
 
-  const handleSelect = useCallback((questionIndex: number, answerIndex: number) => {
-    if (showResults) return;
-    setSelectedAnswers(prev => ({ ...prev, [questionIndex]: answerIndex }));
-  }, [showResults]);
+  const handleSelect = useCallback(
+    (questionIndex: number, answerIndex: number) => {
+      if (showResults) return;
+      setSelectedAnswers((prev) => ({ ...prev, [questionIndex]: answerIndex }));
+    },
+    [showResults]
+  );
 
   const handleSubmit = useCallback(() => {
     // Vérifier que toutes les questions sont répondues
@@ -74,7 +77,9 @@ export function QuizBlock({ questions, passingScore = 70, onComplete }: QuizBloc
         {showResults ? (
           <div className="space-y-6">
             {/* Résultat */}
-            <div className={`p-6 border-2 ${passed ? 'border-toxic bg-toxic/10' : 'border-blood bg-blood/10'} text-center`}>
+            <div
+              className={`p-6 border-2 ${passed ? 'border-toxic bg-toxic/10' : 'border-blood bg-blood/10'} text-center`}
+            >
               <p className="text-sm text-gray uppercase mb-2">
                 {passed ? 'FÉLICITATIONS!' : 'CONTINUEZ VOS EFFORTS'}
               </p>
@@ -98,9 +103,11 @@ export function QuizBlock({ questions, passingScore = 70, onComplete }: QuizBloc
                     className={`p-4 border-2 ${isCorrect ? 'border-toxic bg-toxic/5' : 'border-blood bg-blood/5'}`}
                   >
                     <div className="flex items-start gap-3 mb-3">
-                      <span className={`flex-shrink-0 w-6 h-6 flex items-center justify-center text-sm font-bold ${
-                        isCorrect ? 'bg-toxic text-black' : 'bg-blood text-white'
-                      }`}>
+                      <span
+                        className={`flex-shrink-0 w-6 h-6 flex items-center justify-center text-sm font-bold ${
+                          isCorrect ? 'bg-toxic text-black' : 'bg-blood text-white'
+                        }`}
+                      >
                         {isCorrect ? <Icons.Check size="sm" /> : <Icons.Close size="sm" />}
                       </span>
                       <p className="font-bold text-white">{q.question}</p>
@@ -118,7 +125,9 @@ export function QuizBlock({ questions, passingScore = 70, onComplete }: QuizBloc
                                 : 'text-gray'
                           }`}
                         >
-                          {oi === q.correctAnswer && <Icons.Check size="sm" className="mr-2 inline" />}
+                          {oi === q.correctAnswer && (
+                            <Icons.Check size="sm" className="mr-2 inline" />
+                          )}
                           {option}
                         </div>
                       ))}
@@ -148,16 +157,16 @@ export function QuizBlock({ questions, passingScore = 70, onComplete }: QuizBloc
               <span className="text-gray">
                 {Object.keys(selectedAnswers).length} / {questions.length} répondues
               </span>
-              <span className="text-toxic font-bold">
-                Score requis: {passingScore}%
-              </span>
+              <span className="text-toxic font-bold">Score requis: {passingScore}%</span>
             </div>
 
             {/* Barre de progression */}
             <div className="h-2 border-2 border-steel bg-blackness">
               <div
                 className="h-full bg-toxic border-r border-blood transition-all duration-300"
-                style={{ width: `${(Object.keys(selectedAnswers).length / questions.length) * 100}%` }}
+                style={{
+                  width: `${(Object.keys(selectedAnswers).length / questions.length) * 100}%`,
+                }}
               />
             </div>
 

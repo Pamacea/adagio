@@ -14,7 +14,8 @@ export const HARMONY_RULES_SEED = [
     degree: 'ii',
     tonality: 'major',
     sensation: 'Départ contraint',
-    advice: 'Prépare le V. Utilisez le Dorien pour improviser. Peut remplacer le IV progressivement.',
+    advice:
+      'Prépare le V. Utilisez le Dorien pour improviser. Peut remplacer le IV progressivement.',
   },
   {
     degree: 'iii',
@@ -26,7 +27,8 @@ export const HARMONY_RULES_SEED = [
     degree: 'IV',
     tonality: 'major',
     sensation: 'Aventure : Vous quittez la maison',
-    advice: 'Sens de départ. Utilisez le Lydien pour une couleur dreamy. Évitez le III (préférez le ii pour le mouvement).',
+    advice:
+      'Sens de départ. Utilisez le Lydien pour une couleur dreamy. Évitez le III (préférez le ii pour le mouvement).',
   },
   {
     degree: 'V',
@@ -38,13 +40,15 @@ export const HARMONY_RULES_SEED = [
     degree: 'vi',
     tonality: 'major',
     sensation: 'Tristesse résignée',
-    advice: 'La relative mineure du I. Mélancolique mais beau. Ne terminez pas ici - ramenez vers le I.',
+    advice:
+      'La relative mineure du I. Mélancolique mais beau. Ne terminez pas ici - ramenez vers le I.',
   },
   {
     degree: 'vii°',
     tonality: 'major',
     sensation: 'Suspens dramatique',
-    advice: 'Tension maximale. Résolution sur le I ou vi. Utilisez avec modération - c\'est intense!',
+    advice:
+      "Tension maximale. Résolution sur le I ou vi. Utilisez avec modération - c'est intense!",
   },
 
   // === MINOR KEY ===
@@ -63,26 +67,29 @@ export const HARMONY_RULES_SEED = [
   {
     degree: 'III',
     tonality: 'minor',
-    sensation: 'Lueur d\'espoir',
+    sensation: "Lueur d'espoir",
     advice: 'Moment de soulagement dans la mineur. La relative majeure du bIII est très puissant!',
   },
   {
     degree: 'iv',
     tonality: 'minor',
-    sensation: 'Lueur d\'espoir',
-    advice: 'Évitez ou utilisez avec précaution. Le iv n\'appartient pas vraiment à la tonalité mineure.',
+    sensation: "Lueur d'espoir",
+    advice:
+      "Évitez ou utilisez avec précaution. Le iv n'appartient pas vraiment à la tonalité mineure.",
   },
   {
     degree: 'v',
     tonality: 'minor',
     sensation: 'Tension sombre',
-    advice: 'Souvent remplacé par le V7 (majeur) pour plus de tension. Le V est plus stable ici qu\'en majeur.',
+    advice:
+      "Souvent remplacé par le V7 (majeur) pour plus de tension. Le V est plus stable ici qu'en majeur.",
   },
   {
     degree: 'VI',
     tonality: 'minor',
     sensation: 'Évasion momentanée',
-    advice: 'La relative majeure du i. Moment de lumière dans la tristesse. Bon pour les contrastes.',
+    advice:
+      'La relative majeure du i. Moment de lumière dans la tristesse. Bon pour les contrastes.',
   },
   {
     degree: 'VII',

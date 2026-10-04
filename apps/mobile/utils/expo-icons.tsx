@@ -42,36 +42,36 @@ export type IconName =
   | 'success';
 
 const ICONS: Record<IconName, string> = {
-  'home': '🏠',
-  'music': '🎵',
-  'compose': '🎼',
-  'library': '📚',
-  'user': '👤',
-  'settings': '⚙️',
-  'close': '✕',
-  'check': '✓',
+  home: '🏠',
+  music: '🎵',
+  compose: '🎼',
+  library: '📚',
+  user: '👤',
+  settings: '⚙️',
+  close: '✕',
+  check: '✓',
   'chevron-right': '→',
   'chevron-left': '←',
   'chevron-down': '↓',
-  'search': '🔍',
-  'filter': '🔽',
-  'star': '☆',
+  search: '🔍',
+  filter: '🔽',
+  star: '☆',
   'star-filled': '★',
-  'heart': '🤍',
+  heart: '🤍',
   'heart-filled': '❤️',
-  'share': '📤',
-  'play': '▶️',
-  'pause': '⏸️',
-  'stop': '⏹️',
-  'refresh': '🔄',
-  'trash': '🗑️',
-  'edit': '✏️',
-  'plus': '+',
-  'minus': '−',
-  'info': 'ℹ️',
-  'warning': '⚠️',
-  'error': '❌',
-  'success': '✅',
+  share: '📤',
+  play: '▶️',
+  pause: '⏸️',
+  stop: '⏹️',
+  refresh: '🔄',
+  trash: '🗑️',
+  edit: '✏️',
+  plus: '+',
+  minus: '−',
+  info: 'ℹ️',
+  warning: '⚠️',
+  error: '❌',
+  success: '✅',
 };
 
 export function getIcon(name: IconName): string {
@@ -85,9 +85,5 @@ export interface IconProps {
 }
 
 export function Icon({ name, size = 24, color = '#000' }: IconProps) {
-  return (
-    <Text style={{ fontSize: size, color }}>
-      {getIcon(name)}
-    </Text>
-  );
+  return <Text style={{ fontSize: size, color }}>{getIcon(name)}</Text>;
 }

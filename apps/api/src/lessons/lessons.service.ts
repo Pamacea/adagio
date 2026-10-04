@@ -66,7 +66,7 @@ export class LessonsService {
               }
             : null,
         };
-      }),
+      })
     );
 
     return lessonsWithProgress;
@@ -137,7 +137,7 @@ export class LessonsService {
       completedSections?: string[];
       status?: string;
       xp?: number;
-    },
+    }
   ) {
     const lesson = await prisma.lesson.findUnique({
       where: { slug },
@@ -204,7 +204,7 @@ export class LessonsService {
       completedSections?: string[];
       status?: string;
       xp?: number;
-    },
+    }
   ) {
     // Check if progress exists
     const existing = await prisma.lessonProgress.findUnique({

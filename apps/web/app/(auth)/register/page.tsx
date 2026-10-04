@@ -35,9 +35,7 @@ export default function RegisterPage() {
           <div className="max-w-md w-full text-center">
             <div className="section-frame p-8 border-2 border-toxic">
               <Icons.User size="lg" className="mx-auto mb-4 text-toxic" />
-              <h1 className="text-2xl font-metal text-white uppercase mb-2">
-                Deja Connecte
-              </h1>
+              <h1 className="text-2xl font-metal text-white uppercase mb-2">Deja Connecte</h1>
               <p className="text-gray mb-4">
                 Vous etes connecte en tant que <span className="text-toxic">{user?.email}</span>
               </p>
@@ -45,11 +43,7 @@ export default function RegisterPage() {
                 Pour creer un nouveau compte, deconnectez-vous d'abord.
               </p>
               <div className="flex flex-col gap-2">
-                <MetalButton
-                  onClick={() => router.push('/profile')}
-                >
-                  Mon Profil
-                </MetalButton>
+                <MetalButton onClick={() => router.push('/profile')}>Mon Profil</MetalButton>
                 <button
                   onClick={() => signOutMutation.mutate()}
                   disabled={signOutMutation.isPending}
@@ -66,7 +60,7 @@ export default function RegisterPage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -100,13 +94,13 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(data.message || data.error || 'Erreur d\'inscription');
+        throw new Error(data.message || data.error || "Erreur d'inscription");
       }
 
       // Redirect to login or home after successful registration
       router.push('/login?registered=true');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur d\'inscription');
+      setError(err instanceof Error ? err.message : "Erreur d'inscription");
     } finally {
       setLoading(false);
     }
@@ -120,12 +114,8 @@ export default function RegisterPage() {
         <div className="max-w-md w-full">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-metal text-white tracking-tighter mb-2">
-              INSCRIPTION
-            </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Rejoignez ADAGIO
-            </p>
+            <h1 className="text-4xl font-metal text-white tracking-tighter mb-2">INSCRIPTION</h1>
+            <p className="text-gray text-sm uppercase tracking-widest">Rejoignez ADAGIO</p>
           </div>
 
           {/* Register Card */}
@@ -142,7 +132,10 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Username */}
                 <div>
-                  <label htmlFor="username" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="username"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Nom d'utilisateur
                   </label>
                   <input
@@ -161,7 +154,10 @@ export default function RegisterPage() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="email"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Email
                   </label>
                   <input
@@ -178,7 +174,10 @@ export default function RegisterPage() {
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="password"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Mot de passe
                   </label>
                   <input
@@ -199,7 +198,10 @@ export default function RegisterPage() {
 
                 {/* Confirm Password */}
                 <div>
-                  <label htmlFor="confirmPassword" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Confirmer le mot de passe
                   </label>
                   <input
@@ -226,8 +228,8 @@ export default function RegisterPage() {
                     J'accepte les{' '}
                     <Link href="/terms" className="text-rust hover:text-white">
                       conditions d'utilisation
-                    </Link>
-                    {' '}et la{' '}
+                    </Link>{' '}
+                    et la{' '}
                     <Link href="/privacy" className="text-rust hover:text-white">
                       politique de confidentialite
                     </Link>
@@ -285,7 +287,10 @@ export default function RegisterPage() {
 
           {/* Back to home */}
           <div className="text-center mt-4">
-            <Link href="/" className="text-xs text-gray hover:text-white transition-colors flex items-center justify-center gap-1">
+            <Link
+              href="/"
+              className="text-xs text-gray hover:text-white transition-colors flex items-center justify-center gap-1"
+            >
               <Icons.ArrowLeft size="sm" />
               Retour a l'accueil
             </Link>

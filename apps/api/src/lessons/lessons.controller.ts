@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Patch,
-  Param,
-  Query,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Get, Post, Patch, Param, Query, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { LessonsService } from './lessons.service';
@@ -22,10 +13,7 @@ export class LessonsController {
   @ApiOperation({ summary: 'Get all lessons' })
   @ApiQuery({ name: 'category', required: false })
   @ApiQuery({ name: 'level', required: false })
-  async getLessons(
-    @Query('category') category?: string,
-    @Query('level') level?: string,
-  ) {
+  async getLessons(@Query('category') category?: string, @Query('level') level?: string) {
     return this.lessonsService.getLessons(category, level);
   }
 
@@ -65,7 +53,7 @@ export class LessonsController {
   async updateProgress(
     @Request() req,
     @Param('slug') slug: string,
-    @Query() dto: UpdateLessonProgressDto,
+    @Query() dto: UpdateLessonProgressDto
   ) {
     return this.lessonsService.updateProgressBySlug(req.user.userId, slug, dto);
   }

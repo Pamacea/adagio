@@ -58,24 +58,23 @@ export function TriadsExtensions({
               key={extension}
               className={cn(
                 'border-2 rounded-none transition-all duration-200',
-                isActive
-                  ? 'border-amber-400/50 bg-amber-400/10'
-                  : 'border-steel/30 bg-void/50'
+                isActive ? 'border-amber-400/50 bg-amber-400/10' : 'border-steel/30 bg-void/50'
               )}
             >
               {/* Extension label */}
               <div className="flex items-center justify-between px-3 py-2 border-b border-steel/20">
-                <span className={cn(
-                  'text-sm font-semibold',
-                  isActive ? 'text-amber-400' : 'text-gray-400'
-                )}>
+                <span
+                  className={cn(
+                    'text-sm font-semibold',
+                    isActive ? 'text-amber-400' : 'text-gray-400'
+                  )}
+                >
                   {TRIAD_EXTENSION_LABELS[extension]} ({extension})
                 </span>
-                <span className={cn(
-                  'text-xs',
-                  isActive ? 'text-amber-400' : 'text-gray-500'
-                )}>
-                  {currentAlteration ? ALTERATIONS.find(a => a.value === currentAlteration)?.sym : '—'}
+                <span className={cn('text-xs', isActive ? 'text-amber-400' : 'text-gray-500')}>
+                  {currentAlteration
+                    ? ALTERATIONS.find((a) => a.value === currentAlteration)?.sym
+                    : '—'}
                 </span>
               </div>
 

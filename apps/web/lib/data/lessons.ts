@@ -12,7 +12,7 @@ export interface Lesson {
   description?: string;
   category: LessonCategory;
   level: LessonLevel;
-  duration: number;  // en minutes
+  duration: number; // en minutes
   xp: number;
   topics: string[];
   order: number;
@@ -48,7 +48,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 15,
     xp: 50,
-    description: 'Decouvrez les 7 modes grecs et leurs emotions caracteristiques. Apprenez a les utiliser dans vos compositions.',
+    description:
+      'Decouvrez les 7 modes grecs et leurs emotions caracteristiques. Apprenez a les utiliser dans vos compositions.',
     topics: ['Ionien', 'Dorien', 'Phrygien', 'Lydien', 'Mixolydien', 'Eolien', 'Locrien'],
     order: 1,
     progress: null,
@@ -61,7 +62,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 20,
     xp: 75,
-    description: 'Maîtrisez l\'outil le plus puissant pour comprendre les relations harmoniques entre les tonalites.',
+    description:
+      "Maîtrisez l'outil le plus puissant pour comprendre les relations harmoniques entre les tonalites.",
     topics: ['Cycle des quintes', 'Tonalites voisines', 'Armure', 'Modulation'],
     order: 2,
     progress: {
@@ -82,7 +84,7 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 25,
     xp: 80,
-    description: 'Comprenez et identifiez tous les intervalles. La base de l\'oreille musicale.',
+    description: "Comprenez et identifiez tous les intervalles. La base de l'oreille musicale.",
     topics: ['Intervalles simples', 'Intervalles composes', 'Renversement', 'Oreille relative'],
     order: 3,
     progress: {
@@ -103,7 +105,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'INTERMEDIATE',
     duration: 35,
     xp: 120,
-    description: 'Utilisez les modes pour creer des riffs metal epoustouflants. Phrygien, Locrien et plus.',
+    description:
+      'Utilisez les modes pour creer des riffs metal epoustouflants. Phrygien, Locrien et plus.',
     topics: ['Phrygien dominan', 'Locrien', 'Double harmonique', 'Pentatoniques modales'],
     order: 4,
     progress: {
@@ -138,7 +141,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 30,
     xp: 100,
-    description: 'Apprenez a trouver toutes les notes depuis la position C. Fondamental pour improviser.',
+    description:
+      'Apprenez a trouver toutes les notes depuis la position C. Fondamental pour improviser.',
     topics: ['Position C', 'Tetes de colonne', 'Pattern 5-notes', 'Octaves'],
     order: 6,
     progress: {
@@ -178,7 +182,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'INTERMEDIATE',
     duration: 35,
     xp: 110,
-    description: 'Les triades sont la base du rock et du metal. Apprenez-les partout sur le manche.',
+    description:
+      'Les triades sont la base du rock et du metal. Apprenez-les partout sur le manche.',
     topics: ['Triades majeures', 'Triades mineures', 'Inversions', 'Voice leading'],
     order: 8,
     progress: null,
@@ -206,7 +211,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 20,
     xp: 60,
-    description: 'Les accords essentiels que tout guitariste doit connaitre. E, A, D, G, C, Em, Am.',
+    description:
+      'Les accords essentiels que tout guitariste doit connaitre. E, A, D, G, C, Em, Am.',
     topics: ['Accords majeurs', 'Accords mineurs', 'Progressions simples', 'Rythmique de base'],
     order: 10,
     progress: {
@@ -227,7 +233,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 25,
     xp: 70,
-    description: 'Le power chord est l\'arme du guitariste rock/metal. Maîtrisez-le et ses variantes.',
+    description:
+      "Le power chord est l'arme du guitariste rock/metal. Maîtrisez-le et ses variantes.",
     topics: ['Power chord basic', 'Power chord inverse', 'Power chrod 3 notes', 'Fry roots'],
     order: 11,
     progress: {
@@ -248,7 +255,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'INTERMEDIATE',
     duration: 30,
     xp: 100,
-    description: 'Les shell chords (3eme et 7eme) sont la base du comping jazz. Economiques et expressifs.',
+    description:
+      'Les shell chords (3eme et 7eme) sont la base du comping jazz. Economiques et expressifs.',
     topics: ['Shell chords', 'Root position', 'Inversions', 'Extensions'],
     order: 12,
     progress: {
@@ -304,7 +312,8 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'INTERMEDIATE',
     duration: 30,
     xp: 90,
-    description: 'Noirs pointees, croches, triolets, syncope. Lisez et jouez des rythmes complexes.',
+    description:
+      'Noirs pointees, croches, triolets, syncope. Lisez et jouez des rythmes complexes.',
     topics: ['Syncope', 'Triolets', 'Swing', 'Polymetries'],
     order: 15,
     progress: {
@@ -340,7 +349,12 @@ export const LESSONS_DATA: Lesson[] = [
     duration: 25,
     xp: 85,
     description: 'Les progressions qui donnent des frissons. Modes mineurs, chromatisme, power.',
-    topics: ['Phrygien espagnol', 'Chromatic descending', 'Power metal progressions', 'Doom progressions'],
+    topics: [
+      'Phrygien espagnol',
+      'Chromatic descending',
+      'Power metal progressions',
+      'Doom progressions',
+    ],
     order: 17,
     progress: null,
   },
@@ -349,12 +363,13 @@ export const LESSONS_DATA: Lesson[] = [
   {
     id: '18',
     slug: 'composition-structure-de-base',
-    title: 'Structure d\'une Chanson',
+    title: "Structure d'une Chanson",
     category: 'COMPOSITION',
     level: 'BEGINNER',
     duration: 25,
     xp: 70,
-    description: 'Verse, chorus, bridge... Apprenez les structures standards et comment les utiliser.',
+    description:
+      'Verse, chorus, bridge... Apprenez les structures standards et comment les utiliser.',
     topics: ['Verse-Chorus', 'AABA', 'Rondo', 'Bridge'],
     order: 18,
     progress: {
@@ -388,13 +403,22 @@ export const LESSONS_DATA: Lesson[] = [
     level: 'BEGINNER',
     duration: 30,
     xp: 100,
-    description: 'Comprenez les fondements mathematiques de la musique: frequences, intervalles et harmoniques.',
+    description:
+      'Comprenez les fondements mathematiques de la musique: frequences, intervalles et harmoniques.',
     topics: ['Frequences', 'Ratios harmoniques', 'Serie harmonique', 'Temperament'],
     order: 20,
     progress: null,
   },
 ];
 
-export const LESSON_CATEGORIES = ['ALL', 'THEORY', 'FRETBOARD', 'CHORDS', 'NOTATION', 'PROGRESSIONS', 'COMPOSITION'] as const;
+export const LESSON_CATEGORIES = [
+  'ALL',
+  'THEORY',
+  'FRETBOARD',
+  'CHORDS',
+  'NOTATION',
+  'PROGRESSIONS',
+  'COMPOSITION',
+] as const;
 
 export const LESSON_LEVELS = ['ALL', 'BEGINNER', 'INTERMEDIATE', 'ADVANCED'] as const;

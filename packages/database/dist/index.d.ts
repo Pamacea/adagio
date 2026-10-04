@@ -19,6 +19,7 @@ export declare function getUserWithPreferences(userId: string): Promise<({
         showIntervals: boolean;
         showNotes: boolean;
         showDegrees: boolean;
+        instrument: string;
         tuning: string;
         fretCount: number;
         volume: number;
@@ -48,6 +49,7 @@ export declare function getOrCreatePreferences(userId: string): Promise<{
     showIntervals: boolean;
     showNotes: boolean;
     showDegrees: boolean;
+    instrument: string;
     tuning: string;
     fretCount: number;
     volume: number;

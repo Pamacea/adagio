@@ -3,10 +3,7 @@
 // Business logic for triads and chord extensions
 // ============================================================================
 
-import type {
-  NoteName,
-  Interval,
-} from '@adagio/types';
+import type { NoteName, Interval } from '@adagio/types';
 import { CHROMATIC_SCALE } from '@adagio/theory';
 
 // ============================================================================
@@ -68,45 +65,49 @@ function getNoteIndex(note: NoteName): number {
   if (index !== -1) return index;
 
   const flatMap: Record<string, number> = {
-    'Db': 1, 'Eb': 3, 'Gb': 6, 'Ab': 8, 'Bb': 10,
+    Db: 1,
+    Eb: 3,
+    Gb: 6,
+    Ab: 8,
+    Bb: 10,
   };
   return flatMap[note] ?? 0;
 }
 
 function transposeNote(note: NoteName, semitones: number): NoteName {
   const index = getNoteIndex(note);
-  const newIndex = ((index + semitones) % 12 + 12) % 12;
+  const newIndex = (((index + semitones) % 12) + 12) % 12;
   return CHROMATIC_SCALE[newIndex] as NoteName;
 }
 
 const INTERVAL_SEMITONES: Record<Interval, number> = {
   '1': 0,
-  'b2': 1,
+  b2: 1,
   '2': 2,
-  'b3': 3,
+  b3: 3,
   '3': 4,
   '4': 5,
   '#4': 6,
-  'b5': 6,
+  b5: 6,
   '5': 7,
   '#5': 8,
-  'b6': 8,
+  b6: 8,
   '6': 9,
   '#6': 10,
-  'bb6': 9,
-  'bb7': 10,
-  'b7': 10,
+  bb6: 9,
+  bb7: 10,
+  b7: 10,
   '7': 11,
-  'b4': 4,
+  b4: 4,
   '#1': 1,
   '#2': 3,
   '#3': 5,
-  'b9': 13,
+  b9: 13,
   '9': 14,
   '#9': 15,
   '11': 17,
   '#11': 18,
-  'b13': 20,
+  b13: 20,
   '13': 21,
 };
 
@@ -119,7 +120,7 @@ const INTERVAL_SEMITONES: Record<Interval, number> = {
  */
 export function buildTriad(root: NoteName, quality: TriadQuality): NoteName[] {
   const intervals = TRIAD_INTERVALS[quality];
-  return intervals.map(interval => {
+  return intervals.map((interval) => {
     const semitones = INTERVAL_SEMITONES[interval];
     return transposeNote(root, semitones);
   });
@@ -257,13 +258,13 @@ export function getExtendedChordName(
 
   // Mapper vers les qualités d'accords standards
   let chordQuality = '';
-  const extNotes = extensions.map(e => getAlterationInterval(e.extension, e.alteration));
+  const extNotes = extensions.map((e) => getAlterationInterval(e.extension, e.alteration));
 
   // Logique de dénomination des accords
-  const hasSeventh = extNotes.some(i => i === 'b7' || i === '7');
-  const hasNinth = extNotes.some(i => i === '9' || i === 'b9' || i === '#9');
-  const hasEleventh = extNotes.some(i => i === '11' || i === '#11');
-  const hasThirteenth = extNotes.some(i => i === '13' || i === 'b13');
+  const hasSeventh = extNotes.some((i) => i === 'b7' || i === '7');
+  const hasNinth = extNotes.some((i) => i === '9' || i === 'b9' || i === '#9');
+  const hasEleventh = extNotes.some((i) => i === '11' || i === '#11');
+  const hasThirteenth = extNotes.some((i) => i === '13' || i === 'b13');
 
   if (triadQuality === 'major') {
     if (hasSeventh) {
@@ -340,16 +341,29 @@ export function getExtendedChordInfo(
   // Ordre harmonique naturel des degrés
   const HARMONIC_ORDER: Interval[] = [
     '1', // fondamentale
-    'b2', '2', // seconde
-    'b3', '3', // tierce
-    'b4', '4', // quarte
+    'b2',
+    '2', // seconde
+    'b3',
+    '3', // tierce
+    'b4',
+    '4', // quarte
     '#4', // quarte augmentée
-    'b5', '5', '#5', // quinte
-    'b6', '6', '#6', // sixte
-    'bb7', 'b7', '7', // septième
-    'b9', '9', '#9', // neuvième
-    '11', '#11', // onzième
-    'b13', '13', // treizième
+    'b5',
+    '5',
+    '#5', // quinte
+    'b6',
+    '6',
+    '#6', // sixte
+    'bb7',
+    'b7',
+    '7', // septième
+    'b9',
+    '9',
+    '#9', // neuvième
+    '11',
+    '#11', // onzième
+    'b13',
+    '13', // treizième
   ];
 
   // Construire toutes les notes et intervalles
@@ -402,9 +416,9 @@ export function getExtendedChordInfo(
     return aIndex - bIndex;
   });
 
-  const sortedNotes = indexedNotes.map(item => item.note);
+  const sortedNotes = indexedNotes.map((item) => item.note);
   const sortedIntervals = indexedNotes
-    .map(item => item.interval)
+    .map((item) => item.interval)
     .filter((interval): interval is Interval => typeof interval === 'string');
 
   const chordName = getExtendedChordName(root, quality, extensions);
@@ -456,7 +470,7 @@ export function calculateFretboardForTriad(
     }
   });
   // Ajouter les extensions
-  const extNotes = chordInfo.allNotes.filter(n => !chordInfo.triad.notes.includes(n));
+  const extNotes = chordInfo.allNotes.filter((n) => !chordInfo.triad.notes.includes(n));
   chordInfo.extensions.forEach((ext, i) => {
     const interval = getAlterationInterval(ext.extension, ext.alteration);
     if (extNotes[i]) {
@@ -505,13 +519,23 @@ export function calculateFretboardForTriad(
 // ============================================================================
 
 export const NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
-  'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-  'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-  'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RÉ♭',
+  D: 'RÉ',
+  'D#': 'RÉ♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };
 
 export function formatNoteFr(note: NoteName): string {
@@ -519,10 +543,7 @@ export function formatNoteFr(note: NoteName): string {
 }
 
 export function formatIntervalFr(interval: Interval): string {
-  return interval
-    .replace(/#/g, '♯')
-    .replace(/b/g, '♭')
-    .replace(/bb/g, '♭♭');
+  return interval.replace(/#/g, '♯').replace(/b/g, '♭').replace(/bb/g, '♭♭');
 }
 
 // ============================================================================
@@ -530,16 +551,37 @@ export function formatIntervalFr(interval: Interval): string {
 // ============================================================================
 
 export const COMMON_EXTENSION_PRESETS: Record<string, ExtensionConfig[]> = {
-  'Aucune': [],
+  Aucune: [],
   'Septième (7)': [{ extension: '7', alteration: 'flat' }],
   'Majeur 7 (maj7)': [{ extension: '7', alteration: 'natural' }],
   'Sixte (6)': [{ extension: '6', alteration: 'natural' }],
-  'Add9': [{ extension: '9', alteration: 'natural' }],
+  Add9: [{ extension: '9', alteration: 'natural' }],
   'Mineur 7 (m7)': [{ extension: '7', alteration: 'flat' }],
-  '9 (9e)': [{ extension: '7', alteration: 'flat' }, { extension: '9', alteration: 'natural' }],
-  '11 (11e)': [{ extension: '7', alteration: 'flat' }, { extension: '9', alteration: 'natural' }, { extension: '11', alteration: 'natural' }],
-  '13 (13e)': [{ extension: '7', alteration: 'flat' }, { extension: '9', alteration: 'natural' }, { extension: '11', alteration: 'natural' }, { extension: '13', alteration: 'natural' }],
-  '7#11': [{ extension: '7', alteration: 'flat' }, { extension: '11', alteration: 'sharp' }],
-  '7b9': [{ extension: '7', alteration: 'flat' }, { extension: '9', alteration: 'flat' }],
-  '7#9': [{ extension: '7', alteration: 'flat' }, { extension: '9', alteration: 'sharp' }],
+  '9 (9e)': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '9', alteration: 'natural' },
+  ],
+  '11 (11e)': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '9', alteration: 'natural' },
+    { extension: '11', alteration: 'natural' },
+  ],
+  '13 (13e)': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '9', alteration: 'natural' },
+    { extension: '11', alteration: 'natural' },
+    { extension: '13', alteration: 'natural' },
+  ],
+  '7#11': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '11', alteration: 'sharp' },
+  ],
+  '7b9': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '9', alteration: 'flat' },
+  ],
+  '7#9': [
+    { extension: '7', alteration: 'flat' },
+    { extension: '9', alteration: 'sharp' },
+  ],
 };

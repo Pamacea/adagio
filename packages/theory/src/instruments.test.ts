@@ -72,14 +72,14 @@ describe('FretboardCalculator - paramétrage instrument', () => {
 
   it('getFretboardNotesForKey accepte un tuning optionnel (rétro-compatible)', () => {
     const guitar = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
-    const guitarExplicit = getFretboardNotesForKey(
-      'C', ['1', '2', '3', '4', '5', '6', '7'], 12, [...GUITAR.tuningDisplay]
-    );
+    const guitarExplicit = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12, [
+      ...GUITAR.tuningDisplay,
+    ]);
     expect(guitar).toEqual(guitarExplicit);
 
-    const bass = getFretboardNotesForKey(
-      'C', ['1', '2', '3', '4', '5', '6', '7'], 12, [...BASS.tuningDisplay]
-    );
+    const bass = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12, [
+      ...BASS.tuningDisplay,
+    ]);
     expect(bass).toHaveLength(4 * 13);
     // Tonic C présente sur le manche de basse
     expect(bass.some((n) => n.name === 'C' && n.interval === '1')).toBe(true);

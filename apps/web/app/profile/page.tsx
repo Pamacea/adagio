@@ -7,7 +7,15 @@
 'use client';
 
 import { useState } from 'react';
-import { MetalNav, MetalFooter, MetalButton, Icons, PreferencesSection, AccountActions, AchievementsView } from '@/components';
+import {
+  MetalNav,
+  MetalFooter,
+  MetalButton,
+  Icons,
+  PreferencesSection,
+  AccountActions,
+  AchievementsView,
+} from '@/components';
 import { MetalLink } from '@/components/MetalButton';
 import { useUserProfile, useUserStats } from '@/lib';
 import { useRouter } from 'next/navigation';
@@ -17,7 +25,9 @@ export default function ProfilePage() {
   const { data: profile, isLoading: profileLoading, isAuthenticated } = useUserProfile();
   const { data: stats } = useUserStats();
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'stats' | 'achievements' | 'settings'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'stats' | 'achievements' | 'settings'>(
+    'profile'
+  );
   const [editMode, setEditMode] = useState(false);
 
   // Si pas connecté, afficher le bouton de connexion
@@ -27,24 +37,15 @@ export default function ProfilePage() {
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
           <div className="mx-auto text-center">
-            <div className="section-frame p-12 border-2 border-steel">
-              <Icons.User size="lg" className="mx-auto mb-6" />
-              <h1 className="text-3xl font-metal text-white uppercase mb-4">
-                Connexion Requise
-              </h1>
-              <p className="text-gray mb-8">
+            <div className="section-frame w-96 max-w-full mx-auto p-6 border-2 border-steel">
+              <Icons.User size="lg" className="mx-auto mb-3" />
+              <h1 className="text-xl font-metal text-white uppercase mb-2">Connexion Requise</h1>
+              <p className="text-gray text-sm mb-4">
                 Vous devez être connecté pour accéder à votre profil et vos paramètres.
               </p>
-              <div className="flex gap-4 justify-center">
-                <MetalButton
-                  onClick={() => router.push('/login')}
-                >
-                  SE CONNECTER
-                </MetalButton>
-                <MetalButton
-                  onClick={() => router.push('/register')}
-                  variant="outline"
-                >
+              <div className="flex gap-3 justify-center">
+                <MetalButton onClick={() => router.push('/login')}>SE CONNECTER</MetalButton>
+                <MetalButton onClick={() => router.push('/register')} variant="outline">
                   S'INSCRIRE
                 </MetalButton>
               </div>
@@ -62,7 +63,7 @@ export default function ProfilePage() {
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
           <div className="mx-auto">
-            <div className="section-frame p-12 text-center">
+            <div className="section-frame w-fit mx-auto p-6 text-center">
               <Icons.User size="lg" />
               <p className="text-gray mt-4">Chargement du profil...</p>
             </div>
@@ -80,19 +81,13 @@ export default function ProfilePage() {
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
           <div className="mx-auto text-center">
-            <div className="section-frame p-12 border-2 border-steel">
-              <Icons.User size="lg" className="mx-auto mb-6" />
-              <h1 className="text-3xl font-metal text-white uppercase mb-4">
-                Connexion Requise
-              </h1>
-              <p className="text-gray mb-8">
+            <div className="section-frame w-96 max-w-full mx-auto p-6 border-2 border-steel">
+              <Icons.User size="lg" className="mx-auto mb-3" />
+              <h1 className="text-xl font-metal text-white uppercase mb-2">Connexion Requise</h1>
+              <p className="text-gray text-sm mb-4">
                 Vous devez être connecté pour accéder à votre profil.
               </p>
-              <MetalButton
-                onClick={() => router.push('/login')}
-              >
-                SE CONNECTER
-              </MetalButton>
+              <MetalButton onClick={() => router.push('/login')}>SE CONNECTER</MetalButton>
             </div>
           </div>
         </main>
@@ -112,9 +107,7 @@ export default function ProfilePage() {
             <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
               PROFIL
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Votre progression ADAGIO
-            </p>
+            <p className="text-gray text-sm uppercase tracking-widest">Votre progression ADAGIO</p>
           </div>
 
           {/* Profile Header Card */}
@@ -123,9 +116,19 @@ export default function ProfilePage() {
               {/* Avatar */}
               <div className="w-24 h-24 border-4 border-blood bg-toxic flex items-center justify-center">
                 {profile.avatar ? (
-                  <img src={profile.avatar} alt={profile.username} className="w-full h-full object-cover" />
+                  <img
+                    src={profile.avatar}
+                    alt={profile.username}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
-                  <svg className="w-12 h-12 text-blackness" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg
+                    className="w-12 h-12 text-blackness"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0" />
                     <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2" />
                     <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8" />
@@ -140,7 +143,9 @@ export default function ProfilePage() {
                   {profile.username}
                 </h2>
                 <p className="text-blood font-bold uppercase mb-2">{profile.level}</p>
-                <p className="text-sm text-gray">Membre depuis {new Date(profile.joinedAt).toLocaleDateString('fr-FR')}</p>
+                <p className="text-sm text-gray">
+                  Membre depuis {new Date(profile.joinedAt).toLocaleDateString('fr-FR')}
+                </p>
               </div>
 
               {/* Level badge */}
@@ -235,7 +240,7 @@ export default function ProfilePage() {
                       Instruments
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {['Guitare', 'Basse', 'Piano', 'Chant'].map(inst => (
+                      {['Guitare', 'Basse', 'Piano', 'Chant'].map((inst) => (
                         <button
                           key={inst}
                           disabled={!editMode}
@@ -257,7 +262,7 @@ export default function ProfilePage() {
                       Genres preferes
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {['Metal', 'Rock', 'Jazz', 'Blues', 'Classique', 'Funk'].map(genre => (
+                      {['Metal', 'Rock', 'Jazz', 'Blues', 'Classique', 'Funk'].map((genre) => (
                         <button
                           key={genre}
                           disabled={!editMode}
@@ -325,11 +330,15 @@ export default function ProfilePage() {
                     </div>
                     <div className="border-2 border-steel bg-blackness p-4 text-center">
                       <p className="text-xs text-gray uppercase mb-1">Leçons</p>
-                      <p className="text-3xl font-metal text-white">{stats.lessons.completed}/{stats.lessons.total}</p>
+                      <p className="text-3xl font-metal text-white">
+                        {stats.lessons.completed}/{stats.lessons.total}
+                      </p>
                     </div>
                     <div className="border-2 border-steel bg-blackness p-4 text-center">
                       <p className="text-xs text-gray uppercase mb-1">Techniques</p>
-                      <p className="text-3xl font-metal text-white">{stats.techniques.learned}/{stats.techniques.total}</p>
+                      <p className="text-3xl font-metal text-white">
+                        {stats.techniques.learned}/{stats.techniques.total}
+                      </p>
                     </div>
                   </div>
 
@@ -340,7 +349,9 @@ export default function ProfilePage() {
                     </h3>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-gray">{stats.xp.currentLevelXP} XP</span>
-                      <span className="text-sm text-toxic font-bold">{stats.xp.xpToNextLevel} XP restants</span>
+                      <span className="text-sm text-toxic font-bold">
+                        {stats.xp.xpToNextLevel} XP restants
+                      </span>
                     </div>
                     <div className="h-4 border-2 border-steel bg-blackness">
                       <div
@@ -352,9 +363,7 @@ export default function ProfilePage() {
 
                   {/* Lessons Progress */}
                   <div className="section-frame p-6 mb-4">
-                    <h3 className="text-lg font-metal text-white uppercase mb-4">
-                      Leçons
-                    </h3>
+                    <h3 className="text-lg font-metal text-white uppercase mb-4">Leçons</h3>
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
                         <p className="text-2xl font-metal text-toxic">{stats.lessons.completed}</p>
@@ -365,7 +374,9 @@ export default function ProfilePage() {
                         <p className="text-xs text-gray">En cours</p>
                       </div>
                       <div>
-                        <p className="text-2xl font-metal text-white">{stats.lessons.completionPercent}%</p>
+                        <p className="text-2xl font-metal text-white">
+                          {stats.lessons.completionPercent}%
+                        </p>
                         <p className="text-xs text-gray">Complétion</p>
                       </div>
                     </div>
@@ -373,24 +384,28 @@ export default function ProfilePage() {
 
                   {/* Techniques Progress */}
                   <div className="section-frame p-6">
-                    <h3 className="text-lg font-metal text-white uppercase mb-4">
-                      Techniques
-                    </h3>
+                    <h3 className="text-lg font-metal text-white uppercase mb-4">Techniques</h3>
                     <div className="grid grid-cols-4 gap-4 text-center">
                       <div>
                         <p className="text-2xl font-metal text-white">{stats.techniques.learned}</p>
                         <p className="text-xs text-gray">Apprises</p>
                       </div>
                       <div>
-                        <p className="text-2xl font-metal text-toxic">{stats.techniques.mastered}</p>
+                        <p className="text-2xl font-metal text-toxic">
+                          {stats.techniques.mastered}
+                        </p>
                         <p className="text-xs text-gray">Maîtrisées</p>
                       </div>
                       <div>
-                        <p className="text-2xl font-metal text-rust">{stats.techniques.inProgress}</p>
+                        <p className="text-2xl font-metal text-rust">
+                          {stats.techniques.inProgress}
+                        </p>
                         <p className="text-xs text-gray">En cours</p>
                       </div>
                       <div>
-                        <p className="text-2xl font-metal text-white">{stats.techniques.completionPercent}%</p>
+                        <p className="text-2xl font-metal text-white">
+                          {stats.techniques.completionPercent}%
+                        </p>
                         <p className="text-xs text-gray">Complétion</p>
                       </div>
                     </div>
@@ -412,9 +427,7 @@ export default function ProfilePage() {
 
               {/* App info */}
               <div className="section-frame p-6">
-                <h3 className="text-lg font-metal text-white uppercase mb-4">
-                  Application
-                </h3>
+                <h3 className="text-lg font-metal text-white uppercase mb-4">Application</h3>
                 <div className="space-y-2 text-sm">
                   <p className="text-gray">Version: 0.1.0</p>
                   <p className="text-gray">Build: 2025.03.06</p>

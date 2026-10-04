@@ -20,10 +20,7 @@ import type { Config } from 'tailwindcss';
 const config: Config = {
   presets: [require('@adagio/ui/src/tailwind-preset')],
   darkMode: ['class'],
-  content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './features/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './features/**/*.{js,ts,jsx,tsx,mdx}'],
 };
 
 export default config;
@@ -45,6 +42,7 @@ The color palette is inspired by musical notation, instruments, and mood:
 ### Typography
 
 Music notation friendly fonts:
+
 - `sans` - Inter (primary UI font)
 - `serif` - Merriweather (content)
 - `mono` - JetBrains Mono (code/technical)
@@ -141,7 +139,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@adag
   <CardContent>
     <p>C - D - E - F - G - A - B - C</p>
   </CardContent>
-</Card>
+</Card>;
 ```
 
 ### Modal
@@ -149,15 +147,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@adag
 ```tsx
 import { Modal, Button } from '@adagio/ui';
 
-<Modal
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
-  title="Welcome to Adagio"
-  size="md"
->
+<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Welcome to Adagio" size="md">
   <p>Start your musical journey today!</p>
   <Button onClick={() => setIsOpen(false)}>Get Started</Button>
-</Modal>
+</Modal>;
 ```
 
 ### Fretboard
@@ -172,7 +165,7 @@ import type { FretboardNote } from '@adagio/types';
   showFretNumbers={true}
   showStringNumbers={true}
   onClickNote={(note) => console.log(note)}
-/>
+/>;
 ```
 
 ## Utilities
@@ -182,11 +175,7 @@ import type { FretboardNote } from '@adagio/types';
 ```tsx
 import { cn } from '@adagio/ui';
 
-const className = cn(
-  'base-class',
-  isActive && 'active-class',
-  'another-class'
-);
+const className = cn('base-class', isActive && 'active-class', 'another-class');
 ```
 
 ## License

@@ -28,11 +28,15 @@ function PillarDropdown({
 }) {
   const active =
     isActivePath(pathname, pillar.href) ||
-    pillar.children.some(child => isActivePath(pathname, child.href));
+    pillar.children.some((child) => isActivePath(pathname, child.href));
 
   if (pillar.children.length === 0) {
     return (
-      <Link href={pillar.href} className={`nav-link ${active ? 'active' : ''}`} onClick={onNavigate}>
+      <Link
+        href={pillar.href}
+        className={`nav-link ${active ? 'active' : ''}`}
+        onClick={onNavigate}
+      >
         <pillar.icon size="sm" />
         {pillar.label}
       </Link>
@@ -41,10 +45,20 @@ function PillarDropdown({
 
   return (
     <div className="group relative">
-      <Link href={pillar.href} className={`nav-link ${active ? 'active' : ''}`} onClick={onNavigate}>
+      <Link
+        href={pillar.href}
+        className={`nav-link ${active ? 'active' : ''}`}
+        onClick={onNavigate}
+      >
         <pillar.icon size="sm" />
         {pillar.label}
-        <svg className="w-3 h-3 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+          className="w-3 h-3 opacity-60"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
           <path d="m6 9 6 6 6-6" />
         </svg>
       </Link>
@@ -58,7 +72,7 @@ function PillarDropdown({
           <pillar.icon size="sm" />
           Vue d&apos;ensemble
         </Link>
-        {pillar.children.map(child => (
+        {pillar.children.map((child) => (
           <Link
             key={child.href}
             href={child.href}
@@ -95,15 +109,13 @@ export function MetalNav() {
             <Icons.Logo size="md" />
           </div>
           <div>
-            <h1 className="text-xl text-white font-metal tracking-tighter uppercase">
-              ADAGIO
-            </h1>
+            <h1 className="text-xl text-white font-metal tracking-tighter uppercase">ADAGIO</h1>
           </div>
         </Link>
 
         {/* Navigation desktop : 4 piliers */}
         <div className="hidden lg:flex items-center gap-0">
-          {PILLARS.map(pillar => (
+          {PILLARS.map((pillar) => (
             <PillarDropdown key={pillar.href} pillar={pillar} pathname={pathname} />
           ))}
         </div>
@@ -135,7 +147,7 @@ export function MetalNav() {
       {/* Mobile menu : regroupé par pilier */}
       {mobileMenuOpen && (
         <div className="lg:hidden max-h-[70vh] overflow-y-auto border-t-2 border-steel bg-blackness">
-          {PILLARS.map(pillar => (
+          {PILLARS.map((pillar) => (
             <div key={pillar.href} className="border-b border-steel">
               <Link
                 href={pillar.href}
@@ -147,7 +159,7 @@ export function MetalNav() {
               </Link>
               {pillar.children.length > 0 && (
                 <div className="pl-6 border-l-2 border-steel ml-4">
-                  {pillar.children.map(child => (
+                  {pillar.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href}
@@ -197,9 +209,7 @@ export function LocalNav({ items, title }: LocalNavProps) {
   return (
     <div className="border-b-2 border-steel bg-blackness">
       <div className="px-4 py-2">
-        <h2 className="text-xs text-gray font-mono tracking-widest uppercase mb-2">
-          {title}
-        </h2>
+        <h2 className="text-xs text-gray font-mono tracking-widest uppercase mb-2">{title}</h2>
         <div className="flex flex-wrap gap-1">
           {items.map((item) => (
             <Link

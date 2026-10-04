@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { prisma } from '@adagio/database';
 import * as bcrypt from 'bcrypt';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -76,7 +81,9 @@ export class UsersService {
       orderBy: { updatedAt: 'desc' },
     });
 
-    const learned = progress.filter(p => p.status === 'learned' || p.status === 'mastered').length;
+    const learned = progress.filter(
+      (p) => p.status === 'learned' || p.status === 'mastered'
+    ).length;
     const total = await prisma.technique.count();
 
     return {
@@ -84,8 +91,8 @@ export class UsersService {
       stats: {
         total,
         learned,
-        inProgress: progress.filter(p => p.status === 'in-progress').length,
-        mastered: progress.filter(p => p.status === 'mastered').length,
+        inProgress: progress.filter((p) => p.status === 'in-progress').length,
+        mastered: progress.filter((p) => p.status === 'mastered').length,
       },
     };
   }
@@ -115,7 +122,7 @@ export class UsersService {
     const totalTechniques = await prisma.technique.count();
     const masteredTechniques = techniqueProgress.filter((p) => p.status === 'mastered').length;
     const learnedTechniques = techniqueProgress.filter(
-      (p) => p.status === 'learned' || p.status === 'mastered',
+      (p) => p.status === 'learned' || p.status === 'mastered'
     ).length;
 
     // Lesson stats
@@ -157,7 +164,8 @@ export class UsersService {
         total: totalLessons,
         completed: completedLessons,
         inProgress: inProgressLessons,
-        completionPercent: totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0,
+        completionPercent:
+          totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0,
       },
       achievements: {
         total: totalAchievements,
@@ -270,9 +278,7 @@ export class UsersService {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const sortedSessions = [...sessions].sort(
-      (a, b) => b.date.getTime() - a.date.getTime(),
-    );
+    const sortedSessions = [...sessions].sort((a, b) => b.date.getTime() - a.date.getTime());
 
     let streak = 0;
     let currentDate = today;
@@ -282,7 +288,7 @@ export class UsersService {
       sessionDate.setHours(0, 0, 0, 0);
 
       const diffDays = Math.floor(
-        (currentDate.getTime() - sessionDate.getTime()) / (1000 * 60 * 60 * 24),
+        (currentDate.getTime() - sessionDate.getTime()) / (1000 * 60 * 60 * 24)
       );
 
       if (diffDays === 0 || diffDays === 1) {
@@ -296,7 +302,9 @@ export class UsersService {
     return streak;
   }
 
-  private async getPracticeThisWeek(userId: string): Promise<{ sessions: number; minutes: number }> {
+  private async getPracticeThisWeek(
+    userId: string
+  ): Promise<{ sessions: number; minutes: number }> {
     const now = new Date();
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
@@ -313,7 +321,9 @@ export class UsersService {
     };
   }
 
-  private async getPracticeThisMonth(userId: string): Promise<{ sessions: number; minutes: number }> {
+  private async getPracticeThisMonth(
+    userId: string
+  ): Promise<{ sessions: number; minutes: number }> {
     const now = new Date();
     const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
@@ -360,19 +370,22 @@ export class UsersService {
     return preferences;
   }
 
-  async updatePreferences(userId: string, preferencesData: {
-    theme?: string;
-    notation?: string;
-    sound?: string;
-    showIntervals?: boolean;
-    showNotes?: boolean;
-    showDegrees?: boolean;
-    instrument?: string;
-    tuning?: string;
-    fretCount?: number;
-    volume?: number;
-    metronomeVolume?: number;
-  }) {
+  async updatePreferences(
+    userId: string,
+    preferencesData: {
+      theme?: string;
+      notation?: string;
+      sound?: string;
+      showIntervals?: boolean;
+      showNotes?: boolean;
+      showDegrees?: boolean;
+      instrument?: string;
+      tuning?: string;
+      fretCount?: number;
+      volume?: number;
+      metronomeVolume?: number;
+    }
+  ) {
     const preferences = await prisma.userPreferences.upsert({
       where: { userId },
       create: {
@@ -412,20 +425,14 @@ export class UsersService {
     }
 
     // Verify current password
-    const isPasswordValid = await bcrypt.compare(
-      changePasswordDto.currentPassword,
-      user.password
-    );
+    const isPasswordValid = await bcrypt.compare(changePasswordDto.currentPassword, user.password);
 
     if (!isPasswordValid) {
       throw new ForbiddenException('Current password is incorrect');
     }
 
     // Hash new password
-    const newPasswordHash = await bcrypt.hash(
-      changePasswordDto.newPassword,
-      SALT_ROUNDS
-    );
+    const newPasswordHash = await bcrypt.hash(changePasswordDto.newPassword, SALT_ROUNDS);
 
     // Update password
     await prisma.user.update({

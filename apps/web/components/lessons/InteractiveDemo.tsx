@@ -51,9 +51,7 @@ export function InteractiveDemo({ block, onEvent }: InteractiveDemoProps) {
   const [selectedMode, setSelectedMode] = useState<ModeName>(
     (config.modes?.selectedMode as ModeName) || 'dorian'
   );
-  const [selectedKey, setSelectedKey] = useState(
-    config.circle?.selectedKey || 'C'
-  );
+  const [selectedKey, setSelectedKey] = useState(config.circle?.selectedKey || 'C');
 
   // Rendu selon le type de composant
   const renderComponent = () => {
@@ -127,15 +125,11 @@ export function InteractiveDemo({ block, onEvent }: InteractiveDemoProps) {
             </h3>
           )}
           {description && (
-            <p className="text-sm text-gray pl-4 border-l-2 border-steel">
-              {description}
-            </p>
+            <p className="text-sm text-gray pl-4 border-l-2 border-steel">{description}</p>
           )}
         </div>
       )}
-      <div className="interactive-demo">
-        {renderComponent()}
-      </div>
+      <div className="interactive-demo">{renderComponent()}</div>
     </div>
   );
 }

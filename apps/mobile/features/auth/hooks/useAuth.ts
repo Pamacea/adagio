@@ -57,77 +57,83 @@ export function useAuth(): UseAuthReturn {
     }
   }
 
-  const signIn = useCallback(async (email: string, password: string): Promise<boolean> => {
-    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+  const signIn = useCallback(
+    async (email: string, password: string): Promise<boolean> => {
+      setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-    try {
-      const result = await authClient.signIn.email({ email, password });
+      try {
+        const result = await authClient.signIn.email({ email, password });
 
-      if (result.error) {
+        if (result.error) {
+          setState({
+            ...state,
+            isLoading: false,
+            error: result.error.message ?? 'Sign in failed',
+          });
+          return false;
+        }
+
+        const user = await getCurrentUser();
+        setState({
+          user: user as User | null,
+          isLoading: false,
+          isAuthenticated: true,
+          error: null,
+        });
+
+        return true;
+      } catch (_error) {
         setState({
           ...state,
           isLoading: false,
-          error: result.error.message ?? 'Sign in failed',
+          error: 'An unexpected error occurred',
         });
         return false;
       }
+    },
+    [state]
+  );
 
-      const user = await getCurrentUser();
-      setState({
-        user: user as User | null,
-        isLoading: false,
-        isAuthenticated: true,
-        error: null,
-      });
+  const signUp = useCallback(
+    async (email: string, password: string, name?: string): Promise<boolean> => {
+      setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-      return true;
-    } catch (_error) {
-      setState({
-        ...state,
-        isLoading: false,
-        error: 'An unexpected error occurred',
-      });
-      return false;
-    }
-  }, [state]);
+      try {
+        const result = await authClient.signUp.email({
+          email,
+          password,
+          name: name || '',
+        });
 
-  const signUp = useCallback(async (email: string, password: string, name?: string): Promise<boolean> => {
-    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+        if (result.error) {
+          setState({
+            ...state,
+            isLoading: false,
+            error: result.error.message ?? 'Sign up failed',
+          });
+          return false;
+        }
 
-    try {
-      const result = await authClient.signUp.email({
-        email,
-        password,
-        name: name || '',
-      });
+        const user = await getCurrentUser();
+        setState({
+          user: user as User | null,
+          isLoading: false,
+          isAuthenticated: true,
+          error: null,
+        });
 
-      if (result.error) {
+        return true;
+      } catch (_error) {
         setState({
           ...state,
           isLoading: false,
-          error: result.error.message ?? 'Sign up failed',
+          error: 'An unexpected error occurred',
         });
         return false;
       }
-
-      const user = await getCurrentUser();
-      setState({
-        user: user as User | null,
-        isLoading: false,
-        isAuthenticated: true,
-        error: null,
-      });
-
-      return true;
-    } catch (_error) {
-      setState({
-        ...state,
-        isLoading: false,
-        error: 'An unexpected error occurred',
-      });
-      return false;
-    }
-  }, [state]);
+    },
+    [state]
+  );
 
   const signOut = useCallback(async (): Promise<void> => {
     setState((prev) => ({ ...prev, isLoading: true }));

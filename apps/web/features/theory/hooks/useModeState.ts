@@ -35,18 +35,14 @@ export interface UseModeStateOptions {
 }
 
 export function useModeState(options: UseModeStateOptions = {}): UseModeStateReturn {
-  const {
-    initialRoot = 'C',
-    initialSelectedMode = 'ionian',
-    initialShowCircle = false,
-  } = options;
+  const { initialRoot = 'C', initialSelectedMode = 'ionian', initialShowCircle = false } = options;
 
   const [root, setRoot] = useState<NoteName>(initialRoot);
   const [selectedMode, setSelectedMode] = useState<ModeName>(initialSelectedMode);
   const [showCircle, setShowCircle] = useState(initialShowCircle);
 
   const toggleView = () => {
-    setShowCircle(prev => !prev);
+    setShowCircle((prev) => !prev);
   };
 
   return {

@@ -80,8 +80,8 @@ export const ACHIEVEMENTS_SEED = [
   },
   {
     slug: 'chord-library',
-    title: 'Bibliothécaire d\'Accords',
-    description: 'Découvrir 50 types d\'accords différents',
+    title: "Bibliothécaire d'Accords",
+    description: "Découvrir 50 types d'accords différents",
     category: 'discovery',
     xp: 350,
     target: 50,
@@ -139,7 +139,7 @@ export const ACHIEVEMENTS_SEED = [
   {
     slug: 'ear-training-expert',
     title: 'Oreille Absolue',
-    description: 'Identifier tous les intervalles à l\'oreille',
+    description: "Identifier tous les intervalles à l'oreille",
     category: 'mastery',
     xp: 500,
     target: 100,
@@ -157,7 +157,7 @@ export const ACHIEVEMENTS_SEED = [
   {
     slug: 'improvisation-master',
     title: 'Improvisateur',
-    description: 'Compléter 10 sessions d\'improvisation',
+    description: "Compléter 10 sessions d'improvisation",
     category: 'mastery',
     xp: 450,
     target: 10,

@@ -18,16 +18,14 @@ const TOOLS = [
     title: 'MANCHE',
     href: '/fretboard',
     icon: Icons.Fretboard,
-    description:
-      'Manche interactif : gammes, modes et positions CAGED, en notation française.',
+    description: 'Manche interactif : gammes, modes et positions CAGED, en notation française.',
     tags: ['Interactif', 'CAGED'],
   },
   {
     title: 'NOTATION',
     href: '/notation',
     icon: Icons.Notation,
-    description:
-      'Partition française : notes, accords et progressions écrites à lire.',
+    description: 'Partition française : notes, accords et progressions écrites à lire.',
     tags: ['Lecture'],
   },
   {
@@ -67,7 +65,7 @@ export default function PlayPage() {
 
           {/* Tools */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {TOOLS.map(tool => (
+            {TOOLS.map((tool) => (
               <Link
                 key={tool.href}
                 href={tool.href}
@@ -81,7 +79,7 @@ export default function PlayPage() {
                 </h2>
                 <p className="text-sm text-gray mb-4">{tool.description}</p>
                 <div className="flex flex-wrap gap-1">
-                  {tool.tags.map(tag => (
+                  {tool.tags.map((tag) => (
                     <span
                       key={tag}
                       className="px-2 py-0.5 text-xs border border-steel bg-blackness text-gray"
@@ -105,9 +103,8 @@ export default function PlayPage() {
                   DESSINE TES ACCORDS — CONCORDIA
                 </h2>
                 <p className="text-sm text-gray">
-                  Éditeur de diagrammes d&apos;accords sur canvas : pointeur, notes, textes,
-                  export JSON/PNG/SVG/PDF. Un outil séparé d&apos;Adagio, ouvert dans un
-                  nouvel onglet.
+                  Éditeur de diagrammes d&apos;accords sur canvas : pointeur, notes, textes, export
+                  JSON/PNG/SVG/PDF. Un outil séparé d&apos;Adagio, ouvert dans un nouvel onglet.
                 </p>
               </div>
               <a

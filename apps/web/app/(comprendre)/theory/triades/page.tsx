@@ -18,10 +18,26 @@ import { TriadsFretboard } from '@/components/theory/triads';
 const NOTES: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 const QUALITY_OPTIONS = [
-  { q: 'major' as const, label: 'Majeur', color: 'border-emerald-500 bg-emerald-500/20 text-emerald-400' },
-  { q: 'minor' as const, label: 'Mineur', color: 'border-amber-400 bg-amber-400/20 text-amber-400' },
-  { q: 'augmented' as const, label: 'Augmenté', color: 'border-red-500 bg-red-500/20 text-red-400' },
-  { q: 'diminished' as const, label: 'Diminé', color: 'border-purple-500 bg-purple-500/20 text-purple-400' },
+  {
+    q: 'major' as const,
+    label: 'Majeur',
+    color: 'border-emerald-500 bg-emerald-500/20 text-emerald-400',
+  },
+  {
+    q: 'minor' as const,
+    label: 'Mineur',
+    color: 'border-amber-400 bg-amber-400/20 text-amber-400',
+  },
+  {
+    q: 'augmented' as const,
+    label: 'Augmenté',
+    color: 'border-red-500 bg-red-500/20 text-red-400',
+  },
+  {
+    q: 'diminished' as const,
+    label: 'Diminé',
+    color: 'border-purple-500 bg-purple-500/20 text-purple-400',
+  },
 ];
 
 const FRET_OPTIONS = [12, 15, 17, 19, 21, 24] as const;
@@ -73,7 +89,7 @@ export default function TriadsPage() {
                   Note racine
                 </label>
                 <div className="grid grid-cols-6 lg:grid-cols-12 gap-1.5">
-                  {NOTES.map(note => (
+                  {NOTES.map((note) => (
                     <button
                       key={note}
                       onClick={() => setRoot(note)}
@@ -141,26 +157,49 @@ export default function TriadsPage() {
                       const interval = chordInfo.allIntervals[i];
                       if (!interval) return null;
                       const isRoot = note === root;
-                      const colorClass = isRoot ? 'bg-toxic/30 border-toxic' :
-                                        interval === '3' ? 'bg-emerald-500/30 border-emerald-500' :
-                                        interval === 'b3' ? 'bg-amber-400/30 border-amber-400' :
-                                        interval === '5' ? 'bg-cyan-400/30 border-cyan-400' :
-                                        interval === '#5' ? 'bg-red-400/30 border-red-400' :
-                                        interval === 'b5' ? 'bg-purple-500/30 border-purple-500' :
-                                        interval === '7' ? 'bg-rose-400/30 border-rose-400' :
-                                        interval === 'b7' ? 'bg-orange-400/30 border-orange-400' :
-                                        interval === '9' ? 'bg-teal-400/30 border-teal-400' :
-                                        interval === '11' ? 'bg-sky-400/30 border-sky-400' :
-                                        interval === '13' ? 'bg-fuchsia-400/30 border-fuchsia-400' :
-                                        interval === '2' ? 'bg-blue-400/30 border-blue-400' :
-                                        interval === 'b2' ? 'bg-blue-400/20 border-blue-400/50' :
-                                        interval === '4' ? 'bg-indigo-400/30 border-indigo-400' :
-                                        interval === 'b4' ? 'bg-indigo-400/20 border-indigo-400/50' :
-                                        interval === '6' ? 'bg-violet-400/30 border-violet-400' :
-                                        interval === 'b6' ? 'bg-violet-400/20 border-violet-400/50' :
-                                        'bg-gray-500/30 border-gray-500';
+                      const colorClass = isRoot
+                        ? 'bg-toxic/30 border-toxic'
+                        : interval === '3'
+                          ? 'bg-emerald-500/30 border-emerald-500'
+                          : interval === 'b3'
+                            ? 'bg-amber-400/30 border-amber-400'
+                            : interval === '5'
+                              ? 'bg-cyan-400/30 border-cyan-400'
+                              : interval === '#5'
+                                ? 'bg-red-400/30 border-red-400'
+                                : interval === 'b5'
+                                  ? 'bg-purple-500/30 border-purple-500'
+                                  : interval === '7'
+                                    ? 'bg-rose-400/30 border-rose-400'
+                                    : interval === 'b7'
+                                      ? 'bg-orange-400/30 border-orange-400'
+                                      : interval === '9'
+                                        ? 'bg-teal-400/30 border-teal-400'
+                                        : interval === '11'
+                                          ? 'bg-sky-400/30 border-sky-400'
+                                          : interval === '13'
+                                            ? 'bg-fuchsia-400/30 border-fuchsia-400'
+                                            : interval === '2'
+                                              ? 'bg-blue-400/30 border-blue-400'
+                                              : interval === 'b2'
+                                                ? 'bg-blue-400/20 border-blue-400/50'
+                                                : interval === '4'
+                                                  ? 'bg-indigo-400/30 border-indigo-400'
+                                                  : interval === 'b4'
+                                                    ? 'bg-indigo-400/20 border-indigo-400/50'
+                                                    : interval === '6'
+                                                      ? 'bg-violet-400/30 border-violet-400'
+                                                      : interval === 'b6'
+                                                        ? 'bg-violet-400/20 border-violet-400/50'
+                                                        : 'bg-gray-500/30 border-gray-500';
                       return (
-                        <div key={note} className={cn('px-3 py-2 border-2 rounded-none text-center min-w-[60px]', colorClass)}>
+                        <div
+                          key={note}
+                          className={cn(
+                            'px-3 py-2 border-2 rounded-none text-center min-w-[60px]',
+                            colorClass
+                          )}
+                        >
                           <p className="text-sm font-bold text-white">{displayNote(note)}</p>
                           <p className="text-xs text-gray-300">{displayInterval(interval)}</p>
                         </div>
@@ -176,7 +215,7 @@ export default function TriadsPage() {
                     Nombre de frettes
                   </label>
                   <div className="grid grid-cols-3 gap-2 mt-3">
-                    {FRET_OPTIONS.map(frets => (
+                    {FRET_OPTIONS.map((frets) => (
                       <button
                         key={frets}
                         onClick={() => setFretCount(frets)}

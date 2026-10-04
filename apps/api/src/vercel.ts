@@ -9,10 +9,7 @@ let cachedApp: any;
 async function bootstrap() {
   if (!cachedApp) {
     const express = require('express');
-    const app = await NestFactory.create(
-      AppModule,
-      new ExpressAdapter(express())
-    );
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(express()));
 
     // Hide X-Powered-By header for security
     const httpAdapter = app.getHttpAdapter();

@@ -59,7 +59,9 @@ export function Fretboard({
                 {/* String line */}
                 <div
                   className="flex-1 h-0.5 rounded-full relative"
-                  style={{ background: 'linear-gradient(90deg, #6b5a45 0%, #8a7358 50%, #6b5a45 100%)' }}
+                  style={{
+                    background: 'linear-gradient(90deg, #6b5a45 0%, #8a7358 50%, #6b5a45 100%)',
+                  }}
                 >
                   {/* Frets */}
                   {Array.from({ length: 13 }, (_, fret) => {
@@ -85,12 +87,14 @@ export function Fretboard({
                               noteAtPosition.name === root
                                 ? 'bg-gradient-to-br from-amber-300 to-amber-500 text-neutral-900 ring-2 ring-amber-300 ring-offset-2 ring-offset-neutral-900 shadow-amber-500/50'
                                 : noteAtPosition.inScale
-                                ? 'bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-emerald-500/30'
-                                : 'bg-neutral-700 text-neutral-400'
+                                  ? 'bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-emerald-500/30'
+                                  : 'bg-neutral-700 text-neutral-400'
                             )}
                             style={
                               !noteAtPosition.inScale
-                                ? { background: 'linear-gradient(135deg, #374151 0%, #1f2937 100%)' }
+                                ? {
+                                    background: 'linear-gradient(135deg, #374151 0%, #1f2937 100%)',
+                                  }
                                 : undefined
                             }
                           >
@@ -99,25 +103,29 @@ export function Fretboard({
                         )}
 
                         {/* Fret marker (single dot at 3, 5, 7, 9) */}
-                        {!noteAtPosition &&
-                          [3, 5, 7, 9].includes(fret) &&
-                          fret !== 0 && (
-                            <div
-                              className="w-2.5 h-2.5 rounded-full shadow-inner"
-                              style={{ background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)' }}
-                            />
-                          )}
+                        {!noteAtPosition && [3, 5, 7, 9].includes(fret) && fret !== 0 && (
+                          <div
+                            className="w-2.5 h-2.5 rounded-full shadow-inner"
+                            style={{
+                              background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)',
+                            }}
+                          />
+                        )}
 
                         {/* Double fret marker (12th fret) */}
                         {!noteAtPosition && fret === 12 && (
                           <div className="flex gap-4">
                             <div
                               className="w-2.5 h-2.5 rounded-full shadow-inner"
-                              style={{ background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)' }}
+                              style={{
+                                background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)',
+                              }}
                             />
                             <div
                               className="w-2.5 h-2.5 rounded-full shadow-inner"
-                              style={{ background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)' }}
+                              style={{
+                                background: 'radial-gradient(circle, #4a5568 0%, #2d3748 100%)',
+                              }}
                             />
                           </div>
                         )}
@@ -135,7 +143,8 @@ export function Fretboard({
                       style={{
                         left: `${fret * 7.5}%`,
                         width: '2px',
-                        background: 'linear-gradient(180deg, #8b7355 0%, #5c4a3a 50%, #8b7355 100%)',
+                        background:
+                          'linear-gradient(180deg, #8b7355 0%, #5c4a3a 50%, #8b7355 100%)',
                       }}
                     />
                   ) : null

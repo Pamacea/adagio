@@ -256,9 +256,7 @@ describe('TheoryController', () => {
         new NotFoundException('Mode nonexistent not found')
       );
 
-      await expect(controller.getModeBySlug('nonexistent')).rejects.toThrow(
-        NotFoundException
-      );
+      await expect(controller.getModeBySlug('nonexistent')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -653,9 +651,7 @@ describe('TheoryController', () => {
         new NotFoundException('Technique nonexistent not found')
       );
 
-      await expect(controller.getTechniqueBySlug('nonexistent')).rejects.toThrow(
-        NotFoundException
-      );
+      await expect(controller.getTechniqueBySlug('nonexistent')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -674,9 +670,7 @@ describe('TheoryController', () => {
         new NotFoundException('Scale nonexistent not found')
       );
 
-      await expect(controller.getScaleBySlug('nonexistent')).rejects.toThrow(
-        NotFoundException
-      );
+      await expect(controller.getScaleBySlug('nonexistent')).rejects.toThrow(NotFoundException);
     });
 
     it('should return scale with intervals', async () => {

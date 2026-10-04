@@ -57,15 +57,15 @@ Les couleurs utilisées représentent l'émotion associée à chaque degré :
 • Degrés secondaires : Couleurs plus fraîches`,
     related: [
       { id: 'compose.progressions', title: 'Progressions' },
-      { id: 'compose.variations', title: 'Variations d\'accords' },
+      { id: 'compose.variations', title: "Variations d'accords" },
       { id: 'theory.harmony', title: 'Harmonie' },
     ],
   },
 
   'compose.progressions': {
     id: 'compose.progressions',
-    title: 'Les Progressions d\'Accords',
-    short: 'Enchaînements d\'accords qui créent du mouvement',
+    title: "Les Progressions d'Accords",
+    short: "Enchaînements d'accords qui créent du mouvement",
     content: `Une progression est une suite d'accords qui crée un sens musical. Voici les progressions les plus courantes :
 
 **I - V - vi - IV** (Pop/Rock)
@@ -92,7 +92,7 @@ Chaque progression évoque une émotion différente selon les degrés utilisés 
 
   'compose.variations': {
     id: 'compose.variations',
-    title: 'Variations d\'Accords',
+    title: "Variations d'Accords",
     short: 'Enrichissez vos harmonies avec extensions et substitutions',
     content: `Les accords de base peuvent être transformés pour plus de couleur :
 
@@ -172,7 +172,7 @@ Chaque forme contient les mêmes notes mais à des positions différentes. En le
 
   'chords.positions': {
     id: 'chords.positions',
-    title: 'Positions d\'Accords',
+    title: "Positions d'Accords",
     short: 'Où jouer un accord sur le manche',
     content: `Chaque accord peut se jouer à plusieurs positions sur le manche. Choisir la bonne position dépend de :
 
@@ -197,8 +197,8 @@ Le diagramme de manche montre les doigts (cercles) et les cordes jouées. Un cer
 
   'chords.voicings': {
     id: 'chords.voicings',
-    title: 'Voicings d\'Accords',
-    short: 'Différentes façons de disposer les notes d\'un accord',
+    title: "Voicings d'Accords",
+    short: "Différentes façons de disposer les notes d'un accord",
     content: `Le "voicing" est l'ordre et la disposition des notes dans un accord. Un même accord peut sonner très différemment selon son voicing :
 
 **Voicings ouverts**
@@ -222,13 +222,13 @@ Le diagramme de manche montre les doigts (cercles) et les cordes jouées. Un cer
 • Standard en jazz combo`,
     related: [
       { id: 'chords.inversions', title: 'Renversements' },
-      { id: 'compose.variations', title: 'Variations d\'accords' },
+      { id: 'compose.variations', title: "Variations d'accords" },
     ],
   },
 
   'chords.inversions': {
     id: 'chords.inversions',
-    title: 'Renversements d\'Accords',
+    title: "Renversements d'Accords",
     short: 'Quand une note autre que la fondamentale est à la basse',
     content: `Un accord est "renversé" quand sa note la plus grave n'est pas la fondamentale :
 
@@ -382,7 +382,7 @@ Exemple en Do majeur :
 • Chaque mode a sa "coloration harmonique" unique
 • Les modes changent l'ambiance sans changer la tonalité de base`,
     related: [
-      { id: 'compose.variations', title: 'Variations d\'accords' },
+      { id: 'compose.variations', title: "Variations d'accords" },
       { id: 'scales.relative', title: 'Tonalités relatives' },
     ],
   },
@@ -454,7 +454,7 @@ Exemple en Do majeur :
   'theory.harmony': {
     id: 'theory.harmony',
     title: 'Harmonie Diatonique',
-    short: 'Les accords formés par les degrés d\'une tonalité',
+    short: "Les accords formés par les degrés d'une tonalité",
     content: `L'harmonie diatonique construit des accords en empilant des tierces à partir de chaque degré de la gamme :
 
 **Accords de la gamme majeure**
@@ -535,8 +535,10 @@ export function getAllHelpTopics(): HelpTopic[] {
 /**
  * Récupère les sujets d'aide filtrés par catégorie
  */
-export function getHelpTopicsByCategory(category: 'compose' | 'chords' | 'circle' | 'scales' | 'theory'): HelpTopic[] {
-  return Object.values(HELP_CONTENT).filter(topic => topic.id.startsWith(category + '.'));
+export function getHelpTopicsByCategory(
+  category: 'compose' | 'chords' | 'circle' | 'scales' | 'theory'
+): HelpTopic[] {
+  return Object.values(HELP_CONTENT).filter((topic) => topic.id.startsWith(category + '.'));
 }
 
 /**
@@ -545,7 +547,7 @@ export function getHelpTopicsByCategory(category: 'compose' | 'chords' | 'circle
 export function searchHelpTopics(query: string): HelpTopic[] {
   const lowerQuery = query.toLowerCase();
   return Object.values(HELP_CONTENT).filter(
-    topic =>
+    (topic) =>
       topic.title.toLowerCase().includes(lowerQuery) ||
       (typeof topic.content === 'string' && topic.content.toLowerCase().includes(lowerQuery)) ||
       topic.short?.toLowerCase().includes(lowerQuery)

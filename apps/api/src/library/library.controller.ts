@@ -11,7 +11,7 @@ export class LibraryController {
   @Get('techniques')
   async getTechniques(
     @Param('category') category?: string,
-    @Param('difficulty') difficulty?: string,
+    @Param('difficulty') difficulty?: string
   ) {
     return this.libraryService.getTechniques(category, difficulty);
   }

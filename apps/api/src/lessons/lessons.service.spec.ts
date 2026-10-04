@@ -263,9 +263,7 @@ describe('LessonsService', () => {
     it('should throw NotFoundException when lesson not found', async () => {
       mockPrisma.lesson.findUnique.mockResolvedValue(null);
 
-      await expect(service.getLessonBySlug('non-existent')).rejects.toThrow(
-        NotFoundException
-      );
+      await expect(service.getLessonBySlug('non-existent')).rejects.toThrow(NotFoundException);
       await expect(service.getLessonBySlug('non-existent')).rejects.toThrow(
         'Lesson non-existent not found'
       );
@@ -402,9 +400,9 @@ describe('LessonsService', () => {
     it('should throw NotFoundException when lesson not found', async () => {
       mockPrisma.lesson.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.updateProgressBySlug('user-123', 'non-existent', {})
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.updateProgressBySlug('user-123', 'non-existent', {})).rejects.toThrow(
+        NotFoundException
+      );
     });
 
     it('should call updateProgress with correct parameters', async () => {
@@ -823,10 +821,7 @@ describe('LessonsService', () => {
   describe('getLessonCategories()', () => {
     it('should return distinct categories', async () => {
       // Prisma distinct would return unique values, so we mock distinct results
-      const mockCategories = [
-        { category: 'technique' },
-        { category: 'theory' },
-      ];
+      const mockCategories = [{ category: 'technique' }, { category: 'theory' }];
       mockPrisma.lesson.findMany.mockResolvedValue(mockCategories);
 
       const result = await service.getLessonCategories();

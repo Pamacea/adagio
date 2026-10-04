@@ -252,7 +252,13 @@ export function SaveIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: 
 export function PlayIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
-      <Polygon points="5,3 19,12 5,21" fill="none" stroke={color} strokeWidth="2" strokeLinejoin="miter" />
+      <Polygon
+        points="5,3 19,12 5,21"
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinejoin="miter"
+      />
     </Svg>
   );
 }
@@ -274,7 +280,15 @@ export function SearchIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Circle cx="11" cy="11" r="8" fill="none" stroke={color} strokeWidth="2" />
-      <Line x1="21" y1="21" x2="16.65" y2="16.65" stroke={color} strokeWidth="2" strokeLinecap="square" />
+      <Line
+        x1="21"
+        y1="21"
+        x2="16.65"
+        y2="16.65"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="square"
+      />
     </Svg>
   );
 }
@@ -282,7 +296,13 @@ export function SearchIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }
 export function FilterIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
-      <Polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46" fill="none" stroke={color} strokeWidth="2" strokeLinejoin="miter" />
+      <Polygon
+        points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinejoin="miter"
+      />
     </Svg>
   );
 }
@@ -323,12 +343,23 @@ export function InfoIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: 
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Circle cx="12" cy="12" r="10" fill="none" stroke={color} strokeWidth="2" />
       <Line x1="12" y1="16" x2="12" y2="12" stroke={color} strokeWidth="2" strokeLinecap="square" />
-      <Line x1="12" y1="8" x2="12.01" y2="8" stroke={color} strokeWidth="2" strokeLinecap="square" />
+      <Line
+        x1="12"
+        y1="8"
+        x2="12.01"
+        y2="8"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="square"
+      />
     </Svg>
   );
 }
 
-export function StarIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps, filled = false) {
+export function StarIcon(
+  { size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps,
+  filled = false
+) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Polygon
@@ -346,7 +377,10 @@ export function StarFilledIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, sty
   return StarIcon({ size, color, style }, true);
 }
 
-export function HeartIcon({ size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps, filled = false) {
+export function HeartIcon(
+  { size = DEFAULT_SIZE, color = DEFAULT_COLOR, style }: IconProps,
+  filled = false
+) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Path

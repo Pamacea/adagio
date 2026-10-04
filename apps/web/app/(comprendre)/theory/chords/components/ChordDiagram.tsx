@@ -52,9 +52,7 @@ export function ChordDiagram({
 
   // Détecter si c'est un barré
   const barreChord = positions.find(
-    (p) =>
-      p.finger &&
-      positions.filter((o) => o.finger === p.finger && o.fret > 0).length >= 2
+    (p) => p.finger && positions.filter((o) => o.finger === p.finger && o.fret > 0).length >= 2
   );
 
   // Cordes E A D G B E (de bas aigu à haut grave, gauche à droite)
@@ -161,14 +159,7 @@ export function ChordDiagram({
 
         {/* Fond */}
         <rect x="0" y="0" width={W} height={H} fill="#0a0908" rx="4" />
-        <rect
-          x="4"
-          y="4"
-          width={W - 8}
-          height={H - 8}
-          fill="url(#diagramBg)"
-          rx="3"
-        />
+        <rect x="4" y="4" width={W - 8} height={H - 8} fill="url(#diagramBg)" rx="3" />
         <rect
           x="4"
           y="4"
@@ -196,14 +187,7 @@ export function ChordDiagram({
 
         {/* Indicateur de position */}
         {position !== undefined && totalPositions && totalPositions > 1 && (
-          <text
-            x={W - 16}
-            y={38}
-            fill="#666"
-            fontSize={14}
-            fontWeight="600"
-            textAnchor="end"
-          >
+          <text x={W - 16} y={38} fill="#666" fontSize={14} fontWeight="600" textAnchor="end">
             {position}/{totalPositions}
           </text>
         )}
@@ -290,14 +274,7 @@ export function ChordDiagram({
             const x = pos.string * STRING_SPACING;
             return (
               <g key={`open-${pos.string}`}>
-                <circle
-                  cx={x}
-                  cy={-22}
-                  r={9}
-                  fill="none"
-                  stroke="#22c55e"
-                  strokeWidth={2.5}
-                />
+                <circle cx={x} cy={-22} r={9} fill="none" stroke="#22c55e" strokeWidth={2.5} />
               </g>
             );
           })}
@@ -334,21 +311,23 @@ export function ChordDiagram({
           {/* Ligne de barré */}
           {barreChord &&
             barreChord.finger &&
-            positions.filter(
-              (p) => p.finger === barreChord.finger && p.fret > 0
-            ).length >= 3 && (
+            positions.filter((p) => p.finger === barreChord.finger && p.fret > 0).length >= 3 && (
               <path
-                d={`M ${positions
-                  .filter((p) => p.finger === barreChord.finger && p.fret > 0)
-                  .reduce((min, p) => Math.min(min, p.string), 5) *
-                  STRING_SPACING -
-                  14} ${(barreChord.fret - startFret) * FRET_HEIGHT + FRET_HEIGHT / 2 - 18}
+                d={`M ${
+                  positions
+                    .filter((p) => p.finger === barreChord.finger && p.fret > 0)
+                    .reduce((min, p) => Math.min(min, p.string), 5) *
+                    STRING_SPACING -
+                  14
+                } ${(barreChord.fret - startFret) * FRET_HEIGHT + FRET_HEIGHT / 2 - 18}
                    Q ${2.5 * STRING_SPACING} ${(barreChord.fret - startFret) * FRET_HEIGHT + FRET_HEIGHT / 2 - 28}
-                   ${positions
-                  .filter((p) => p.finger === barreChord.finger && p.fret > 0)
-                  .reduce((max, p) => Math.max(max, p.string), 0) *
-                  STRING_SPACING +
-                  14} ${(barreChord.fret - startFret) * FRET_HEIGHT + FRET_HEIGHT / 2 - 18}`}
+                   ${
+                     positions
+                       .filter((p) => p.finger === barreChord.finger && p.fret > 0)
+                       .reduce((max, p) => Math.max(max, p.string), 0) *
+                       STRING_SPACING +
+                     14
+                   } ${(barreChord.fret - startFret) * FRET_HEIGHT + FRET_HEIGHT / 2 - 18}`}
                 fill="none"
                 stroke="#888"
                 strokeWidth={2}
@@ -416,9 +395,7 @@ export function ChordDiagram({
         </g>
 
         {/* Labels des cordes en bas */}
-        <g
-          transform={`translate(${MARGIN_LEFT}, ${MARGIN_TOP + FRET_HEIGHT * NUM_FRETS + 22})`}
-        >
+        <g transform={`translate(${MARGIN_LEFT}, ${MARGIN_TOP + FRET_HEIGHT * NUM_FRETS + 22})`}>
           {STRING_NAMES.map((name, i) => (
             <text
               key={`string-label-${i}`}
@@ -435,9 +412,7 @@ export function ChordDiagram({
         </g>
 
         {/* Numéros de frettes sur le côté */}
-        <g
-          transform={`translate(${MARGIN_LEFT + STRING_SPACING * 5 + 12}, ${MARGIN_TOP})`}
-        >
+        <g transform={`translate(${MARGIN_LEFT + STRING_SPACING * 5 + 12}, ${MARGIN_TOP})`}>
           {Array.from({ length: NUM_FRETS }, (_, i) => (
             <text
               key={`fret-num-${i}`}

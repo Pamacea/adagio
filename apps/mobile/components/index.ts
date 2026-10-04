@@ -19,12 +19,7 @@ export type { ToggleProps } from './Toggle';
 export { MetalButton, JaggedButton } from './MetalButton';
 export type { MetalButtonProps, JaggedButtonProps } from './MetalButton';
 
-export {
-  MetalCard,
-  MetalCardWithHeader,
-  ModeCard,
-  NoteCard,
-} from './MetalCard';
+export { MetalCard, MetalCardWithHeader, ModeCard, NoteCard } from './MetalCard';
 export type {
   MetalCardProps,
   MetalCardWithHeaderProps,

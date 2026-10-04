@@ -18,16 +18,12 @@ export function MetalFooter() {
               <h3 className="text-lg font-metal text-white uppercase tracking-tighter mb-2">
                 ADAGIO
               </h3>
-              <p className="text-xs text-gray">
-                Theorie Musicale Brutale
-              </p>
-              <p className="text-xs text-gray mt-1">
-                Pour guitaristes metal
-              </p>
+              <p className="text-xs text-gray">Theorie Musicale Brutale</p>
+              <p className="text-xs text-gray mt-1">Pour guitaristes metal</p>
             </div>
 
             {/* 4 piliers */}
-            {PILLARS.map(pillar => (
+            {PILLARS.map((pillar) => (
               <div key={pillar.href}>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
                   <Link href={pillar.href} className="hover:text-toxic transition-colors">
@@ -35,7 +31,7 @@ export function MetalFooter() {
                   </Link>
                 </h4>
                 <div className="flex flex-col gap-1">
-                  {pillar.children.map(item => (
+                  {pillar.children.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -50,9 +46,7 @@ export function MetalFooter() {
 
             {/* Account */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
-                Compte
-              </h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">Compte</h4>
               <div className="flex flex-col gap-1">
                 {ACCOUNT_NAV.map((item) => (
                   <Link
@@ -75,9 +69,7 @@ export function MetalFooter() {
             <p className="text-xs text-gray tracking-widest uppercase">
               THEORIE MUSICALE POUR GUITARRISTES
             </p>
-            <p className="text-xs text-gray">
-              ADAGIO • {new Date().getFullYear()}
-            </p>
+            <p className="text-xs text-gray">ADAGIO • {new Date().getFullYear()}</p>
           </div>
         </div>
       </div>
@@ -96,9 +88,7 @@ export function MetalFooterCompact() {
           <p className="text-xs text-gray tracking-widest uppercase">
             THEORIE MUSICALE POUR GUITARRISTES
           </p>
-          <p className="text-xs text-gray">
-            ADAGIO • {new Date().getFullYear()}
-          </p>
+          <p className="text-xs text-gray">ADAGIO • {new Date().getFullYear()}</p>
         </div>
       </div>
     </footer>

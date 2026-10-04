@@ -42,10 +42,18 @@ export default function HarmoniePage() {
   };
 
   // Blocs de la colonne droite (texte libre du Sheet)
-  const [parallTitle, ...parallLines] = [mergedRows[8]?.[4], mergedRows[9]?.[4], mergedRows[10]?.[4]]
+  const [parallTitle, ...parallLines] = [
+    mergedRows[8]?.[4],
+    mergedRows[9]?.[4],
+    mergedRows[10]?.[4],
+  ]
     .filter((c): c is string => Boolean(c))
     .map(formatSheetCell);
-  const [lydianTitle, ...lydianLines] = [mergedRows[12]?.[4], mergedRows[13]?.[4], mergedRows[14]?.[4]]
+  const [lydianTitle, ...lydianLines] = [
+    mergedRows[12]?.[4],
+    mergedRows[13]?.[4],
+    mergedRows[14]?.[4],
+  ]
     .filter((c): c is string => Boolean(c))
     .map(formatSheetCell);
 

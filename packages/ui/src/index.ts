@@ -36,7 +36,11 @@ export { RootSelector } from './molecules/RootSelector';
 export type { RootSelectorProps } from './molecules/RootSelector';
 
 export { HelpTooltip } from './molecules/HelpTooltip';
-export type { HelpTooltipProps, TooltipPosition, HelpTooltipVariant } from './molecules/HelpTooltip';
+export type {
+  HelpTooltipProps,
+  TooltipPosition,
+  HelpTooltipVariant,
+} from './molecules/HelpTooltip';
 
 export { HelpModal, type HelpTopic, type HelpRelatedTopic } from './molecules/HelpModal';
 

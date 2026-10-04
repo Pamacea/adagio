@@ -21,14 +21,16 @@ import { ProfileModule } from './profile/profile.module';
     }),
 
     // Rate limiting
-    ThrottlerModule.forRoot([{
-      ttl: 60000, // 60 seconds
-      limit: 100, // 100 requests per minute
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 60 seconds
+        limit: 100, // 100 requests per minute
+      },
+    ]),
 
     // Authentication
     BetterAuthModule, // Better Auth endpoints at /api/v1/auth/*
-    AuthModule,       // Legacy JWT auth (kept for backward compatibility)
+    AuthModule, // Legacy JWT auth (kept for backward compatibility)
 
     // Feature modules
     TheoryModule,

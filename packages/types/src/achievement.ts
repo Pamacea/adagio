@@ -6,20 +6,20 @@
  * Achievement categories
  */
 export type AchievementCategory =
-  | 'progression'  // Created progressions, composed music
-  | 'discovery'    // Discovered modes, scales, chords
-  | 'practice'     // Practice consistency, time spent
-  | 'mastery'      // Mastered techniques, modes
-  | 'social'       // Shared progressions, community
-  | 'milestone';   // Special milestones
+  | 'progression' // Created progressions, composed music
+  | 'discovery' // Discovered modes, scales, chords
+  | 'practice' // Practice consistency, time spent
+  | 'mastery' // Mastered techniques, modes
+  | 'social' // Shared progressions, community
+  | 'milestone'; // Special milestones
 
 /**
  * Achievement rarity
  */
 export type AchievementRarity =
-  | 'common'     // Easy to unlock
-  | 'rare'       // Requires some effort
-  | 'epic'       // Significant dedication
+  | 'common' // Easy to unlock
+  | 'rare' // Requires some effort
+  | 'epic' // Significant dedication
   | 'legendary'; // Extraordinary achievement
 
 /**

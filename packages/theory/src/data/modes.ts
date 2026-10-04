@@ -13,13 +13,13 @@ import type { ModeName } from '@adagio/types';
  * Chaque mode est défini par ses 7 degrés exprimés en demi-tons
  */
 export const MODE_INTERVALS: Record<ModeName, number[]> = {
-  ionian: [0, 2, 4, 5, 7, 9, 11],      // Majeur
-  dorian: [0, 2, 3, 5, 7, 9, 10],      // Mineur avec 6 majeure
-  phrygian: [0, 1, 3, 5, 7, 8, 10],    // Mineur avec 2 mineure
-  lydian: [0, 2, 4, 6, 7, 9, 11],      // Majeur avec #4
-  mixolydian: [0, 2, 4, 5, 7, 9, 10],  // Majeur avec 7 mineure
-  aeolian: [0, 2, 3, 5, 7, 8, 10],     // Mineur naturel
-  locrian: [0, 1, 3, 5, 6, 8, 10],     // Mineur avec 5 diminuée
+  ionian: [0, 2, 4, 5, 7, 9, 11], // Majeur
+  dorian: [0, 2, 3, 5, 7, 9, 10], // Mineur avec 6 majeure
+  phrygian: [0, 1, 3, 5, 7, 8, 10], // Mineur avec 2 mineure
+  lydian: [0, 2, 4, 6, 7, 9, 11], // Majeur avec #4
+  mixolydian: [0, 2, 4, 5, 7, 9, 10], // Majeur avec 7 mineure
+  aeolian: [0, 2, 3, 5, 7, 8, 10], // Mineur naturel
+  locrian: [0, 1, 3, 5, 6, 8, 10], // Mineur avec 5 diminuée
 };
 
 // ============================================================================

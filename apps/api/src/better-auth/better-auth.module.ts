@@ -20,7 +20,10 @@ import { BetterAuthController } from './better-auth.controller';
     {
       provide: 'BETTER_AUTH_CONFIG',
       useFactory: (config: ConfigService) => ({
-        url: config.get<string>('BETTER_AUTH_URL') || config.get<string>('API_URL') || 'http://localhost:3001',
+        url:
+          config.get<string>('BETTER_AUTH_URL') ||
+          config.get<string>('API_URL') ||
+          'http://localhost:3001',
         appId: config.get<string>('BETTER_AUTH_APP_ID') || 'adagio',
       }),
       inject: [ConfigService],

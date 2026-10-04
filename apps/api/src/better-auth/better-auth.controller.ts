@@ -33,12 +33,12 @@ export class BetterAuthController {
 
     // Build headers from Express request
     const headers = new Headers();
-    Object.keys(req.headers).forEach(key => {
+    Object.keys(req.headers).forEach((key) => {
       const value = req.headers[key];
       if (typeof value === 'string') {
         headers.set(key, value);
       } else if (Array.isArray(value)) {
-        value.forEach(v => headers.append(key, v));
+        value.forEach((v) => headers.append(key, v));
       }
     });
 

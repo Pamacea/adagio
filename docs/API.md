@@ -1,6 +1,6 @@
 # API Documentation — ADAGIO
 
-> *Documentation de l'API RESTful Adagio*
+> _Documentation de l'API RESTful Adagio_
 
 ---
 
@@ -42,6 +42,7 @@ Content-Type: application/json
 Crée un nouveau compte utilisateur.
 
 **Request :**
+
 ```json
 {
   "email": "user@example.com",
@@ -51,6 +52,7 @@ Crée un nouveau compte utilisateur.
 ```
 
 **Response (201) :**
+
 ```json
 {
   "user": {
@@ -72,6 +74,7 @@ Crée un nouveau compte utilisateur.
 Authentifie un utilisateur existant.
 
 **Request :**
+
 ```json
 {
   "email": "user@example.com",
@@ -80,6 +83,7 @@ Authentifie un utilisateur existant.
 ```
 
 **Response (200) :**
+
 ```json
 {
   "user": {
@@ -100,6 +104,7 @@ Authentifie un utilisateur existant.
 Rafraîchit le token d'accès.
 
 **Request :**
+
 ```json
 {
   "refreshToken": "eyJhbGc..."
@@ -107,6 +112,7 @@ Rafraîchit le token d'accès.
 ```
 
 **Response (200) :**
+
 ```json
 {
   "accessToken": "eyJhbGc...",
@@ -119,6 +125,7 @@ Rafraîchit le token d'accès.
 Termine la session utilisateur.
 
 **Request :**
+
 ```http
 Authorization: Bearer <token>
 ```
@@ -134,6 +141,7 @@ Authorization: Bearer <token>
 Liste toutes les tonalités disponibles.
 
 **Response (200) :**
+
 ```json
 {
   "keys": [
@@ -150,11 +158,13 @@ Liste toutes les tonalités disponibles.
 Liste tous les modes avec leurs caractéristiques émotionnelles.
 
 **Query Parameters :**
+
 - `feeling` (optional) : Filtrer par sensation (ex: "sombre", "aérien")
 - `limit` (optional) : Nombre de résultats (défaut: 50)
 - `offset` (optional) : Pagination
 
 **Response (200) :**
+
 ```json
 {
   "modes": [
@@ -184,6 +194,7 @@ Liste tous les modes avec leurs caractéristiques émotionnelles.
 Détails d'un mode spécifique.
 
 **Response (200) :**
+
 ```json
 {
   "mode": {
@@ -209,9 +220,11 @@ Détails d'un mode spécifique.
 Retourne tous les modes pour une tonalité donnée.
 
 **Parameters :**
+
 - `key` : Nom de la tonalité (ex: "C", "F#")
 
 **Response (200) :**
+
 ```json
 {
   "key": "C",
@@ -236,11 +249,13 @@ Retourne tous les modes pour une tonalité donnée.
 Liste toutes les gammes disponibles.
 
 **Query Parameters :**
+
 - `type` (optional) : Filter par type (ex: "pentatonic", "blues")
 - `limit` (optional)
 - `offset` (optional)
 
 **Response (200) :**
+
 ```json
 {
   "scales": [
@@ -261,12 +276,14 @@ Liste toutes les gammes disponibles.
 Liste tous les accords disponibles.
 
 **Query Parameters :**
+
 - `root` (optional) : Filtrer par note fondamentale (ex: "C")
 - `quality` (optional) : Filtrer par qualité (ex: "maj7", "m7")
 - `limit` (optional)
 - `offset` (optional)
 
 **Response (200) :**
+
 ```json
 {
   "chords": [
@@ -298,19 +315,21 @@ Liste tous les accords disponibles.
 Analyse une progression d'accords et suggère des gammes.
 
 **Request :**
+
 ```json
 {
   "key": "C",
   "progression": [
-    {"degree": "I", "quality": "maj7"},
-    {"degree": "IV", "quality": "maj7"},
-    {"degree": "V", "quality": "7"},
-    {"degree": "I", "quality": "maj7"}
+    { "degree": "I", "quality": "maj7" },
+    { "degree": "IV", "quality": "maj7" },
+    { "degree": "V", "quality": "7" },
+    { "degree": "I", "quality": "maj7" }
   ]
 }
 ```
 
 **Response (200) :**
+
 ```json
 {
   "key": "C",
@@ -353,25 +372,27 @@ Analyse une progression d'accords et suggère des gammes.
 Retourne les données du cercle des quintes.
 
 **Query Parameters :**
+
 - `center` (optional) : Note centrale pour la visualisation
 
 **Response (200) :**
+
 ```json
 {
   "center": "C",
   "circle": [
-    {"note": "C", "interval": 0},
-    {"note": "G", "interval": 7},
-    {"note": "D", "interval": 2},
-    {"note": "A", "interval": 9},
-    {"note": "E", "interval": 4},
-    {"note": "B", "interval": 11},
-    {"note": "F#", "interval": 6},
-    {"note": "Db", "interval": 1},
-    {"note": "Ab", "interval": 8},
-    {"note": "Eb", "interval": 3},
-    {"note": "Bb", "interval": 10},
-    {"note": "F", "interval": 5}
+    { "note": "C", "interval": 0 },
+    { "note": "G", "interval": 7 },
+    { "note": "D", "interval": 2 },
+    { "note": "A", "interval": 9 },
+    { "note": "E", "interval": 4 },
+    { "note": "B", "interval": 11 },
+    { "note": "F#", "interval": 6 },
+    { "note": "Db", "interval": 1 },
+    { "note": "Ab", "interval": 8 },
+    { "note": "Eb", "interval": 3 },
+    { "note": "Bb", "interval": 10 },
+    { "note": "F", "interval": 5 }
   ],
   "enharmonics": {
     "F#": "Gb",
@@ -385,6 +406,7 @@ Retourne les données du cercle des quintes.
 Retourne les groupes Axis Theory.
 
 **Response (200) :**
+
 ```json
 {
   "axisGroups": [
@@ -419,11 +441,13 @@ Retourne les groupes Axis Theory.
 Informations sur l'utilisateur actuel.
 
 **Request :**
+
 ```http
 Authorization: Bearer <token>
 ```
 
 **Response (200) :**
+
 ```json
 {
   "user": {
@@ -451,9 +475,11 @@ Authorization: Bearer <token>
 Met à jour le profil utilisateur.
 
 **Request :**
+
 ```http
 Authorization: Bearer <token>
 ```
+
 ```json
 {
   "name": "John Smith",
@@ -465,6 +491,7 @@ Authorization: Bearer <token>
 ```
 
 **Response (200) :**
+
 ```json
 {
   "user": {
@@ -481,10 +508,12 @@ Authorization: Bearer <token>
 Liste toutes les progressions sauvegardées de l'utilisateur.
 
 **Query Parameters :**
+
 - `limit` (optional)
 - `offset` (optional)
 
 **Response (200) :**
+
 ```json
 {
   "progressions": [
@@ -515,25 +544,28 @@ Liste toutes les progressions sauvegardées de l'utilisateur.
 Crée une nouvelle progression sauvegardée.
 
 **Request :**
+
 ```http
 Authorization: Bearer <token>
 ```
+
 ```json
 {
   "name": "My Blues Progression",
   "key": "E",
   "timeSignature": "4/4",
   "chords": [
-    {"degree": "I", "quality": "7"},
-    {"degree": "IV", "quality": "7"},
-    {"degree": "I", "quality": "7"},
-    {"degree": "V", "quality": "7"}
+    { "degree": "I", "quality": "7" },
+    { "degree": "IV", "quality": "7" },
+    { "degree": "I", "quality": "7" },
+    { "degree": "V", "quality": "7" }
   ],
   "isPublic": false
 }
 ```
 
 **Response (201) :**
+
 ```json
 {
   "id": "prog456",
@@ -561,6 +593,7 @@ Supprime une progression.
 Retourne la progression d'apprentissage de l'utilisateur.
 
 **Response (200) :**
+
 ```json
 {
   "progress": [
@@ -588,11 +621,13 @@ Retourne la progression d'apprentissage de l'utilisateur.
 Liste toutes les techniques disponibles.
 
 **Query Parameters :**
+
 - `category` (optional) : Filtrer par catégorie (ex: "legato", "sweep")
 - `difficulty` (optional) : Filtrer par difficulté (ex: "beginner", "intermediate")
 - `learned` (optional) : Filtrer par statut d'apprentissage (nécessite auth)
 
 **Response (200) :**
+
 ```json
 {
   "techniques": [
@@ -625,11 +660,13 @@ Détails d'une technique spécifique.
 Marque une technique comme apprise.
 
 **Request :**
+
 ```http
 Authorization: Bearer <token>
 ```
 
 **Response (200) :**
+
 ```json
 {
   "techniqueId": "tech123",
@@ -642,19 +679,19 @@ Authorization: Bearer <token>
 
 ## Codes d'Erreur
 
-| Code | Description |
-|------|-------------|
-| 200 | OK |
-| 201 | Created |
-| 204 | No Content |
-| 400 | Bad Request |
-| 401 | Unauthorized |
-| 403 | Forbidden |
-| 404 | Not Found |
-| 409 | Conflict |
-| 422 | Unprocessable Entity (Validation error) |
-| 429 | Too Many Requests |
-| 500 | Internal Server Error |
+| Code | Description                             |
+| ---- | --------------------------------------- |
+| 200  | OK                                      |
+| 201  | Created                                 |
+| 204  | No Content                              |
+| 400  | Bad Request                             |
+| 401  | Unauthorized                            |
+| 403  | Forbidden                               |
+| 404  | Not Found                               |
+| 409  | Conflict                                |
+| 422  | Unprocessable Entity (Validation error) |
+| 429  | Too Many Requests                       |
+| 500  | Internal Server Error                   |
 
 ### Format d'Erreur
 
@@ -697,6 +734,7 @@ X-RateLimit-Reset: 1677699600
 Webhook pour les événements Stripe (paiements, abonnements).
 
 **Headers :**
+
 ```http
 Stripe-Signature: <signature>
 ```
@@ -724,12 +762,12 @@ Envoyer le token JWT en premier message :
 
 ### Events
 
-| Event | Description |
-|-------|-------------|
-| `progression.updated` | Une progression a été mise à jour |
-| `progress.achievement` | Un succès débloqué |
-| `collaborator.joined` | Un collaborateur a rejoint une session |
+| Event                  | Description                            |
+| ---------------------- | -------------------------------------- |
+| `progression.updated`  | Une progression a été mise à jour      |
+| `progress.achievement` | Un succès débloqué                     |
+| `collaborator.joined`  | Un collaborateur a rejoint une session |
 
 ---
 
-*Dernière mise à jour : 2025-03-02*
+_Dernière mise à jour : 2025-03-02_

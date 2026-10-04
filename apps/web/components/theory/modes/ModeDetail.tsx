@@ -31,12 +31,12 @@ export function ModeDetail({
 }: ModeDetailProps) {
   const modeDescriptions: Record<ModeName, string> = {
     ionian: "C'est la gamme majeure naturelle, la base de la musique occidentale.",
-    dorian: "Souvent utilisé dans le jazz et le rock, il apporte une touche soulful.",
-    phrygian: "Très présent dans la musique flamenco et espagnole.",
-    lydian: "Donne une impression de rêve et de mystère, très utilisé dans les films.",
-    mixolydian: "Le mode du blues et du rock, énergique et dominant.",
-    aeolian: "La gamme mineure naturelle, mélancolique et émotive.",
-    locrian: "Le mode le plus instable, créant une tension extrême.",
+    dorian: 'Souvent utilisé dans le jazz et le rock, il apporte une touche soulful.',
+    phrygian: 'Très présent dans la musique flamenco et espagnole.',
+    lydian: 'Donne une impression de rêve et de mystère, très utilisé dans les films.',
+    mixolydian: 'Le mode du blues et du rock, énergique et dominant.',
+    aeolian: 'La gamme mineure naturelle, mélancolique et émotive.',
+    locrian: 'Le mode le plus instable, créant une tension extrême.',
   };
 
   return (
@@ -44,15 +44,11 @@ export function ModeDetail({
       {/* Mode header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-metal text-white uppercase">
-            {modeInfo.name}
-          </h2>
+          <h2 className="text-3xl font-metal text-white uppercase">{modeInfo.name}</h2>
           <p className="text-blood font-bold mt-1">{modeInfo.character}</p>
         </div>
         <div className="text-right">
-          <p className="text-4xl font-metal text-white">
-            {noteFr[root] || root}
-          </p>
+          <p className="text-4xl font-metal text-white">{noteFr[root] || root}</p>
           <p className="text-xs text-gray uppercase">{selectedMode}</p>
         </div>
       </div>
@@ -71,9 +67,7 @@ export function ModeDetail({
 
       {/* Mode notes */}
       <div className="border-2 border-steel bg-blackness p-4 mb-6">
-        <p className="text-xs text-gray uppercase tracking-wider mb-3">
-          Notes du mode
-        </p>
+        <p className="text-xs text-gray uppercase tracking-wider mb-3">Notes du mode</p>
         <div className="flex gap-2">
           {modeNotes.map((note, i) => {
             const _degree = modeDegrees[i];
@@ -103,7 +97,8 @@ export function ModeDetail({
       <div className="border-2 border-steel bg-blackness p-4">
         <p className="text-sm text-gray leading-relaxed">
           Le mode <span className="text-white font-bold">{modeInfo.name.toLowerCase()}</span> est
-          caractérisé par son ambiance <span className="text-blood">{modeInfo.character.toLowerCase()}</span>.
+          caractérisé par son ambiance{' '}
+          <span className="text-blood">{modeInfo.character.toLowerCase()}</span>.
           {modeDescriptions[selectedMode]}
         </p>
       </div>

@@ -4,39 +4,30 @@
  * Accessible modal with backdrop and proper focus management
  */
 
-import {
-  forwardRef,
-  useEffect,
-  useRef,
-  type ReactNode,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, useEffect, useRef, type ReactNode, type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/cn';
 
-const modalVariants = cva(
-  'rounded-2xl border shadow-guitar',
-  {
-    variants: {
-      size: {
-        sm: 'max-w-sm',
-        md: 'max-w-md',
-        lg: 'max-w-2xl',
-        xl: 'max-w-3xl',
-        '2xl': 'max-w-4xl',
-        fullscreen: 'max-w-screen-lg h-screen-lg rounded-none',
-      },
-      variant: {
-        default: 'border-neutral-700 bg-neutral-900',
-        glass: 'border-neutral-700/50 bg-neutral-900/80 backdrop-blur-md',
-      },
+const modalVariants = cva('rounded-2xl border shadow-guitar', {
+  variants: {
+    size: {
+      sm: 'max-w-sm',
+      md: 'max-w-md',
+      lg: 'max-w-2xl',
+      xl: 'max-w-3xl',
+      '2xl': 'max-w-4xl',
+      fullscreen: 'max-w-screen-lg h-screen-lg rounded-none',
     },
-    defaultVariants: {
-      size: 'md',
-      variant: 'default',
+    variant: {
+      default: 'border-neutral-700 bg-neutral-900',
+      glass: 'border-neutral-700/50 bg-neutral-900/80 backdrop-blur-md',
     },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'md',
+    variant: 'default',
+  },
+});
 
 export type ModalSize = VariantProps<typeof modalVariants>['size'];
 
@@ -90,9 +81,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
       const firstElement = focusableElements[0] as HTMLElement;
-      const lastElement = focusableElements[
-        focusableElements.length - 1
-      ] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
       firstElement?.focus();
 
@@ -176,12 +165,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                   className="ml-auto text-neutral-400 hover:text-white transition-colors"
                   aria-label="Close modal"
                 >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

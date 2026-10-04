@@ -96,9 +96,7 @@ export default function RegisterScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Create Account</Text>
@@ -108,9 +106,7 @@ export default function RegisterScreen() {
         {/* Form */}
         <View style={styles.form}>
           {/* General Error */}
-          {errors.general && (
-            <Text style={styles.generalError}>{errors.general}</Text>
-          )}
+          {errors.general && <Text style={styles.generalError}>{errors.general}</Text>}
 
           {/* Name Input */}
           <View style={styles.inputGroup}>
@@ -172,7 +168,9 @@ export default function RegisterScreen() {
               autoCapitalize="none"
               editable={!isLoading}
             />
-            {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
+            {errors.confirmPassword && (
+              <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+            )}
           </View>
 
           {/* Register Button */}

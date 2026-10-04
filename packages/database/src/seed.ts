@@ -69,13 +69,15 @@ async function main() {
     {
       name: 'tonic',
       notes: JSON.stringify(['C', 'Eb', 'Gb', 'A']),
-      description: 'Accords de résolution et de repos. Les notes qui permettent de "rentrer à la maison".',
+      description:
+        'Accords de résolution et de repos. Les notes qui permettent de "rentrer à la maison".',
       substitutions: JSON.stringify(['relative-minor', 'relative-major', 'chromatic-mediant']),
     },
     {
       name: 'dominant',
       notes: JSON.stringify(['G', 'B', 'Db', 'E']),
-      description: 'Accords de tension qui demandent une résolution. Créent du mouvement et du suspense.',
+      description:
+        'Accords de tension qui demandent une résolution. Créent du mouvement et du suspense.',
       substitutions: JSON.stringify(['tritone', 'V7alt', 'diminished']),
     },
     {

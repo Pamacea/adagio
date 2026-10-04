@@ -7,3 +7,6 @@ coverage
 *.log
 .env*
 pnpm-lock.yaml
+# Générés / non-JSON strict
+next-env.d.ts
+railway.json

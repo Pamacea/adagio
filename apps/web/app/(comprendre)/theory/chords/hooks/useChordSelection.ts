@@ -13,12 +13,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import type { NoteName, ChordQuality, ChordVoicing } from '@adagio/types';
-import {
-  buildChord,
-  getChordTension,
-  getChordVoicings,
-  getDegreeNote,
-} from '@adagio/theory';
+import { buildChord, getChordTension, getChordVoicings, getDegreeNote } from '@adagio/theory';
 
 // ============================================================================
 // TYPES
@@ -136,9 +131,7 @@ export interface UseChordSelectionReturn {
  * } = useChordSelection();
  * ```
  */
-export function useChordSelection(
-  options: UseChordSelectionOptions = {}
-): UseChordSelectionReturn {
+export function useChordSelection(options: UseChordSelectionOptions = {}): UseChordSelectionReturn {
   const {
     initialRoot = 'C',
     initialTonality = 'major',

@@ -30,13 +30,7 @@ export interface HelpModalProps {
   onTopicChange?: (topicId: string) => void;
 }
 
-export function HelpModal({
-  isOpen,
-  onClose,
-  topic,
-  size = 'lg',
-  onTopicChange,
-}: HelpModalProps) {
+export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }: HelpModalProps) {
   const [activeTab, setActiveTab] = useState<'content' | 'related'>('content');
 
   if (!topic) return null;
@@ -72,9 +66,7 @@ export function HelpModal({
       {/* Content */}
       {activeTab === 'content' && (
         <div className="prose prose-invert prose-sm max-w-none">
-          {topic.short && (
-            <p className="text-blood font-bold mb-4">{topic.short}</p>
-          )}
+          {topic.short && <p className="text-blood font-bold mb-4">{topic.short}</p>}
           {typeof topic.content === 'string' ? (
             <p className="text-gray whitespace-pre-line">{topic.content}</p>
           ) : (

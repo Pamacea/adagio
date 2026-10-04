@@ -46,42 +46,26 @@ function MarkdownContent({ content }: { content: string }) {
             <h4 className="text-base font-metal text-white uppercase mt-4 mb-2">{children}</h4>
           ),
           // Paragraphes
-          p: ({ children }) => (
-            <p className="text-gray mb-4">{children}</p>
-          ),
+          p: ({ children }) => <p className="text-gray mb-4">{children}</p>,
           // Texte en gras
           strong: ({ children }) => (
             <strong className="text-white font-semibold">{children}</strong>
           ),
           // Italique
-          em: ({ children }) => (
-            <em className="text-gray">{children}</em>
-          ),
+          em: ({ children }) => <em className="text-gray">{children}</em>,
           // Listes
-          ul: ({ children }) => (
-            <ul className="list-disc space-y-1 mb-4 ml-4">{children}</ul>
-          ),
-          ol: ({ children }) => (
-            <ol className="list-decimal space-y-1 mb-4 ml-4">{children}</ol>
-          ),
-          li: ({ children }) => (
-            <li className="text-gray">{children}</li>
-          ),
+          ul: ({ children }) => <ul className="list-disc space-y-1 mb-4 ml-4">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal space-y-1 mb-4 ml-4">{children}</ol>,
+          li: ({ children }) => <li className="text-gray">{children}</li>,
           // Tables
           table: ({ children }) => (
             <div className="overflow-x-auto my-4">
               <table className="w-full border-collapse">{children}</table>
             </div>
           ),
-          thead: ({ children }) => (
-            <thead>{children}</thead>
-          ),
-          tbody: ({ children }) => (
-            <tbody>{children}</tbody>
-          ),
-          tr: ({ children }) => (
-            <tr>{children}</tr>
-          ),
+          thead: ({ children }) => <thead>{children}</thead>,
+          tbody: ({ children }) => <tbody>{children}</tbody>,
+          tr: ({ children }) => <tr>{children}</tr>,
           th: ({ children }) => (
             <th className="border border-steel p-2 text-sm bg-toxic/20 text-toxic font-bold text-left">
               {children}

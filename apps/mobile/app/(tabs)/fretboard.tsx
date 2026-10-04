@@ -4,14 +4,7 @@
 // ============================================================================
 
 import { useState, useMemo } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { getFretboardNotesForMobile, getIntervalColor } from '@adagio/theory';
 import type { NoteName, Interval } from '@adagio/types';
 import { MetalCard, GuitarIcon } from '../../components';
@@ -120,20 +113,14 @@ export default function FretboardScreen() {
       </MetalCard>
 
       {/* Toggle All Notes */}
-      <TouchableOpacity
-        style={styles.toggleButton}
-        onPress={() => setShowAllNotes(!showAllNotes)}
-      >
+      <TouchableOpacity style={styles.toggleButton} onPress={() => setShowAllNotes(!showAllNotes)}>
         <Text style={styles.toggleButtonText}>
           {showAllNotes ? 'MASQUER HORS GAMME' : 'AFFICHER TOUTES LES NOTES'}
         </Text>
       </TouchableOpacity>
 
       {/* Fretboard */}
-      <ScrollView
-        style={styles.fretboardContainer}
-        contentContainerStyle={styles.fretboardContent}
-      >
+      <ScrollView style={styles.fretboardContainer} contentContainerStyle={styles.fretboardContent}>
         {/* Fret Numbers */}
         <View style={styles.fretNumbers}>
           <View style={styles.fretNumberPlaceholder} />
@@ -179,9 +166,7 @@ export default function FretboardScreen() {
                       <Text style={[styles.noteText, isInScale && styles.noteTextInScale]}>
                         {toFrenchNote(noteData.name)}
                       </Text>
-                      {interval && isInScale && (
-                        <Text style={styles.intervalText}>{interval}</Text>
-                      )}
+                      {interval && isInScale && <Text style={styles.intervalText}>{interval}</Text>}
                     </View>
                   )}
                 </TouchableOpacity>
@@ -197,9 +182,7 @@ export default function FretboardScreen() {
         <View style={styles.legendRow}>
           {currentIntervals.map((interval) => (
             <View key={interval} style={styles.legendItem}>
-              <View
-                style={[styles.legendDot, { backgroundColor: getIntervalColor(interval) }]}
-              />
+              <View style={[styles.legendDot, { backgroundColor: getIntervalColor(interval) }]} />
               <Text style={styles.legendText}>{interval}</Text>
             </View>
           ))}

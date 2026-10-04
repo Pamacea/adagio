@@ -6,37 +6,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CHORDS_SEED = void 0;
 // Fingerings pour accord de C (adapter pour chaque racine)
 const basicFingerings = {
-    'C': [
+    C: [
         { fret: 0, string: 3 }, // C
         { fret: 2, string: 4 }, // E
         { fret: 0, string: 2 }, // C
     ],
-    'D': [
+    D: [
         { fret: 0, string: 4 },
         { fret: 2, string: 5 },
         { fret: 0, string: 3 },
     ],
-    'E': [
+    E: [
         { fret: 0, string: 5 },
         { fret: 2, string: 4 },
         { fret: 0, string: 3 },
     ],
-    'F': [
+    F: [
         { fret: 0, string: 6 },
         { fret: 2, string: 5 },
         { fret: 0, string: 4 },
     ],
-    'G': [
+    G: [
         { fret: 0, string: 6 },
         { fret: 2, string: 5 },
         { fret: 0, string: 1 },
     ],
-    'A': [
+    A: [
         { fret: 0, string: 5 },
         { fret: 2, string: 4 },
         { fret: 0, string: 3 },
     ],
-    'B': [
+    B: [
         { fret: 0, string: 5 },
         { fret: 4, string: 4 },
         { fret: 0, string: 3 },

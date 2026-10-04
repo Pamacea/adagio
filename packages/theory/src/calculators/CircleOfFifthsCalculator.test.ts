@@ -33,19 +33,16 @@ describe('CircleOfFifthsCalculator', () => {
 
     it('should return correct circle for C major', () => {
       const result = getCircleOfFifths('C');
-      const notes = result.circle.map(item => item.note);
+      const notes = result.circle.map((item) => item.note);
 
-      expect(notes).toEqual([
-        'C', 'G', 'D', 'A', 'E', 'B', 'F#',
-        'Db', 'Ab', 'Eb', 'Bb', 'F',
-      ]);
+      expect(notes).toEqual(['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F']);
     });
 
     it('should calculate correct intervals (perfect fifths)', () => {
       const result = getCircleOfFifths('C');
 
       // Each step should be a perfect fifth (7 semitones)
-      const intervals = result.circle.map(item => item.interval);
+      const intervals = result.circle.map((item) => item.interval);
 
       expect(intervals[0]).toBe(0); // Unison
       expect(intervals[1]).toBe(7); // Perfect fifth
@@ -156,8 +153,8 @@ describe('CircleOfFifthsCalculator', () => {
 
     it('should be 9 steps forward in circle of fifths', () => {
       const circle = getCircleOfFifths('C');
-      const cIndex = circle.circle.findIndex(item => item.note === 'C');
-      const ebIndex = circle.circle.findIndex(item => item.note === 'Eb');
+      const cIndex = circle.circle.findIndex((item) => item.note === 'C');
+      const ebIndex = circle.circle.findIndex((item) => item.note === 'Eb');
 
       // Eb should be 9 steps ahead in circle
       expect((ebIndex - cIndex + 12) % 12).toBe(9);
@@ -195,8 +192,8 @@ describe('CircleOfFifthsCalculator', () => {
 
     it('should be 3 steps forward in circle of fifths', () => {
       const circle = getCircleOfFifths('Eb');
-      const ebIndex = circle.circle.findIndex(item => item.note === 'Eb');
-      const cIndex = circle.circle.findIndex(item => item.note === 'C');
+      const ebIndex = circle.circle.findIndex((item) => item.note === 'Eb');
+      const cIndex = circle.circle.findIndex((item) => item.note === 'C');
 
       // C should be 3 steps ahead in circle
       expect((cIndex - ebIndex + 12) % 12).toBe(3);
@@ -233,8 +230,8 @@ describe('CircleOfFifthsCalculator', () => {
 
     it('should be 6 semitones (augmented fourth) from original', () => {
       const circle = getCircleOfFifths('C');
-      const cIndex = circle.circle.findIndex(item => item.note === 'C');
-      const fsIndex = circle.circle.findIndex(item => item.note === 'F#');
+      const cIndex = circle.circle.findIndex((item) => item.note === 'C');
+      const fsIndex = circle.circle.findIndex((item) => item.note === 'F#');
 
       expect((fsIndex - cIndex + 12) % 12).toBe(6);
     });
@@ -269,15 +266,26 @@ describe('CircleOfFifthsCalculator', () => {
 
     it('should correctly place all 12 notes in circle', () => {
       const result = getCircleOfFifths('C');
-      const notes = result.circle.map(item => item.note);
+      const notes = result.circle.map((item) => item.note);
 
       // All 12 chromatic notes should be present
       const allNotes: NoteName[] = [
-        'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
+        'C',
+        'C#',
+        'D',
+        'D#',
+        'E',
+        'F',
+        'F#',
+        'G',
+        'G#',
+        'A',
+        'A#',
+        'B',
       ];
 
       // Using enharmonic equivalents
-      notes.forEach(note => {
+      notes.forEach((note) => {
         if (note === 'Db') expect(allNotes).toContain('C#');
         else if (note === 'Eb') expect(allNotes).toContain('D#');
         else if (note === 'Gb') expect(allNotes).toContain('F#');

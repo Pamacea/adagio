@@ -74,18 +74,18 @@ export function ChordCard({
             </span>
           )}
         </div>
-        {emotion && (
-          <CardDescription className="text-gray">{emotion}</CardDescription>
-        )}
+        {emotion && <CardDescription className="text-gray">{emotion}</CardDescription>}
       </CardHeader>
 
       <div className="flex flex-col items-center gap-3">
         {/* Harmonic function badge */}
         {chordFunction && (
-          <span className={cn(
-            'text-xs font-bold uppercase px-3 py-1 rounded border-2',
-            functionStyles[chordFunction]
-          )}>
+          <span
+            className={cn(
+              'text-xs font-bold uppercase px-3 py-1 rounded border-2',
+              functionStyles[chordFunction]
+            )}
+          >
             {chordFunction}
           </span>
         )}
@@ -102,10 +102,7 @@ export function ChordCard({
 
         {/* Axis group badge */}
         {axisGroup && (
-          <span className={cn(
-            'text-xs px-3 py-1 rounded border-2',
-            axisGroupStyles[axisGroup]
-          )}>
+          <span className={cn('text-xs px-3 py-1 rounded border-2', axisGroupStyles[axisGroup])}>
             {axisGroup === 'tonic' && 'Tonique'}
             {axisGroup === 'subdominant' && 'Pré-dominant'}
             {axisGroup === 'dominant' && 'Dominant'}

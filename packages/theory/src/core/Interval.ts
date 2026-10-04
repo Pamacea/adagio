@@ -12,32 +12,32 @@ export const INTERVAL_SEMITONES: Record<Interval, number> = {
   // Basic intervals (within octave)
   '1': 0,
   '#1': 1,
-  'b2': 1,
+  b2: 1,
   '2': 2,
   '#2': 3,
-  'b3': 3,
+  b3: 3,
   '3': 4,
   '#3': 5,
-  'b4': 4,
+  b4: 4,
   '4': 5,
   '#4': 6,
-  'b5': 6,
+  b5: 6,
   '5': 7,
   '#5': 8,
-  'b6': 8,
-  'bb6': 8,
+  b6: 8,
+  bb6: 8,
   '6': 9,
   '#6': 10,
-  'bb7': 9,
-  'b7': 10,
+  bb7: 9,
+  b7: 10,
   '7': 11,
   // Extensions (above octave)
-  'b9': 13,
+  b9: 13,
   '9': 14,
   '#9': 15,
   '11': 17,
   '#11': 18,
-  'b13': 20,
+  b13: 20,
   '13': 21,
 };
 
@@ -70,7 +70,27 @@ export function getIntervalFromSemitones(semitones: number): Interval {
  * Check if interval is altered (has sharps/flats)
  */
 export function isAltered(interval: Interval): boolean {
-  return ['#4', 'b2', 'b3', '#4', 'b5', '#5', 'b6', 'bb6', 'bb7', 'b7', 'b9', '#9', '#11', 'b13', '#6', 'b4', '#1', '#2', '#3'].includes(interval);
+  return [
+    '#4',
+    'b2',
+    'b3',
+    '#4',
+    'b5',
+    '#5',
+    'b6',
+    'bb6',
+    'bb7',
+    'b7',
+    'b9',
+    '#9',
+    '#11',
+    'b13',
+    '#6',
+    'b4',
+    '#1',
+    '#2',
+    '#3',
+  ].includes(interval);
 }
 
 /**

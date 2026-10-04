@@ -56,7 +56,13 @@ export function ChordsSidebar({
         <div className="mb-6 pb-4 border-b border-steel/30">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-none bg-gradient-to-br from-blood to-blood/70 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                className="w-6 h-6 text-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M9 18V5l12-2v13" />
                 <circle cx="6" cy="18" r="3" />
                 <circle cx="18" cy="16" r="3" />
@@ -102,7 +108,7 @@ export function ChordsSidebar({
 
           {/* Note selector */}
           <div className="grid grid-cols-6 gap-1.5">
-            {notes.map(note => (
+            {notes.map((note) => (
               <button
                 key={note}
                 onClick={() => onRootChange(note)}
@@ -127,9 +133,10 @@ export function ChordsSidebar({
           </label>
           <div className="flex flex-wrap gap-1.5">
             {getDiatonicChordsByDegree(root, tonality).map((deg) => {
-              const diatonicCount = tonality === 'major'
-                ? majorDegreeQualities[deg.degree]?.length || 0
-                : minorDegreeQualities[deg.degree]?.length || 0;
+              const diatonicCount =
+                tonality === 'major'
+                  ? majorDegreeQualities[deg.degree]?.length || 0
+                  : minorDegreeQualities[deg.degree]?.length || 0;
 
               return (
                 <button
@@ -156,7 +163,9 @@ export function ChordsSidebar({
 
         {/* Info actuelle */}
         <div className="p-4 border-2 border-steel/30 rounded-none bg-gradient-to-br from-void to-abyss">
-          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2 font-semibold">Tonique actuelle</p>
+          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2 font-semibold">
+            Tonique actuelle
+          </p>
           <p className="text-3xl font-metal text-amber-400 mb-1">{root}</p>
           <div className="flex items-center gap-2 text-sm text-gray-300">
             {selectedChordName ? (

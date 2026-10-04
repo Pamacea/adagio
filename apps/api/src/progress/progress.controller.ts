@@ -12,10 +12,7 @@ export class ProgressController {
   @Post('progressions')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  async saveProgression(
-    @Request() req,
-    @Body() dto: SaveProgressionDto,
-  ) {
+  async saveProgression(@Request() req, @Body() dto: SaveProgressionDto) {
     return this.progressService.saveProgression(req.user.userId, dto);
   }
 
@@ -25,7 +22,7 @@ export class ProgressController {
   async completeMilestone(
     @Request() req,
     @Param('id') id: string,
-    @Body('milestoneId') milestoneId: string,
+    @Body('milestoneId') milestoneId: string
   ) {
     return this.progressService.completeMilestone(req.user.userId, id, milestoneId);
   }

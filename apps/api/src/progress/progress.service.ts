@@ -25,7 +25,7 @@ export class ProgressService {
       throw new Error('Progression not found');
     }
 
-    const milestonesCompleted = progress.milestonesCompleted as string[] || [];
+    const milestonesCompleted = (progress.milestonesCompleted as string[]) || [];
 
     return prisma.userProgress.update({
       where: { id: progressionId },

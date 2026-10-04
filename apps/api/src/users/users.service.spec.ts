@@ -359,9 +359,9 @@ describe('UsersService', () => {
     it('should throw NotFoundException if user not found', async () => {
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
-      await expect(
-        service.changePassword('nonexistent-id', mockChangePasswordDto)
-      ).rejects.toThrow(new NotFoundException('User not found'));
+      await expect(service.changePassword('nonexistent-id', mockChangePasswordDto)).rejects.toThrow(
+        new NotFoundException('User not found')
+      );
 
       expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(prisma.user.update).not.toHaveBeenCalled();
@@ -372,9 +372,7 @@ describe('UsersService', () => {
         password: null,
       });
 
-      await expect(
-        service.changePassword('oauth-user', mockChangePasswordDto)
-      ).rejects.toThrow(
+      await expect(service.changePassword('oauth-user', mockChangePasswordDto)).rejects.toThrow(
         new BadRequestException('Account uses OAuth or has no password set')
       );
 
@@ -389,9 +387,9 @@ describe('UsersService', () => {
 
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-      await expect(
-        service.changePassword('user-123', mockChangePasswordDto)
-      ).rejects.toThrow(new ForbiddenException('Current password is incorrect'));
+      await expect(service.changePassword('user-123', mockChangePasswordDto)).rejects.toThrow(
+        new ForbiddenException('Current password is incorrect')
+      );
 
       expect(bcrypt.compare).toHaveBeenCalledWith(
         mockChangePasswordDto.currentPassword,
@@ -425,9 +423,9 @@ describe('UsersService', () => {
       (bcrypt.compare as jest.Mock).mockRejectedValue(new Error('bcrypt error'));
 
       // The service does not catch bcrypt errors, so they are propagated as-is
-      await expect(
-        service.changePassword('user-123', mockChangePasswordDto)
-      ).rejects.toThrow('bcrypt error');
+      await expect(service.changePassword('user-123', mockChangePasswordDto)).rejects.toThrow(
+        'bcrypt error'
+      );
     });
 
     it('should handle bcrypt hash errors during password update', async () => {
@@ -438,9 +436,9 @@ describe('UsersService', () => {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       (bcrypt.hash as jest.Mock).mockRejectedValue(new Error('Hash failed'));
 
-      await expect(
-        service.changePassword('user-123', mockChangePasswordDto)
-      ).rejects.toThrow('Hash failed');
+      await expect(service.changePassword('user-123', mockChangePasswordDto)).rejects.toThrow(
+        'Hash failed'
+      );
     });
   });
 
@@ -801,7 +799,9 @@ describe('UsersService', () => {
     });
 
     it('should respect custom limit parameter', async () => {
-      const mockSessions = [{ id: 'session-1', userId: 'user-123', duration: 30, date: new Date() }];
+      const mockSessions = [
+        { id: 'session-1', userId: 'user-123', duration: 30, date: new Date() },
+      ];
 
       (prisma.practiceSession.findMany as jest.Mock).mockResolvedValue(mockSessions);
 

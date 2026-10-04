@@ -73,7 +73,7 @@ export type Tuning =
   // Basse
   | 'EADG' // Standard 4 cordes
   | 'BEAD' // Standard 5 cordes (grave)
-  | 'DADG' // Drop D basse
+  | 'DADG'; // Drop D basse
 
 /**
  * User progress on a technique
@@ -90,11 +90,7 @@ export interface UserProgress {
   milestonesCompleted: string[];
 }
 
-export type ProgressStatus =
-  | 'locked'
-  | 'in-progress'
-  | 'learned'
-  | 'mastered';
+export type ProgressStatus = 'locked' | 'in-progress' | 'learned' | 'mastered';
 
 /**
  * Player level based on XP

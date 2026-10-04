@@ -9,7 +9,15 @@ import {
   getChordVisualStyle,
 } from '@adagio/theory';
 
-const MODE_NAMES: ModeName[] = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
+const MODE_NAMES: ModeName[] = [
+  'ionian',
+  'dorian',
+  'phrygian',
+  'lydian',
+  'mixolydian',
+  'aeolian',
+  'locrian',
+];
 const DEGREE_ROMAN = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'] as const;
 const DEGREE_ROMAN_MINOR = ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'] as const;
 

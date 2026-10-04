@@ -7,11 +7,7 @@
 
 import { useState, useMemo } from 'react';
 import type { NoteName, ChordQuality, ChordVoicing } from '@adagio/types';
-import {
-  getDiatonicChordsByDegree,
-  getChordVoicings,
-  buildChord,
-} from '@adagio/theory';
+import { getDiatonicChordsByDegree, getChordVoicings, buildChord } from '@adagio/theory';
 import { NOTE_FR } from '@/lib/theory';
 import { ScaleFretboard, calculateFretPositions } from '../scales/ScaleFretboard';
 import type { FretboardNote } from '@adagio/types';
@@ -46,17 +42,23 @@ const _CAGED_SHAPES = ['C', 'A', 'G', 'E', 'D'] as const;
 
 function getDifficultyLabel(level: DifficultyLevel): string {
   switch (level) {
-    case 'beginner': return 'Débutant';
-    case 'intermediate': return 'Intermédiaire';
-    case 'advanced': return 'Avancé';
+    case 'beginner':
+      return 'Débutant';
+    case 'intermediate':
+      return 'Intermédiaire';
+    case 'advanced':
+      return 'Avancé';
   }
 }
 
 function _getDifficultyColor(level: DifficultyLevel): string {
   switch (level) {
-    case 'beginner': return 'text-toxic';
-    case 'intermediate': return 'text-rust';
-    case 'advanced': return 'text-blood';
+    case 'beginner':
+      return 'text-toxic';
+    case 'intermediate':
+      return 'text-rust';
+    case 'advanced':
+      return 'text-blood';
   }
 }
 
@@ -75,7 +77,7 @@ function voicingToFretboardData(
 
   // Générer les notes du manche autour du voicing
   for (let string = 0; string < displayTuning.length; string++) {
-    const voicingNote = voicing.notes.find(n => n.string === string);
+    const voicingNote = voicing.notes.find((n) => n.string === string);
 
     if (voicingNote) {
       // Note jouée dans l'accord
@@ -137,7 +139,7 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
 
   // Filtrer les voicings par difficulté
   const filteredVoicings = useMemo(() => {
-    return chordVoicings.filter(v => {
+    return chordVoicings.filter((v) => {
       switch (difficulty) {
         case 'beginner':
           return v.difficulty === 'easy' && v.fretRange[0] < 4;
@@ -154,7 +156,7 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
     if (selectedShape === 'open' && filteredVoicings.length > 0) {
       return filteredVoicings[0];
     }
-    return filteredVoicings.find(v => v.id.endsWith(selectedShape)) || filteredVoicings[0];
+    return filteredVoicings.find((v) => v.id.endsWith(selectedShape)) || filteredVoicings[0];
   }, [filteredVoicings, selectedShape]);
 
   const fretboardData = useMemo(() => {
@@ -174,15 +176,18 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
 
       {/* Sélection de difficulté */}
       <div className="flex gap-2 mb-4">
-        {(Object.keys({ beginner: null, intermediate: null, advanced: null }) as DifficultyLevel[]).map((level) => (
+        {(
+          Object.keys({ beginner: null, intermediate: null, advanced: null }) as DifficultyLevel[]
+        ).map((level) => (
           <button
             key={level}
             onClick={() => setDifficulty(level)}
             className={`
               px-3 py-1 text-xs font-bold uppercase border-2 transition-all
-              ${difficulty === level
-                ? 'bg-toxic border-blood text-white'
-                : 'bg-blackness border-steel text-gray hover:border-blood'
+              ${
+                difficulty === level
+                  ? 'bg-toxic border-blood text-white'
+                  : 'bg-blackness border-steel text-gray hover:border-blood'
               }
             `}
           >
@@ -196,7 +201,7 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
         {diatonicChords.map((chord, index) => {
           const isSelected = selectedDegree === index;
           const chordName = chord.diatonic[0] || '';
-          const chordRoot = chordName.match(/^([A-G][#b]?)/)?.[1] as NoteName || root;
+          const chordRoot = (chordName.match(/^([A-G][#b]?)/)?.[1] as NoteName) || root;
           const chordQuality = chordName.replace(/^[A-G][#b]?/, '') as ChordQuality;
 
           // Obtenir les notes de l'accord
@@ -214,9 +219,10 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
               }}
               className={`
                 p-2 border-2 transition-all flex flex-col items-center gap-1
-                ${isSelected
-                  ? 'bg-blood border-blood text-white'
-                  : 'bg-blackness border-steel text-gray hover:border-rust hover:text-white'
+                ${
+                  isSelected
+                    ? 'bg-blood border-blood text-white'
+                    : 'bg-blackness border-steel text-gray hover:border-rust hover:text-white'
                 }
               `}
             >
@@ -233,23 +239,17 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
         <div className="bg-blackness border border-steel p-3 mb-4">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <span className="text-2xl font-metal text-blood">
-                {selectedChord.diatonic[0]}
-              </span>
-              <span className="text-sm text-gray ml-2">
-                ({degrees[selectedDegree]})
-              </span>
+              <span className="text-2xl font-metal text-blood">{selectedChord.diatonic[0]}</span>
+              <span className="text-sm text-gray ml-2">({degrees[selectedDegree]})</span>
             </div>
-            <div className="text-xs text-gray">
-              {selectedChord.function}
-            </div>
+            <div className="text-xs text-gray">{selectedChord.function}</div>
           </div>
 
           {/* Notes de l'accord */}
           <div className="flex gap-2 mb-2">
             {buildChord(
               (selectedChord.diatonic[0]?.match(/^([A-G][#b]?)/)?.[1] || root) as NoteName,
-              selectedChord.diatonic[0]?.replace(/^[A-G][#b]?/, '') as ChordQuality || ''
+              (selectedChord.diatonic[0]?.replace(/^[A-G][#b]?/, '') as ChordQuality) || ''
             ).map((note) => (
               <span key={note} className="px-2 py-1 text-xs bg-toxic border border-steel">
                 {displayNote(note)}
@@ -274,15 +274,22 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
                 onClick={() => setSelectedShape(voicing.id)}
                 className={`
                   px-3 py-1 text-xs font-bold border-2 transition-all
-                  ${selectedVoicing?.id === voicing.id
-                    ? 'bg-toxic border-blood text-white'
-                    : 'bg-blackness border-steel text-gray hover:border-rust'
+                  ${
+                    selectedVoicing?.id === voicing.id
+                      ? 'bg-toxic border-blood text-white'
+                      : 'bg-blackness border-steel text-gray hover:border-rust'
                   }
                 `}
               >
                 {voicing.fretRange[0] === 0 ? 'Open' : `Fret ${voicing.fretRange[0]}`}
                 <span className="ml-1 text-[10px] text-gray">
-                  ({voicing.difficulty === 'easy' ? ' facile' : voicing.difficulty === 'medium' ? ' moyen' : ' dur'})
+                  (
+                  {voicing.difficulty === 'easy'
+                    ? ' facile'
+                    : voicing.difficulty === 'medium'
+                      ? ' moyen'
+                      : ' dur'}
+                  )
                 </span>
               </button>
             ))}
@@ -307,24 +314,24 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
       )}
 
       {/* Extensions communes */}
-      {selectedChord && selectedChord.commonExtensions && selectedChord.commonExtensions.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-steel">
-          <h4 className="text-xs text-gray uppercase tracking-wider mb-2">
-            Extensions
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {selectedChord.commonExtensions.map((ext) => (
-              <button
-                key={ext}
-                onClick={() => onChordSelect?.(ext)}
-                className="px-2 py-1 text-xs bg-void border border-steel hover:border-rust transition-all"
-              >
-                {ext}
-              </button>
-            ))}
+      {selectedChord &&
+        selectedChord.commonExtensions &&
+        selectedChord.commonExtensions.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-steel">
+            <h4 className="text-xs text-gray uppercase tracking-wider mb-2">Extensions</h4>
+            <div className="flex flex-wrap gap-2">
+              {selectedChord.commonExtensions.map((ext) => (
+                <button
+                  key={ext}
+                  onClick={() => onChordSelect?.(ext)}
+                  className="px-2 py-1 text-xs bg-void border border-steel hover:border-rust transition-all"
+                >
+                  {ext}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

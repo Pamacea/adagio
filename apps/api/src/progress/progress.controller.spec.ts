@@ -250,13 +250,11 @@ describe('ProgressController', () => {
         user: mockUser,
       };
 
-      mockProgressService.saveProgression.mockRejectedValue(
-        new Error('Database error')
-      );
+      mockProgressService.saveProgression.mockRejectedValue(new Error('Database error'));
 
-      await expect(
-        controller.saveProgression(mockRequest as any, saveDto as any)
-      ).rejects.toThrow('Database error');
+      await expect(controller.saveProgression(mockRequest as any, saveDto as any)).rejects.toThrow(
+        'Database error'
+      );
     });
 
     it('should validate chord structure with all properties', async () => {
@@ -354,11 +352,7 @@ describe('ProgressController', () => {
 
       mockProgressService.completeMilestone.mockResolvedValue(updatedProgress);
 
-      await controller.completeMilestone(
-        mockRequest as any,
-        'progress-123',
-        'milestone-3'
-      );
+      await controller.completeMilestone(mockRequest as any, 'progress-123', 'milestone-3');
 
       expect(service.completeMilestone).toHaveBeenCalledWith(
         'user-123',
@@ -396,11 +390,7 @@ describe('ProgressController', () => {
 
       mockProgressService.completeMilestone.mockResolvedValue(mockUserProgress);
 
-      await controller.completeMilestone(
-        mockRequest as any,
-        'progress-123',
-        'milestone-1'
-      );
+      await controller.completeMilestone(mockRequest as any, 'progress-123', 'milestone-1');
 
       expect(service.completeMilestone).toHaveBeenCalledWith(
         'different-user-456',
@@ -414,16 +404,10 @@ describe('ProgressController', () => {
         user: mockUser,
       };
 
-      mockProgressService.completeMilestone.mockRejectedValue(
-        new Error('Progression not found')
-      );
+      mockProgressService.completeMilestone.mockRejectedValue(new Error('Progression not found'));
 
       await expect(
-        controller.completeMilestone(
-          mockRequest as any,
-          'non-existent',
-          'milestone-1'
-        )
+        controller.completeMilestone(mockRequest as any, 'non-existent', 'milestone-1')
       ).rejects.toThrow('Progression not found');
     });
 
@@ -432,16 +416,10 @@ describe('ProgressController', () => {
         user: mockUser,
       };
 
-      mockProgressService.completeMilestone.mockRejectedValue(
-        new Error('Unauthorized access')
-      );
+      mockProgressService.completeMilestone.mockRejectedValue(new Error('Unauthorized access'));
 
       await expect(
-        controller.completeMilestone(
-          mockRequest as any,
-          'other-users-progress',
-          'milestone-1'
-        )
+        controller.completeMilestone(mockRequest as any, 'other-users-progress', 'milestone-1')
       ).rejects.toThrow('Unauthorized access');
     });
 
@@ -523,11 +501,7 @@ describe('ProgressController', () => {
 
       mockProgressService.completeMilestone.mockResolvedValue(updatedProgress);
 
-      await controller.completeMilestone(
-        mockRequest as any,
-        'progress-123',
-        'milestone-3'
-      );
+      await controller.completeMilestone(mockRequest as any, 'progress-123', 'milestone-3');
 
       expect(service.completeMilestone).toHaveBeenCalledWith(
         'user-123',
@@ -553,11 +527,7 @@ describe('ProgressController', () => {
           milestonesCompleted: [milestoneId],
         });
 
-        await controller.completeMilestone(
-          mockRequest as any,
-          'progress-123',
-          milestoneId
-        );
+        await controller.completeMilestone(mockRequest as any, 'progress-123', milestoneId);
 
         expect(service.completeMilestone).toHaveBeenCalledWith(
           'user-123',
@@ -642,21 +612,17 @@ describe('ProgressController', () => {
       const saveDto = { key: 'C', chords: [] };
       const mockRequest = { user: mockUser };
 
-      mockProgressService.saveProgression.mockRejectedValue(
-        new Error('Validation failed')
-      );
+      mockProgressService.saveProgression.mockRejectedValue(new Error('Validation failed'));
 
-      await expect(
-        controller.saveProgression(mockRequest as any, saveDto as any)
-      ).rejects.toThrow('Validation failed');
+      await expect(controller.saveProgression(mockRequest as any, saveDto as any)).rejects.toThrow(
+        'Validation failed'
+      );
     });
 
     it('should propagate completeMilestone errors', async () => {
       const mockRequest = { user: mockUser };
 
-      mockProgressService.completeMilestone.mockRejectedValue(
-        new Error('Milestone not found')
-      );
+      mockProgressService.completeMilestone.mockRejectedValue(new Error('Milestone not found'));
 
       await expect(
         controller.completeMilestone(mockRequest as any, 'progress-123', 'invalid')
@@ -667,13 +633,11 @@ describe('ProgressController', () => {
       const saveDto = { key: 'C', chords: [] };
       const mockRequest = { user: mockUser };
 
-      mockProgressService.saveProgression.mockRejectedValue(
-        new Error('Database connection lost')
-      );
+      mockProgressService.saveProgression.mockRejectedValue(new Error('Database connection lost'));
 
-      await expect(
-        controller.saveProgression(mockRequest as any, saveDto as any)
-      ).rejects.toThrow('Database connection lost');
+      await expect(controller.saveProgression(mockRequest as any, saveDto as any)).rejects.toThrow(
+        'Database connection lost'
+      );
     });
 
     it('should handle unexpected errors gracefully', async () => {

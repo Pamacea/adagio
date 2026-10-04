@@ -21,9 +21,7 @@ export function ModeInfo({ root, mode, scaleNotes, displayNote }: ModeInfoProps)
   const emotion = getEmotionForMode(mode);
 
   // Extraire les notes uniques de la gamme (triées par ordre d'apparition)
-  const uniqueNotes = Array.from(
-    new Set(scaleNotes.filter(n => n.inScale).map(n => n.name))
-  );
+  const uniqueNotes = Array.from(new Set(scaleNotes.filter((n) => n.inScale).map((n) => n.name)));
 
   return (
     <div className="section-frame p-4 mb-8 border-2 border-blood">
@@ -40,7 +38,7 @@ export function ModeInfo({ root, mode, scaleNotes, displayNote }: ModeInfoProps)
         {/* Scale notes badges */}
         <div className="flex gap-2 flex-wrap justify-end">
           {uniqueNotes.map((note) => {
-            const noteData = scaleNotes.find(n => n.name === note && n.inScale);
+            const noteData = scaleNotes.find((n) => n.name === note && n.inScale);
             const isRoot = noteData?.interval === '1';
             const isFifth = noteData?.interval === '5';
 
@@ -51,15 +49,13 @@ export function ModeInfo({ root, mode, scaleNotes, displayNote }: ModeInfoProps)
                   isRoot
                     ? 'border-blood bg-toxic text-white'
                     : isFifth
-                    ? 'border-steel bg-circuit text-white'
-                    : 'border-steel bg-blackness text-gray'
+                      ? 'border-steel bg-circuit text-white'
+                      : 'border-steel bg-blackness text-gray'
                 }`}
               >
                 {displayNote(note)}
                 {noteData?.interval && noteData.interval !== '1' && (
-                  <span className="ml-1 text-xs text-gray-400">
-                    {noteData.interval}
-                  </span>
+                  <span className="ml-1 text-xs text-gray-400">{noteData.interval}</span>
                 )}
               </div>
             );
@@ -70,10 +66,7 @@ export function ModeInfo({ root, mode, scaleNotes, displayNote }: ModeInfoProps)
       {/* Sensation/emotion tags */}
       <div className="flex gap-2 mt-3 flex-wrap">
         {emotion.sensation.split(', ').map((sensation, i) => (
-          <span
-            key={i}
-            className="px-2 py-0.5 text-xs bg-abyss border border-steel text-gray"
-          >
+          <span key={i} className="px-2 py-0.5 text-xs bg-abyss border border-steel text-gray">
             {sensation}
           </span>
         ))}

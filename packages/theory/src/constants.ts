@@ -12,16 +12,41 @@ import type { NoteName, ChordQuality } from '@adagio/types';
  * Notes de la gamme chromatique (ordre standard)
  */
 export const CHROMATIC_SCALE: readonly NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
 ] as const;
 
 /**
  * Mapping note → nom français
  */
 export const NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭', 'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-  'E': 'MI', 'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭', 'G': 'SOL', 'G#': 'SOL♯',
-  'Ab': 'LA♭', 'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭', 'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RÉ♭',
+  D: 'RÉ',
+  'D#': 'RÉ♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };
 
 /**
@@ -60,13 +85,13 @@ export const GUITAR_TUNING_DISPLAY: readonly NoteName[] = ['E', 'B', 'G', 'D', '
  * Format simple: une seule qualité par degré
  */
 export const MAJOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
-  'I': '',
-  'II': 'm',
-  'III': 'm',
-  'IV': '',
-  'V': '7',
-  'VI': 'm',
-  'VII': 'm7b5',
+  I: '',
+  II: 'm',
+  III: 'm',
+  IV: '',
+  V: '7',
+  VI: 'm',
+  VII: 'm7b5',
 };
 
 /**
@@ -74,13 +99,13 @@ export const MAJOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
  * Format simple: une seule qualité par degré
  */
 export const MINOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
-  'I': 'm',
-  'II': 'm7b5',
-  'III': '',
-  'IV': 'm',
-  'V': '7', // Souvent majeur pour la tension
-  'VI': '',
-  'VII': '',
+  I: 'm',
+  II: 'm7b5',
+  III: '',
+  IV: 'm',
+  V: '7', // Souvent majeur pour la tension
+  VI: '',
+  VII: '',
 };
 
 // ============================================================================
@@ -93,13 +118,13 @@ export const MINOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
  * Note: Utilise string[] au lieu de ChordQuality[] pour inclure des variations UI non-standard
  */
 export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
-  'I': ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13', 'sus2', 'add4', '5add9'],
-  'II': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4'],
-  'III': ['m', 'm7', 'm6', 'm9', 'madd9', '7', '7sus2', '7b9', 'add9'],
-  'IV': ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13'],
-  'V': ['7', '9', '11', '13', '7sus4', '13sus4', '7b9', '7#9', '7b13', '7#11', '7alt', '7b5'],
-  'VI': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4', '11', '6/9sus2', 'add9'],
-  'VII': ['m7b5', 'm7b5b9', 'm7b11', 'dim7', '7'],
+  I: ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13', 'sus2', 'add4', '5add9'],
+  II: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4'],
+  III: ['m', 'm7', 'm6', 'm9', 'madd9', '7', '7sus2', '7b9', 'add9'],
+  IV: ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13'],
+  V: ['7', '9', '11', '13', '7sus4', '13sus4', '7b9', '7#9', '7b13', '7#11', '7alt', '7b5'],
+  VI: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4', '11', '6/9sus2', 'add9'],
+  VII: ['m7b5', 'm7b5b9', 'm7b11', 'dim7', '7'],
 };
 
 /**
@@ -107,20 +132,44 @@ export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
  * Note: Utilise string[] au lieu de ChordQuality[] pour inclure des variations UI non-standard
  */
 export const MINOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
-  'I': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'II': ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11', '13'],
-  'III': ['', 'maj7', '6', 'add9', 'maj9'],
-  'IV': ['m', 'm7', 'm6', 'm9', 'm11', 'mMaj7', 'm6/9', 'add9', '6/9', '7sus4'],
-  'V': ['7', '7alt', '7#11', '7#9', '7b9', '7#5', '7b13', '7sus4', 'dim7'],
-  'VI': ['', 'maj7', '6', 'add9', '6add9', '9'],
-  'VII': ['', '7', 'maj7'],
+  I: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
+  II: ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11', '13'],
+  III: ['', 'maj7', '6', 'add9', 'maj9'],
+  IV: ['m', 'm7', 'm6', 'm9', 'm11', 'mMaj7', 'm6/9', 'add9', '6/9', '7sus4'],
+  V: ['7', '7alt', '7#11', '7#9', '7b9', '7#5', '7b13', '7sus4', 'dim7'],
+  VI: ['', 'maj7', '6', 'add9', '6add9', '9'],
+  VII: ['', '7', 'maj7'],
 };
 
 /**
  * Qualités d'accords supplémentaires non-diatoniques
  */
 export const EXTENSION_QUALITIES: string[] = [
-  'aug', 'aug7', 'dim', 'dim7', 'sus2', 'sus4', '7sus4',
-  '9', 'm9', 'maj9', '11', 'm11', '13', 'm13', 'maj13',
-  '6', 'm6', '6/9', 'add9', 'add4', '7alt', '7b9', '7#9', '7b5', '7#5', '7#11', '7b13',
+  'aug',
+  'aug7',
+  'dim',
+  'dim7',
+  'sus2',
+  'sus4',
+  '7sus4',
+  '9',
+  'm9',
+  'maj9',
+  '11',
+  'm11',
+  '13',
+  'm13',
+  'maj13',
+  '6',
+  'm6',
+  '6/9',
+  'add9',
+  'add4',
+  '7alt',
+  '7b9',
+  '7#9',
+  '7b5',
+  '7#5',
+  '7#11',
+  '7b13',
 ];

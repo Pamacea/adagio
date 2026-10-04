@@ -58,7 +58,7 @@ exports.MODES_SEED = [
         name: 'Mixolydien',
         greekName: 'Mixolydien',
         intervals: JSON.stringify([0, 2, 4, 5, 7, 9, 10]),
-        character: 'Bluesy, rock\'n\'roll, énergique',
+        character: "Bluesy, rock'n'roll, énergique",
         sensation: 'Puissant, dynamique',
         feeling: 'Rock',
         relativeTo: 'V in major',

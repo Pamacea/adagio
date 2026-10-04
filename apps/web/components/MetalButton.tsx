@@ -49,10 +49,12 @@ export const MetalButton = forwardRef<HTMLButtonElement, MetalButtonProps>(
     },
     ref
   ) => {
-    const baseClasses = 'btn-poly inline-flex items-center justify-center gap-2 font-bold uppercase tracking-wider transition-all disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseClasses =
+      'btn-poly inline-flex items-center justify-center gap-2 font-bold uppercase tracking-wider transition-all disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variantClasses = {
-      primary: 'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
+      primary:
+        'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
       blood: 'btn-blood hover:-translate-x-px hover:-translate-y-px',
       ghost: 'bg-transparent border-transparent text-gray hover:text-white hover:bg-void',
       outline: 'bg-transparent border-steel text-white hover:bg-toxic hover:border-blood',
@@ -63,12 +65,7 @@ export const MetalButton = forwardRef<HTMLButtonElement, MetalButtonProps>(
     const iconElement = Icon ? <Icon size="sm" /> : null;
 
     return (
-      <button
-        ref={ref}
-        className={combinedClasses}
-        disabled={disabled}
-        {...props}
-      >
+      <button ref={ref} className={combinedClasses} disabled={disabled} {...props}>
         {Icon && iconPosition === 'left' && iconElement}
         <span>{children}</span>
         {Icon && iconPosition === 'right' && iconElement}
@@ -107,10 +104,12 @@ export function MetalLink({
   className = '',
   external = false,
 }: MetalLinkProps) {
-  const baseClasses = 'btn-poly inline-flex items-center justify-center gap-2 font-bold uppercase tracking-wider transition-all';
+  const baseClasses =
+    'btn-poly inline-flex items-center justify-center gap-2 font-bold uppercase tracking-wider transition-all';
 
   const variantClasses = {
-    primary: 'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
+    primary:
+      'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
     blood: 'btn-blood hover:-translate-x-px hover:-translate-y-px',
     ghost: 'bg-transparent border-transparent text-gray hover:text-white hover:bg-void',
     outline: 'bg-transparent border-steel text-white hover:bg-toxic hover:border-blood',
@@ -122,12 +121,7 @@ export function MetalLink({
 
   if (external) {
     return (
-      <a
-        href={href}
-        className={combinedClasses}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={href} className={combinedClasses} target="_blank" rel="noopener noreferrer">
         {Icon && iconPosition === 'left' && iconElement}
         <span>{children}</span>
         {Icon && iconPosition === 'right' && iconElement}
@@ -161,8 +155,6 @@ export function ButtonGroup({ children, align = 'left', className = '' }: Button
   };
 
   return (
-    <div className={`flex flex-wrap gap-2 ${alignClasses[align]} ${className}`}>
-      {children}
-    </div>
+    <div className={`flex flex-wrap gap-2 ${alignClasses[align]} ${className}`}>{children}</div>
   );
 }

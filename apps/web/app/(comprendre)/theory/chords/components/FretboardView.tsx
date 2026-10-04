@@ -32,11 +32,7 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
         <span className="w-2.5 h-2.5 rounded-none bg-toxic"></span>
         Manche de guitare (24 frets)
       </h3>
-      <svg
-        viewBox="0 0 1900 340"
-        className="w-full h-auto"
-        preserveAspectRatio="xMidYMid meet"
-      >
+      <svg viewBox="0 0 1900 340" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="fretboardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#1a1510" />
@@ -52,10 +48,10 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
             <stop offset="100%" stopColor="#16a34a" />
           </radialGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
             <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
@@ -65,7 +61,16 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
         {[0, 1, 2, 3, 4, 5].map((i) => {
           const y = 42 + i * 48;
           return (
-            <line key={`string-${i}`} x1="50" y1={y} x2="1880" y2={y} stroke={i < 3 ? '#8a7358' : '#6b5a45'} strokeWidth={i === 0 || i === 5 ? 2.5 : 2} opacity={0.8} />
+            <line
+              key={`string-${i}`}
+              x1="50"
+              y1={y}
+              x2="1880"
+              y2={y}
+              stroke={i < 3 ? '#8a7358' : '#6b5a45'}
+              strokeWidth={i === 0 || i === 5 ? 2.5 : 2}
+              opacity={0.8}
+            />
           );
         })}
 
@@ -74,7 +79,15 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
           const x = 50 + i * 75;
           const isNut = i === 0;
           return (
-            <line key={`fret-${i}`} x1={x} y1="20" x2={x} y2="300" stroke={isNut ? '#8b7355' : '#5c4a3a'} strokeWidth={isNut ? 5 : 2} />
+            <line
+              key={`fret-${i}`}
+              x1={x}
+              y1="20"
+              x2={x}
+              y2="300"
+              stroke={isNut ? '#8b7355' : '#5c4a3a'}
+              strokeWidth={isNut ? 5 : 2}
+            />
           );
         })}
 
@@ -82,8 +95,15 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
         <rect x="45" y="20" width="10" height="280" fill="#3d3225" rx="0" />
 
         {/* Fret markers - single dots at 3, 5, 7, 9, 15, 17, 19, 21 */}
-        {[3, 5, 7, 9, 15, 17, 19, 21].map(fret => (
-          <circle key={`marker-${fret}`} cx={50 + fret * 75 - 37.5} cy="160" r={7} fill="#4a5568" opacity={0.5} />
+        {[3, 5, 7, 9, 15, 17, 19, 21].map((fret) => (
+          <circle
+            key={`marker-${fret}`}
+            cx={50 + fret * 75 - 37.5}
+            cy="160"
+            r={7}
+            fill="#4a5568"
+            opacity={0.5}
+          />
         ))}
         {/* Double markers at 12, 24 */}
         <circle cx={50 + 12 * 75 - 37.5} cy="125" r={7} fill="#4a5568" opacity={0.5} />
@@ -95,7 +115,16 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
         {Array.from({ length: 24 }, (_, i) => {
           const fretNum = i + 1;
           return (
-            <text key={`fret-num-${fretNum}`} x={50 + i * 75 + 37.5} y="320" textAnchor="middle" fill="#6b7280" fontSize="10" fontFamily="monospace" fontWeight="bold">
+            <text
+              key={`fret-num-${fretNum}`}
+              x={50 + i * 75 + 37.5}
+              y="320"
+              textAnchor="middle"
+              fill="#6b7280"
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="bold"
+            >
               {fretNum}
             </text>
           );
@@ -103,7 +132,16 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
 
         {/* String names */}
         {['MI', 'SI', 'SOL', 'RÉ', 'LA', 'MI'].map((name, i) => (
-          <text key={`string-name-${i}`} x="28" y={42 + i * 48 + 4} textAnchor="end" fill="#6b7280" fontSize="9" fontFamily="monospace" fontWeight="bold">
+          <text
+            key={`string-name-${i}`}
+            x="28"
+            y={42 + i * 48 + 4}
+            textAnchor="end"
+            fill="#6b7280"
+            fontSize="9"
+            fontFamily="monospace"
+            fontWeight="bold"
+          >
             {name}
           </text>
         ))}
@@ -121,7 +159,15 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
           if (!inScale) {
             return (
               <g key={`note-${noteData.string}-${noteData.fret}`}>
-                <circle cx={x} cy={y} r={noteRadius - 1} fill="#1f2937" stroke="#374151" strokeWidth={1} opacity={0.2} />
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={noteRadius - 1}
+                  fill="#1f2937"
+                  stroke="#374151"
+                  strokeWidth={1}
+                  opacity={0.2}
+                />
               </g>
             );
           }
@@ -129,13 +175,46 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
           return (
             <g key={`note-${noteData.string}-${noteData.fret}`}>
               {isRoot && (
-                <circle cx={x} cy={y} r={noteRadius + 3} fill="none" stroke="#fbbf24" strokeWidth={1} opacity={0.4}>
-                  <animate attributeName="r" values={`${noteRadius + 3};${noteRadius + 6};${noteRadius + 3}`} dur="2s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={noteRadius + 3}
+                  fill="none"
+                  stroke="#fbbf24"
+                  strokeWidth={1}
+                  opacity={0.4}
+                >
+                  <animate
+                    attributeName="r"
+                    values={`${noteRadius + 3};${noteRadius + 6};${noteRadius + 3}`}
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0.4;0;0.4"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
                 </circle>
               )}
-              <circle cx={x} cy={y} r={noteRadius} fill={isRoot ? 'url(#noteRootGrad)' : 'url(#noteScaleGrad)'} stroke={isRoot ? '#fbbf24' : '#22c55e'} strokeWidth={1.5} filter="url(#glow)" />
-              <text x={x} y={y + noteRadius * 0.35} textAnchor="middle" fill={isRoot ? '#1a1a1a' : '#ffffff'} fontSize={9} fontWeight="bold">
+              <circle
+                cx={x}
+                cy={y}
+                r={noteRadius}
+                fill={isRoot ? 'url(#noteRootGrad)' : 'url(#noteScaleGrad)'}
+                stroke={isRoot ? '#fbbf24' : '#22c55e'}
+                strokeWidth={1.5}
+                filter="url(#glow)"
+              />
+              <text
+                x={x}
+                y={y + noteRadius * 0.35}
+                textAnchor="middle"
+                fill={isRoot ? '#1a1a1a' : '#ffffff'}
+                fontSize={9}
+                fontWeight="bold"
+              >
                 {noteData.name}
               </text>
             </g>

@@ -38,25 +38,41 @@ import type { ModeName } from '@adagio/types';
 
 describe('MODE_COLORS', () => {
   it('should have all 7 modes defined', () => {
-    const modes: ModeName[] = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
-    modes.forEach(mode => {
+    const modes: ModeName[] = [
+      'ionian',
+      'dorian',
+      'phrygian',
+      'lydian',
+      'mixolydian',
+      'aeolian',
+      'locrian',
+    ];
+    modes.forEach((mode) => {
       expect(MODE_COLORS[mode]).toBeDefined();
     });
   });
 
   it('should have valid hex color format', () => {
     const hexRegex = /^#[0-9A-F]{6}$/i;
-    Object.values(MODE_COLORS).forEach(color => {
+    Object.values(MODE_COLORS).forEach((color) => {
       expect(color).toMatch(hexRegex);
     });
   });
 });
 
 describe('getModeColor', () => {
-  const modes: ModeName[] = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
+  const modes: ModeName[] = [
+    'ionian',
+    'dorian',
+    'phrygian',
+    'lydian',
+    'mixolydian',
+    'aeolian',
+    'locrian',
+  ];
 
   it('should return a color for each mode', () => {
-    modes.forEach(mode => {
+    modes.forEach((mode) => {
       const color = getModeColor(mode);
       expect(color).toBeDefined();
       expect(typeof color).toBe('string');
@@ -93,7 +109,7 @@ describe('getAllModeColors', () => {
 
   it('should return valid hex colors', () => {
     const colors = getAllModeColors();
-    colors.forEach(color => {
+    colors.forEach((color) => {
       expect(color).toMatch(/^#[0-9A-F]{6}$/i);
     });
   });
@@ -134,7 +150,7 @@ describe('getDegreeColor - Major Key', () => {
 
   it('should work with all 7 degrees', () => {
     const degrees = [0, 1, 2, 3, 4, 5, 6];
-    degrees.forEach(degree => {
+    degrees.forEach((degree) => {
       const colorInfo = getDegreeColor(degree, 'major');
       expect(colorInfo.primary).toMatch(/^#[0-9A-F]{6}$/i);
       expect(colorInfo.emotion).toBeDefined();
@@ -166,7 +182,7 @@ describe('getDegreeColor - Minor Key', () => {
 
   it('should work with all 7 degrees', () => {
     const degrees = [0, 1, 2, 3, 4, 5, 6];
-    degrees.forEach(degree => {
+    degrees.forEach((degree) => {
       const colorInfo = getDegreeColor(degree, 'minor');
       expect(colorInfo.primary).toMatch(/^#[0-9A-F]{6}$/i);
       expect(colorInfo.emotion).toBeDefined();
@@ -251,7 +267,15 @@ describe('getDegreeMode', () => {
   });
 
   it('should return valid ModeName', () => {
-    const validModes: ModeName[] = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
+    const validModes: ModeName[] = [
+      'ionian',
+      'dorian',
+      'phrygian',
+      'lydian',
+      'mixolydian',
+      'aeolian',
+      'locrian',
+    ];
     for (let i = 0; i < 7; i++) {
       const mode = getDegreeMode(i, 'major');
       expect(validModes).toContain(mode);
@@ -263,7 +287,7 @@ describe('getAllDegreeColors', () => {
   it('should return 7 DegreeColorInfo for major', () => {
     const colors = getAllDegreeColors('major');
     expect(colors).toHaveLength(7);
-    colors.forEach(info => {
+    colors.forEach((info) => {
       expect(info.primary).toBeDefined();
       expect(info.emotion).toBeDefined();
     });
@@ -287,7 +311,7 @@ describe('getDegreeHexColors', () => {
   it('should return array of hex strings', () => {
     const colors = getDegreeHexColors('major');
     expect(colors).toHaveLength(7);
-    colors.forEach(color => {
+    colors.forEach((color) => {
       expect(color).toMatch(/^#[0-9A-F]{6}$/i);
     });
   });
@@ -437,9 +461,17 @@ describe('colorWithOpacity', () => {
 describe('Color Accessibility', () => {
   it('should have sufficient contrast for dark backgrounds', () => {
     // All mode colors should have good contrast on #0a0a0a
-    const modes: ModeName[] = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
+    const modes: ModeName[] = [
+      'ionian',
+      'dorian',
+      'phrygian',
+      'lydian',
+      'mixolydian',
+      'aeolian',
+      'locrian',
+    ];
 
-    modes.forEach(mode => {
+    modes.forEach((mode) => {
       const color = getModeColor(mode);
       const textColor = getContrastTextColor(color);
       expect(['#000000', '#FFFFFF']).toContain(textColor);
@@ -466,7 +498,7 @@ describe('Emotion-Color Mapping Consistency', () => {
     const positiveModes = ['ionian', 'mixolydian', 'dorian'];
     const warmColors = ['#F59E0B', '#F97316', '#F59E0B'];
 
-    positiveModes.forEach(mode => {
+    positiveModes.forEach((mode) => {
       const color = getModeColor(mode as ModeName);
       expect(warmColors).toContain(color);
     });

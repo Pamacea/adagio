@@ -31,12 +31,7 @@ export const authClient = createAuthClient({
 });
 
 // Export commonly used methods and hooks for convenience
-export const {
-  signIn,
-  signOut,
-  signUp,
-  useSession,
-} = authClient;
+export const { signIn, signOut, signUp, useSession } = authClient;
 
 /**
  * Helper to check if user is authenticated (server-side utility)

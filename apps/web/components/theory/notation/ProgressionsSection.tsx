@@ -72,19 +72,50 @@ export function ProgressionsSection() {
             );
           })}
 
-          <path d="M 150 70 Q 200 80 210 120" fill="none" stroke="#8b1a1a" strokeWidth="2" markerEnd="url(#arrowhead)" />
+          <path
+            d="M 150 70 Q 200 80 210 120"
+            fill="none"
+            stroke="#8b1a1a"
+            strokeWidth="2"
+            markerEnd="url(#arrowhead)"
+          />
           <path d="M 210 150 Q 200 190 160 200" fill="none" stroke="#8b1a1a" strokeWidth="2" />
           <path d="M 150 230 Q 100 220 90 180" fill="none" stroke="#8b1a1a" strokeWidth="2" />
           <path d="M 90 150 Q 100 100 140 80" fill="none" stroke="#8b1a1a" strokeWidth="2" />
 
           <defs>
-            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <marker
+              id="arrowhead"
+              markerWidth="10"
+              markerHeight="7"
+              refX="9"
+              refY="3.5"
+              orient="auto"
+            >
               <polygon points="0 0, 10 3.5, 0 7" fill="#8b1a1a" />
             </marker>
           </defs>
 
-          <text x="150" y="145" textAnchor="middle" fill="#e0e0e0" fontSize="10" fontFamily="monospace">FIFTHS</text>
-          <text x="150" y="158" textAnchor="middle" fill="#666666" fontSize="8" fontFamily="monospace">FALL</text>
+          <text
+            x="150"
+            y="145"
+            textAnchor="middle"
+            fill="#e0e0e0"
+            fontSize="10"
+            fontFamily="monospace"
+          >
+            FIFTHS
+          </text>
+          <text
+            x="150"
+            y="158"
+            textAnchor="middle"
+            fill="#666666"
+            fontSize="8"
+            fontFamily="monospace"
+          >
+            FALL
+          </text>
         </svg>
 
         <p className="text-center text-sm text-gray mt-4">
@@ -98,8 +129,8 @@ export function ProgressionsSection() {
           Système Numéral
         </h2>
         <p className="text-sm text-gray mb-4">
-          Les chiffres romains représentent les degrés de la gamme. Les majuscules sont majeurs,
-          les minuscules sont mineurs.
+          Les chiffres romains représentent les degrés de la gamme. Les majuscules sont majeurs, les
+          minuscules sont mineurs.
         </p>
 
         <div className="grid grid-cols-7 gap-2">
@@ -107,7 +138,9 @@ export function ProgressionsSection() {
             const isMinor = [1, 2, 5].includes(i);
             return (
               <div key={deg} className="text-center">
-                <div className={`aspect-square border-2 ${isMinor ? 'border-gray' : 'border-steel'} bg-blackness flex items-center justify-center`}>
+                <div
+                  className={`aspect-square border-2 ${isMinor ? 'border-gray' : 'border-steel'} bg-blackness flex items-center justify-center`}
+                >
                   <span className={`text-xl font-metal ${isMinor ? 'text-gray' : 'text-white'}`}>
                     {isMinor ? ROMAN_DEGREES_MINOR[i] : deg}
                   </span>

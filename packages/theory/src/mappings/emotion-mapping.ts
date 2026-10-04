@@ -68,26 +68,26 @@ export function getEmotionForMode(mode: ModeName): EmotionMapping {
  */
 export function getModesByFeeling(feeling: string): ModeName[] {
   const mappings: Record<string, ModeName[]> = {
-    'joyeux': ['ionian'],
-    'heureux': ['ionian'],
-    'serein': ['ionian'],
-    'jazzy': ['dorian'],
-    'soulful': ['dorian'],
-    'sophistique': ['dorian'],
-    'espagnol': ['phrygian'],
-    'sombre': ['phrygian', 'locrian'],
-    'exotique': ['phrygian'],
-    'aérien': ['lydian'],
-    'lumineux': ['lydian', 'ionian'],
-    'rêveur': ['lydian'],
-    'dreamy': ['lydian'],
-    'bluesy': ['mixolydian'],
-    'rock': ['mixolydian', 'dorian'],
-    'energique': ['mixolydian'],
-    'mélancolique': ['aeolian'],
-    'triste': ['aeolian'],
-    'dissonant': ['locrian'],
-    'tense': ['locrian'],
+    joyeux: ['ionian'],
+    heureux: ['ionian'],
+    serein: ['ionian'],
+    jazzy: ['dorian'],
+    soulful: ['dorian'],
+    sophistique: ['dorian'],
+    espagnol: ['phrygian'],
+    sombre: ['phrygian', 'locrian'],
+    exotique: ['phrygian'],
+    aérien: ['lydian'],
+    lumineux: ['lydian', 'ionian'],
+    rêveur: ['lydian'],
+    dreamy: ['lydian'],
+    bluesy: ['mixolydian'],
+    rock: ['mixolydian', 'dorian'],
+    energique: ['mixolydian'],
+    mélancolique: ['aeolian'],
+    triste: ['aeolian'],
+    dissonant: ['locrian'],
+    tense: ['locrian'],
   };
 
   const feelingLower = feeling.toLowerCase();
@@ -99,9 +99,9 @@ export function getModesByFeeling(feeling: string): ModeName[] {
 // ============================================================================
 
 export interface DegreeColorInfo {
-  primary: string;      // Main color for the degree
-  secondary: string;    // Alternative shade (lighter/darker)
-  emotion: string;      // Emotional feeling
+  primary: string; // Main color for the degree
+  secondary: string; // Alternative shade (lighter/darker)
+  emotion: string; // Emotional feeling
   modeAssociation?: ModeName; // Associated mode
 }
 
@@ -109,44 +109,51 @@ export interface DegreeColorInfo {
  * Color palettes for major tonality - based on modal emotions
  */
 const MAJOR_DEGREE_COLORS: Record<number, DegreeColorInfo> = {
-  0: { // I - Tonic, resolution
-    primary: '#60A5FA',    // Blue-400 - Calm, resolved
+  0: {
+    // I - Tonic, resolution
+    primary: '#60A5FA', // Blue-400 - Calm, resolved
     secondary: '#93C5FD',
     emotion: 'Resolution, Home',
     modeAssociation: 'ionian',
   },
-  1: { // ii - Pre-dominant, movement
-    primary: '#A78BFA',    // Purple-400 - Sophisticated, jazzy
+  1: {
+    // ii - Pre-dominant, movement
+    primary: '#A78BFA', // Purple-400 - Sophisticated, jazzy
     secondary: '#C4B5FD',
     emotion: 'Movement, Preparation',
     modeAssociation: 'dorian',
   },
-  2: { // iii - Relative minor, nostalgia
-    primary: '#F87171',    // Red-400 - Passionate, tense
+  2: {
+    // iii - Relative minor, nostalgia
+    primary: '#F87171', // Red-400 - Passionate, tense
     secondary: '#FCA5A5',
     emotion: 'Nostalgia, Longing',
     modeAssociation: 'phrygian',
   },
-  3: { // IV - Subdominant, departure
-    primary: '#38BDF8',    // Sky-400 - Airy, dreamy
+  3: {
+    // IV - Subdominant, departure
+    primary: '#38BDF8', // Sky-400 - Airy, dreamy
     secondary: '#7DD3FC',
     emotion: 'Adventure, Departure',
     modeAssociation: 'lydian',
   },
-  4: { // V - Dominant, tension
-    primary: '#FBBF24',    // Amber-400 - Energetic, dominant
+  4: {
+    // V - Dominant, tension
+    primary: '#FBBF24', // Amber-400 - Energetic, dominant
     secondary: '#FCD34D',
     emotion: 'Tension, Expectation',
     modeAssociation: 'mixolydian',
   },
-  5: { // vi - Relative minor, sadness
-    primary: '#94A3B8',    // Slate-400 - Melancholic, neutral
+  5: {
+    // vi - Relative minor, sadness
+    primary: '#94A3B8', // Slate-400 - Melancholic, neutral
     secondary: '#CBD5E1',
     emotion: 'Sadness, Resignation',
     modeAssociation: 'aeolian',
   },
-  6: { // vii° - Leading tone, maximum tension
-    primary: '#64748B',    // Slate-500 - Dark, tense
+  6: {
+    // vii° - Leading tone, maximum tension
+    primary: '#64748B', // Slate-500 - Dark, tense
     secondary: '#94A3B8',
     emotion: 'Dramatic Tension, Suspense',
     modeAssociation: 'locrian',
@@ -157,44 +164,51 @@ const MAJOR_DEGREE_COLORS: Record<number, DegreeColorInfo> = {
  * Color palettes for minor tonality - different emotional landscape
  */
 const MINOR_DEGREE_COLORS: Record<number, DegreeColorInfo> = {
-  0: { // i - Minor tonic
-    primary: '#64748B',    // Slate-500 - Melancholic home
+  0: {
+    // i - Minor tonic
+    primary: '#64748B', // Slate-500 - Melancholic home
     secondary: '#94A3B8',
     emotion: 'Melancholy, Resignation',
     modeAssociation: 'aeolian',
   },
-  1: { // ii° - Diminished supertonic
-    primary: '#475569',    // Slate-600 - Dark tension
+  1: {
+    // ii° - Diminished supertonic
+    primary: '#475569', // Slate-600 - Dark tension
     secondary: '#64748B',
     emotion: 'Dark Tension',
     modeAssociation: 'locrian',
   },
-  2: { // III - Relative major, hope
-    primary: '#60A5FA',    // Blue-400 - Ray of hope
+  2: {
+    // III - Relative major, hope
+    primary: '#60A5FA', // Blue-400 - Ray of hope
     secondary: '#93C5FD',
     emotion: 'Hope, Light',
     modeAssociation: 'ionian',
   },
-  3: { // iv - Minor subdominant
-    primary: '#A78BFA',    // Purple-400 - Soulful
+  3: {
+    // iv - Minor subdominant
+    primary: '#A78BFA', // Purple-400 - Soulful
     secondary: '#C4B5FD',
     emotion: 'Soulful, Comfort',
     modeAssociation: 'dorian',
   },
-  4: { // v - Minor dominant
-    primary: '#F87171',    // Red-400 - Dark tension
+  4: {
+    // v - Minor dominant
+    primary: '#F87171', // Red-400 - Dark tension
     secondary: '#FCA5A5',
     emotion: 'Dark Tension',
     modeAssociation: 'phrygian',
   },
-  5: { // VI - Major submediant
-    primary: '#38BDF8',    // Sky-400 - Bright hope
+  5: {
+    // VI - Major submediant
+    primary: '#38BDF8', // Sky-400 - Bright hope
     secondary: '#7DD3FC',
     emotion: 'Brightness, Relief',
     modeAssociation: 'lydian',
   },
-  6: { // VII - Major leading tone
-    primary: '#FBBF24',    // Amber-400 - Escape
+  6: {
+    // VII - Major leading tone
+    primary: '#FBBF24', // Amber-400 - Escape
     secondary: '#FCD34D',
     emotion: 'Escape, Urgency',
     modeAssociation: 'mixolydian',
@@ -315,13 +329,13 @@ export function getAllDegreeColors(tonality: 'major' | 'minor'): DegreeColorInfo
  * - Locrien (tension, dissonant) → dark tense colors
  */
 export const MODE_COLORS: Record<ModeName, string> = {
-  ionian: '#F59E0B',      // Gold - Joyeux, Lumineux
-  dorian: '#F59E0B',      // Amber - Chaud, Soulful
-  phrygian: '#DC2626',    // Crimson - Espagnol, Exotique
-  lydian: '#A78BFA',      // Lavender - Rêveur, Féerique
-  mixolydian: '#F97316',  // Orange - Bluesy, Rock
-  aeolian: '#60A5FA',     // Steel Blue - Mélancolique, Triste
-  locrian: '#334155',     // Dark Slate - Dissonant, Instable
+  ionian: '#F59E0B', // Gold - Joyeux, Lumineux
+  dorian: '#F59E0B', // Amber - Chaud, Soulful
+  phrygian: '#DC2626', // Crimson - Espagnol, Exotique
+  lydian: '#A78BFA', // Lavender - Rêveur, Féerique
+  mixolydian: '#F97316', // Orange - Bluesy, Rock
+  aeolian: '#60A5FA', // Steel Blue - Mélancolique, Triste
+  locrian: '#334155', // Dark Slate - Dissonant, Instable
 } as const;
 
 /**
@@ -346,13 +360,13 @@ export function getModeColor(mode: ModeName): string {
  */
 export function getAllModeColors(): readonly string[] {
   return [
-    MODE_COLORS.lydian,     // Lightest (dreamy)
-    MODE_COLORS.ionian,     // Bright (joyful)
+    MODE_COLORS.lydian, // Lightest (dreamy)
+    MODE_COLORS.ionian, // Bright (joyful)
     MODE_COLORS.mixolydian, // Warm (energetic)
-    MODE_COLORS.dorian,     // Warm amber
-    MODE_COLORS.phrygian,   // Intense
-    MODE_COLORS.aeolian,    // Cool (sad)
-    MODE_COLORS.locrian,    // Darkest (tense)
+    MODE_COLORS.dorian, // Warm amber
+    MODE_COLORS.phrygian, // Intense
+    MODE_COLORS.aeolian, // Cool (sad)
+    MODE_COLORS.locrian, // Darkest (tense)
   ];
 }
 
@@ -363,9 +377,9 @@ export function getAllModeColors(): readonly string[] {
  * - Diminished: Dark, tense (dark grey)
  */
 export const CHORD_QUALITY_COLORS: Readonly<Record<'major' | 'minor' | 'diminished', string>> = {
-  major: '#F59E0B',         // Bright, positive
-  minor: '#3B82F6',         // Melancholic
-  diminished: '#334155',    // Tense, unstable
+  major: '#F59E0B', // Bright, positive
+  minor: '#3B82F6', // Melancholic
+  diminished: '#334155', // Tense, unstable
 } as const;
 
 /**

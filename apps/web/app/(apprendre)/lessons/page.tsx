@@ -11,7 +11,15 @@ import { MetalNav, MetalFooter, MetalCard, StatCard, Icons } from '@/components'
 import { useLessons } from '@/lib';
 import Link from 'next/link';
 
-const CATEGORIES = ['ALL', 'THEORY', 'FRETBOARD', 'CHORDS', 'NOTATION', 'PROGRESSIONS', 'COMPOSITION'] as const;
+const CATEGORIES = [
+  'ALL',
+  'THEORY',
+  'FRETBOARD',
+  'CHORDS',
+  'NOTATION',
+  'PROGRESSIONS',
+  'COMPOSITION',
+] as const;
 
 const LEVELS = ['ALL', 'BEGINNER', 'INTERMEDIATE', 'ADVANCED'] as const;
 
@@ -35,7 +43,9 @@ function isLessonCompleted(lesson: { progress?: { status: string } | null }): bo
   return lesson.progress?.status === 'completed';
 }
 
-function getLessonProgressPercent(lesson: { progress?: { currentSection: number } | null }): number {
+function getLessonProgressPercent(lesson: {
+  progress?: { currentSection: number } | null;
+}): number {
   if (!lesson.progress) return 0;
   // Approximation: currentSection / 5 * 100 (5 sections par leçon en moyenne)
   return Math.min(Math.round((lesson.progress.currentSection / 5) * 100), 100);
@@ -53,10 +63,12 @@ export default function LessonsPage() {
     if (!lessons) return null;
 
     const totalLessons = lessons.length;
-    const completedLessons = lessons.filter(l => isLessonCompleted(l)).length;
-    const totalXP = lessons.filter(l => isLessonCompleted(l)).reduce((sum, l) => sum + l.xp, 0);
-    const totalDuration = lessons.filter(l => isLessonCompleted(l)).reduce((sum, l) => sum + l.duration, 0);
-    const inProgressLessons = lessons.filter(l => l.progress?.status === 'in-progress').length;
+    const completedLessons = lessons.filter((l) => isLessonCompleted(l)).length;
+    const totalXP = lessons.filter((l) => isLessonCompleted(l)).reduce((sum, l) => sum + l.xp, 0);
+    const totalDuration = lessons
+      .filter((l) => isLessonCompleted(l))
+      .reduce((sum, l) => sum + l.duration, 0);
+    const inProgressLessons = lessons.filter((l) => l.progress?.status === 'in-progress').length;
 
     return { totalLessons, completedLessons, totalXP, totalDuration, inProgressLessons };
   }, [lessons]);
@@ -65,7 +77,7 @@ export default function LessonsPage() {
   const filteredLessons = useMemo(() => {
     if (!lessons) return [];
 
-    return lessons.filter(lesson => {
+    return lessons.filter((lesson) => {
       if (selectedCategory !== 'ALL' && lesson.category !== selectedCategory) return false;
       if (selectedLevel !== 'ALL' && lesson.level !== selectedLevel) return false;
       if (filterStatus === 'completed' && !isLessonCompleted(lesson)) return false;
@@ -131,11 +143,7 @@ export default function LessonsPage() {
                 value={stats.inProgressLessons.toString()}
                 icon={<Icons.Sessions />}
               />
-              <StatCard
-                label="XP Gagnees"
-                value={`${stats.totalXP} XP`}
-                icon={<Icons.Compose />}
-              />
+              <StatCard label="XP Gagnees" value={`${stats.totalXP} XP`} icon={<Icons.Compose />} />
               <StatCard
                 label="Temps de Pratique"
                 value={`${Math.floor(stats.totalDuration / 60)}h ${stats.totalDuration % 60}m`}
@@ -149,7 +157,9 @@ export default function LessonsPage() {
             <div className="section-frame p-4 mb-8">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-gray uppercase">Progression Globale</span>
-                <span className="text-sm text-white font-bold">{Math.round((stats.completedLessons / stats.totalLessons) * 100)}%</span>
+                <span className="text-sm text-white font-bold">
+                  {Math.round((stats.completedLessons / stats.totalLessons) * 100)}%
+                </span>
               </div>
               <div className="h-4 border-2 border-steel bg-blackness">
                 <div
@@ -169,7 +179,7 @@ export default function LessonsPage() {
                   Categorie
                 </label>
                 <div className="flex flex-wrap gap-1">
-                  {CATEGORIES.map(cat => (
+                  {CATEGORIES.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
@@ -192,7 +202,7 @@ export default function LessonsPage() {
                   Niveau
                 </label>
                 <div className="flex flex-wrap gap-1">
-                  {LEVELS.map(level => (
+                  {LEVELS.map((level) => (
                     <button
                       key={level}
                       onClick={() => setSelectedLevel(level)}
@@ -251,13 +261,12 @@ export default function LessonsPage() {
 
           {/* Lessons list */}
           <div className="space-y-4">
-            {sortedLessons.map(lesson => (
-              <Link
-                key={lesson.id}
-                href={`/lessons/${lesson.slug || lesson.id}`}
-                className="block"
-              >
-                <MetalCard hover className={`${isLessonCompleted(lesson) ? 'border-toxic' : ''} ${lesson.progress?.status === 'in-progress' ? 'border-rust' : ''}`}>
+            {sortedLessons.map((lesson) => (
+              <Link key={lesson.id} href={`/lessons/${lesson.slug || lesson.id}`} className="block">
+                <MetalCard
+                  hover
+                  className={`${isLessonCompleted(lesson) ? 'border-toxic' : ''} ${lesson.progress?.status === 'in-progress' ? 'border-rust' : ''}`}
+                >
                   <div className="p-4">
                     {/* Header */}
                     <div className="flex items-start justify-between mb-3">
@@ -267,7 +276,9 @@ export default function LessonsPage() {
                             {CATEGORY_ICONS[lesson.category]}
                             {lesson.category}
                           </span>
-                          <span className={`text-xs font-bold uppercase ${LEVEL_COLORS[lesson.level]}`}>
+                          <span
+                            className={`text-xs font-bold uppercase ${LEVEL_COLORS[lesson.level]}`}
+                          >
                             {lesson.level}
                           </span>
                         </div>
@@ -305,9 +316,7 @@ export default function LessonsPage() {
                           <Icons.Stop size="sm" />
                           {lesson.duration} min
                         </span>
-                        <span className="text-xs text-rust font-bold">
-                          +{lesson.xp} XP
-                        </span>
+                        <span className="text-xs text-rust font-bold">+{lesson.xp} XP</span>
                       </div>
 
                       <div className="flex items-center gap-2">
@@ -324,14 +333,20 @@ export default function LessonsPage() {
                         )}
 
                         {/* CTA */}
-                        <span className={`px-4 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                          isLessonCompleted(lesson)
-                            ? 'border-toxic bg-toxic text-white'
+                        <span
+                          className={`px-4 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
+                            isLessonCompleted(lesson)
+                              ? 'border-toxic bg-toxic text-white'
+                              : lesson.progress?.status === 'in-progress'
+                                ? 'border-steel bg-void text-gray'
+                                : 'border-blood bg-blackness text-white'
+                          }`}
+                        >
+                          {isLessonCompleted(lesson)
+                            ? 'REFAIRE'
                             : lesson.progress?.status === 'in-progress'
-                              ? 'border-steel bg-void text-gray'
-                              : 'border-blood bg-blackness text-white'
-                        }`}>
-                          {isLessonCompleted(lesson) ? 'REFAIRE' : lesson.progress?.status === 'in-progress' ? 'CONTINUER' : 'COMMENCER'}
+                              ? 'CONTINUER'
+                              : 'COMMENCER'}
                         </span>
                       </div>
                     </div>

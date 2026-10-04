@@ -492,8 +492,18 @@ describe('Note', () => {
   describe('Edge cases and behavior consistency', () => {
     it('should handle all 12 notes in chromatic scale', () => {
       const chromaticNotes: NoteName[] = [
-        'C', 'C#', 'D', 'D#', 'E', 'F',
-        'F#', 'G', 'G#', 'A', 'A#', 'B',
+        'C',
+        'C#',
+        'D',
+        'D#',
+        'E',
+        'F',
+        'F#',
+        'G',
+        'G#',
+        'A',
+        'A#',
+        'B',
       ];
 
       chromaticNotes.forEach((noteName, index) => {

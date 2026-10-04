@@ -14,7 +14,10 @@ export interface DegreeFeeling {
 /**
  * Get feeling for a harmonic degree
  */
-export function getDegreeFeeling(degree: ProgressionDegree, tonality: 'major' | 'minor'): DegreeFeeling {
+export function getDegreeFeeling(
+  degree: ProgressionDegree,
+  tonality: 'major' | 'minor'
+): DegreeFeeling {
   const key = `${degree}-${tonality}`;
 
   const feelings: Record<string, DegreeFeeling> = {
@@ -75,13 +78,13 @@ export function getDegreeFeeling(degree: ProgressionDegree, tonality: 'major' | 
     'III-minor': {
       degree: 'III',
       tonality: 'minor',
-      sensation: 'Lueur d\'espoir',
+      sensation: "Lueur d'espoir",
       advice: 'La relative majeure du i. Moment de lumière.',
     },
     'iv-minor': {
       degree: 'iv',
       tonality: 'minor',
-      sensation: 'Lueur d\'espoir',
+      sensation: "Lueur d'espoir",
       advice: 'Soulagement dans la mineur.',
     },
     'v-minor': {
@@ -99,23 +102,28 @@ export function getDegreeFeeling(degree: ProgressionDegree, tonality: 'major' | 
     'VII-minor': {
       degree: 'VII',
       tonality: 'minor',
-      sensation: 'Fuite vers l\'inconnu',
-      advice: 'Sens de fuite, d\'évasion. Peut mener au i ou au III.',
+      sensation: "Fuite vers l'inconnu",
+      advice: "Sens de fuite, d'évasion. Peut mener au i ou au III.",
     },
   };
 
-  return feelings[key] || {
-    degree,
-    tonality,
-    sensation: 'Inconnu',
-    advice: '',
-  };
+  return (
+    feelings[key] || {
+      degree,
+      tonality,
+      sensation: 'Inconnu',
+      advice: '',
+    }
+  );
 }
 
 /**
  * Get suggested modes for a chord degree
  */
-export function getSuggestedModesForDegree(degree: ProgressionDegree, tonality: 'major' | 'minor'): string[] {
+export function getSuggestedModesForDegree(
+  degree: ProgressionDegree,
+  tonality: 'major' | 'minor'
+): string[] {
   const suggestions: Record<string, string[]> = {
     'I-major': ['Ionien', 'Lydien'],
     'ii-major': ['Dorien'],

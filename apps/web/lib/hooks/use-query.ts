@@ -56,8 +56,7 @@ export function useChords(root?: string, quality?: string) {
 export function useCircleOfFifths(center?: string) {
   return useQuery({
     queryKey: ['theory', 'circle-of-fifths', center],
-    queryFn: () =>
-      apiClient.get(`/theory/circle-of-fifths${center ? `?center=${center}` : ''}`),
+    queryFn: () => apiClient.get(`/theory/circle-of-fifths${center ? `?center=${center}` : ''}`),
     staleTime: 1000 * 60 * 60,
   });
 }
@@ -109,8 +108,7 @@ export function useMarkAsLearned() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (techniqueId: string) =>
-      apiClient.post(`/library/techniques/${techniqueId}/learn`),
+    mutationFn: (techniqueId: string) => apiClient.post(`/library/techniques/${techniqueId}/learn`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['library'] });
       queryClient.invalidateQueries({ queryKey: ['user', 'progress'] });
@@ -123,12 +121,8 @@ export function useSaveProgression() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: {
-      name?: string;
-      key: string;
-      timeSignature: string;
-      chords: unknown[];
-    }) => apiClient.post('/progress/progressions', data),
+    mutationFn: (data: { name?: string; key: string; timeSignature: string; chords: unknown[] }) =>
+      apiClient.post('/progress/progressions', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user', 'progressions'] });
     },
@@ -248,8 +242,7 @@ export function useUnlockAchievementMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (achievementId: string) =>
-      apiClient.post(`/achievements/${achievementId}/unlock`),
+    mutationFn: (achievementId: string) => apiClient.post(`/achievements/${achievementId}/unlock`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['achievements'] });
       queryClient.invalidateQueries({ queryKey: ['user', 'achievements'] });

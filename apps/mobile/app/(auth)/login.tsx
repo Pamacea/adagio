@@ -92,9 +92,7 @@ export default function LoginScreen() {
         {/* Form */}
         <View style={styles.form}>
           {/* General Error */}
-          {errors.general && (
-            <Text style={styles.generalError}>{errors.general}</Text>
-          )}
+          {errors.general && <Text style={styles.generalError}>{errors.general}</Text>}
 
           {/* Email Input */}
           <View style={styles.inputGroup}>

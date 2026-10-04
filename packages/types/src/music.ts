@@ -364,24 +364,24 @@ export type ChordDegree =
  * Based on functional harmony theory
  */
 export type ChordFunction =
-  | 'tonic'           // I, vi, iii - stability/rest
-  | 'subdominant'     // IV, ii - preparation/departure
-  | 'dominant'        // V, vii - tension/resolution
+  | 'tonic' // I, vi, iii - stability/rest
+  | 'subdominant' // IV, ii - preparation/departure
+  | 'dominant' // V, vii - tension/resolution
   | 'substitute-dominant' // bII, tritone substitution
-  | 'modal-interchange'   // Borrowed from parallel tonality
-  | 'secondary-dominant'  // V/x - dominant of another chord
-  | 'passing'         // Passing chord
-  | 'augmented-sixth'  // German/French/Italian sixth
-  | 'neapolitan';     // bII
+  | 'modal-interchange' // Borrowed from parallel tonality
+  | 'secondary-dominant' // V/x - dominant of another chord
+  | 'passing' // Passing chord
+  | 'augmented-sixth' // German/French/Italian sixth
+  | 'neapolitan'; // bII
 
 /**
  * Chord inversion position
  */
 export type ChordPosition =
-  | 'root'      // Root in bass (e.g., C/E for 1st inversion)
-  | 'first'     // 3rd in bass
-  | 'second'    // 5th in bass
-  | 'third';    // 7th in bass (for 7th chords)
+  | 'root' // Root in bass (e.g., C/E for 1st inversion)
+  | 'first' // 3rd in bass
+  | 'second' // 5th in bass
+  | 'third'; // 7th in bass (for 7th chords)
 
 /**
  * CAGED system shapes for guitar
@@ -656,13 +656,27 @@ export const ChordProgressionSchema = z.object({
 
 // Zod schemas for new chord types
 export const ChordDegreeSchema = z.enum([
-  'I', 'bI', '#I',
-  'II', 'bII', '#II',
-  'III', 'bIII', '#III',
-  'IV', 'bIV', '#IV',
-  'V', 'bV', '#V',
-  'VI', 'bVI', '#VI',
-  'VII', 'bVII', '#VII',
+  'I',
+  'bI',
+  '#I',
+  'II',
+  'bII',
+  '#II',
+  'III',
+  'bIII',
+  '#III',
+  'IV',
+  'bIV',
+  '#IV',
+  'V',
+  'bV',
+  '#V',
+  'VI',
+  'bVI',
+  '#VI',
+  'VII',
+  'bVII',
+  '#VII',
 ]);
 
 export const ChordFunctionSchema = z.enum([
@@ -740,9 +754,11 @@ export const KeyChordLibrarySchema = z.object({
   key: NoteNameSchema,
   tonality: z.enum(['major', 'minor']),
   degrees: z.record(z.string(), DegreeChordsSchema),
-  commonProgressions: z.array(z.object({
-    name: z.string(),
-    degrees: z.array(ChordDegreeSchema),
-    description: z.string(),
-  })),
+  commonProgressions: z.array(
+    z.object({
+      name: z.string(),
+      degrees: z.array(ChordDegreeSchema),
+      description: z.string(),
+    })
+  ),
 });

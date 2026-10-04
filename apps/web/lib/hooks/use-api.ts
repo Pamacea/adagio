@@ -26,24 +26,13 @@ export {
 } from './use-query';
 
 // Library hooks
-export {
-  useTechniques,
-  useTechnique,
-  useMarkAsLearned,
-} from './use-query';
+export { useTechniques, useTechnique, useMarkAsLearned } from './use-query';
 
 // Progress hooks
-export {
-  useSaveProgression,
-  useCompleteMilestone,
-} from './use-query';
+export { useSaveProgression, useCompleteMilestone } from './use-query';
 
 // Lessons hooks
-export {
-  useLessonsQuery,
-  useLessonQuery,
-  useUpdateLessonProgressMutation,
-} from './use-query';
+export { useLessonsQuery, useLessonQuery, useUpdateLessonProgressMutation } from './use-query';
 
 // Achievements hooks
 export {
@@ -53,11 +42,7 @@ export {
 } from './use-query';
 
 // User profile hooks
-export {
-  useUserProfileQuery,
-  useUserStatsQuery,
-  useUpdateProfileMutation,
-} from './use-query';
+export { useUserProfileQuery, useUserStatsQuery, useUpdateProfileMutation } from './use-query';
 
 // Re-export types from use-query
 export type {

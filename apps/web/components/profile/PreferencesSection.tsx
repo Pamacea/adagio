@@ -7,7 +7,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePreferences, useMutatePreferences, DEFAULT_PREFERENCES } from '@/lib/hooks/use-preferences';
+import {
+  usePreferences,
+  useMutatePreferences,
+  DEFAULT_PREFERENCES,
+} from '@/lib/hooks/use-preferences';
 
 interface Preference {
   id: string;
@@ -29,7 +33,7 @@ export function PreferencesSection() {
 
   // Build local preferences from config and current values
   const [localPreferences, setLocalPreferences] = useState<Preference[]>(() =>
-    PREFERENCES_CONFIG.map(pref => {
+    PREFERENCES_CONFIG.map((pref) => {
       const prefValue = DEFAULT_PREFERENCES[pref.id as keyof typeof DEFAULT_PREFERENCES];
       return {
         ...pref,
@@ -40,8 +44,8 @@ export function PreferencesSection() {
 
   // Update local state when preferences change
   useEffect(() => {
-    setLocalPreferences(prev =>
-      prev.map(pref => {
+    setLocalPreferences((prev) =>
+      prev.map((pref) => {
         const prefValue = preferences[pref.id as keyof typeof preferences];
         return {
           ...pref,
@@ -53,10 +57,8 @@ export function PreferencesSection() {
 
   const handlePreferenceChange = async (prefId: string, newValue: string) => {
     // Update local UI immediately
-    setLocalPreferences(prev =>
-      prev.map(pref =>
-        pref.id === prefId ? { ...pref, value: newValue } : pref
-      )
+    setLocalPreferences((prev) =>
+      prev.map((pref) => (pref.id === prefId ? { ...pref, value: newValue } : pref))
     );
 
     // Show saving status
@@ -76,9 +78,7 @@ export function PreferencesSection() {
     <div className="section-frame p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h3 className="text-lg font-metal text-white uppercase">
-            Préférences
-          </h3>
+          <h3 className="text-lg font-metal text-white uppercase">Préférences</h3>
           {/* Status indicators */}
           {!isOnline && (
             <span className="px-2 py-0.5 text-xs font-bold uppercase bg-blood/20 text-blood border border-blood/30">
@@ -92,14 +92,20 @@ export function PreferencesSection() {
           )}
         </div>
         {saveStatus !== 'idle' && (
-          <span className={`text-xs font-bold uppercase ${
-            saveStatus === 'saving' ? 'text-gray animate-pulse' :
-            saveStatus === 'saved' ? 'text-toxic' :
-            'text-blood'
-          }`}>
-            {saveStatus === 'saving' ? 'Sauvegarde...' :
-             saveStatus === 'saved' ? 'Sauvegardé !' :
-             'Erreur !'}
+          <span
+            className={`text-xs font-bold uppercase ${
+              saveStatus === 'saving'
+                ? 'text-gray animate-pulse'
+                : saveStatus === 'saved'
+                  ? 'text-toxic'
+                  : 'text-blood'
+            }`}
+          >
+            {saveStatus === 'saving'
+              ? 'Sauvegarde...'
+              : saveStatus === 'saved'
+                ? 'Sauvegardé !'
+                : 'Erreur !'}
           </span>
         )}
       </div>
@@ -144,7 +150,8 @@ export function PreferencesSection() {
       {isOfflineMode && (
         <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
           <p className="text-xs text-amber-500">
-            <span className="font-bold">[ATTENTION]</span> Mode hors ligne : Les préférences sont sauvegardées localement et seront synchronisées à la reconnexion.
+            <span className="font-bold">[ATTENTION]</span> Mode hors ligne : Les préférences sont
+            sauvegardées localement et seront synchronisées à la reconnexion.
           </p>
         </div>
       )}

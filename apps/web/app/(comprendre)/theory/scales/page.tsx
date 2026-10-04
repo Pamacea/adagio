@@ -9,7 +9,12 @@ import { useMemo } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
 import { getFretboardNotesForKey, SCALES, SCALE_CATEGORIES } from '@adagio/theory';
 import { NOTE_FR } from '@/lib/theory';
-import { ScaleSelector, ScaleDisplay, ScaleFretboard, IntervalLegend } from '@/components/theory/scales';
+import {
+  ScaleSelector,
+  ScaleDisplay,
+  ScaleFretboard,
+  IntervalLegend,
+} from '@/components/theory/scales';
 import { useScaleState } from '@/features/theory/hooks';
 import { calculateFretPositions } from '@/components/theory/scales/ScaleFretboard';
 
@@ -31,13 +36,13 @@ export default function ScalesPage() {
 
   // Calculer les données du manche pour la gamme sélectionnée
   const fretboardData = useMemo(() => {
-    const scaleDef = SCALES.find(s => s.id === scaleType);
+    const scaleDef = SCALES.find((s) => s.id === scaleType);
     if (!scaleDef) return [];
     return getFretboardNotesForKey(root, scaleDef.intervals, fretCount);
   }, [root, scaleType, fretCount]);
 
   // Récupérer la définition de la gamme courante
-  const currentScaleDef = SCALES.find(s => s.id === scaleType) ?? null;
+  const currentScaleDef = SCALES.find((s) => s.id === scaleType) ?? null;
 
   // Fonction d'affichage des notes en français
   const displayNote = (note: string): string => NOTE_FR[note] || note;
@@ -53,9 +58,7 @@ export default function ScalesPage() {
             <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
               SCALES
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Gammes Musicales
-            </p>
+            <p className="text-gray text-sm uppercase tracking-widest">Gammes Musicales</p>
           </div>
 
           {/* Sélecteurs (composant) */}

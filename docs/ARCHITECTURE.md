@@ -1,6 +1,6 @@
 # Architecture Technique — ADAGIO
 
-> *Architecture Fullstack/Cross-Platform pour l'atlas harmonique intelligent*
+> _Architecture Fullstack/Cross-Platform pour l'atlas harmonique intelligent_
 
 ---
 
@@ -91,14 +91,14 @@
 
 ### Choix Architecturaux
 
-| Décision | Raison | Alternative Rejetée |
-|----------|--------|---------------------|
-| **Monorepo** | Partage du code (UI, théorie) | Multi-repos (duplication) |
-| **Next.js 16** | RSC, App Router, SEO | Vite + React (pas de SSR) |
-| **NestJS** | Architecture modulaire, TypeScript | Express (moins structuré) |
-| **Neon** | Serverless, branches, scalabilité | Supabase (vendor lock-in) |
-| **BetterAuth** | Moderne, flexible, type-safe | NextAuth (moins modulaire) |
-| **TanStack Query** | Cache, background refetch | SWR (moins de features) |
+| Décision           | Raison                             | Alternative Rejetée        |
+| ------------------ | ---------------------------------- | -------------------------- |
+| **Monorepo**       | Partage du code (UI, théorie)      | Multi-repos (duplication)  |
+| **Next.js 16**     | RSC, App Router, SEO               | Vite + React (pas de SSR)  |
+| **NestJS**         | Architecture modulaire, TypeScript | Express (moins structuré)  |
+| **Neon**           | Serverless, branches, scalabilité  | Supabase (vendor lock-in)  |
+| **BetterAuth**     | Moderne, flexible, type-safe       | NextAuth (moins modulaire) |
+| **TanStack Query** | Cache, background refetch          | SWR (moins de features)    |
 
 ---
 
@@ -437,32 +437,32 @@ export function Fretboard({
 
 ```typescript
 // features/fretboard/hooks/useFretboardNotes.ts
-'use client'
+'use client';
 
-import { useMemo } from 'react'
-import { Note } from '@adagio/types'
-import { getScaleNotes } from '@adagio/theory'
+import { useMemo } from 'react';
+import { Note } from '@adagio/types';
+import { getScaleNotes } from '@adagio/theory';
 
 export function useFretboardNotes(key: string, scale: string[]) {
   return useMemo(() => {
-    const scaleNotes = getScaleNotes(key, scale)
-    const allNotes: Note[] = []
+    const scaleNotes = getScaleNotes(key, scale);
+    const allNotes: Note[] = [];
 
     // Générer les notes pour toute la grille du manche
     for (let string = 0; string < 6; string++) {
       for (let fret = 0; fret < 24; fret++) {
-        const note = calculateNote(string, fret)
+        const note = calculateNote(string, fret);
         allNotes.push({
           ...note,
           string,
           fret,
-          inScale: scaleNotes.includes(note.name)
-        })
+          inScale: scaleNotes.includes(note.name),
+        });
       }
     }
 
-    return allNotes
-  }, [key, scale])
+    return allNotes;
+  }, [key, scale]);
 }
 ```
 
@@ -493,30 +493,30 @@ export function useFretboardNotes(key: string, scale: string[]) {
 
 ```typescript
 // features/harmonic-engine/hooks/useHarmonicEngine.ts
-'use client'
+'use client';
 
-import { useQuery } from '@tanstack/react-query'
-import { createClient } from '@adagio/api-client'
+import { useQuery } from '@tanstack/react-query';
+import { createClient } from '@adagio/api-client';
 
 // Server state avec TanStack Query
 export function useModes() {
   return useQuery({
     queryKey: ['modes'],
-    queryFn: () => createClient().modes.list()
-  })
+    queryFn: () => createClient().modes.list(),
+  });
 }
 
 // UI state avec useState
 export function useHarmonicEngine() {
-  const [selectedKey, setSelectedKey] = useState('C')
-  const [selectedMode, setSelectedMode] = useState('ionian')
+  const [selectedKey, setSelectedKey] = useState('C');
+  const [selectedMode, setSelectedMode] = useState('ionian');
 
   return {
     selectedKey,
     setSelectedKey,
     selectedMode,
-    setSelectedMode
-  }
+    setSelectedMode,
+  };
 }
 ```
 
@@ -1062,7 +1062,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 // packages/theory/src/core/Note.ts
 export class Note {
   constructor(
-    public readonly name: NoteName,  // C, C#, D, Db...
+    public readonly name: NoteName, // C, C#, D, Db...
     public readonly octave: number
   ) {}
 
@@ -1160,4 +1160,4 @@ jobs:
 
 ---
 
-*Dernière mise à jour : 2025-03-02*
+_Dernière mise à jour : 2025-03-02_

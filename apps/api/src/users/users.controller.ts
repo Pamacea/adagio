@@ -22,10 +22,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update current user profile' })
-  async updateProfile(
-    @Request() req,
-    @Body() updateProfileDto: UpdateProfileDto,
-  ) {
+  async updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
     return this.usersService.updateProfile(req.user.userId, updateProfileDto);
   }
 
@@ -93,10 +90,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update current user preferences' })
-  async updatePreferences(
-    @Request() req,
-    @Body() preferencesData: Record<string, unknown>,
-  ) {
+  async updatePreferences(@Request() req, @Body() preferencesData: Record<string, unknown>) {
     return this.usersService.updatePreferences(req.user.userId, preferencesData);
   }
 
@@ -108,10 +102,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Change current user password' })
-  async changePassword(
-    @Request() req,
-    @Body() changePasswordDto: ChangePasswordDto,
-  ) {
+  async changePassword(@Request() req, @Body() changePasswordDto: ChangePasswordDto) {
     return this.usersService.changePassword(req.user.userId, changePasswordDto);
   }
 
@@ -123,10 +114,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete current user account' })
-  async deleteAccount(
-    @Request() req,
-    @Body() body: { password?: string },
-  ) {
+  async deleteAccount(@Request() req, @Body() body: { password?: string }) {
     return this.usersService.deleteAccount(req.user.userId, body.password);
   }
 

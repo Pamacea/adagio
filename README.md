@@ -10,16 +10,19 @@
 ## ✨ Features
 
 ### 🔮 Harmonic Engine
+
 - **Fretboard Interactif** — Visualisation des notes, intervalles et degrés sur un manche de guitare dynamique
 - **Mapping Émotionnel** — Filtrez les modes par sensation : "Aérien", "Sombre", "James Bond"
 - **Axis Theory** — Visualisation des axes de substitution via un cercle des quintes dynamique
 
 ### 🎹 Composer's Assistant
+
 - **Smart Progressions** — Glisser-déposer pour créer des suites d'accords
 - **Analyse en Temps Réel** — Suggestions de gammes et sensations pour chaque accord
 - **Substitutions 1-clic** — Tritonique, relative, diminuable pour pimenter vos progressions
 
 ### 📚 The Grimoire
+
 - **Wiki de Poche** — Toutes les techniques (Hammer-on, Sweep, etc.) avec notes personnelles
 - **Système de Progression** — Marquez des techniques comme "Appris" avec synchronisation cloud
 
@@ -27,18 +30,18 @@
 
 ## 🛠️ Stack Technique
 
-| Composant | Technologie | Usage |
-|-----------|-------------|-------|
-| **Frontend Web** | Next.js 16 + React 19 | App Router, RSC, Server Actions |
-| **Mobile** | React Native + Expo | Application native iOS/Android |
-| **Backend** | NestJS | API REST modulaire |
-| **Base de Données** | Neon (PostgreSQL) | Serverless, branches de développement |
-| **Authentification** | BetterAuth | Moderne et flexible |
-| **State Management** | TanStack Query + Form | Server state, formulaires |
-| **UI Web** | Tailwind CSS + Shadcn/UI | Design system |
-| **UI Mobile** | NativeWind | Styling natif avec Tailwind |
-| **Théorie Musicale** | Tonal.js | Calculs d'intervalles et gammes |
-| **Moteur Audio** | Tone.js | Synthèse polyphonique |
+| Composant            | Technologie              | Usage                                 |
+| -------------------- | ------------------------ | ------------------------------------- |
+| **Frontend Web**     | Next.js 16 + React 19    | App Router, RSC, Server Actions       |
+| **Mobile**           | React Native + Expo      | Application native iOS/Android        |
+| **Backend**          | NestJS                   | API REST modulaire                    |
+| **Base de Données**  | Neon (PostgreSQL)        | Serverless, branches de développement |
+| **Authentification** | BetterAuth               | Moderne et flexible                   |
+| **State Management** | TanStack Query + Form    | Server state, formulaires             |
+| **UI Web**           | Tailwind CSS + Shadcn/UI | Design system                         |
+| **UI Mobile**        | NativeWind               | Styling natif avec Tailwind           |
+| **Théorie Musicale** | Tonal.js                 | Calculs d'intervalles et gammes       |
+| **Moteur Audio**     | Tone.js                  | Synthèse polyphonique                 |
 
 ---
 
@@ -86,8 +89,8 @@ adagio/
 
 ---
 
-*Nous ne vendons pas la connaissance, nous la transmettons. Découvrez et profitez de toutes les connaissances musicales du monde.*
+_Nous ne vendons pas la connaissance, nous la transmettons. Découvrez et profitez de toutes les connaissances musicales du monde._
 
 ---
 
-*License MIT — © 2025 Adagio*
+_License MIT — © 2025 Adagio_

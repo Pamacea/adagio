@@ -18,7 +18,13 @@ export function EmptyState({ className }: EmptyStateProps) {
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <div className="flex justify-center mb-4 animate-pulse">
-            <svg className="w-16 h-16 text-gray/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              className="w-16 h-16 text-gray/30"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M9 18V5l12-2v13" />
               <circle cx="6" cy="18" r="3" />
               <circle cx="18" cy="16" r="3" />

@@ -19,7 +19,8 @@ const helpButtonVariants = cva(
         lg: 'h-10 w-10 text-base',
       },
       variant: {
-        default: 'bg-steel border-2 border-blood text-white hover:bg-blood hover:border-toxic hover:shadow-glow',
+        default:
+          'bg-steel border-2 border-blood text-white hover:bg-blood hover:border-toxic hover:shadow-glow',
         subtle: 'bg-blackness border border-steel text-gray hover:border-toxic hover:text-toxic',
         accent: 'bg-toxic border-2 border-blood text-white hover:bg-blood hover:shadow-glow',
       },
@@ -34,7 +35,10 @@ const helpButtonVariants = cva(
 export type HelpButtonSize = VariantProps<typeof helpButtonVariants>['size'];
 export type HelpButtonVariant = VariantProps<typeof helpButtonVariants>['variant'];
 
-export interface HelpButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> {
+export interface HelpButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'aria-label'
+> {
   size?: HelpButtonSize;
   variant?: HelpButtonVariant;
   /** Topic ID for help content lookup */
@@ -46,7 +50,19 @@ export interface HelpButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
 }
 
 export const HelpButton = forwardRef<HTMLButtonElement, HelpButtonProps>(
-  ({ className, size = 'md', variant = 'default', topic, ariaLabel, ariaDescribedBy, children, ...props }, ref) => {
+  (
+    {
+      className,
+      size = 'md',
+      variant = 'default',
+      topic,
+      ariaLabel,
+      ariaDescribedBy,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     // Generate accessible label based on topic or custom ariaLabel
     const ariaLabelValue = ariaLabel ?? (topic ? `Aide : ${topic}` : 'Aide');
 

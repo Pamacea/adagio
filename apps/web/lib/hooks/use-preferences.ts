@@ -211,7 +211,7 @@ export function usePreferencesListener() {
 
     // Listen for custom events (same tab)
     const handlePreferencesChange = (e: CustomEvent<Partial<UserPreferences>>) => {
-      setPreferences(prev => ({ ...prev, ...e.detail }));
+      setPreferences((prev) => ({ ...prev, ...e.detail }));
     };
 
     window.addEventListener('storage', handleStorageChange);

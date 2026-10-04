@@ -26,7 +26,7 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
   const NUM_FRETS = 5;
   const STRING_NAMES = ['E', 'A', 'D', 'G', 'B', 'E'];
 
-  const pressedFrets = positions.filter(p => p && p.fret > 0).map(p => p!.fret);
+  const pressedFrets = positions.filter((p) => p && p.fret > 0).map((p) => p!.fret);
   const minFret = pressedFrets.length > 0 ? Math.min(...pressedFrets) : 1;
   const startFret = minFret > 3 ? minFret : 1;
 
@@ -46,16 +46,40 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
       {/* Fond */}
       <rect x="0" y="0" width={W} height={H} fill="#0a0908" rx="4" />
       <rect x="3" y="3" width={W - 6} height={H - 6} fill="url(#composeDiagramBg)" rx="3" />
-      <rect x="3" y="3" width={W - 6} height={H - 6} fill="none" stroke="#333" strokeWidth={1} rx="3" />
+      <rect
+        x="3"
+        y="3"
+        width={W - 6}
+        height={H - 6}
+        fill="none"
+        stroke="#333"
+        strokeWidth={1}
+        rx="3"
+      />
 
       {/* Nom de l'accord */}
-      <text x={W / 2} y={32} fill="#e5e5e5" fontSize={22} fontWeight="bold" textAnchor="middle" className="font-metal">
+      <text
+        x={W / 2}
+        y={32}
+        fill="#e5e5e5"
+        fontSize={22}
+        fontWeight="bold"
+        textAnchor="middle"
+        className="font-metal"
+      >
         {chord}
       </text>
 
       {/* Indicateur de frette de départ */}
       {startFret > 1 && (
-        <text x={MARGIN_LEFT - 12} y={MARGIN_TOP + FRET_HEIGHT / 2 + 4} fill="#888" fontSize={12} fontWeight="bold" textAnchor="middle">
+        <text
+          x={MARGIN_LEFT - 12}
+          y={MARGIN_TOP + FRET_HEIGHT / 2 + 4}
+          fill="#888"
+          fontSize={12}
+          fontWeight="bold"
+          textAnchor="middle"
+        >
           {startFret}
         </text>
       )}
@@ -64,19 +88,43 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
       <g transform={`translate(${MARGIN_LEFT}, ${MARGIN_TOP})`}>
         {/* Sillet */}
         {startFret === 1 && (
-          <line x1={0} y1={0} x2={STRING_SPACING * 5} y2={0} stroke="#8b1a1a" strokeWidth={6} strokeLinecap="butt" />
+          <line
+            x1={0}
+            y1={0}
+            x2={STRING_SPACING * 5}
+            y2={0}
+            stroke="#8b1a1a"
+            strokeWidth={6}
+            strokeLinecap="butt"
+          />
         )}
 
         {/* Cordes verticales */}
         {STRING_NAMES.map((_, i) => (
-          <line key={`s-${i}`} x1={i * STRING_SPACING} y1={0} x2={i * STRING_SPACING} y2={FRET_HEIGHT * NUM_FRETS}
-            stroke="#555" strokeWidth={i === 0 || i === 5 ? 2.5 : 1.8} opacity={0.8} />
+          <line
+            key={`s-${i}`}
+            x1={i * STRING_SPACING}
+            y1={0}
+            x2={i * STRING_SPACING}
+            y2={FRET_HEIGHT * NUM_FRETS}
+            stroke="#555"
+            strokeWidth={i === 0 || i === 5 ? 2.5 : 1.8}
+            opacity={0.8}
+          />
         ))}
 
         {/* Frettes horizontales */}
         {Array.from({ length: NUM_FRETS + 1 }).map((_, i) => (
-          <line key={`f-${i}`} x1={0} y1={i * FRET_HEIGHT} x2={STRING_SPACING * 5} y2={i * FRET_HEIGHT}
-            stroke="#555" strokeWidth={i === 0 && startFret === 1 ? 0 : 1.8} opacity={0.7} />
+          <line
+            key={`f-${i}`}
+            x1={0}
+            y1={i * FRET_HEIGHT}
+            x2={STRING_SPACING * 5}
+            y2={i * FRET_HEIGHT}
+            stroke="#555"
+            strokeWidth={i === 0 && startFret === 1 ? 0 : 1.8}
+            opacity={0.7}
+          />
         ))}
 
         {/* Cordes à vide / étouffées */}
@@ -87,14 +135,40 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
             const size = 6;
             return (
               <g key={`m-${i}`}>
-                <line x1={x - size} y1={-18 - size} x2={x + size} y2={-18 + size} stroke="#ef4444" strokeWidth={2} strokeLinecap="round" />
-                <line x1={x + size} y1={-18 - size} x2={x - size} y2={-18 + size} stroke="#ef4444" strokeWidth={2} strokeLinecap="round" />
+                <line
+                  x1={x - size}
+                  y1={-18 - size}
+                  x2={x + size}
+                  y2={-18 + size}
+                  stroke="#ef4444"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                />
+                <line
+                  x1={x + size}
+                  y1={-18 - size}
+                  x2={x - size}
+                  y2={-18 + size}
+                  stroke="#ef4444"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                />
               </g>
             );
           }
           if (pos.fret === 0) {
             const x = pos.string * STRING_SPACING;
-            return <circle key={`o-${i}`} cx={x} cy={-18} r={7} fill="none" stroke="#22c55e" strokeWidth={2} />;
+            return (
+              <circle
+                key={`o-${i}`}
+                cx={x}
+                cy={-18}
+                r={7}
+                fill="none"
+                stroke="#22c55e"
+                strokeWidth={2}
+              />
+            );
           }
           return null;
         })}
@@ -110,8 +184,23 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
 
           return (
             <g key={`p-${i}`}>
-              <circle cx={x} cy={y} r={12} fill="url(#composeNoteFill)" stroke="#8b1a1a" strokeWidth={2.5} />
-              <text x={x} y={y + 1} fill="#e0e0e0" fontSize={11} fontWeight="bold" textAnchor="middle" dominantBaseline="central">
+              <circle
+                cx={x}
+                cy={y}
+                r={12}
+                fill="url(#composeNoteFill)"
+                stroke="#8b1a1a"
+                strokeWidth={2.5}
+              />
+              <text
+                x={x}
+                y={y + 1}
+                fill="#e0e0e0"
+                fontSize={11}
+                fontWeight="bold"
+                textAnchor="middle"
+                dominantBaseline="central"
+              >
                 {pos.fret}
               </text>
             </g>
@@ -122,7 +211,15 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
       {/* Labels des cordes en bas */}
       <g transform={`translate(${MARGIN_LEFT}, ${MARGIN_TOP + FRET_HEIGHT * NUM_FRETS + 18})`}>
         {STRING_NAMES.map((name, i) => (
-          <text key={`l-${i}`} x={i * STRING_SPACING} y={0} fill="#555" fontSize={11} fontWeight="600" textAnchor="middle">
+          <text
+            key={`l-${i}`}
+            x={i * STRING_SPACING}
+            y={0}
+            fill="#555"
+            fontSize={11}
+            fontWeight="600"
+            textAnchor="middle"
+          >
             {name}
           </text>
         ))}
@@ -131,11 +228,19 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
       {/* Numéros de frettes sur le côté */}
       <g transform={`translate(${MARGIN_LEFT + STRING_SPACING * 5 + 10}, ${MARGIN_TOP})`}>
         {Array.from({ length: NUM_FRETS }, (_, i) => (
-          <text key={`fn-${i}`} x={0} y={i * FRET_HEIGHT + FRET_HEIGHT / 2 + 4} fill="#555" fontSize={10} fontWeight="500" textAnchor="start">
+          <text
+            key={`fn-${i}`}
+            x={0}
+            y={i * FRET_HEIGHT + FRET_HEIGHT / 2 + 4}
+            fill="#555"
+            fontSize={10}
+            fontWeight="500"
+            textAnchor="start"
+          >
             {startFret + i}
-            </text>
-          ))}
-        </g>
+          </text>
+        ))}
+      </g>
     </svg>
   );
 }
@@ -271,23 +376,23 @@ export function getChordPositions(chordName: string): ({ fret: number; string: n
   // Offsets pour chaque corde selon la note racine
   // Pour position ouverte en tonique A
   const rootOffsets: Record<string, number[]> = {
-    'C': [3, 3, 0, 0, 0, 3],  // C shape décalé
+    C: [3, 3, 0, 0, 0, 3], // C shape décalé
     'C#': [4, 4, 1, 1, 1, 4],
-    'Db': [4, 4, 1, 1, 1, 4],
-    'D': [0, 0, 0, 2, 2, 2],  // D shape
+    Db: [4, 4, 1, 1, 1, 4],
+    D: [0, 0, 0, 2, 2, 2], // D shape
     'D#': [1, 1, 1, 3, 3, 3],
-    'Eb': [1, 1, 1, 3, 3, 3],
-    'E': [0, 2, 2, 2, 2, 0],  // E shape (ouverte)
-    'F': [1, 1, 2, 3, 3, 1],  // F shape barré
+    Eb: [1, 1, 1, 3, 3, 3],
+    E: [0, 2, 2, 2, 2, 0], // E shape (ouverte)
+    F: [1, 1, 2, 3, 3, 1], // F shape barré
     'F#': [2, 2, 3, 4, 4, 2],
-    'Gb': [2, 2, 3, 4, 4, 2],
-    'G': [3, 3, 4, 5, 5, 3],
+    Gb: [2, 2, 3, 4, 4, 2],
+    G: [3, 3, 4, 5, 5, 3],
     'G#': [4, 4, 5, 6, 6, 4],
-    'Ab': [4, 4, 5, 6, 6, 4],
-    'A': [0, 0, 2, 2, 2, 0],  // A shape (ouverte)
+    Ab: [4, 4, 5, 6, 6, 4],
+    A: [0, 0, 2, 2, 2, 0], // A shape (ouverte)
     'A#': [1, 1, 3, 3, 3, 1],
-    'Bb': [1, 1, 3, 3, 3, 1],
-    'B': [0, 2, 4, 4, 4, 2],  // B shape
+    Bb: [1, 1, 3, 3, 3, 1],
+    B: [0, 2, 4, 4, 4, 2], // B shape
   };
 
   // Positions spécifiques pour certains accords

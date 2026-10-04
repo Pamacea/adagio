@@ -27,7 +27,8 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Stabilité, joie pure, triomphe',
     moods: ['happy', 'triumphant', 'stable', 'optimistic'],
     styles: ['all'],
-    advice: 'La base de la musique occidentale. Parfait pour les conclusions, les thèmes principaux.',
+    advice:
+      'La base de la musique occidentale. Parfait pour les conclusions, les thèmes principaux.',
     substitutions: ['6', 'add9', 'maj7'],
   },
   {
@@ -57,7 +58,8 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Luxe, sophistication, smooth jazz',
     moods: ['sophisticated', 'romantic', 'dreamy', 'warm'],
     styles: ['jazz', 'r&b', 'neo-soul', 'bossa-nova'],
-    advice: 'L\'accord "à million de dollars". Sensuel et raffiné. Évitez la fondamentale à la basse pour un effet plus subtil.',
+    advice:
+      'L\'accord "à million de dollars". Sensuel et raffiné. Évitez la fondamentale à la basse pour un effet plus subtil.',
     substitutions: ['6', 'add9', '9'],
   },
 
@@ -69,7 +71,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Tristesse, mélancolie, gravité',
     moods: ['sad', 'serious', 'melancholic', 'dark'],
     styles: ['all'],
-    advice: 'La base de la musique mineure. Exprime la tristesse, l\'introspection.',
+    advice: "La base de la musique mineure. Exprime la tristesse, l'introspection.",
     substitutions: ['m6', 'madd9', 'm7'],
   },
   {
@@ -99,7 +101,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Douceur, jazz cool, intimité',
     moods: ['gentle', 'intimate', 'cool', 'relaxed'],
     styles: ['jazz', 'r&b', 'soul', 'neo-soul'],
-    advice: 'Plus doux que le majeur. L\'accord de base du jazz moderne.',
+    advice: "Plus doux que le majeur. L'accord de base du jazz moderne.",
     substitutions: ['m9', 'm11', 'm6'],
   },
 
@@ -131,7 +133,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Tension riche, couleur luxueuse',
     moods: ['rich', 'sophisticated', 'warm-tension'],
     styles: ['jazz', 'bossa-nova'],
-    advice: 'L\'accord le plus coloré du dominant. Utilisez-le pour les finitions riches.',
+    advice: "L'accord le plus coloré du dominant. Utilisez-le pour les finitions riches.",
     substitutions: ['9', '7', '9#11'],
   },
 
@@ -143,7 +145,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Incertain, flottant, folk',
     moods: ['floating', 'uncertain', 'open', 'folk'],
     styles: ['folk', 'pop', 'ambient'],
-    advice: 'L\'accord sans tierce. Sens de flottement avant résolution.',
+    advice: "L'accord sans tierce. Sens de flottement avant résolution.",
     substitutions: ['sus4', 'add9'],
   },
   {
@@ -163,7 +165,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Tension moderne, fusion, ambient',
     moods: ['modern', 'floating-tension', 'ambiguous'],
     styles: ['jazz', 'fusion', 'ambient', 'pop'],
-    advice: 'L\'accord flottant par excellence. Très moderne, sans résolution obligatoire.',
+    advice: "L'accord flottant par excellence. Très moderne, sans résolution obligatoire.",
     substitutions: ['sus4', '11'],
   },
 
@@ -185,7 +187,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Cauchemar, suspense, expressionniste',
     moods: ['nightmare', 'suspense', 'expressionist'],
     styles: ['classical', 'horror', 'silent-film'],
-    advice: 'L\'accord du suspense maximal. Peut moduler par tons entiers.',
+    advice: "L'accord du suspense maximal. Peut moduler par tons entiers.",
     substitutions: ['7b9', 'm7b5'],
   },
   {
@@ -249,7 +251,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Rêve flottant, lumineux, spirituel',
     moods: ['dreamy', 'spiritual', 'floating', 'heavenly'],
     styles: ['jazz', 'gospel', 'ambient'],
-    advice: 'Souvent avec la quarte augmentée (#11) pour l\'effet Lydien. Ethéré.',
+    advice: "Souvent avec la quarte augmentée (#11) pour l'effet Lydien. Ethéré.",
     substitutions: ['maj7#11', '9'],
   },
   {
@@ -259,7 +261,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
     feeling: 'Mélancolie riche, profonde',
     moods: ['deep-sadness', 'rich', 'poignant'],
     styles: ['jazz', 'bossa-nova'],
-    advice: 'L\'accord mineur le plus complet. Très expressif.',
+    advice: "L'accord mineur le plus complet. Très expressif.",
     substitutions: ['m9', 'm11'],
   },
 ];
@@ -268,7 +270,7 @@ export const CHORD_FEELINGS: ChordFeeling[] = [
  * Get feeling for a chord quality
  */
 export function getChordFeeling(quality: ChordQuality): ChordFeeling | undefined {
-  return CHORD_FEELINGS.find(f => f.quality === quality);
+  return CHORD_FEELINGS.find((f) => f.quality === quality);
 }
 
 /**
@@ -283,8 +285,8 @@ export function getChordSubstitutions(quality: ChordQuality): string[] {
  * Get chords by mood
  */
 export function getChordsByMood(mood: string): ChordFeeling[] {
-  return CHORD_FEELINGS.filter(f =>
-    f.moods.some(m => m.toLowerCase().includes(mood.toLowerCase()))
+  return CHORD_FEELINGS.filter((f) =>
+    f.moods.some((m) => m.toLowerCase().includes(mood.toLowerCase()))
   );
 }
 
@@ -292,9 +294,11 @@ export function getChordsByMood(mood: string): ChordFeeling[] {
  * Get chords by style
  */
 export function getChordsByStyle(style: string): ChordFeeling[] {
-  return CHORD_FEELINGS.filter(f =>
-    f.styles.some(s =>
-      s.toLowerCase().includes(style.toLowerCase()) || style.toLowerCase().includes(s.toLowerCase())
+  return CHORD_FEELINGS.filter((f) =>
+    f.styles.some(
+      (s) =>
+        s.toLowerCase().includes(style.toLowerCase()) ||
+        style.toLowerCase().includes(s.toLowerCase())
     )
   );
 }
@@ -304,15 +308,15 @@ export function getChordsByStyle(style: string): ChordFeeling[] {
  */
 export function getChordFunctionDescription(fn: ChordFunction): string {
   const descriptions: Record<ChordFunction, string> = {
-    'tonic': 'Repos, stabilité, résolution',
-    'subdominant': 'Préparation, départ, éloignement',
-    'dominant': 'Tension, mouvement vers résolution',
+    tonic: 'Repos, stabilité, résolution',
+    subdominant: 'Préparation, départ, éloignement',
+    dominant: 'Tension, mouvement vers résolution',
     'substitute-dominant': 'Substitution tritonique, tension colorée',
     'modal-interchange': 'Emprunt modal, couleur exotique',
     'secondary-dominant': 'Dominant secondaire, tension temporaire',
-    'passing': 'Accord de passage, transition fluide',
+    passing: 'Accord de passage, transition fluide',
     'augmented-sixth': 'Sixte augmentée, tension classique',
-    'neapolitan': 'Napolitain, couleur dramatique',
+    neapolitan: 'Napolitain, couleur dramatique',
   };
   return descriptions[fn] || '';
 }

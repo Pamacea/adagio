@@ -79,15 +79,13 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
   // Utiliser useState pour l'état (sera géré par le composant parent)
   const [root, setRoot] = useState<NoteName>(initialRoot);
   const [mode, setMode] = useState<ModeName>(initialMode);
-  const [fretCount, setFretCount] = useState<UseFretboardStateReturn['fretCount']>(initialFretCount);
+  const [fretCount, setFretCount] =
+    useState<UseFretboardStateReturn['fretCount']>(initialFretCount);
   const [showAllNotes, setShowAllNotes] = useState(initialShowAllNotes);
   const [instrument, setInstrument] = useState<Instrument>(initialInstrument);
 
   // Accordage de l'instrument courant (aigu → grave, ordre visuel)
-  const tuning = useMemo(
-    () => [...getInstrument(instrument).tuningDisplay],
-    [instrument]
-  );
+  const tuning = useMemo(() => [...getInstrument(instrument).tuningDisplay], [instrument]);
 
   // Calculer les positions des frettes
   const fretPositions = useMemo(() => calculateFretPositions(fretCount), [fretCount]);
@@ -107,19 +105,29 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
   // Fonction d'affichage des notes en français
   const displayNote = (note: string): string => {
     const NOTE_FR: Record<string, string> = {
-      'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
-      'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-      'E': 'MI',
-      'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-      'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-      'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-      'B': 'SI',
+      C: 'DO',
+      'C#': 'DO♯',
+      Db: 'RÉ♭',
+      D: 'RÉ',
+      'D#': 'RÉ♯',
+      Eb: 'MI♭',
+      E: 'MI',
+      F: 'FA',
+      'F#': 'FA♯',
+      Gb: 'SOL♭',
+      G: 'SOL',
+      'G#': 'SOL♯',
+      Ab: 'LA♭',
+      A: 'LA',
+      'A#': 'LA♯',
+      Bb: 'SI♭',
+      B: 'SI',
     };
     return NOTE_FR[note] || note;
   };
 
   const toggleShowAllNotes = () => {
-    setShowAllNotes(prev => !prev);
+    setShowAllNotes((prev) => !prev);
   };
 
   return {

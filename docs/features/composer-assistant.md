@@ -1,6 +1,6 @@
 # Feature: Composer's Assistant
 
-> *L'assistant de composition — Créez des progressions avec intelligence émotionnelle*
+> _L'assistant de composition — Créez des progressions avec intelligence émotionnelle_
 
 ---
 
@@ -13,12 +13,15 @@ Le **Composer's Assistant** est un outil de composition assistée qui permet de 
 ## User Stories
 
 ### En tant que compositeur...
+
 > Je veux créer des progressions d'accords et voir quelles gammes utiliser pour improviser dessus.
 
 ### En tant que guitariste qui bloque...
+
 > Je veux qu'on me propose des substitutions intéressantes pour rendre ma progression plus originale.
 
 ### En tant qu'étudiant en harmonie...
+
 > Je veux comprendre l'émotion associée à chaque degré harmonique.
 
 ---
@@ -30,6 +33,7 @@ Le **Composer's Assistant** est un outil de composition assistée qui permet de 
 **Par quoi ça remplace :** Le papier/crayon ou les apps de notation complexes
 
 **Approche Adagio :**
+
 - **Bac à sable visuel** : Glisser-déposer des degrés (I, IV, V, ii...)
 - **Résultat audio immédiat** : Entendre la progression en temps réel
 - **Auto-complétion intelligente** : Suggestions basées sur la théorie
@@ -39,47 +43,48 @@ Le **Composer's Assistant** est un outil de composition assistée qui permet de 
 ```typescript
 interface ProgressionBuilderProps {
   // État
-  progression: ChordProgression
-  key: Note
-  timeSignature: string       // "4/4", "3/4", "6/8"
+  progression: ChordProgression;
+  key: Note;
+  timeSignature: string; // "4/4", "3/4", "6/8"
 
   // Configuration
-  availableDegrees: Degree[]  // I, ii, iii, IV, V...
-  showDegrees: boolean        // Afficher en degrés ou en accord
-  showAnalysis: boolean       // Afficher l'analyse
+  availableDegrees: Degree[]; // I, ii, iii, IV, V...
+  showDegrees: boolean; // Afficher en degrés ou en accord
+  showAnalysis: boolean; // Afficher l'analyse
 
   // Callbacks
-  onAddChord: (chord: Chord) => void
-  onRemoveChord: (index: number) => void
-  onReorder: (fromIndex: number, toIndex: number) => void
-  onChordChange: (index: number, chord: Chord) => void
-  onSave: () => void
-  onPlay: () => void
-  onStop: () => void
+  onAddChord: (chord: Chord) => void;
+  onRemoveChord: (index: number) => void;
+  onReorder: (fromIndex: number, toIndex: number) => void;
+  onChordChange: (index: number, chord: Chord) => void;
+  onSave: () => void;
+  onPlay: () => void;
+  onStop: () => void;
 }
 
 interface ChordProgression {
-  id: string
-  name?: string
-  key: Note
-  timeSignature: string
-  chords: ProgressionChord[]
-  analysis?: ProgressionAnalysis
+  id: string;
+  name?: string;
+  key: Note;
+  timeSignature: string;
+  chords: ProgressionChord[];
+  analysis?: ProgressionAnalysis;
 }
 
 interface ProgressionChord {
-  degree: string              // "I", "ii", "IV", "V7", "bII7"...
-  actualChord?: string         // "Cmaj7", "Dm7"...
-  beats: number               // Durée en temps
+  degree: string; // "I", "ii", "IV", "V7", "bII7"...
+  actualChord?: string; // "Cmaj7", "Dm7"...
+  beats: number; // Durée en temps
   analysis?: {
-    scale: string             // "Dorien", "Mixolydien"...
-    feeling: string           // "Aventure", "Tension"...
-    advice: string            // Conseil personnalisé
-  }
+    scale: string; // "Dorien", "Mixolydien"...
+    feeling: string; // "Aventure", "Tension"...
+    advice: string; // Conseil personnalisé
+  };
 }
 ```
 
 **UX Pattern :**
+
 1. L'utilisateur choisit sa tonalité (ex: "C")
 2. Une timeline vide apparaît
 3. Il fait glisser des degrés depuis la palette vers la timeline
@@ -94,6 +99,7 @@ interface ProgressionChord {
 **Par quoi ça remplace :** Les livres d'harmonie complexes
 
 **Approche Adagio :**
+
 - **Mapping émotionnel** : Chaque degré a une "sensation" textuelle
 - **Suggestions de gammes** : Pour chaque accord, la gamme à utiliser
 - **Visualisation des tensions** : Les notes de tension sont surlignées
@@ -103,38 +109,39 @@ interface ProgressionChord {
 ```typescript
 interface ProgressionAnalysis {
   overall: {
-    feeling: string           // Ex: "Mélancolique mais résolu"
-    tonality: string          // Ex: "Majeur avec emprunts"
-    complexity: "simple" | "intermediate" | "advanced"
-  }
-  chords: ChordAnalysis[]
-  suggestions: string[]       // Idées d'amélioration
+    feeling: string; // Ex: "Mélancolique mais résolu"
+    tonality: string; // Ex: "Majeur avec emprunts"
+    complexity: 'simple' | 'intermediate' | 'advanced';
+  };
+  chords: ChordAnalysis[];
+  suggestions: string[]; // Idées d'amélioration
 }
 
 interface ChordAnalysis {
-  chord: ProgressionChord
-  scale: Scale                // Gamme suggérée
-  feeling: string             // Sensation du degré
-  tension: "stable" | "tense" | "restless"
-  advice: string              // Conseil d'improvisation
-  avoid?: string[]            // Notes à éviter (cas particuliers)
+  chord: ProgressionChord;
+  scale: Scale; // Gamme suggérée
+  feeling: string; // Sensation du degré
+  tension: 'stable' | 'tense' | 'restless';
+  advice: string; // Conseil d'improvisation
+  avoid?: string[]; // Notes à éviter (cas particuliers)
 }
 ```
 
 **Exemple d'analyse :**
 
-| Degré | Accord | Gamme suggérée | Sensation | Conseil |
-|-------|--------|----------------|-----------|---------|
-| I | Cmaj7 | Ionien | Être content à la maison | Base stable, explorez les positions |
-| IV | Fmaj7 | Lydien | Aventure : Vous quittez la maison | Le #4 apporte une couleur rêveuse |
-| V | G7 | Mixolydien | Tension : Le retour est incertain | Préparez la résolution sur le I |
-| I | Cmaj7 | Ionien | Retour à la maison | Résolution parfaite |
+| Degré | Accord | Gamme suggérée | Sensation                         | Conseil                             |
+| ----- | ------ | -------------- | --------------------------------- | ----------------------------------- |
+| I     | Cmaj7  | Ionien         | Être content à la maison          | Base stable, explorez les positions |
+| IV    | Fmaj7  | Lydien         | Aventure : Vous quittez la maison | Le #4 apporte une couleur rêveuse   |
+| V     | G7     | Mixolydien     | Tension : Le retour est incertain | Préparez la résolution sur le I     |
+| I     | Cmaj7  | Ionien         | Retour à la maison                | Résolution parfaite                 |
 
 ### 3. Substitutions 1-Clic
 
 **Par quoi ça remplace :** Les tables de substitutions complexes
 
 **Approche Adagio :**
+
 - **Clic droit sur accord** : Menu de substitutions
 - **Aperçu audio** : Entendre la substitution avant de valider
 - **Explication** : Pourquoi cette substitution fonctionne
@@ -143,31 +150,32 @@ interface ChordAnalysis {
 
 ```typescript
 interface Substitution {
-  type: "tritone" | "relative" | "secondary-dominant" | "diminished"
-  originalChord: ProgressionChord
-  substitutedChord: ProgressionChord
-  explanation: string        // Pourquoi ça marche
-  risk: "safe" | "moderate" | "adventurous"
+  type: 'tritone' | 'relative' | 'secondary-dominant' | 'diminished';
+  originalChord: ProgressionChord;
+  substitutedChord: ProgressionChord;
+  explanation: string; // Pourquoi ça marche
+  risk: 'safe' | 'moderate' | 'adventurous';
 }
 
 interface SubstitutionMenuProps {
-  chord: ProgressionChord
-  key: Note
-  onSelect: (substitution: Substitution) => void
+  chord: ProgressionChord;
+  key: Note;
+  onSelect: (substitution: Substitution) => void;
 }
 ```
 
 **Types de substitutions :**
 
-| Type | Exemple | Explication | Risque |
-|------|---------|-------------|--------|
-| **Tritonique** | V7 → bII7 | Remplace le V par son tritonique | Modéré |
-| **Relative mineure** | I → vi | Accord relative mineur | Safe |
-| **Relative majeure** | ii → IV | Accord relative majeure | Safe |
-| **Dominante secondaire** | ii → V/ii | Prépare le ii | Modéré |
-| **Diminuée** | I → #iv°7 | Transition chromatique | Aventureux |
+| Type                     | Exemple   | Explication                      | Risque     |
+| ------------------------ | --------- | -------------------------------- | ---------- |
+| **Tritonique**           | V7 → bII7 | Remplace le V par son tritonique | Modéré     |
+| **Relative mineure**     | I → vi    | Accord relative mineur           | Safe       |
+| **Relative majeure**     | ii → IV   | Accord relative majeure          | Safe       |
+| **Dominante secondaire** | ii → V/ii | Prépare le ii                    | Modéré     |
+| **Diminuée**             | I → #iv°7 | Transition chromatique           | Aventureux |
 
 **UX Pattern :**
+
 1. Utilisateur fait un clic long sur un accord
 2. Menu des substitutions apparaît
 3. Il sélectionne une substitution
@@ -179,6 +187,7 @@ interface SubstitutionMenuProps {
 **Par quoi ça remplace :** Les dictionnaires d'accords statiques
 
 **Approche Adagio :**
+
 - **Contextuelle** : Les accords suggérés selon la tonalité
 - **Renversements** : Voir toutes les positions sur le manche
 - **Extensions** : Ajouter des 9, 11, 13 en 1 clic
@@ -187,29 +196,29 @@ interface SubstitutionMenuProps {
 
 ```typescript
 interface ChordLibraryProps {
-  key: Note
-  filter?: ChordFilter
-  onSelect: (chord: Chord) => void
+  key: Note;
+  filter?: ChordFilter;
+  onSelect: (chord: Chord) => void;
 }
 
 interface ChordFilter {
-  quality?: ChordQuality[]    // ["maj7", "m7", "7"...]
-  hasExtensions?: boolean
-  difficulty?: "beginner" | "intermediate" | "advanced"
+  quality?: ChordQuality[]; // ["maj7", "m7", "7"...]
+  hasExtensions?: boolean;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
 }
 
 interface Chord {
-  id: string
-  name: string                // "Cmaj7", "Am9"...
-  root: Note
-  quality: ChordQuality
-  extensions?: string[]       // ["9", "11"]
-  fingerings: Fingering[]
+  id: string;
+  name: string; // "Cmaj7", "Am9"...
+  root: Note;
+  quality: ChordQuality;
+  extensions?: string[]; // ["9", "11"]
+  fingerings: Fingering[];
   theory: {
-    intervals: string[]
-    scaleDegrees: string[]
-    tension: "stable" | "tense" | "dominant"
-  }
+    intervals: string[];
+    scaleDegrees: string[];
+    tension: 'stable' | 'tense' | 'dominant';
+  };
 }
 ```
 
@@ -280,6 +289,7 @@ model Progression {
 ### Layout
 
 **Desktop :**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  ≡ Composer's Assistant                    [💾 Save] [▶ Play] │
@@ -313,6 +323,7 @@ model Progression {
 ```
 
 **Mobile :**
+
 ```
 ┌─────────────────────────────┐
 │  ≡ Composer        [💾] [▶] │
@@ -338,15 +349,15 @@ model Progression {
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `Space` | Play/Stop |
-| `N` | Nouvelle progression |
-| `S` | Sauvegarder |
-| `Delete` | Supprimer accord sélectionné |
-| `Cmd+Z` | Annuler |
-| `Cmd+Shift+Z` | Rétablir |
-| `1-7` | Ajouter degré I-vii |
+| Shortcut      | Action                       |
+| ------------- | ---------------------------- |
+| `Space`       | Play/Stop                    |
+| `N`           | Nouvelle progression         |
+| `S`           | Sauvegarder                  |
+| `Delete`      | Supprimer accord sélectionné |
+| `Cmd+Z`       | Annuler                      |
+| `Cmd+Shift+Z` | Rétablir                     |
+| `1-7`         | Ajouter degré I-vii          |
 
 ---
 
@@ -394,4 +405,4 @@ model Progression {
 
 ---
 
-*Feature specification v1.0 — Dernière mise à jour : 2025-03-02*
+_Feature specification v1.0 — Dernière mise à jour : 2025-03-02_

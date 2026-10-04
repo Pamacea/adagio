@@ -56,10 +56,7 @@ export function SheetTable({ section, cfHref }: SheetTableProps) {
           )}
           <tbody>
             {rows.map((row, ri) => (
-              <tr
-                key={ri}
-                className="border-b border-steel/20 last:border-b-0 even:bg-abyss/40"
-              >
+              <tr key={ri} className="border-b border-steel/20 last:border-b-0 even:bg-abyss/40">
                 {row.map((cell, ci) => {
                   const formatted = formatSheetCell(cell);
                   return (

@@ -13,13 +13,23 @@ import type { NoteName } from '@adagio/types';
  * Utilise les symboles musicaux corrects (♯, ♭)
  */
 export const NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
-  'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-  'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-  'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RÉ♭',
+  D: 'RÉ',
+  'D#': 'RÉ♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };
 
 // ============================================================================
@@ -31,12 +41,12 @@ export const NOTE_FR: Record<string, string> = {
  * De la plus aiguë à la plus grave (ordre d'affichage)
  */
 export const GUITAR_STRINGS: Array<{ note: NoteName; name: string }> = [
-  { note: 'E', name: 'MI' },   // Corde 1 - Mi aigu
-  { note: 'B', name: 'SI' },   // Corde 2 - Si
-  { note: 'G', name: 'SOL' },  // Corde 3 - Sol
-  { note: 'D', name: 'RÉ' },   // Corde 4 - Ré
-  { note: 'A', name: 'LA' },   // Corde 5 - La
-  { note: 'E', name: 'MI' },   // Corde 6 - Mi grave
+  { note: 'E', name: 'MI' }, // Corde 1 - Mi aigu
+  { note: 'B', name: 'SI' }, // Corde 2 - Si
+  { note: 'G', name: 'SOL' }, // Corde 3 - Sol
+  { note: 'D', name: 'RÉ' }, // Corde 4 - Ré
+  { note: 'A', name: 'LA' }, // Corde 5 - La
+  { note: 'E', name: 'MI' }, // Corde 6 - Mi grave
 ];
 
 // ============================================================================
@@ -64,7 +74,18 @@ export const FRET_CONSTANTS = {
  * Notes chromatiques dans l'ordre standard
  */
 export const CHROMATIC: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
 ];
 
 // ============================================================================
@@ -74,6 +95,4 @@ export const CHROMATIC: NoteName[] = [
 /**
  * Tonalites disponibles - toutes les notes chromatiques
  */
-export const ROOTS: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-];
+export const ROOTS: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];

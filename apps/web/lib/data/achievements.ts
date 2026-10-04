@@ -135,8 +135,8 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
   },
   {
     id: 'chord-library',
-    title: 'Bibliothécaire d\'Accords',
-    description: 'Decouvrir 50 types d\'accords differents',
+    title: "Bibliothécaire d'Accords",
+    description: "Decouvrir 50 types d'accords differents",
     category: 'discovery',
     rarity: 'epic',
     xp: 350,
@@ -207,7 +207,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
   {
     id: 'ear-training-expert',
     title: 'Oreille Absolue',
-    description: 'Identifier tous les intervalles a l\'oreille',
+    description: "Identifier tous les intervalles a l'oreille",
     category: 'mastery',
     rarity: 'epic',
     xp: 500,
@@ -229,7 +229,7 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
   {
     id: 'improvisation-master',
     title: 'Improvisateur',
-    description: 'Completer 10 sessions d\'improvisation',
+    description: "Completer 10 sessions d'improvisation",
     category: 'mastery',
     rarity: 'epic',
     xp: 450,

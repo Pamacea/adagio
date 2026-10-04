@@ -4,14 +4,7 @@
 // ============================================================================
 
 import { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   TrophyIcon,
@@ -58,25 +51,21 @@ export default function ProfileScreen() {
   }
 
   async function handleLogout() {
-    Alert.alert(
-      'Déconnexion',
-      'Êtes-vous sûr de vouloir vous déconnecter?',
-      [
-        { text: 'Annuler', style: 'cancel' },
-        {
-          text: 'Déconnexion',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await authClient.signOut();
-              router.replace('/(auth)/login');
-            } catch (error) {
-              console.error('Logout error:', error);
-            }
-          },
+    Alert.alert('Déconnexion', 'Êtes-vous sûr de vouloir vous déconnecter?', [
+      { text: 'Annuler', style: 'cancel' },
+      {
+        text: 'Déconnexion',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await authClient.signOut();
+            router.replace('/(auth)/login');
+          } catch (error) {
+            console.error('Logout error:', error);
+          }
         },
-      ]
-    );
+      },
+    ]);
   }
 
   const menuItems: MenuItem[] = [
@@ -128,9 +117,7 @@ export default function ProfileScreen() {
         <View style={styles.avatar}>
           <UserIcon size={40} color={Colors.black} />
         </View>
-        <Text style={styles.name}>
-          {user?.name || 'MUSICIEN'}
-        </Text>
+        <Text style={styles.name}>{user?.name || 'MUSICIEN'}</Text>
         <Text style={styles.email}>{user?.email || 'guest@adagio.app'}</Text>
       </View>
 

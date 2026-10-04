@@ -11,7 +11,20 @@ import { NOTE_FR } from '@/lib/theory';
 import { INSTRUMENTS, INSTRUMENT_IDS } from '@adagio/theory';
 
 // Toutes les notes chromatiques (avec dièses)
-const CHROMATIC_ROOTS: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const CHROMATIC_ROOTS: NoteName[] = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+];
 
 // Modes grecs disponibles
 const GREEK_MODES: ModeName[] = [
@@ -37,7 +50,7 @@ const MODE_FR_NAMES: Record<ModeName, string> = {
 
 // Options de nombre de frettes
 const FRET_COUNT_OPTIONS = [12, 15, 17, 19, 21, 24] as const;
-type FretCountOption = typeof FRET_COUNT_OPTIONS[number];
+type FretCountOption = (typeof FRET_COUNT_OPTIONS)[number];
 
 interface FretboardControlsProps {
   currentRoot: NoteName;
@@ -77,7 +90,7 @@ export function FretboardControls({
             INSTRUMENT
           </label>
           <div className="flex gap-1">
-            {INSTRUMENT_IDS.map(id => (
+            {INSTRUMENT_IDS.map((id) => (
               <button
                 key={id}
                 onClick={() => onInstrumentChange(id)}
@@ -97,11 +110,9 @@ export function FretboardControls({
 
         {/* Root selection */}
         <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            TONIQUE
-          </label>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">TONIQUE</label>
           <div className="flex flex-wrap gap-1">
-            {CHROMATIC_ROOTS.map(root => (
+            {CHROMATIC_ROOTS.map((root) => (
               <button
                 key={root}
                 onClick={() => onRootChange(root)}
@@ -121,15 +132,13 @@ export function FretboardControls({
 
         {/* Mode selection */}
         <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            MODE
-          </label>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">MODE</label>
           <select
             value={currentMode}
             onChange={(e) => onModeChange(e.target.value as ModeName)}
             className="w-full px-3 py-2 text-sm font-bold uppercase border-2 border-steel bg-abyss text-white"
           >
-            {GREEK_MODES.map(mode => (
+            {GREEK_MODES.map((mode) => (
               <option key={mode} value={mode}>
                 {MODE_FR_NAMES[mode]}
               </option>
@@ -139,11 +148,9 @@ export function FretboardControls({
 
         {/* Fret count */}
         <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            FRETTES
-          </label>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">FRETTES</label>
           <div className="flex gap-1 flex-wrap">
-            {FRET_COUNT_OPTIONS.map(frets => (
+            {FRET_COUNT_OPTIONS.map((frets) => (
               <button
                 key={frets}
                 onClick={() => onFretCountChange(frets)}
@@ -163,9 +170,7 @@ export function FretboardControls({
 
         {/* Display toggle */}
         <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            AFFICHAGE
-          </label>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">AFFICHAGE</label>
           <button
             onClick={onToggleNotes}
             className={`w-full px-4 py-2 text-sm font-bold uppercase border-2 transition-all ${

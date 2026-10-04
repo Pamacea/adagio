@@ -217,8 +217,18 @@ describe('TheoryService', () => {
 
       (prisma.harmonyRule.findUnique as jest.Mock)
         .mockResolvedValueOnce(mockHarmonyRule)
-        .mockResolvedValueOnce({ ...mockHarmonyRule, degree: 'IV', sensation: 'Expansive', advice: 'Pre-dominant' })
-        .mockResolvedValueOnce({ ...mockHarmonyRule, degree: 'V', sensation: 'Tense', advice: 'Dominant' });
+        .mockResolvedValueOnce({
+          ...mockHarmonyRule,
+          degree: 'IV',
+          sensation: 'Expansive',
+          advice: 'Pre-dominant',
+        })
+        .mockResolvedValueOnce({
+          ...mockHarmonyRule,
+          degree: 'V',
+          sensation: 'Tense',
+          advice: 'Dominant',
+        });
 
       const result = await service.analyzeProgression(dto);
 
@@ -231,9 +241,7 @@ describe('TheoryService', () => {
     it('should return chord analysis with scale, feeling, tension, and advice', async () => {
       const dto = {
         key: 'C',
-        chords: [
-          { degree: 'I', quality: 'maj7', beats: 4 },
-        ],
+        chords: [{ degree: 'I', quality: 'maj7', beats: 4 }],
       };
 
       (prisma.harmonyRule.findUnique as jest.Mock).mockResolvedValue(mockHarmonyRule);
@@ -320,9 +328,7 @@ describe('TheoryService', () => {
     it('should map degrees to suggested modes correctly', async () => {
       const dto = {
         key: 'C',
-        chords: [
-          { degree: 'ii', quality: 'm7', beats: 4 },
-        ],
+        chords: [{ degree: 'ii', quality: 'm7', beats: 4 }],
       };
 
       (prisma.harmonyRule.findUnique as jest.Mock).mockResolvedValue(mockHarmonyRule);
@@ -784,7 +790,10 @@ describe('TheoryService', () => {
 
       const result = await service.getTechniques();
 
-      expect(result[0].tips).toEqual(['Keep fingers close to fretboard', 'Use quick, precise motion']);
+      expect(result[0].tips).toEqual([
+        'Keep fingers close to fretboard',
+        'Use quick, precise motion',
+      ]);
       expect(result[0].prerequisites).toEqual([]);
       expect(result[0].relatedTechniques).toEqual(['pull-off', 'trill']);
       expect(result[0].milestones).toEqual(['Clean execution at 60 BPM', 'Smooth transitions']);

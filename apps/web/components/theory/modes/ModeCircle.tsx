@@ -79,10 +79,16 @@ export function ModeCircle({ modes, selectedMode, onSelect }: ModeCircleProps) {
               className="absolute transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform z-20"
               style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <div className={`w-14 h-14 flex items-center justify-center border-2 rounded-full transition-all ${
-                isActive ? 'border-blood bg-toxic' : 'border-steel bg-blackness hover:border-white'
-              }`}>
-                <span className="text-xs font-bold text-white uppercase">{info.name.slice(0, 3).toUpperCase()}</span>
+              <div
+                className={`w-14 h-14 flex items-center justify-center border-2 rounded-full transition-all ${
+                  isActive
+                    ? 'border-blood bg-toxic'
+                    : 'border-steel bg-blackness hover:border-white'
+                }`}
+              >
+                <span className="text-xs font-bold text-white uppercase">
+                  {info.name.slice(0, 3).toUpperCase()}
+                </span>
               </div>
             </button>
           );

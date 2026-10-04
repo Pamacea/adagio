@@ -9,32 +9,32 @@ import type { Interval } from '@adagio/types';
 
 // Couleurs hexadécimales pour la légende
 const INTERVAL_HEX_COLORS: Record<string, string> = {
-  '1': '#ef4444',      // rouge - fondamentale
-  '5': '#f97316',      // orange - quinte
-  'b3': '#6b7280',     // gris - tierce mineure
-  'b7': '#6b7280',     // gris - septième mineure
-  'bb6': '#6b7280',    // gris - sixte double-bémol
-  'bb7': '#6b7280',    // gris - septième double-bémol
-  '3': '#22c55e',      // vert - tierce majeure
-  '7': '#a855f7',      // violet - septième majeure
-  '#6': '#a855f7',     // violet - sixte augmentée
-  '4': '#06b6d4',      // cyan - quarte
-  '#4': '#06b6d4',     // cyan - quarte augmentée
-  'b5': '#0891b2',     // cyan foncé - quinte diminuée
-  'b4': '#0891b2',     // cyan foncé - quarte diminuée
-  '#5': '#a855f7',     // violet - quinte augmentée
-  'b2': '#f97316',     // orange - seconde mineure
-  'b6': '#f97316',     // orange - sixte mineure
-  '2': '#fbbf24',      // jaune - seconde
-  '6': '#fbbf24',      // jaune - sixte
+  '1': '#ef4444', // rouge - fondamentale
+  '5': '#f97316', // orange - quinte
+  b3: '#6b7280', // gris - tierce mineure
+  b7: '#6b7280', // gris - septième mineure
+  bb6: '#6b7280', // gris - sixte double-bémol
+  bb7: '#6b7280', // gris - septième double-bémol
+  '3': '#22c55e', // vert - tierce majeure
+  '7': '#a855f7', // violet - septième majeure
+  '#6': '#a855f7', // violet - sixte augmentée
+  '4': '#06b6d4', // cyan - quarte
+  '#4': '#06b6d4', // cyan - quarte augmentée
+  b5: '#0891b2', // cyan foncé - quinte diminuée
+  b4: '#0891b2', // cyan foncé - quarte diminuée
+  '#5': '#a855f7', // violet - quinte augmentée
+  b2: '#f97316', // orange - seconde mineure
+  b6: '#f97316', // orange - sixte mineure
+  '2': '#fbbf24', // jaune - seconde
+  '6': '#fbbf24', // jaune - sixte
 };
 
 // Convertir les intervalles vers notation musicale
 function formatInterval(interval: Interval): string {
   const symbols: Record<string, string> = {
     '#': '♯',
-    'b': '♭',
-    'bb': '♭♭',
+    b: '♭',
+    bb: '♭♭',
     '##': '♯♯',
   };
   let result: string = interval;

@@ -49,7 +49,7 @@ const SEMITONE_TO_INTERVAL: Record<number, string[]> = {
  * getNoteAt('A', 2) // 'B'
  */
 export function getNoteAt(stringOpen: string, fret: number): NoteName {
-  const openIndex = CHROMATIC.findIndex(n => n === stringOpen);
+  const openIndex = CHROMATIC.findIndex((n) => n === stringOpen);
   if (openIndex === -1) return 'C';
 
   const noteIndex = (openIndex + fret) % 12;
@@ -73,8 +73,8 @@ export function getIntervalForNote(
   root: string,
   modeIntervals: string[]
 ): string | null {
-  const rootIndex = CHROMATIC.findIndex(n => n === root);
-  const noteIndex = CHROMATIC.findIndex(n => n === note);
+  const rootIndex = CHROMATIC.findIndex((n) => n === root);
+  const noteIndex = CHROMATIC.findIndex((n) => n === note);
 
   if (rootIndex === -1 || noteIndex === -1) return null;
 
@@ -82,7 +82,7 @@ export function getIntervalForNote(
   const possibleIntervals = SEMITONE_TO_INTERVAL[semitones] || [];
 
   // Find the first interval that exists in the mode
-  return possibleIntervals.find(i => modeIntervals.includes(i)) || null;
+  return possibleIntervals.find((i) => modeIntervals.includes(i)) || null;
 }
 
 /**
@@ -96,16 +96,12 @@ export function getIntervalForNote(
  * getOctaveForNote('E', 0, 0) // 2 (low E string, open)
  * getOctaveForNote('E', 5, 0) // 4 (high E string, open)
  */
-export function getOctaveForNote(
-  note: string,
-  stringIndex: number,
-  fret: number
-): number {
+export function getOctaveForNote(note: string, stringIndex: number, fret: number): number {
   const stringOpen = STRINGS[stringIndex] ?? 'E';
   const baseOctave = STRING_BASE_OCTAVES[stringIndex] ?? 2;
 
-  const openIndex = CHROMATIC.findIndex(n => n === stringOpen);
-  const targetIndex = CHROMATIC.findIndex(n => n === note);
+  const openIndex = CHROMATIC.findIndex((n) => n === stringOpen);
+  const targetIndex = CHROMATIC.findIndex((n) => n === note);
 
   // Calculate how many times we've crossed C (which increments octave)
   const octaveIncrease = Math.floor((openIndex + fret) / 12);
@@ -195,10 +191,7 @@ export function isNoteInMode(noteData: NoteData): boolean {
  * @param interval - The interval to find (e.g., '1', '5', 'b3')
  * @returns Array of note data matching the interval
  */
-export function getNotesByInterval(
-  fretboard: FretboardData,
-  interval: string
-): NoteData[] {
+export function getNotesByInterval(fretboard: FretboardData, interval: string): NoteData[] {
   const notes: NoteData[] = [];
 
   for (const stringData of fretboard) {
@@ -228,8 +221,8 @@ export function getRootNotes(fretboard: FretboardData): NoteData[] {
  * @returns Number of semitones (0-11)
  */
 export function getSemitoneDistance(from: NoteName, to: NoteName): number {
-  const fromIndex = CHROMATIC.findIndex(n => n === from);
-  const toIndex = CHROMATIC.findIndex(n => n === to);
+  const fromIndex = CHROMATIC.findIndex((n) => n === from);
+  const toIndex = CHROMATIC.findIndex((n) => n === to);
 
   if (fromIndex === -1 || toIndex === -1) return 0;
 
@@ -269,9 +262,25 @@ export function getIntervalColor(interval: string): string {
 export function getFretboardNotesForMobile(
   key: string,
   intervals: string[]
-): Array<{ name: string; note: string; interval: string | null; inScale: boolean; string: number; fret: number; color: string }> {
+): Array<{
+  name: string;
+  note: string;
+  interval: string | null;
+  inScale: boolean;
+  string: number;
+  fret: number;
+  color: string;
+}> {
   const fretboard = calculateFretboard({ rootNote: key, modeIntervals: intervals });
-  const result: Array<{ name: string; note: string; interval: string | null; inScale: boolean; string: number; fret: number; color: string }> = [];
+  const result: Array<{
+    name: string;
+    note: string;
+    interval: string | null;
+    inScale: boolean;
+    string: number;
+    fret: number;
+    color: string;
+  }> = [];
 
   for (let stringIdx = 0; stringIdx < fretboard.length; stringIdx++) {
     const stringData = fretboard[stringIdx];

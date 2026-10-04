@@ -1,4 +1,4 @@
-TECHNIQUES,APPRENTISSAGE (  ⭕  ❌ ),DESCRIPTION,NOTES                                                            ,LIENS
+TECHNIQUES,APPRENTISSAGE (  ⭕  ❌ ),DESCRIPTION,NOTES,LIENS
 Alternate picking,⭕,– attaque alternée haut/bas avec le médiator.,—,cf.
 Economy picking,⭕,"– variante fluide de l’alternate, en combinant sweeping et alternate.",—,cf.
 Down picking,⭕,– uniquement des coups vers le bas (ex : James Hetfield).,—,cf.
@@ -7,7 +7,7 @@ Finger picking,⭕,– jeu aux doigts (sans médiator).,—,cf.
 Chicken picking,⭕,"– tiré claquant des cordes, souvent country/funk.",—,cf.
 Raking,⭕,– balayage de plusieurs cordes mortes ou pour accentuer une note.,—,cf.
 Sweep picking,⭕,– balayer plusieurs cordes dans un mouvement fluide (souvent pour les arpèges rapides).,—,cf.
-Directional picking,⭕,"– semblable à l’economy, accentue le mouvement “naturel” de la main. +On remonte d'une corde alors on upstroke, on desdend alors on downstroke.",—,cf.
+Directional picking,⭕,"– semblable à l’economy, accentue le mouvement “naturel” de la main. +On remonte d'une corde alors on upstroke, on descend alors on downstroke.",—,cf.
 Slap picking,⭕,– mélange entre un slap alterné plus du finger picking.,—,cf.
 Hammer-on,⭕,– enchaîner une note en frappant la corde sans regratter.,—,cf.
 Pull-off,⭕,– retirer le doigt pour faire sonner une note inférieure.,—,cf.
@@ -18,7 +18,7 @@ Legato,⭕,"– jeu fluide combinant hammer-on, pull-off et slides sans attaque.
 Trill,⭕,– alternance rapide entre deux notes proches (mini hammer/pull rapides).,—,cf.
 Pre-bend / Release bend,⭕,"– bend avant de gratter, puis relâcher.",—,cf.
 Harmoniques naturelles,⭕,"– toucher légèrement une corde sur une frette (5e, 7e, 12e...).",—,cf.
-Harmoniques artificielles(pinch),⭕,"– générées avec le pouce du médiator (sons aigus, criards).",—,cf.
+Harmoniques artificielles (pinch),⭕,"– générées avec le pouce du médiator (sons aigus, criards).",—,cf.
 Tapped harmonics,⭕,"– harmoniques créées par tap sur une case spécifique. Joué fret 5 puis tap 12 ou 17,",—,cf.
 Harmoniques à la main droite (touch harmonics),❌,– touchées avec un doigt pendant le grattage.,—,cf.
 Feedback,⭕,– utiliser la résonance de l’ampli pour créer un sustain aigu.,—,cf.

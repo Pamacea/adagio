@@ -29,11 +29,9 @@ export function ModeSelector({
       <div className="flex flex-wrap items-center gap-4">
         {/* Root selection */}
         <div className="flex-1">
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            TONIQUE
-          </label>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">TONIQUE</label>
           <div className="flex flex-wrap gap-1">
-            {ROOTS.map(root => (
+            {ROOTS.map((root) => (
               <button
                 key={root}
                 onClick={() => onRootChange(root)}

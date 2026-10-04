@@ -36,9 +36,7 @@ export function CircleControls({
     <div className="section-frame p-4 mb-6">
       {/* Sélecteur de tonique */}
       <div className="mb-4">
-        <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-          Tonique
-        </label>
+        <label className="text-xs text-gray uppercase tracking-wider block mb-2">Tonique</label>
         <div className="flex flex-wrap gap-2">
           {CIRCLE_OF_FIFTHS.map((note) => (
             <button
@@ -46,9 +44,10 @@ export function CircleControls({
               onClick={() => onKeyChange(note)}
               className={`
                 px-3 py-2 text-sm font-bold border-2 transition-all
-                ${selectedKey === note
-                  ? 'bg-blood border-blood text-white'
-                  : 'bg-blackness border-steel text-gray hover:border-blood hover:text-white'
+                ${
+                  selectedKey === note
+                    ? 'bg-blood border-blood text-white'
+                    : 'bg-blackness border-steel text-gray hover:border-blood hover:text-white'
                 }
               `}
             >
@@ -66,9 +65,10 @@ export function CircleControls({
             onClick={onToggleChords}
             className={`
               px-4 py-2 text-xs font-bold uppercase border-2 transition-all
-              ${showChords
-                ? 'bg-toxic border-blood text-white'
-                : 'bg-blackness border-steel text-gray hover:border-blood'
+              ${
+                showChords
+                  ? 'bg-toxic border-blood text-white'
+                  : 'bg-blackness border-steel text-gray hover:border-blood'
               }
             `}
           >

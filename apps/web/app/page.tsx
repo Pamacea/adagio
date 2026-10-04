@@ -18,9 +18,7 @@ export default function HomePage() {
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-24 mt-16">
         {/* Titre massif */}
         <div className="text-center relative z-10">
-          <h2 className="text-massive font-metal text-white tracking-tighter mb-6">
-            ADAGIO
-          </h2>
+          <h2 className="text-massive font-metal text-white tracking-tighter mb-6">ADAGIO</h2>
 
           {/* Sous-titre */}
           <div className="section-frame inline-block px-8 py-4 mb-8">
@@ -40,9 +38,7 @@ export default function HomePage() {
                   i === 2 ? 'note-delay-2' : ''
                 } ${i === 3 ? 'note-delay-3' : ''} ${
                   i === 4 ? 'note-delay-4' : ''
-                } ${i === 5 ? 'note-delay-5' : ''} ${
-                  i === 6 ? 'note-delay-6' : ''
-                }`}
+                } ${i === 5 ? 'note-delay-5' : ''} ${i === 6 ? 'note-delay-6' : ''}`}
               >
                 {note}
               </span>

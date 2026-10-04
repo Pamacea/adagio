@@ -41,7 +41,7 @@ export function calculateFretboard(options: FretboardOptions = {}): FretboardNot
 
     for (let fret = 0; fret <= fretCount; fret++) {
       const note = openNote.transpose(fret);
-      const inScale = scaleNotes.some(sn => sn.equals(note));
+      const inScale = scaleNotes.some((sn) => sn.equals(note));
 
       notes.push({
         name: note.name,
@@ -72,7 +72,7 @@ export function getFretboardNotesForKey(
   const scaleIntervals = scale;
   const scaleNotes = new Scale(key, scale).getNotes();
 
-  return notes.map(note => {
+  return notes.map((note) => {
     const noteObj = new Note(note.name, note.octave);
     let interval: Interval | undefined;
     let degree: string | undefined;
@@ -105,24 +105,24 @@ export function getFretboardNotesForKey(
 export function getIntervalColor(interval?: Interval): string {
   const colors: Record<string, string> = {
     '1': '#ef4444', // Red - Root
-    'b2': '#a855f7',
+    b2: '#a855f7',
     '2': '#a855f7',
-    'b3': '#3b82f6', // Blue - Minor third
+    b3: '#3b82f6', // Blue - Minor third
     '3': '#3b82f6', // Blue - Major third
     '4': '#22c55e', // Green - Perfect fourth
     '5': '#22c55e', // Green - Perfect fifth
-    'b6': '#a855f7',
+    b6: '#a855f7',
     '6': '#a855f7',
-    'bb7': '#a855f7',
-    'b7': '#eab308', // Yellow - Minor seventh
+    bb7: '#a855f7',
+    b7: '#eab308', // Yellow - Minor seventh
     '7': '#eab308', // Yellow - Major seventh
     // Extensions (not in Interval type but used for display)
-    'b9': '#f97316',
+    b9: '#f97316',
     '9': '#f97316', // Ninth
     '#9': '#f97316',
     '11': '#f97316', // Eleventh
     '#11': '#f97316',
-    'b13': '#f97316',
+    b13: '#f97316',
     '13': '#f97316', // Thirteenth
   };
 

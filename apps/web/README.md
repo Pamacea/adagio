@@ -7,11 +7,13 @@ The Adagio web application has been completely rebuilt with the following struct
 ## Pages Created
 
 ### Public Pages
+
 - **`/`** - Landing page with hero, features, and CTA sections
 - **`/login`** - Authentication page with email/password
 - **`/register`** - Registration page with name, email, password
 
 ### Protected Pages (require authentication)
+
 - **`/dashboard`** - User dashboard with level progress, stats, and quick actions
 - **`/theory`** - Theory hub with navigation to sub-pages
 - **`/theory/circle-of-fifths`** - Interactive circle of fifths visualization
@@ -71,17 +73,20 @@ apps/web/
 ## Key Features
 
 ### Authentication
+
 - Uses `better-auth` for authentication
 - Session management via cookies
 - Protected routes via middleware
 - Sign in/up flows with proper error handling
 
 ### State Management
+
 - TanStack Query for server state
 - Optimistic updates for mutations
 - Proper cache invalidation
 
 ### Styling
+
 - Tailwind CSS with custom design system
 - Dark mode support
 - Responsive design

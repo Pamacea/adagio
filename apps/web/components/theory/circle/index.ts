@@ -16,15 +16,8 @@ export type { RelativeKeyProps } from './RelativeKey';
 export type { CircleControlsProps } from './CircleControls';
 
 // Utilities
-export {
-  createSegmentPath,
-  getContrastTextColor,
-} from './CircleOfFifths';
-export {
-  getChordQuality,
-  getChordQualityColor,
-  getChordQualitySymbol,
-} from './ChordDisplay';
+export { createSegmentPath, getContrastTextColor } from './CircleOfFifths';
+export { getChordQuality, getChordQualityColor, getChordQualitySymbol } from './ChordDisplay';
 
 // Constants
 export {

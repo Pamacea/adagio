@@ -38,9 +38,12 @@ export function ChordCard({
   showDiatonic,
 }: ChordCardProps) {
   const colorClasses = {
-    'Diatonique': 'border-emerald-500/50 bg-gradient-to-br from-emerald-500/20 to-transparent shadow-emerald-500/20',
-    'Extensions': 'border-blue-500/50 bg-gradient-to-br from-blue-500/20 to-transparent shadow-blue-500/20',
-    'Altérations': 'border-red-500/50 bg-gradient-to-br from-red-500/20 to-transparent shadow-red-500/20',
+    Diatonique:
+      'border-emerald-500/50 bg-gradient-to-br from-emerald-500/20 to-transparent shadow-emerald-500/20',
+    Extensions:
+      'border-blue-500/50 bg-gradient-to-br from-blue-500/20 to-transparent shadow-blue-500/20',
+    Altérations:
+      'border-red-500/50 bg-gradient-to-br from-red-500/20 to-transparent shadow-red-500/20',
   };
 
   return (
@@ -56,15 +59,20 @@ export function ChordCard({
     >
       {/* Selection indicator */}
       {isSelected && (
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-10 rounded-r-none shadow-lg animate-pulse" style={{ background: categoryColor }} />
+        <div
+          className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-10 rounded-r-none shadow-lg animate-pulse"
+          style={{ background: categoryColor }}
+        />
       )}
 
       <div className="flex items-center justify-between mb-3 pl-4">
         <div className="flex items-center gap-2">
-          <span className={cn(
-            'font-metal font-bold text-lg tracking-wide',
-            isSelected ? 'text-white' : 'text-gray-200 group-hover:text-white transition-colors'
-          )}>
+          <span
+            className={cn(
+              'font-metal font-bold text-lg tracking-wide',
+              isSelected ? 'text-white' : 'text-gray-200 group-hover:text-white transition-colors'
+            )}
+          >
             {name}
           </span>
           {showDiatonic && (
@@ -101,9 +109,7 @@ export function ChordCard({
       {/* Voicings indicator */}
       {voicings.length > 0 && (
         <div className="flex items-center gap-2 pl-4 mt-2">
-          <span className="text-sm text-gray-400">
-            {voicings.length} positions
-          </span>
+          <span className="text-sm text-gray-400">{voicings.length} positions</span>
           <div className="flex gap-0.5">
             {voicings.slice(0, 5).map((_, i) => (
               <div key={i} className="w-1 h-1 rounded-none bg-toxic/50" />

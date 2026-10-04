@@ -4,7 +4,11 @@
 
 'use client';
 
-import { useAchievementsQuery, useUserAchievementsQuery, useUnlockAchievementMutation } from './use-query';
+import {
+  useAchievementsQuery,
+  useUserAchievementsQuery,
+  useUnlockAchievementMutation,
+} from './use-query';
 import { type Achievement } from '../data';
 
 /**
@@ -63,26 +67,32 @@ export function useAchievementStats() {
   }
 
   const totalAchievements = achievements.length;
-  const unlockedAchievements = achievements.filter(a => a.unlocked).length;
-  const totalXP = achievements.filter(a => a.unlocked).reduce((sum, a) => sum + a.xp, 0);
+  const unlockedAchievements = achievements.filter((a) => a.unlocked).length;
+  const totalXP = achievements.filter((a) => a.unlocked).reduce((sum, a) => sum + a.xp, 0);
   const maxXP = achievements.reduce((sum, a) => sum + a.xp, 0);
   const completionPercentage = Math.round((unlockedAchievements / totalAchievements) * 100);
 
   // Count by rarity
-  const byRarity = achievements.reduce((acc, a) => {
-    acc[a.rarity] = (acc[a.rarity] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const byRarity = achievements.reduce(
+    (acc, a) => {
+      acc[a.rarity] = (acc[a.rarity] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   // Count by category
-  const byCategory = achievements.reduce((acc, a) => {
-    const unlocked = a.unlocked ? 1 : 0;
-    const cat = acc[a.category] || { total: 0, unlocked: 0 };
-    cat.total++;
-    cat.unlocked += unlocked;
-    acc[a.category] = cat;
-    return acc;
-  }, {} as Record<string, { total: number; unlocked: number }>);
+  const byCategory = achievements.reduce(
+    (acc, a) => {
+      const unlocked = a.unlocked ? 1 : 0;
+      const cat = acc[a.category] || { total: 0, unlocked: 0 };
+      cat.total++;
+      cat.unlocked += unlocked;
+      acc[a.category] = cat;
+      return acc;
+    },
+    {} as Record<string, { total: number; unlocked: number }>
+  );
 
   return {
     totalAchievements,

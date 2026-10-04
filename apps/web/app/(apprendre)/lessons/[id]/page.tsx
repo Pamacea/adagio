@@ -42,7 +42,7 @@ export default function LessonDetailPage() {
   // Fallback: données statiques si pas de contenu interactif
   const staticLesson = useMemo(() => {
     if (lesson) return null;
-    return LESSONS_DATA.find(l => l.slug === lessonId || l.id === lessonId) || null;
+    return LESSONS_DATA.find((l) => l.slug === lessonId || l.id === lessonId) || null;
   }, [lessonId, lesson]);
 
   // Toutes les leçons pour les suggestions
@@ -57,8 +57,8 @@ export default function LessonDetailPage() {
   // Calcul de la progression
   const progress = useMemo(() => {
     if (!lesson) return 0;
-    const quizCount = lesson.blocks.filter(b => b.type === 'quiz').length;
-    const exerciseCount = lesson.blocks.filter(b => b.type === 'exercise').length;
+    const quizCount = lesson.blocks.filter((b) => b.type === 'quiz').length;
+    const exerciseCount = lesson.blocks.filter((b) => b.type === 'exercise').length;
     const completableCount = quizCount + exerciseCount;
     if (completableCount === 0) return 100;
     return Math.round((completedBlocks.size / completableCount) * 100);
@@ -66,7 +66,7 @@ export default function LessonDetailPage() {
 
   // Gestionnaire d'événements
   const handleBlockComplete = (blockIndex: number) => {
-    setCompletedBlocks(prev => new Set(prev).add(blockIndex));
+    setCompletedBlocks((prev) => new Set(prev).add(blockIndex));
   };
 
   const handleDemoEvent = (event: DemoEvent) => {
@@ -115,9 +115,9 @@ export default function LessonDetailPage() {
 
   // Leçon statique (sans contenu interactif)
   if (!lesson && staticLesson) {
-    const related = LESSONS_DATA
-      .filter(l => l.slug !== lessonId && l.category === staticLesson.category)
-      .slice(0, 3);
+    const related = LESSONS_DATA.filter(
+      (l) => l.slug !== lessonId && l.category === staticLesson.category
+    ).slice(0, 3);
 
     return (
       <div className="min-h-screen flex flex-col bg-abyss">
@@ -136,11 +136,15 @@ export default function LessonDetailPage() {
             <MetalCard className="mb-8">
               <div className="p-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className={`px-3 py-1 text-xs font-bold uppercase border-2 ${
-                    staticLesson.level === 'BEGINNER' ? 'border-toxic text-toxic' :
-                    staticLesson.level === 'INTERMEDIATE' ? 'border-rust text-rust' :
-                    'border-blood text-blood'
-                  }`}>
+                  <span
+                    className={`px-3 py-1 text-xs font-bold uppercase border-2 ${
+                      staticLesson.level === 'BEGINNER'
+                        ? 'border-toxic text-toxic'
+                        : staticLesson.level === 'INTERMEDIATE'
+                          ? 'border-rust text-rust'
+                          : 'border-blood text-blood'
+                    }`}
+                  >
                     {staticLesson.level}
                   </span>
                   <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steel text-gray">
@@ -166,7 +170,10 @@ export default function LessonDetailPage() {
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {staticLesson.topics.map((topic, i) => (
-                      <div key={i} className="flex items-center gap-2 p-3 border border-steel/30 bg-void/30">
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 p-3 border border-steel/30 bg-void/30"
+                      >
                         <span className="w-2 h-2 bg-toxic" />
                         <span className="text-sm text-gray">{topic}</span>
                       </div>
@@ -184,7 +191,8 @@ export default function LessonDetailPage() {
                 </div>
                 <h2 className="text-xl font-metal text-white mb-2">Contenu en préparation</h2>
                 <p className="text-gray text-sm">
-                  Le contenu interactif de cette leçon sera bientôt disponible avec des démos, quiz et exercices.
+                  Le contenu interactif de cette leçon sera bientôt disponible avec des démos, quiz
+                  et exercices.
                 </p>
               </div>
             </MetalCard>
@@ -194,14 +202,16 @@ export default function LessonDetailPage() {
               <div>
                 <h2 className="text-xl font-metal text-white uppercase mb-4">Leçons Similaires</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {related.map(r => (
+                  {related.map((r) => (
                     <Link
                       key={r.id}
                       href={`/lessons/${r.slug || r.id}`}
                       className="border-2 border-steel bg-abyss p-4 hover:border-white transition-all"
                     >
                       <p className="text-sm font-bold text-white mb-1">{r.title}</p>
-                      <p className="text-xs text-gray">{r.level} - {r.duration} min</p>
+                      <p className="text-xs text-gray">
+                        {r.level} - {r.duration} min
+                      </p>
                     </Link>
                   ))}
                 </div>
@@ -220,7 +230,7 @@ export default function LessonDetailPage() {
 
   // Leçons similaires
   const relatedLessons = allLessons
-    .filter(l => l.id !== lessonId && l.category === metadata.category)
+    .filter((l) => l.id !== lessonId && l.category === metadata.category)
     .slice(0, 2);
 
   return (
@@ -268,13 +278,9 @@ export default function LessonDetailPage() {
                 <Icons.Stop size="sm" />
                 {metadata.duration}
               </span>
-              <span className="text-sm text-rust font-bold">
-                +{metadata.xp} XP
-              </span>
+              <span className="text-sm text-rust font-bold">+{metadata.xp} XP</span>
               {progress > 0 && !isComplete && (
-                <span className="text-sm text-toxic">
-                  {progress}% complété
-                </span>
+                <span className="text-sm text-toxic">{progress}% complété</span>
               )}
             </div>
 
@@ -314,9 +320,9 @@ export default function LessonDetailPage() {
                   className={`w-3 h-3 rounded-sm transition-all ${
                     i === currentBlockIndex
                       ? 'bg-toxic border border-blood'
-                    : i < currentBlockIndex || completedBlocks.has(i)
-                      ? 'bg-steel'
-                      : 'bg-abyss border border-steel'
+                      : i < currentBlockIndex || completedBlocks.has(i)
+                        ? 'bg-steel'
+                        : 'bg-abyss border border-steel'
                   }`}
                   title={`Bloc ${i + 1}`}
                 />
@@ -378,7 +384,7 @@ export default function LessonDetailPage() {
             <div className="mt-12">
               <h2 className="text-xl font-metal text-white uppercase mb-6">Leçons Similaires</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {relatedLessons.map(relatedLesson => (
+                {relatedLessons.map((relatedLesson) => (
                   <Link
                     key={relatedLesson.id}
                     href={`/lessons/${relatedLesson.id}`}

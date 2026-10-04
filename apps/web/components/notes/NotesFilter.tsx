@@ -51,7 +51,7 @@ export function NotesFilter({
           <input
             type="text"
             value={searchQuery}
-            onChange={e => onSearchChange(e.target.value)}
+            onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Rechercher dans l'antisèche..."
             className="w-full bg-void border border-steel/50 rounded-lg py-2 pl-10 pr-4 text-white text-sm placeholder:text-gray focus:outline-none focus:border-blood"
           />
@@ -59,7 +59,7 @@ export function NotesFilter({
 
         {/* Catégories */}
         <div className="flex flex-wrap gap-2">
-          {CHEATSHEET_CATEGORIES.map(cat => (
+          {CHEATSHEET_CATEGORIES.map((cat) => (
             <button
               key={cat.value}
               onClick={() => onCategoryChange(cat.value)}
@@ -77,11 +77,7 @@ export function NotesFilter({
       </div>
 
       {/* Compteur de résultats */}
-      <div className="mt-3 text-xs text-gray">
-        {searchQuery && (
-          <span>Recherche active</span>
-        )}
-      </div>
+      <div className="mt-3 text-xs text-gray">{searchQuery && <span>Recherche active</span>}</div>
     </div>
   );
 }

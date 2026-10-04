@@ -7,7 +7,12 @@
 'use client';
 
 import { MetalNav, MetalFooter } from '@/components';
-import { NotationTabs, NotesSection, ChordsSection, ProgressionsSection } from '@/components/theory/notation';
+import {
+  NotationTabs,
+  NotesSection,
+  ChordsSection,
+  ProgressionsSection,
+} from '@/components/theory/notation';
 import { useNotationState } from '@/features/theory';
 
 export default function NotationPage() {
@@ -24,9 +29,7 @@ export default function NotationPage() {
             <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
               NOTATION
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Partition et accords
-            </p>
+            <p className="text-gray text-sm uppercase tracking-widest">Partition et accords</p>
           </div>
 
           {/* Tabs */}

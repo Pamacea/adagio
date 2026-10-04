@@ -6,21 +6,31 @@ import type { NoteName } from '@adagio/types';
 
 // Circle of fifths order
 const CIRCLE_OF_FIFTHS: NoteName[] = [
-  'C', 'G', 'D', 'A', 'E', 'B', 'F#',
-  'Db', 'Ab', 'Eb', 'Bb', 'F',
+  'C',
+  'G',
+  'D',
+  'A',
+  'E',
+  'B',
+  'F#',
+  'Db',
+  'Ab',
+  'Eb',
+  'Bb',
+  'F',
 ];
 
 // Enharmonic equivalents
 const ENHARMONICS: Record<string, NoteName> = {
   'F#': 'Gb',
-  'Gb': 'F#',
-  'Db': 'C#',
+  Gb: 'F#',
+  Db: 'C#',
   'C#': 'Db',
-  'Ab': 'G#',
+  Ab: 'G#',
   'G#': 'Ab',
-  'Eb': 'D#',
+  Eb: 'D#',
   'D#': 'Eb',
-  'Bb': 'A#',
+  Bb: 'A#',
   'A#': 'Bb',
 };
 

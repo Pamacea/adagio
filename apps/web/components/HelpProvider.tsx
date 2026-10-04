@@ -128,12 +128,7 @@ export function HelpTooltip({ topicId, ...props }: ConnectedHelpTooltipProps) {
     return <>{props.children}</>;
   }
 
-  return (
-    <BaseHelpTooltip
-      content={topic.short || topic.title}
-      {...props}
-    />
-  );
+  return <BaseHelpTooltip content={topic.short || topic.title} {...props} />;
 }
 
 // ============================================================================

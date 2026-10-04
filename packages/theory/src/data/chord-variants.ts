@@ -22,16 +22,16 @@ import type { NoteName } from '@adagio/types';
  * Type de variante d'accord
  */
 export type VariantType =
-  | 'open'           // Position ouverte (0-3 frettes)
-  | 'closed'         // Position fermée (barré)
-  | 'moveable'       // Forme déplaçable sans barré
-  | 'inversion-1st'  // 1er renversement
-  | 'inversion-2nd'  // 2ème renversement
-  | 'inversion-3rd'  // 3ème renversement (accords 7 notes)
-  | 'shell'          // Voicing shell (3+7 ou 7+3)
-  | 'spread'         // Voicing écarté (drop 2, drop 3)
-  | 'power'          // Power chord (1+5)
-  | 'simplified';    // Version simplifiée
+  | 'open' // Position ouverte (0-3 frettes)
+  | 'closed' // Position fermée (barré)
+  | 'moveable' // Forme déplaçable sans barré
+  | 'inversion-1st' // 1er renversement
+  | 'inversion-2nd' // 2ème renversement
+  | 'inversion-3rd' // 3ème renversement (accords 7 notes)
+  | 'shell' // Voicing shell (3+7 ou 7+3)
+  | 'spread' // Voicing écarté (drop 2, drop 3)
+  | 'power' // Power chord (1+5)
+  | 'simplified'; // Version simplifiée
 
 /**
  * Niveau de difficulté
@@ -65,9 +65,23 @@ export interface ChordVariant {
   /** Type de variante */
   type: VariantType;
   /** Positions sur les 6 cordes (du mi aigu au mi grave) */
-  frets: [StringPosition, StringPosition, StringPosition, StringPosition, StringPosition, StringPosition];
+  frets: [
+    StringPosition,
+    StringPosition,
+    StringPosition,
+    StringPosition,
+    StringPosition,
+    StringPosition,
+  ];
   /** Doigtés suggérés (optionnel) */
-  fingers?: [FingerSuggestion, FingerSuggestion, FingerSuggestion, FingerSuggestion, FingerSuggestion, FingerSuggestion];
+  fingers?: [
+    FingerSuggestion,
+    FingerSuggestion,
+    FingerSuggestion,
+    FingerSuggestion,
+    FingerSuggestion,
+    FingerSuggestion,
+  ];
   /** Forme CAGED associée (si applicable) */
   shape?: 'C' | 'A' | 'G' | 'E' | 'D';
   /** Numéro de case où commence la forme (pour barrés) */
@@ -110,13 +124,13 @@ function variantId(degree: number, type: VariantType, index: number): string {
  */
 function getOpenMajorFrets(root: NoteName): ChordVariant['frets'] {
   const baseMap: Record<string, ChordVariant['frets']> = {
-    'C': [0, 3, 2, 0, 1, 0],
-    'D': [null, null, 0, 2, 3, 2],
-    'E': [0, 2, 2, 1, 0, 0],
-    'F': [null, null, 3, 2, 1, 1],
-    'G': [3, 2, 0, 0, 0, 3],
-    'A': [null, 0, 2, 2, 2, 0],
-    'B': [null, null, null, 4, 4, 4],
+    C: [0, 3, 2, 0, 1, 0],
+    D: [null, null, 0, 2, 3, 2],
+    E: [0, 2, 2, 1, 0, 0],
+    F: [null, null, 3, 2, 1, 1],
+    G: [3, 2, 0, 0, 0, 3],
+    A: [null, 0, 2, 2, 2, 0],
+    B: [null, null, null, 4, 4, 4],
   };
   return baseMap[root] || [null, null, null, null, null, null];
 }
@@ -126,13 +140,13 @@ function getOpenMajorFrets(root: NoteName): ChordVariant['frets'] {
  */
 function getOpenMinorFrets(root: NoteName): ChordVariant['frets'] {
   const baseMap: Record<string, ChordVariant['frets']> = {
-    'C': [null, null, null, null, 1, 0],
-    'D': [null, null, 0, 2, 3, 1],
-    'E': [0, 2, 2, 0, 0, 0],
-    'F': [1, 3, 3, 1, 1, 1],
-    'G': [3, 5, 5, 3, 3, 3],
-    'A': [null, 0, 2, 2, 1, 0],
-    'B': [null, null, null, 4, 3, 2],
+    C: [null, null, null, null, 1, 0],
+    D: [null, null, 0, 2, 3, 1],
+    E: [0, 2, 2, 0, 0, 0],
+    F: [1, 3, 3, 1, 1, 1],
+    G: [3, 5, 5, 3, 3, 3],
+    A: [null, 0, 2, 2, 1, 0],
+    B: [null, null, null, 4, 3, 2],
   };
   return baseMap[root] || [null, null, null, null, null, null];
 }
@@ -143,8 +157,8 @@ function getOpenMinorFrets(root: NoteName): ChordVariant['frets'] {
 function getDiminishedFrets(root: NoteName, isOpen: boolean): ChordVariant['frets'] {
   if (isOpen) {
     const openMap: Record<string, ChordVariant['frets']> = {
-      'B': [null, null, null, 2, 0, 1],
-      'D': [null, null, 0, 1, 0, null],
+      B: [null, null, null, 2, 0, 1],
+      D: [null, null, 0, 1, 0, null],
     };
     return openMap[root] || [null, null, null, null, null, null];
   }
@@ -753,8 +767,34 @@ export function getAllDegreeVariants(
   mode: 'major' | 'minor' = 'major'
 ): DegreeChordVariants[] {
   // Calculer les notes de la gamme pour avoir les fondamentales
-  const sharpChromatic: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  const flatChromatic: NoteName[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const sharpChromatic: NoteName[] = [
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#',
+    'A',
+    'A#',
+    'B',
+  ];
+  const flatChromatic: NoteName[] = [
+    'C',
+    'Db',
+    'D',
+    'Eb',
+    'E',
+    'F',
+    'Gb',
+    'G',
+    'Ab',
+    'A',
+    'Bb',
+    'B',
+  ];
 
   const useFlats = ['Db', 'Eb', 'Gb', 'Ab', 'Bb', 'F'].includes(key);
   const chromatic = useFlats ? flatChromatic : sharpChromatic;
@@ -768,7 +808,7 @@ export function getAllDegreeVariants(
   const intervals = mode === 'major' ? majorIntervals : minorIntervals;
 
   // Obtenir les notes de chaque degré
-  const degreeNotes = intervals.map(i => chromatic[(keyIndex + i) % 12]!);
+  const degreeNotes = intervals.map((i) => chromatic[(keyIndex + i) % 12]!);
 
   return [
     getDegreeIVariants(degreeNotes[0]!),
@@ -791,7 +831,7 @@ export function findVariantById(
 ): ChordVariant | null {
   const allVariants = getAllDegreeVariants(key, mode);
   for (const degree of allVariants) {
-    const found = degree.variants.find(v => v.id === variantId);
+    const found = degree.variants.find((v) => v.id === variantId);
     if (found) return found;
   }
   return null;
@@ -807,7 +847,7 @@ export function filterByDifficulty(
   const difficultyOrder: DifficultyLevel[] = ['beginner', 'intermediate', 'advanced'];
   const maxIndex = difficultyOrder.indexOf(maxDifficulty);
 
-  return variants.filter(v => {
+  return variants.filter((v) => {
     const index = difficultyOrder.indexOf(v.difficulty);
     return index <= maxIndex;
   });
@@ -816,9 +856,6 @@ export function filterByDifficulty(
 /**
  * Filtre les variantes par type
  */
-export function filterByType(
-  variants: ChordVariant[],
-  types: VariantType[]
-): ChordVariant[] {
-  return variants.filter(v => types.includes(v.type));
+export function filterByType(variants: ChordVariant[], types: VariantType[]): ChordVariant[] {
+  return variants.filter((v) => types.includes(v.type));
 }

@@ -21,10 +21,12 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
         },
       }),
     }),
-    ThrottlerModule.forRoot([{
-      ttl: 60000,        // 60 seconds
-      limit: 5,          // 5 requests per minute
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 60 seconds
+        limit: 5, // 5 requests per minute
+      },
+    ]),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtAuthGuard],

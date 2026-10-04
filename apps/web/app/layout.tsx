@@ -37,19 +37,13 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className="dark">
       <body className={`${archivoBlack.variable} ${spaceMono.variable}`}>
         <Providers>
           <AuthProvider>
-            <HelpProvider>
-              {children}
-            </HelpProvider>
+            <HelpProvider>{children}</HelpProvider>
           </AuthProvider>
         </Providers>
         <Analytics />

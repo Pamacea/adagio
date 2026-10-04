@@ -3,14 +3,7 @@
 // ============================================================================
 
 // Auth hooks - Uses @adagio/auth/client with relative URLs for Next.js
-export {
-  useSession,
-  useUser,
-  useSignIn,
-  useSignUp,
-  useSignOut,
-  useSocialSignIn,
-} from './use-auth';
+export { useSession, useUser, useSignIn, useSignUp, useSignOut, useSocialSignIn } from './use-auth';
 export type { Session, User } from './use-auth';
 
 // Better-auth client and utilities (direct re-export)

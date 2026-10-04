@@ -26,9 +26,5 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   const [client] = useState(() => queryClient);
 
-  return (
-    <QueryClientProvider client={client}>
-      {children}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }

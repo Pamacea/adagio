@@ -19,7 +19,12 @@ export interface VoicingSelectorProps {
   className?: string;
 }
 
-export function VoicingSelector({ voicings, selectedIndex, onSelect, className }: VoicingSelectorProps) {
+export function VoicingSelector({
+  voicings,
+  selectedIndex,
+  onSelect,
+  className,
+}: VoicingSelectorProps) {
   if (voicings.length <= 1) return null;
 
   return (
@@ -43,13 +48,19 @@ export function VoicingSelector({ voicings, selectedIndex, onSelect, className }
             )}
           >
             <div className="flex items-center gap-3">
-              <span className={cn(
-                'w-8 h-8 flex items-center justify-center rounded text-base font-bold',
-                selectedIndex === index ? 'bg-amber-400 text-black' : 'bg-steel/30 text-gray-400 group-hover:bg-steel/50'
-              )}>
+              <span
+                className={cn(
+                  'w-8 h-8 flex items-center justify-center rounded text-base font-bold',
+                  selectedIndex === index
+                    ? 'bg-amber-400 text-black'
+                    : 'bg-steel/30 text-gray-400 group-hover:bg-steel/50'
+                )}
+              >
                 {index + 1}
               </span>
-              <span className="text-base font-medium text-gray-300">Cases {voicing.fretRange?.join('-')}</span>
+              <span className="text-base font-medium text-gray-300">
+                Cases {voicing.fretRange?.join('-')}
+              </span>
             </div>
           </button>
         ))}

@@ -77,7 +77,11 @@ export default function GrimoireScreen() {
           name: 'II-V-I Jazz',
           key: 'C',
           timeSignature: '4/4',
-          chords: [{ degree: 'ii', beats: 4 }, { degree: 'V', beats: 4 }, { degree: 'I', beats: 4 }],
+          chords: [
+            { degree: 'ii', beats: 4 },
+            { degree: 'V', beats: 4 },
+            { degree: 'I', beats: 4 },
+          ],
           isPublic: false,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -108,9 +112,10 @@ export default function GrimoireScreen() {
     }
   }
 
-  const filteredProgressions = progressions.filter((p) =>
-    p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.key.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProgressions = progressions.filter(
+    (p) =>
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.key.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const deleteProgression = (id: string) => {
@@ -269,9 +274,7 @@ export default function GrimoireScreen() {
             <MetalCard variant="border" style={styles.emptyCard}>
               <View style={styles.emptyContent}>
                 <MusicIcon size={32} color={Colors.gray700} />
-                <Text style={styles.emptyText}>
-                  Appuyez sur l'étoile pour ajouter aux favoris
-                </Text>
+                <Text style={styles.emptyText}>Appuyez sur l'étoile pour ajouter aux favoris</Text>
               </View>
             </MetalCard>
           </>

@@ -66,12 +66,7 @@ export default function FretboardPage() {
           />
 
           {/* Current scale info */}
-          <ModeInfo
-            root={root}
-            mode={mode}
-            scaleNotes={fretboardData}
-            displayNote={displayNote}
-          />
+          <ModeInfo root={root} mode={mode} scaleNotes={fretboardData} displayNote={displayNote} />
 
           {/* Fretboard */}
           <FretboardDisplay

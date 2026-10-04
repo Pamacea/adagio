@@ -77,18 +77,19 @@ export function useUserStats() {
 export function useUserPreferences() {
   return useQuery({
     queryKey: ['user', 'preferences'],
-    queryFn: () => apiClient.get<{
-      theme?: string;
-      notation?: string;
-      sound?: string;
-      showIntervals?: boolean;
-      showNotes?: boolean;
-      showDegrees?: boolean;
-      tuning?: string;
-      fretCount?: number;
-      volume?: number;
-      metronomeVolume?: number;
-    }>('/users/me/preferences'),
+    queryFn: () =>
+      apiClient.get<{
+        theme?: string;
+        notation?: string;
+        sound?: string;
+        showIntervals?: boolean;
+        showNotes?: boolean;
+        showDegrees?: boolean;
+        tuning?: string;
+        fretCount?: number;
+        volume?: number;
+        metronomeVolume?: number;
+      }>('/users/me/preferences'),
     staleTime: 1000 * 60 * 5,
   });
 }

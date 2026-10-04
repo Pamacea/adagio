@@ -395,12 +395,12 @@ describe('ChordCalculator', () => {
       it('should have correct chord qualities for C major', () => {
         const result = getDiatonicChordsByDegree('C', 'major');
 
-        expect(result[0]?.diatonic[0]).toBe('C');    // I - major
-        expect(result[1]?.diatonic[0]).toBe('Dm');   // ii - minor
-        expect(result[2]?.diatonic[0]).toBe('Em');   // iii - minor
-        expect(result[3]?.diatonic[0]).toBe('F');    // IV - major
-        expect(result[4]?.diatonic[0]).toBe('G7');   // V - dominant 7
-        expect(result[5]?.diatonic[0]).toBe('Am');   // vi - minor
+        expect(result[0]?.diatonic[0]).toBe('C'); // I - major
+        expect(result[1]?.diatonic[0]).toBe('Dm'); // ii - minor
+        expect(result[2]?.diatonic[0]).toBe('Em'); // iii - minor
+        expect(result[3]?.diatonic[0]).toBe('F'); // IV - major
+        expect(result[4]?.diatonic[0]).toBe('G7'); // V - dominant 7
+        expect(result[5]?.diatonic[0]).toBe('Am'); // vi - minor
         expect(result[6]?.diatonic[0]).toBe('Bm7b5'); // vii - half-diminished
       });
 
@@ -431,7 +431,7 @@ describe('ChordCalculator', () => {
       it('should provide advice for each degree', () => {
         const result = getDiatonicChordsByDegree('C', 'major');
 
-        result.forEach(degree => {
+        result.forEach((degree) => {
           expect(degree.advice).toBeTruthy();
           expect(typeof degree.advice).toBe('string');
         });
@@ -456,13 +456,13 @@ describe('ChordCalculator', () => {
       it('should have correct chord qualities for A minor', () => {
         const result = getDiatonicChordsByDegree('A', 'minor');
 
-        expect(result[0]?.diatonic[0]).toBe('Am');    // i - minor
+        expect(result[0]?.diatonic[0]).toBe('Am'); // i - minor
         expect(result[1]?.diatonic[0]).toBe('Bm7b5'); // ii - half-diminished
-        expect(result[2]?.diatonic[0]).toBe('C');     // III - major (relative major)
-        expect(result[3]?.diatonic[0]).toBe('Dm');    // iv - minor
-        expect(result[4]?.diatonic[0]).toBe('E7');    // V - dominant 7
-        expect(result[5]?.diatonic[0]).toBe('F');     // VI - major
-        expect(result[6]?.diatonic[0]).toBe('G');     // VII - major
+        expect(result[2]?.diatonic[0]).toBe('C'); // III - major (relative major)
+        expect(result[3]?.diatonic[0]).toBe('Dm'); // iv - minor
+        expect(result[4]?.diatonic[0]).toBe('E7'); // V - dominant 7
+        expect(result[5]?.diatonic[0]).toBe('F'); // VI - major
+        expect(result[6]?.diatonic[0]).toBe('G'); // VII - major
       });
 
       it('should have correct functions for minor key', () => {
@@ -526,7 +526,7 @@ describe('ChordCalculator', () => {
       it('should include 7b9 variations', () => {
         const result = getSecondaryDominants('C', 'major');
 
-        Object.values(result).forEach(chords => {
+        Object.values(result).forEach((chords) => {
           expect(chords).toHaveLength(2);
           expect(chords[1]).toContain('7b9');
         });
@@ -544,7 +544,7 @@ describe('ChordCalculator', () => {
         const result = getSecondaryDominants('A', 'minor');
 
         // A minor scale: A, B, C, D, E, F, G
-        expect(result['I']).toContain('E7');   // V7/i (dominant of A)
+        expect(result['I']).toContain('E7'); // V7/i (dominant of A)
         expect(result['III']).toContain('G7'); // V7/III (dominant of C? no, C + 7 = G? Let me check...)
 
         // Let's verify with implementation logic:
@@ -570,9 +570,9 @@ describe('ChordCalculator', () => {
         const result = getSecondaryDominants('C', 'major');
 
         // Common jazz secondary dominants
-        expect(result['II']).toBeDefined();   // V7/ii (ii-V-I)
-        expect(result['V']).toBeDefined();    // V7/V (extended cadence)
-        expect(result['VI']).toBeDefined();   // V7/vi (deceptive)
+        expect(result['II']).toBeDefined(); // V7/ii (ii-V-I)
+        expect(result['V']).toBeDefined(); // V7/V (extended cadence)
+        expect(result['VI']).toBeDefined(); // V7/vi (deceptive)
       });
     });
   });
@@ -601,8 +601,8 @@ describe('ChordCalculator', () => {
   describe('analyzeChordFunction', () => {
     it('should identify tonic function in major', () => {
       expect(analyzeChordFunction('C', 'C', 'major')).toBe('tonic');
-      expect(analyzeChordFunction('A', 'C', 'major')).toBe('tonic');   // vi
-      expect(analyzeChordFunction('E', 'C', 'major')).toBe('tonic');   // iii
+      expect(analyzeChordFunction('A', 'C', 'major')).toBe('tonic'); // vi
+      expect(analyzeChordFunction('E', 'C', 'major')).toBe('tonic'); // iii
     });
 
     it('should identify subdominant function in major', () => {
@@ -611,8 +611,8 @@ describe('ChordCalculator', () => {
     });
 
     it('should identify dominant function in major', () => {
-      expect(analyzeChordFunction('G', 'C', 'major')).toBe('dominant');  // V
-      expect(analyzeChordFunction('B', 'C', 'major')).toBe('dominant');  // vii
+      expect(analyzeChordFunction('G', 'C', 'major')).toBe('dominant'); // V
+      expect(analyzeChordFunction('B', 'C', 'major')).toBe('dominant'); // vii
     });
 
     it('should identify modal-interchange for non-diatonic', () => {
@@ -724,7 +724,7 @@ describe('ChordCalculator', () => {
     it('should include voicing metadata', () => {
       const result = getChordVoicings('C', '');
 
-      result.forEach(voicing => {
+      result.forEach((voicing) => {
         expect(voicing.id).toBeTruthy();
         expect(voicing.name).toBe('C');
         expect(voicing.notes.length).toBeGreaterThanOrEqual(3);
@@ -746,7 +746,7 @@ describe('ChordCalculator', () => {
       const result = getCAGEDShape('C');
 
       expect(result).toHaveLength(5);
-      expect(result.map(r => r.shape).sort()).toEqual(['A', 'C', 'D', 'E', 'G']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['A', 'C', 'D', 'E', 'G']);
     });
 
     it('should return CAGED shapes for A', () => {
@@ -759,7 +759,7 @@ describe('ChordCalculator', () => {
       // E: ['E', 'A', 'D', 'G', 'C'] - has A at position 1 (fret 5)
       // D: ['D', 'G', 'C', 'F', 'Bb'] - no A
       expect(result).toHaveLength(2);
-      expect(result.map(r => r.shape).sort()).toEqual(['A', 'E']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['A', 'E']);
     });
 
     it('should return CAGED shapes for G', () => {
@@ -771,7 +771,7 @@ describe('ChordCalculator', () => {
       // E: has G at position 3 (fret 15)
       // D: has G at position 1 (fret 5)
       expect(result).toHaveLength(4);
-      expect(result.map(r => r.shape).sort()).toEqual(['A', 'D', 'E', 'G']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['A', 'D', 'E', 'G']);
     });
 
     it('should return CAGED shapes for E', () => {
@@ -783,7 +783,7 @@ describe('ChordCalculator', () => {
       // E: has E at position 0 (fret 0)
       // D: no E
       expect(result).toHaveLength(2);
-      expect(result.map(r => r.shape).sort()).toEqual(['A', 'E']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['A', 'E']);
     });
 
     it('should return CAGED shapes for D', () => {
@@ -795,30 +795,30 @@ describe('ChordCalculator', () => {
       // E: has D at position 2 (fret 10)
       // D: has D at position 0 (fret 0)
       expect(result).toHaveLength(3);
-      expect(result.map(r => r.shape).sort()).toEqual(['A', 'D', 'E']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['A', 'D', 'E']);
     });
 
     it('should calculate correct root frets for C', () => {
       const result = getCAGEDShape('C');
 
       // C shape: root at fret 0 (C is 1st in C array, index 0 * 5 = 0)
-      const cShape = result.find(r => r.shape === 'C');
+      const cShape = result.find((r) => r.shape === 'C');
       expect(cShape?.rootFret).toBe(0);
 
       // A shape: root at fret 15 (C is 4th in A array ['A', 'D', 'G', 'C', 'E'], index 3 * 5 = 15)
-      const aShape = result.find(r => r.shape === 'A');
+      const aShape = result.find((r) => r.shape === 'A');
       expect(aShape?.rootFret).toBe(15);
 
       // G shape: root at fret 5 (C is 2nd in G array ['G', 'C', 'F', 'Bb', 'Eb'], index 1 * 5 = 5)
-      const gShape = result.find(r => r.shape === 'G');
+      const gShape = result.find((r) => r.shape === 'G');
       expect(gShape?.rootFret).toBe(5);
 
       // E shape: root at fret 20 (C is 5th in E array ['E', 'A', 'D', 'G', 'C'], index 4 * 5 = 20)
-      const eShape = result.find(r => r.shape === 'E');
+      const eShape = result.find((r) => r.shape === 'E');
       expect(eShape?.rootFret).toBe(20);
 
       // D shape: root at fret 10 (C is 3rd in D array ['D', 'G', 'C', 'F', 'Bb'], index 2 * 5 = 10)
-      const dShape = result.find(r => r.shape === 'D');
+      const dShape = result.find((r) => r.shape === 'D');
       expect(dShape?.rootFret).toBe(10);
     });
 
@@ -838,7 +838,7 @@ describe('ChordCalculator', () => {
       // G: ['G', 'C', 'F', 'Bb', 'Eb'] - Bb at index 3 (fret 15)
       // D: ['D', 'G', 'C', 'F', 'Bb'] - Bb at index 4 (fret 20)
       expect(result).toHaveLength(3);
-      expect(result.map(r => r.shape).sort()).toEqual(['C', 'D', 'G']);
+      expect(result.map((r) => r.shape).sort()).toEqual(['C', 'D', 'G']);
     });
   });
 
@@ -853,7 +853,7 @@ describe('ChordCalculator', () => {
       it('should include II-V-I progression', () => {
         const result = getCommonProgressions('major');
 
-        const iiV_I = result.find(p => p.name === 'II-V-I');
+        const iiV_I = result.find((p) => p.name === 'II-V-I');
         expect(iiV_I).toBeDefined();
         expect(iiV_I?.degrees).toEqual(['II', 'V', 'I']);
       });
@@ -861,28 +861,28 @@ describe('ChordCalculator', () => {
       it('should include I-VI-ii-V turnaround', () => {
         const result = getCommonProgressions('major');
 
-        const turnaround = result.find(p => p.name === 'I-VI-ii-V');
+        const turnaround = result.find((p) => p.name === 'I-VI-ii-V');
         expect(turnaround).toBeDefined();
       });
 
       it('should include I-IV-V blues progression', () => {
         const result = getCommonProgressions('major');
 
-        const blues = result.find(p => p.name === 'I-IV-V');
+        const blues = result.find((p) => p.name === 'I-IV-V');
         expect(blues).toBeDefined();
       });
 
       it('should include i-vi-IV-V "50s progression"', () => {
         const result = getCommonProgressions('major');
 
-        const progression = result.find(p => p.name === 'I-vi-IV-V');
+        const progression = result.find((p) => p.name === 'I-vi-IV-V');
         expect(progression).toBeDefined();
       });
 
       it('should have descriptions for each progression', () => {
         const result = getCommonProgressions('major');
 
-        result.forEach(progression => {
+        result.forEach((progression) => {
           expect(progression.description).toBeTruthy();
           expect(typeof progression.description).toBe('string');
         });
@@ -899,21 +899,21 @@ describe('ChordCalculator', () => {
       it('should include ii-V-i progression', () => {
         const result = getCommonProgressions('minor');
 
-        const iiV_i = result.find(p => p.name === 'ii-V-i');
+        const iiV_i = result.find((p) => p.name === 'ii-V-i');
         expect(iiV_i).toBeDefined();
       });
 
       it('should include i-IV-V basic progression', () => {
         const result = getCommonProgressions('minor');
 
-        const basic = result.find(p => p.name === 'i-iv-V');
+        const basic = result.find((p) => p.name === 'i-iv-V');
         expect(basic).toBeDefined();
       });
 
       it('should include Andalucian cadence', () => {
         const result = getCommonProgressions('minor');
 
-        const andalucian = result.find(p => p.name === 'i-VI-III-VII');
+        const andalucian = result.find((p) => p.name === 'i-VI-III-VII');
         expect(andalucian).toBeDefined();
       });
     });
@@ -943,7 +943,7 @@ describe('ChordCalculator', () => {
 
       // Check that some degrees have secondary dominants
       const degreesWithSecDoms = Object.values(result.degrees).filter(
-        d => d.secondaryDominants && d.secondaryDominants.length > 0
+        (d) => d.secondaryDominants && d.secondaryDominants.length > 0
       );
 
       // Should have secondary dominants for I, II, III, IV, V, VI (but not VII)
@@ -957,7 +957,7 @@ describe('ChordCalculator', () => {
     it('should include modal interchange in degree data', () => {
       const result = getKeyChordLibrary('C', 'major');
 
-      Object.values(result.degrees).forEach(degree => {
+      Object.values(result.degrees).forEach((degree) => {
         expect(degree.modalInterchange).toBeDefined();
         expect(Array.isArray(degree.modalInterchange)).toBe(true);
       });
@@ -966,7 +966,7 @@ describe('ChordCalculator', () => {
     it('should include advice for each degree', () => {
       const result = getKeyChordLibrary('C', 'major');
 
-      Object.values(result.degrees).forEach(degree => {
+      Object.values(result.degrees).forEach((degree) => {
         expect(degree.advice).toBeTruthy();
         expect(typeof degree.advice).toBe('string');
       });
@@ -993,7 +993,7 @@ describe('ChordCalculator', () => {
 
     it('should support CAGED system workflow', () => {
       const caged = getCAGEDShape('C');
-      const cShape = caged.find(s => s.shape === 'C');
+      const cShape = caged.find((s) => s.shape === 'C');
 
       expect(cShape).toBeDefined();
       expect(cShape?.shape).toBe('C');
@@ -1005,12 +1005,12 @@ describe('ChordCalculator', () => {
       const sharpNotes: NoteName[] = ['C#', 'D#', 'F#', 'G#', 'A#'];
       const flatNotes: NoteName[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 
-      sharpNotes.forEach(note => {
+      sharpNotes.forEach((note) => {
         const result = buildChord(note, 'm7');
         expect(result).toHaveLength(4);
       });
 
-      flatNotes.forEach(note => {
+      flatNotes.forEach((note) => {
         const result = buildChord(note, '7');
         expect(result).toHaveLength(4);
       });

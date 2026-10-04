@@ -11,21 +11,31 @@ import type { FretboardNote } from '@adagio/types';
 
 // Mapping des notes anglaises vers françaises
 const _NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RE♭',
-  'D': 'RE', 'D#': 'RE♯', 'Eb': 'MI♭',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-  'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-  'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RE♭',
+  D: 'RE',
+  'D#': 'RE♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };
 
 // Convertir les intervalles vers notation musicale avec symboles (♯, ♭, ♮)
 function formatInterval(interval: Interval): string {
   const symbols: Record<string, string> = {
     '#': '♯',
-    'b': '♭',
-    'bb': '♭♭',
+    b: '♭',
+    bb: '♭♭',
     '##': '♯♯',
   };
   let result: string = interval;
@@ -39,21 +49,33 @@ function formatInterval(interval: Interval): string {
 function getTSPattern(intervals: Interval[]): string {
   const semitones: Record<Interval, number> = {
     '1': 0,
-    '#1': 1, 'b2': 1,
+    '#1': 1,
+    b2: 1,
     '2': 2,
-    '#2': 3, 'b3': 3,
-    '3': 4, 'b4': 4,
+    '#2': 3,
+    b3: 3,
+    '3': 4,
+    b4: 4,
     '4': 5,
-    '#4': 6, 'b5': 6,
+    '#4': 6,
+    b5: 6,
     '5': 7,
-    '#5': 8, 'b6': 8, 'bb6': 8,
+    '#5': 8,
+    b6: 8,
+    bb6: 8,
     '6': 9,
-    '#6': 10, 'bb7': 9, 'b7': 10,
+    '#6': 10,
+    bb7: 9,
+    b7: 10,
     '7': 11,
     '#3': 5,
-    'b9': 13, '9': 14, '#9': 15,
-    '11': 17, '#11': 18,
-    'b13': 20, '13': 21,
+    b9: 13,
+    '9': 14,
+    '#9': 15,
+    '11': 17,
+    '#11': 18,
+    b13: 20,
+    '13': 21,
   };
 
   const pattern: string[] = [];
@@ -96,7 +118,7 @@ export function ScaleDisplay({
 }: ScaleDisplayProps) {
   // Obtenir les notes uniques de la gamme pour l'affichage
   const uniqueScaleNotes = useMemo(() => {
-    const notesInScale = fretboardData.filter(d => d.inScale).map(d => d.name);
+    const notesInScale = fretboardData.filter((d) => d.inScale).map((d) => d.name);
     return Array.from(new Set(notesInScale)).sort();
   }, [fretboardData]);
 
@@ -116,9 +138,7 @@ export function ScaleDisplay({
         <div className="flex gap-2">
           {uniqueScaleNotes.map((note) => (
             <div key={note} className="text-center">
-              <span className="px-2 py-1 text-xs bg-toxic text-white">
-                {displayNote(note)}
-              </span>
+              <span className="px-2 py-1 text-xs bg-toxic text-white">{displayNote(note)}</span>
             </div>
           ))}
         </div>
@@ -133,12 +153,17 @@ export function ScaleDisplay({
               <span
                 key={i}
                 className={`px-2 py-1 text-sm font-bold border-2 ${
-                  interval === '1' ? 'border-blood bg-toxic text-white' :
-                  interval === '5' ? 'border-steel bg-circuit text-white' :
-                  ['b3', 'b7', 'bb6', 'bb7'].includes(interval) ? 'border-steel bg-void text-gray' :
-                  ['3', '7', '#6'].includes(interval) ? 'border-blood bg-blackness text-toxic' :
-                  ['4', '#4', 'b4', 'b5'].includes(interval) ? 'border-rust bg-blackness text-rust' :
-                  'border-steel bg-blackness text-white'
+                  interval === '1'
+                    ? 'border-blood bg-toxic text-white'
+                    : interval === '5'
+                      ? 'border-steel bg-circuit text-white'
+                      : ['b3', 'b7', 'bb6', 'bb7'].includes(interval)
+                        ? 'border-steel bg-void text-gray'
+                        : ['3', '7', '#6'].includes(interval)
+                          ? 'border-blood bg-blackness text-toxic'
+                          : ['4', '#4', 'b4', 'b5'].includes(interval)
+                            ? 'border-rust bg-blackness text-rust'
+                            : 'border-steel bg-blackness text-white'
                 }`}
               >
                 {formatInterval(interval)}
@@ -152,7 +177,10 @@ export function ScaleDisplay({
           <span className="text-xs text-gray uppercase tracking-wider">STRUCTURE</span>
           <span className="px-3 py-1 text-xs bg-blackness text-toxic border border-steel">
             {getTSPattern(scaleDef.intervals)}
-            <span className="ml-2 text-gray"> · T = Ton (2 demi-tons) · S = Seconde (1 demi-ton)</span>
+            <span className="ml-2 text-gray">
+              {' '}
+              · T = Ton (2 demi-tons) · S = Seconde (1 demi-ton)
+            </span>
           </span>
         </div>
       </div>

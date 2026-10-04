@@ -1,6 +1,6 @@
 # 🎼 ADAGIO — Guide Complet
 
-> *Une promenade architecturale à travers l'atlas harmonique intelligent*
+> _Une promenade architecturale à travers l'atlas harmonique intelligent_
 
 ---
 
@@ -27,7 +27,7 @@ Adagio est un **atlas harmonique intelligent** pour guitaristes. Contrairement a
 
 ### Pourquoi "Adagio" ?
 
-En musique, *adagio* signifie "lentement, à l'aise" — une approche posée de l'apprentissage. Ce nom reflète notre philosophie :
+En musique, _adagio_ signifie "lentement, à l'aise" — une approche posée de l'apprentissage. Ce nom reflète notre philosophie :
 
 > La maîtrise ne vient pas de la vitesse, mais de la compréhension profonde et intuitive.
 
@@ -37,19 +37,19 @@ En musique, *adagio* signifie "lentement, à l'aise" — une approche posée de 
 
 ### Public Cible
 
-| Profil | Besoin | Solution Adagio |
-|--------|--------|-----------------|
+| Profil                       | Besoin                                              | Solution Adagio                    |
+| ---------------------------- | --------------------------------------------------- | ---------------------------------- |
 | **Guitariste Intermédiaire** | Bloqué sur le manche, veut comprendre les relations | Fretboard interactif + Axis Theory |
-| **Compositeur** | Cherche des couleurs harmoniques | Mapping émotionnel des modes |
-| **Professeur** | Outil pédagogique visuel | Grimoire avec progression |
+| **Compositeur**              | Cherche des couleurs harmoniques                    | Mapping émotionnel des modes       |
+| **Professeur**               | Outil pédagogique visuel                            | Grimoire avec progression          |
 
 ### Différenciation
 
-| Concurrent | Approche | Limite | Adagio |
-|------------|----------|--------|--------|
-| Ultimate Guitar | Base de données d'accords | Statique, non contextuel | Dynamique + suggestions |
-| Twelve Assistant | Visualisation moderne | Interface complexe | Parcours guidé + langage humain |
-| Musescore | Édition de partition | Trop complexe pour la théorie | Focus sur l'intuition |
+| Concurrent       | Approche                  | Limite                        | Adagio                          |
+| ---------------- | ------------------------- | ----------------------------- | ------------------------------- |
+| Ultimate Guitar  | Base de données d'accords | Statique, non contextuel      | Dynamique + suggestions         |
+| Twelve Assistant | Visualisation moderne     | Interface complexe            | Parcours guidé + langage humain |
+| Musescore        | Édition de partition      | Trop complexe pour la théorie | Focus sur l'intuition           |
 
 ---
 
@@ -89,27 +89,33 @@ En musique, *adagio* signifie "lentement, à l'aise" — une approche posée de 
 ### Stories Utilisateur
 
 #### Story 1 : Le Guitariste qui bloque
-> *Je connais mes pentes mais je ne sais pas quoi jouer ailleurs.*
+
+> _Je connais mes pentes mais je ne sais pas quoi jouer ailleurs._
 
 **Solution Adagio :**
+
 1. Sélectionner la tonalité
 2. Voir tous les modes disponibles sur le fretboard
 3. Comprendre visuellement les différences (altérations surlignées)
 4. Écouter chaque mode pour développer l'oreille
 
 #### Story 2 : Le Compositeur en panne d'inspiration
-> *J'ai mes accords mais ça sonne plat.*
+
+> _J'ai mes accords mais ça sonne plat._
 
 **Solution Adagio :**
+
 1. Entrer sa progression dans le Composer's Assistant
 2. Recevoir des suggestions de substitution (tritonique, relative)
 3. Explorer les "sensations" associées à chaque degré
 4. Tester les alternatives en un clic
 
 #### Story 3 : L'Étudiant qui veut progresser
-> *Je veux apprendre de nouvelles techniques de manière structurée.*
+
+> _Je veux apprendre de nouvelles techniques de manière structurée._
 
 **Solution Adagio :**
+
 1. Parcourir le Grimoire (techniques organisées)
 2. Voir des démonstrations visuelles sur le fretboard
 3. Marquer comme "Appris" pour suivre sa progression
@@ -194,6 +200,7 @@ apps/web/
 ```
 
 **Règles :**
+
 - ✅ Server Components par défaut
 - ✅ Client Components uniquement pour l'interactivité
 - ✅ Server Actions pour les mutations
@@ -227,6 +234,7 @@ apps/mobile/
 ```
 
 **Spécificités Mobile :**
+
 - Offline mode avec AsyncStorage
 - Haptic feedback sur les interactions
 - Gestures natives (pinch to zoom fretboard)
@@ -291,6 +299,7 @@ WS     /api/v1/jam             // Session de jam en temps réel
 ### Conventions de Code
 
 #### TypeScript Strict
+
 ```typescript
 // tsconfig.json
 {
@@ -303,25 +312,27 @@ WS     /api/v1/jam             // Session de jam en temps réel
 ```
 
 #### Naming Conventions
+
 ```typescript
 // Composants : PascalCase
-export function Fretboard({ notes }: FretboardProps) { }
+export function Fretboard({ notes }: FretboardProps) {}
 
 // Hooks : camelCase with "use" prefix
-export function useFretboardInteraction() { }
+export function useFretboardInteraction() {}
 
 // Utils : camelCase
-export function calculateInterval(root: Note, target: Note) { }
+export function calculateInterval(root: Note, target: Note) {}
 
 // Types : PascalCase
-export type FretboardProps = { }
+export type FretboardProps = {};
 
 // Interfaces : PascalCase with "I" prefix AVOIDED
-export interface Chord { }  // ✅ Good
-export interface IChord { } // ❌ Avoid
+export interface Chord {} // ✅ Good
+export interface IChord {} // ❌ Avoid
 ```
 
 #### File Structure
+
 ```
 feature/
 ├── components/
@@ -341,16 +352,18 @@ feature/
 ### Design Patterns
 
 #### 1. Feature-Based Architecture
+
 Chaque fonctionnalité est un module autonome :
 
 ```typescript
 // features/fretboard/index.ts
-export { Fretboard } from './components/Fretboard'
-export { useFretboard } from './hooks/useFretboard'
-export type { FretboardProps, NotePosition } from './types'
+export { Fretboard } from './components/Fretboard';
+export { useFretboard } from './hooks/useFretboard';
+export type { FretboardProps, NotePosition } from './types';
 ```
 
 #### 2. Composition Over Inheritance
+
 ```typescript
 // ❌ Éviter
 class MajorChord extends Chord { }
@@ -362,6 +375,7 @@ export function Chord({ quality, extensions }: ChordProps) {
 ```
 
 #### 3. Server First, Client Enhanced
+
 ```typescript
 // ✅ Server Component par défaut
 export default async function ModesPage() {
@@ -378,14 +392,15 @@ export function ModeSelector({ modes }: { modes: Mode[] }) {
 ```
 
 #### 4. Barrel Exports
+
 ```typescript
 // ui/index.ts
-export { Button } from './atoms/Button'
-export { Input } from './atoms/Input'
-export { Card } from './molecules/Card'
+export { Button } from './atoms/Button';
+export { Input } from './atoms/Input';
+export { Card } from './molecules/Card';
 
 // Usage simplifié
-import { Button, Input, Card } from '@/ui'
+import { Button, Input, Card } from '@/ui';
 ```
 
 ---
@@ -417,6 +432,7 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 **Types :**
+
 - `RELEASE` — Breaking changes (MAJOR)
 - `UPDATE` — Nouvelles fonctionnalités (MINOR)
 - `PATCH` — Corrections de bugs (PATCH)
@@ -424,6 +440,7 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ### Processus de Développement
 
 #### 1. Créer une Feature
+
 ```bash
 git checkout -b feature/fretboard-component
 pnpm install
@@ -431,6 +448,7 @@ pnpm dev:web
 ```
 
 #### 2. Développer avec Tests
+
 ```bash
 # Écrire le test d'abord (TDD)
 pnpm test --watch
@@ -440,6 +458,7 @@ pnpm test --watch
 ```
 
 #### 3. Quality Gates
+
 ```bash
 # Linting
 pnpm lint
@@ -455,6 +474,7 @@ pnpm build
 ```
 
 #### 4. Commit & Push
+
 ```bash
 git add .
 git commit -m "UPDATE: Adagio - v0.2.0
@@ -470,11 +490,13 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
 ## Ressources
 
 ### Documentation Interne
+
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — Architecture technique détaillée
 - [PROGRESS.md](./PROGRESS.md) — Suivi de l'avancement
 - [API.md](./API.md) — Documentation de l'API
 
 ### Documentation Externe
+
 - [Next.js 16 Documentation](https://nextjs.org/docs)
 - [NestJS Documentation](https://docs.nestjs.com/)
 - [Tonal.js Documentation](https://tonaljs.github.io/tonal/)
@@ -482,4 +504,4 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
 
 ---
 
-*Dernière mise à jour : 2025-03-02*
+_Dernière mise à jour : 2025-03-02_

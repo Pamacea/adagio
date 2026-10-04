@@ -3,14 +3,7 @@
 // ============================================================================
 
 import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-  View,
-} from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle, View } from 'react-native';
 import { Colors, Spacing, BorderRadius, Typography, FontWeights } from '../theme';
 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline';
@@ -118,9 +111,12 @@ export function MetalButton({
 }
 
 function LoadingSpinner({ variant }: { variant: ButtonVariant }) {
-  const color = variant === 'primary' ? Colors.acidGreen :
-                variant === 'danger' ? Colors.danger :
-                Colors.gray300;
+  const color =
+    variant === 'primary'
+      ? Colors.acidGreen
+      : variant === 'danger'
+        ? Colors.danger
+        : Colors.gray300;
 
   return (
     <View style={styles.spinner}>

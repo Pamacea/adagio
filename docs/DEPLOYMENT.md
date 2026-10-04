@@ -1,6 +1,6 @@
 # 🚀 GUIDE DE DÉPLOIEMENT - ADAGIO
 
-> *Comment déployer l'écosystème Adagio en production*
+> _Comment déployer l'écosystème Adagio en production_
 
 ---
 
@@ -63,15 +63,16 @@ adagio/                              ← Repo GitHub
 
 ## 🎯 RÉSUMÉ DES DÉPLOIEMENTS
 
-| Platform | Dossier cible | Config file | URL Production |
-|----------|--------------|-------------|----------------|
-| **Vercel** | `apps/web` | `apps/web/vercel.json` | `https://adagio.vercel.app` |
-| **Railway** | `apps/api` | `apps/api/railway.json` | `https://adagio-api.up.railway.app` |
-| **Expo EAS** | `apps/mobile` | `apps/mobile/eas.json` | Build local → Stores |
+| Platform     | Dossier cible | Config file             | URL Production                      |
+| ------------ | ------------- | ----------------------- | ----------------------------------- |
+| **Vercel**   | `apps/web`    | `apps/web/vercel.json`  | `https://adagio.vercel.app`         |
+| **Railway**  | `apps/api`    | `apps/api/railway.json` | `https://adagio-api.up.railway.app` |
+| **Expo EAS** | `apps/mobile` | `apps/mobile/eas.json`  | Build local → Stores                |
 
 ### ⚠️ Règle d'or
 
 **TOUJOURS spécifier le sous-dossier dans les settings de déploiement :**
+
 - Railway → Settings → Root Directory: `apps/api`
 - Vercel → Import → Root Directory: `apps/web`
 
@@ -122,17 +123,18 @@ adagio/                    ← ❌ NE PAS DÉPLOYER LA RACINE
 
 ### Résumé
 
-| Platform | Dossier à déployer | Fichier de config |
-|----------|-------------------|-------------------|
-| **Railway** | `apps/api` | `apps/api/railway.json` |
-| **Vercel** | `apps/web` | `apps/web/vercel.json` |
-| **Expo EAS** | `apps/mobile` | `apps/mobile/eas.json` |
+| Platform     | Dossier à déployer | Fichier de config       |
+| ------------ | ------------------ | ----------------------- |
+| **Railway**  | `apps/api`         | `apps/api/railway.json` |
+| **Vercel**   | `apps/web`         | `apps/web/vercel.json`  |
+| **Expo EAS** | `apps/mobile`      | `apps/mobile/eas.json`  |
 
 ---
 
 ## 2. BACKEND API - Railway.app
 
 ### Pourquoi Railway ?
+
 - ✅ Support natif de NestJS/Node.js
 - ✅ Intégration PostgreSQL facile
 - CI/CD depuis GitHub inclus
@@ -141,6 +143,7 @@ adagio/                    ← ❌ NE PAS DÉPLOYER LA RACINE
 ### ⚠️ Configuration CRITIQUE pour Monorepo
 
 #### Étape 1 : Connecter GitHub à Railway
+
 1. Allez sur [railway.app](https://railway.app)
 2. Cliquez sur **"New Project"**
 3. Sélectionne **"Deploy from GitHub repo"**
@@ -167,18 +170,21 @@ Dans le formulaire de déploiement Railway :
 3. Le `buildCommand` sera exécuté depuis `apps/api`
 
 #### Étape 3 : Variables d'environnement
+
 Ajoutez les variables suivantes dans Railway :
 
-| Variable | Valeur |
-|---------|--------|
-| `DATABASE_URL` | `postgresql://user:pass@ep-xxx.aws.neon.tech/adagio?sslmode=require` |
-| `JWT_SECRET` | `change-me-with-openssl-rand-base64-32` |
-| `NODE_ENV` | `production` |
-| `PORT` | `3001` |
-| `ALLOWED_ORIGINS` | `https://adagio.vercel.app` |
+| Variable          | Valeur                                                               |
+| ----------------- | -------------------------------------------------------------------- |
+| `DATABASE_URL`    | `postgresql://user:pass@ep-xxx.aws.neon.tech/adagio?sslmode=require` |
+| `JWT_SECRET`      | `change-me-with-openssl-rand-base64-32`                              |
+| `NODE_ENV`        | `production`                                                         |
+| `PORT`            | `3001`                                                               |
+| `ALLOWED_ORIGINS` | `https://adagio.vercel.app`                                          |
 
 #### Étape 4 : Deploy
+
 Cliquez sur **"Deploy"** → Railway va :
+
 - Installer les dépendances (`pnpm install`)
 - Builder l'application (`pnpm build`)
 - Démarrer le serveur
@@ -188,6 +194,7 @@ Cliquez sur **"Deploy"** → Railway va :
 ## 3. FRONTEND WEB - Vercel
 
 ### Pourquoi Vercel ?
+
 - ✅ Créateur de Next.js, support natif du framework
 - **Serveur edge** mondial inclus
 - Build optimisé automatique
@@ -196,6 +203,7 @@ Cliquez sur **"Deploy"** → Railway va :
 ### ⚠️ Configuration CRITIQUE pour Monorepo
 
 #### Via Dashboard
+
 1. Allez sur [vercel.com](https://vercel.com)
 2. Cliquez **"Add New Project"**
 3. Sélectionne le dépôt GitHub `adagio`
@@ -228,12 +236,13 @@ Dans le formulaire de déploiement Vercel :
 
 #### Variables d'environnement
 
-| Variable | Valeur Production |
-|---------|-----------------|
+| Variable              | Valeur Production                                     |
+| --------------------- | ----------------------------------------------------- |
 | `NEXT_PUBLIC_API_URL` | `https://adagio-api-production.up.railway.app/api/v1` |
-| `NEXT_PUBLIC_APP_URL` | `https://adagio.vercel.app` |
+| `NEXT_PUBLIC_APP_URL` | `https://adagio.vercel.app`                           |
 
 #### Domaine Custom (Optionnel)
+
 - Dans le dashboard Vercel → Settings → Domains
 - Ajoutez votre domaine : `adagio.com`
 - Configurez DNS selon les instructions Vercel
@@ -243,6 +252,7 @@ Dans le formulaire de déploiement Vercel :
 ## 4. MOBILE - Expo EAS
 
 ### Pourquoi EAS ?
+
 - Build cloud d'Expo (pas besoin de Mac)
 - Support complet de développement
 - Build simultané iOS + Android
@@ -251,6 +261,7 @@ Dans le formulaire de déploiement Vercel :
 ### Configuration
 
 Dans `apps/mobile/app.json` :
+
 ```json
 {
   "expo": {
@@ -267,18 +278,21 @@ Dans `apps/mobile/app.json` :
 ### Processus de Build
 
 #### Installation EAS CLI
+
 ```bash
 npm i -g eas-cli
 eas login
 ```
 
 #### Build iOS
+
 ```bash
 cd apps/mobile
 eas build --platform ios
 ```
 
 #### Build Android
+
 ```bash
 eas build --platform android
 ```
@@ -286,11 +300,13 @@ eas build --platform android
 #### Publication
 
 **iOS** :
+
 1. Télécharge le `.ipa` depuis EAS
 2. Utilisez [Transporter](https://github.com/expo/eas/tree/main/packages/transporter) pour macOS ou un service comme [AppCenter](https://appcenter.ms)
 3. Soumettez à [App Store Connect](https://appstoreconnect.apple.com)
 
 **Android** :
+
 1. Téléchargez le `.aab`
 2. Soumettez à [Google Play Console](https://play.google.com/console)
 
@@ -326,15 +342,16 @@ async function bootstrap() {
 
 ### URLs attendues
 
-| Service | URL |
-|--------|-----|
-| **Web** | `https://adagio.vercel.app` |
-| **API** | `https://adagio-api-production.up.railway.app/api/v1` |
+| Service      | URL                                                     |
+| ------------ | ------------------------------------------------------- |
+| **Web**      | `https://adagio.vercel.app`                             |
+| **API**      | `https://adagio-api-production.up.railway.app/api/v1`   |
 | **API Docs** | `https://adagio-api-production.up.railway.app/api/docs` |
 
 ### Configuration DNS
 
 Pour vos propres domaines :
+
 - **Web** : Configurez dans Vercel (Domains → Add Domain)
 - **API** : Configurez dans Railway (Settings → Domains)
 
@@ -342,18 +359,19 @@ Pour vos propres domaines :
 
 ## 7. MONITORING
 
-| Service | Outil |
-|--------|------|
-| **Neon** | Dashboard → Metrics (performance des requêtes) |
-| **Railway** | Métriques en temps réel |
-| **Vercel** | Analytics + Realtime Logs |
-| **Expo** | EAS Dashboard → Build logs |
+| Service     | Outil                                          |
+| ----------- | ---------------------------------------------- |
+| **Neon**    | Dashboard → Metrics (performance des requêtes) |
+| **Railway** | Métriques en temps réel                        |
+| **Vercel**  | Analytics + Realtime Logs                      |
+| **Expo**    | EAS Dashboard → Build logs                     |
 
 ---
 
 ## 8. CHECKLIST PRÉ-DÉPLOIEMENT
 
 ### Backend
+
 - [ ] `DATABASE_URL` connectée à Neon
 - [ ] `JWT_SECRET` sécurisé (pas "change-me" !)
 - [ ] CORS autorisé pour `adagio.vercel.app`
@@ -361,12 +379,14 @@ Pour vos propres domaines :
 - [ ] Testé localement : `pnpm dev`
 
 ### Frontend
+
 - [ ] `NEXT_PUBLIC_API_URL` configuré
 - [ ] Build local réussi : `pnpm build`
 - [ ] Page d'accueil s'affiche
 - [ ] Appels API fonctionnent
 
 ### Mobile
+
 - [ ] `EXPO_PUBLIC_API_URL` configuré
 - [ ] Expo Go fonctionne en développement
 - [ ] Build EAS réussi
@@ -431,4 +451,4 @@ git push
 
 ---
 
-*Guide de déploiement v1.1 — Dernière mise à jour : 2025-03-02*
+_Guide de déploiement v1.1 — Dernière mise à jour : 2025-03-02_

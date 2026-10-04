@@ -98,30 +98,36 @@ export interface ChordScaleMapping {
  * Définitions des gammes pour référence
  */
 export const SCALE_DEFINITIONS: Record<ScaleId, { name: string; intervals: string[] }> = {
-  'major': { name: 'Majeur (Ionien)', intervals: ['1', '2', '3', '4', '5', '6', '7'] },
-  'minor': { name: 'Mineur Naturel (Aeolian)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
+  major: { name: 'Majeur (Ionien)', intervals: ['1', '2', '3', '4', '5', '6', '7'] },
+  minor: { name: 'Mineur Naturel (Aeolian)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
   'harmonic-minor': { name: 'Mineur Harmonique', intervals: ['1', '2', 'b3', '4', '5', 'b6', '7'] },
   'melodic-minor': { name: 'Mineur Mélodique', intervals: ['1', '2', 'b3', '4', '5', '6', '7'] },
-  'dorian': { name: 'Dorien', intervals: ['1', '2', 'b3', '4', '5', '6', 'b7'] },
-  'phrygian': { name: 'Phrygien', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
-  'lydian': { name: 'Lydien', intervals: ['1', '2', '3', '#4', '5', '6', '7'] },
-  'mixolydian': { name: 'Mixolydien', intervals: ['1', '2', '3', '4', '5', '6', 'b7'] },
-  'aeolian': { name: 'Aeolian (Mineur)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
-  'locrian': { name: 'Locrien', intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
+  dorian: { name: 'Dorien', intervals: ['1', '2', 'b3', '4', '5', '6', 'b7'] },
+  phrygian: { name: 'Phrygien', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
+  lydian: { name: 'Lydien', intervals: ['1', '2', '3', '#4', '5', '6', '7'] },
+  mixolydian: { name: 'Mixolydien', intervals: ['1', '2', '3', '4', '5', '6', 'b7'] },
+  aeolian: { name: 'Aeolian (Mineur)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
+  locrian: { name: 'Locrien', intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
   'pentatonic-major': { name: 'Pentatonique Majeure', intervals: ['1', '2', '3', '5', '6'] },
   'pentatonic-minor': { name: 'Pentatonique Mineure', intervals: ['1', 'b3', '4', '5', 'b7'] },
-  'blues': { name: 'Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
+  blues: { name: 'Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
   'pentatonic-blues': { name: 'Pentatonique Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
   'dorian-b2': { name: 'Dorien b2', intervals: ['1', 'b2', 'b3', '4', '5', '6', 'b7'] },
   'lydian-augmented': { name: 'Lydien Augmenté', intervals: ['1', '2', '3', '#4', '#5', '6', '7'] },
   'lydian-dominant': { name: 'Lydien Dominant', intervals: ['1', '2', '3', '#4', '5', '6', 'b7'] },
   'mixolydian-b13': { name: 'Mixolydien b13', intervals: ['1', '2', '3', '4', '5', 'b6', 'b7'] },
   'locrian-natural2': { name: 'Locrien nat2', intervals: ['1', '2', 'b3', '4', 'b5', 'b6', 'b7'] },
-  'altered': { name: 'Altéré', intervals: ['1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'] },
-  'half-diminished': { name: 'Half-Diminished', intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
+  altered: { name: 'Altéré', intervals: ['1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'] },
+  'half-diminished': {
+    name: 'Half-Diminished',
+    intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
+  },
   'whole-tone': { name: 'Tons Entiers', intervals: ['1', '2', '3', '#4', '#5', 'b7'] },
-  'diminished': { name: 'Diminué', intervals: ['1', 'b2', 'b3', '3', '#4', '5', '6', 'b7'] },
-  'chromatic': { name: 'Chromatique', intervals: ['1', 'b2', '2', 'b3', '3', '4', '#4', '5', '#5', '6', 'b7', '7'] },
+  diminished: { name: 'Diminué', intervals: ['1', 'b2', 'b3', '3', '#4', '5', '6', 'b7'] },
+  chromatic: {
+    name: 'Chromatique',
+    intervals: ['1', 'b2', '2', 'b3', '3', '4', '#4', '5', '#5', '6', 'b7', '7'],
+  },
 };
 
 // ============================================================================
@@ -136,7 +142,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS MAJEURS
   // ============================================================================
 
-  'C': [
+  C: [
     {
       scaleId: 'major',
       name: 'Majeur (Ionien)',
@@ -187,11 +193,12 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       highlightNotes: ['6', 'b3'],
       match: 'possible',
       styles: ['Jazz', 'Fusion'],
-      context: 'La b3 (= #9 enharmonique) crée une tension colorée avec la tierce majeure de l\'accord. Ce n\'est PAS une incompatibilité théorique, mais un choix stylistique de modal interchange. La b3 peut être utilisée comme note de passage ou appogiature, sans se résoudre dessus. Le degré 6 (#6 relatif à la tonalité) est la note "sûre" à souligner.',
+      context:
+        'La b3 (= #9 enharmonique) crée une tension colorée avec la tierce majeure de l\'accord. Ce n\'est PAS une incompatibilité théorique, mais un choix stylistique de modal interchange. La b3 peut être utilisée comme note de passage ou appogiature, sans se résoudre dessus. Le degré 6 (#6 relatif à la tonalité) est la note "sûre" à souligner.',
     },
   ],
 
-  'Cmaj7': [
+  Cmaj7: [
     {
       scaleId: 'major',
       name: 'Majeur (Ionien)',
@@ -236,7 +243,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS MINEURS
   // ============================================================================
 
-  'Am': [
+  Am: [
     {
       scaleId: 'aeolian',
       name: 'Mineur Naturel (Aeolian)',
@@ -296,7 +303,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'Am7': [
+  Am7: [
     {
       scaleId: 'dorian',
       name: 'Dorien',
@@ -338,7 +345,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS DOMINANTS (7)
   // ============================================================================
 
-  'G7': [
+  G7: [
     {
       scaleId: 'mixolydian',
       name: 'Mixolydien',
@@ -385,7 +392,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'G9': [
+  G9: [
     {
       scaleId: 'mixolydian',
       name: 'Mixolydien',
@@ -415,7 +422,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'G7alt': [
+  G7alt: [
     {
       scaleId: 'altered',
       name: 'Altéré (Super-Locrien)',
@@ -494,7 +501,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS DIMINUÉS
   // ============================================================================
 
-  'Bdim': [
+  Bdim: [
     {
       scaleId: 'locrian',
       name: 'Locrien',
@@ -522,7 +529,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'Bdim7': [
+  Bdim7: [
     {
       scaleId: 'diminished',
       name: 'Diminué (octatonique)',
@@ -542,7 +549,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'Bm7b5': [
+  Bm7b5: [
     {
       scaleId: 'locrian',
       name: 'Locrien',
@@ -567,7 +574,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS AUGMENTÉS
   // ============================================================================
 
-  'Caug': [
+  Caug: [
     {
       scaleId: 'whole-tone',
       name: 'Tons Entiers',
@@ -592,7 +599,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS SUS
   // ============================================================================
 
-  'Csus2': [
+  Csus2: [
     {
       scaleId: 'major',
       name: 'Majeur',
@@ -621,11 +628,12 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       highlightNotes: ['6', '2'],
       match: 'possible',
       styles: ['Fusion'],
-      context: 'Comme l\'accord sus2 n\'a pas de tierce, la b3 du Dorien ne crée pas de conflit. Le #6 (6) donne une couleur "jazz minor" intéressante.',
+      context:
+        'Comme l\'accord sus2 n\'a pas de tierce, la b3 du Dorien ne crée pas de conflit. Le #6 (6) donne une couleur "jazz minor" intéressante.',
     },
   ],
 
-  'Csus4': [
+  Csus4: [
     {
       scaleId: 'major',
       name: 'Majeur',
@@ -647,7 +655,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'G7sus4': [
+  G7sus4: [
     {
       scaleId: 'mixolydian',
       name: 'Mixolydien',
@@ -666,7 +674,8 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       highlightNotes: ['6', '4'],
       match: 'good',
       styles: ['Fusion'],
-      context: 'Comme l\'accord sus4 n\'a pas de tierce, la b3 du Dorien ne crée pas de conflit. Le #6 (6) et la 4 fonctionnent bien.',
+      context:
+        "Comme l'accord sus4 n'a pas de tierce, la b3 du Dorien ne crée pas de conflit. Le #6 (6) et la 4 fonctionnent bien.",
     },
   ],
 
@@ -674,7 +683,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // ACCORDS 6/9
   // ============================================================================
 
-  'C6': [
+  C6: [
     {
       scaleId: 'major',
       name: 'Majeur',
@@ -694,7 +703,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'C69': [
+  C69: [
     {
       scaleId: 'pentatonic-major',
       name: 'Pentatonique Majeure',
@@ -717,7 +726,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // EXTENSIONS JAZZ
   // ============================================================================
 
-  'Cmaj9': [
+  Cmaj9: [
     {
       scaleId: 'lydian',
       name: 'Lydien',
@@ -758,7 +767,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'Cm9': [
+  Cm9: [
     {
       scaleId: 'dorian',
       name: 'Dorien',
@@ -778,7 +787,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'Cm11': [
+  Cm11: [
     {
       scaleId: 'dorian',
       name: 'Dorien',
@@ -790,7 +799,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
     },
   ],
 
-  'C13': [
+  C13: [
     {
       scaleId: 'mixolydian',
       name: 'Mixolydien',
@@ -814,7 +823,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
   // MODAL INTERCHANGE (EMPRUNTS)
   // ============================================================================
 
-  'Dbmaj7': [
+  Dbmaj7: [
     {
       scaleId: 'lydian',
       name: 'Lydien',
@@ -867,7 +876,9 @@ export function getScalesForChord(chord: string): ScaleSuggestion[] {
       if (majorKey) {
         return majorKey.map((s: ScaleSuggestion) => ({
           ...s,
-          context: s.context ? `${s.context} (Transposé depuis ${root})` : `Transposé depuis ${root}`,
+          context: s.context
+            ? `${s.context} (Transposé depuis ${root})`
+            : `Transposé depuis ${root}`,
         }));
       }
     }
@@ -878,7 +889,9 @@ export function getScalesForChord(chord: string): ScaleSuggestion[] {
       if (minorKey) {
         return minorKey.map((s: ScaleSuggestion) => ({
           ...s,
-          context: s.context ? `${s.context} (Transposé depuis ${root}m)` : `Transposé depuis ${root}m`,
+          context: s.context
+            ? `${s.context} (Transposé depuis ${root}m)`
+            : `Transposé depuis ${root}m`,
         }));
       }
     }
@@ -902,7 +915,7 @@ export function getScalesForChord(chord: string): ScaleSuggestion[] {
       if (maj7Key) return maj7Key;
       const genericMaj7 = CHORD_TO_SCALE['Cmaj7'];
       if (genericMaj7) {
-        return genericMaj7.map(s => ({
+        return genericMaj7.map((s) => ({
           ...s,
           context: `Maj7 générique (basé sur Cmaj7)`,
         }));
@@ -953,19 +966,19 @@ function getChordType(chord: string): string {
  */
 function getGenericSuggestions(type: string): ScaleSuggestion[] {
   const suggestions: Record<string, ScaleSuggestion[]> = {
-    'major': CHORD_TO_SCALE['C'] || [],
-    'minor': CHORD_TO_SCALE['Am'] || [],
-    'dominant': CHORD_TO_SCALE['G7'] || [],
-    'major7': CHORD_TO_SCALE['Cmaj7'] || [],
-    'minor7': CHORD_TO_SCALE['Am7'] || [],
-    'diminished': CHORD_TO_SCALE['Bdim'] || [],
-    'augmented': CHORD_TO_SCALE['Caug'] || [],
-    'altered': CHORD_TO_SCALE['G7alt'] || [],
-    'lydian': CHORD_TO_SCALE['Cmaj7#11'] || [],
-    'sus2': CHORD_TO_SCALE['Csus2'] || [],
-    'sus4': CHORD_TO_SCALE['Csus4'] || [],
-    'major6': CHORD_TO_SCALE['C6'] || [],
-    'sus': CHORD_TO_SCALE['Csus4'] || [],
+    major: CHORD_TO_SCALE['C'] || [],
+    minor: CHORD_TO_SCALE['Am'] || [],
+    dominant: CHORD_TO_SCALE['G7'] || [],
+    major7: CHORD_TO_SCALE['Cmaj7'] || [],
+    minor7: CHORD_TO_SCALE['Am7'] || [],
+    diminished: CHORD_TO_SCALE['Bdim'] || [],
+    augmented: CHORD_TO_SCALE['Caug'] || [],
+    altered: CHORD_TO_SCALE['G7alt'] || [],
+    lydian: CHORD_TO_SCALE['Cmaj7#11'] || [],
+    sus2: CHORD_TO_SCALE['Csus2'] || [],
+    sus4: CHORD_TO_SCALE['Csus4'] || [],
+    major6: CHORD_TO_SCALE['C6'] || [],
+    sus: CHORD_TO_SCALE['Csus4'] || [],
   };
 
   return suggestions[type] || suggestions['major'] || [];
@@ -981,7 +994,7 @@ export function filterByMatch(
   const matchOrder: MatchLevel[] = ['experimental', 'possible', 'good', 'perfect'];
   const minIndex = matchOrder.indexOf(minMatch);
 
-  return suggestions.filter(s => {
+  return suggestions.filter((s) => {
     const index = matchOrder.indexOf(s.match);
     return index >= minIndex;
   });
@@ -990,12 +1003,9 @@ export function filterByMatch(
 /**
  * Filtre les suggestions par style musical
  */
-export function filterByStyle(
-  suggestions: ScaleSuggestion[],
-  style: string
-): ScaleSuggestion[] {
-  return suggestions.filter(s =>
-    s.styles?.some(s => s.toLowerCase().includes(style.toLowerCase()))
+export function filterByStyle(suggestions: ScaleSuggestion[], style: string): ScaleSuggestion[] {
+  return suggestions.filter((s) =>
+    s.styles?.some((s) => s.toLowerCase().includes(style.toLowerCase()))
   );
 }
 
@@ -1004,7 +1014,7 @@ export function filterByStyle(
  */
 export function getBestScaleForChord(chord: string): ScaleSuggestion | null {
   const suggestions = getScalesForChord(chord);
-  const perfect = suggestions.filter(s => s.match === 'perfect');
+  const perfect = suggestions.filter((s) => s.match === 'perfect');
   return perfect[0] || suggestions[0] || null;
 }
 
@@ -1016,8 +1026,34 @@ export function getScalesForDegree(
   key: NoteName,
   mode: 'major' | 'minor' = 'major'
 ): ScaleSuggestion[] {
-  const sharpChromatic: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  const flatChromatic: NoteName[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const sharpChromatic: NoteName[] = [
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#',
+    'A',
+    'A#',
+    'B',
+  ];
+  const flatChromatic: NoteName[] = [
+    'C',
+    'Db',
+    'D',
+    'Eb',
+    'E',
+    'F',
+    'Gb',
+    'G',
+    'Ab',
+    'A',
+    'Bb',
+    'B',
+  ];
 
   const useFlats = ['Db', 'Eb', 'Gb', 'Ab', 'Bb', 'F'].includes(key);
   const chromatic = useFlats ? flatChromatic : sharpChromatic;
@@ -1033,7 +1069,8 @@ export function getScalesForDegree(
   const majorQualities = ['', 'm', 'm', '', '', 'm', 'dim'];
   const minorQualities = ['m', 'dim', '', 'm', 'm', '', ''];
 
-  const quality = mode === 'major' ? (majorQualities[degree] ?? '') : (minorQualities[degree] ?? '');
+  const quality =
+    mode === 'major' ? (majorQualities[degree] ?? '') : (minorQualities[degree] ?? '');
   const chord = degreeNote + quality;
 
   return getScalesForChord(chord);

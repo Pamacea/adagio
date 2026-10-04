@@ -6,13 +6,23 @@ import type { NoteName, ChordQuality } from '@adagio/types';
 
 // Mapping des notes anglaises vers françaises
 export const NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO#', 'Db': 'REb',
-  'D': 'RE', 'D#': 'RE#', 'Eb': 'MIb',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA#', 'Gb': 'SOLb',
-  'G': 'SOL', 'G#': 'SOL#', 'Ab': 'LAb',
-  'A': 'LA', 'A#': 'LA#', 'Bb': 'SIb',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO#',
+  Db: 'REb',
+  D: 'RE',
+  'D#': 'RE#',
+  Eb: 'MIb',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA#',
+  Gb: 'SOLb',
+  G: 'SOL',
+  'G#': 'SOL#',
+  Ab: 'LAb',
+  A: 'LA',
+  'A#': 'LA#',
+  Bb: 'SIb',
+  B: 'SI',
 };
 
 // Degrés romains
@@ -27,16 +37,76 @@ export const COMMON_CHORDS: Array<{
   fr: string;
   description: string;
 }> = [
-  { root: 'C', quality: '', name: 'C', fr: 'DO majeur', description: 'Majeur: Tonique - Tierce majeure - Quinte juste' },
-  { root: 'C', quality: 'm', name: 'Cm', fr: 'DO mineur', description: 'Mineur: Tonique - Tierce mineure - Quinte juste' },
-  { root: 'C', quality: '7', name: 'C7', fr: 'DO 7', description: 'Dominant 7: Majeur + septième mineure' },
-  { root: 'C', quality: 'maj7', name: 'Cmaj7', fr: 'DO maj7', description: 'Majeur 7: Majeur + septième majeure' },
-  { root: 'C', quality: 'm7', name: 'Cm7', fr: 'DO mineur 7', description: 'Mineur 7: Mineur + septième mineure' },
-  { root: 'C', quality: 'dim', name: 'Cdim', fr: 'DO diminué', description: 'Diminué: Tierce mineure - Quinte diminuée' },
-  { root: 'C', quality: 'dim7', name: 'Cdim7', fr: 'DO 7 diminué', description: 'Septième diminué: Toutes tierces mineures' },
-  { root: 'C', quality: 'aug', name: 'Caug', fr: 'DO augmenté', description: 'Augmenté: Tierce majeure - Quinte augmentée' },
-  { root: 'C', quality: 'sus4', name: 'Csus4', fr: 'DO sus4', description: 'Sus4: Tierce remplacée par quarte' },
-  { root: 'C', quality: '7sus4', name: 'C7sus4', fr: 'DO 7 sus4', description: '7sus4: Sus4 + septième mineure' },
+  {
+    root: 'C',
+    quality: '',
+    name: 'C',
+    fr: 'DO majeur',
+    description: 'Majeur: Tonique - Tierce majeure - Quinte juste',
+  },
+  {
+    root: 'C',
+    quality: 'm',
+    name: 'Cm',
+    fr: 'DO mineur',
+    description: 'Mineur: Tonique - Tierce mineure - Quinte juste',
+  },
+  {
+    root: 'C',
+    quality: '7',
+    name: 'C7',
+    fr: 'DO 7',
+    description: 'Dominant 7: Majeur + septième mineure',
+  },
+  {
+    root: 'C',
+    quality: 'maj7',
+    name: 'Cmaj7',
+    fr: 'DO maj7',
+    description: 'Majeur 7: Majeur + septième majeure',
+  },
+  {
+    root: 'C',
+    quality: 'm7',
+    name: 'Cm7',
+    fr: 'DO mineur 7',
+    description: 'Mineur 7: Mineur + septième mineure',
+  },
+  {
+    root: 'C',
+    quality: 'dim',
+    name: 'Cdim',
+    fr: 'DO diminué',
+    description: 'Diminué: Tierce mineure - Quinte diminuée',
+  },
+  {
+    root: 'C',
+    quality: 'dim7',
+    name: 'Cdim7',
+    fr: 'DO 7 diminué',
+    description: 'Septième diminué: Toutes tierces mineures',
+  },
+  {
+    root: 'C',
+    quality: 'aug',
+    name: 'Caug',
+    fr: 'DO augmenté',
+    description: 'Augmenté: Tierce majeure - Quinte augmentée',
+  },
+  {
+    root: 'C',
+    quality: 'sus4',
+    name: 'Csus4',
+    fr: 'DO sus4',
+    description: 'Sus4: Tierce remplacée par quarte',
+  },
+  {
+    root: 'C',
+    quality: '7sus4',
+    name: 'C7sus4',
+    fr: 'DO 7 sus4',
+    description: '7sus4: Sus4 + septième mineure',
+  },
 ];
 
 // Progressions classiques

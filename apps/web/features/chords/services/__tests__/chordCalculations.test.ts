@@ -57,18 +57,18 @@ describe('chordCalculations - getIntervalInChord', () => {
   });
 
   it('should handle all chromatic intervals', () => {
-    expect(getIntervalInChord('C', 'C')).toBe('1');     // 0 semitones
-    expect(getIntervalInChord('C', 'Db')).toBe('b2');  // 1 semitone
-    expect(getIntervalInChord('C', 'D')).toBe('2');    // 2 semitones
-    expect(getIntervalInChord('C', 'Eb')).toBe('b3');  // 3 semitones
-    expect(getIntervalInChord('C', 'E')).toBe('3');    // 4 semitones
-    expect(getIntervalInChord('C', 'F')).toBe('4');    // 5 semitones
-    expect(getIntervalInChord('C', 'F#')).toBe('b5');  // 6 semitones (or #4)
-    expect(getIntervalInChord('C', 'G')).toBe('5');    // 7 semitones
-    expect(getIntervalInChord('C', 'G#')).toBe('#5');  // 8 semitones
-    expect(getIntervalInChord('C', 'A')).toBe('b6');   // 9 semitones (or bb7)
-    expect(getIntervalInChord('C', 'Bb')).toBe('b7');  // 10 semitones
-    expect(getIntervalInChord('C', 'B')).toBe('7');    // 11 semitones
+    expect(getIntervalInChord('C', 'C')).toBe('1'); // 0 semitones
+    expect(getIntervalInChord('C', 'Db')).toBe('b2'); // 1 semitone
+    expect(getIntervalInChord('C', 'D')).toBe('2'); // 2 semitones
+    expect(getIntervalInChord('C', 'Eb')).toBe('b3'); // 3 semitones
+    expect(getIntervalInChord('C', 'E')).toBe('3'); // 4 semitones
+    expect(getIntervalInChord('C', 'F')).toBe('4'); // 5 semitones
+    expect(getIntervalInChord('C', 'F#')).toBe('b5'); // 6 semitones (or #4)
+    expect(getIntervalInChord('C', 'G')).toBe('5'); // 7 semitones
+    expect(getIntervalInChord('C', 'G#')).toBe('#5'); // 8 semitones
+    expect(getIntervalInChord('C', 'A')).toBe('b6'); // 9 semitones (or bb7)
+    expect(getIntervalInChord('C', 'Bb')).toBe('b7'); // 10 semitones
+    expect(getIntervalInChord('C', 'B')).toBe('7'); // 11 semitones
   });
 });
 
@@ -99,11 +99,11 @@ describe('chordCalculations - voicingToDiagramPositions', () => {
     });
 
     // Check that played strings have fret 0
-    const playedStrings = positions.filter(p => p.fret === 0);
+    const playedStrings = positions.filter((p) => p.fret === 0);
     expect(playedStrings.length).toBe(3);
 
     // Check that muted strings have fret -1
-    const mutedStrings = positions.filter(p => p.fret === -1);
+    const mutedStrings = positions.filter((p) => p.fret === -1);
     expect(mutedStrings.length).toBe(3);
   });
 
@@ -124,7 +124,7 @@ describe('chordCalculations - voicingToDiagramPositions', () => {
 
     const positions = voicingToDiagramPositions(mockVoicing);
 
-    const played = positions.filter(p => p.fret > 0);
+    const played = positions.filter((p) => p.fret > 0);
     expect(played.length).toBe(4);
   });
 });
@@ -188,7 +188,7 @@ describe('chordCalculations - calculateFretboardForChord', () => {
     expect(fretboard.length).toBe(78);
 
     // All notes should have proper structure
-    fretboard.forEach(note => {
+    fretboard.forEach((note) => {
       expect(note.name).toBeTruthy();
       expect(typeof note.fret).toBe('number');
       expect(note.string).toBeGreaterThanOrEqual(0);
@@ -202,11 +202,11 @@ describe('chordCalculations - calculateFretboardForChord', () => {
     const fretboard = calculateFretboardForChord(chordNotes, 12);
 
     // Count chord notes (C, E, G appear many times)
-    const chordNoteCount = fretboard.filter(n => n.inScale).length;
+    const chordNoteCount = fretboard.filter((n) => n.inScale).length;
     expect(chordNoteCount).toBeGreaterThan(0);
 
     // Check that E string at fret 8 is C
-    const lowE8 = fretboard.find(n => n.string === 0 && n.fret === 8);
+    const lowE8 = fretboard.find((n) => n.string === 0 && n.fret === 8);
     expect(lowE8?.inScale).toBe(true);
     expect(lowE8?.name).toBe('C');
   });
@@ -215,7 +215,7 @@ describe('chordCalculations - calculateFretboardForChord', () => {
     const chordNotes = ['F#', 'A#', 'C#'] as NoteName[];
     const fretboard = calculateFretboardForChord(chordNotes, 12);
 
-    const chordNoteCount = fretboard.filter(n => n.inScale).length;
+    const chordNoteCount = fretboard.filter((n) => n.inScale).length;
     expect(chordNoteCount).toBeGreaterThan(0);
   });
 });
@@ -252,11 +252,11 @@ describe('chordCalculations - Regression Tests', () => {
     const positions = voicingToDiagramPositions(mockVoicing);
 
     // string 5 in voicing = string 0 in diagram (basse)
-    const bassPos = positions.find(p => p.string === 0);
+    const bassPos = positions.find((p) => p.string === 0);
     expect(bassPos?.fret).toBe(3);
 
     // string 0 in voicing = string 5 in diagram (aigu)
-    const treblePos = positions.find(p => p.string === 5);
+    const treblePos = positions.find((p) => p.string === 5);
     expect(treblePos?.fret).toBe(0);
   });
 });

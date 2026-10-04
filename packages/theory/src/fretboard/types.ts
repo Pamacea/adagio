@@ -17,7 +17,7 @@ export const FRET_COUNT = 12;
 /**
  * MIDI frequencies for open guitar strings (E2 to E4)
  */
-export const STRING_FREQUENCIES = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63] as const;
+export const STRING_FREQUENCIES = [82.41, 110.0, 146.83, 196.0, 246.94, 329.63] as const;
 
 /**
  * Chromatic scale notes
@@ -44,19 +44,19 @@ export interface IntervalInfo {
  */
 export const INTERVALS: Record<string, IntervalInfo> = {
   '1': { name: 'R', color: '#ef4444' },
-  'b2': { name: '♭2', color: '#7c3aed' },
+  b2: { name: '♭2', color: '#7c3aed' },
   '2': { name: '2', color: '#8b5cf6' },
-  'b3': { name: '♭3', color: '#3b82f6' },
+  b3: { name: '♭3', color: '#3b82f6' },
   '3': { name: '3', color: '#60a5fa' },
   '4': { name: '4', color: '#6b7280' },
   '#4': { name: '#4', color: '#f97316' },
-  'b5': { name: '♭5', color: '#a855f7' },
+  b5: { name: '♭5', color: '#a855f7' },
   '5': { name: '5', color: '#22c55e' },
   '#5': { name: '#5', color: '#a855f7' },
-  'b6': { name: '♭6', color: '#a855f7' },
+  b6: { name: '♭6', color: '#a855f7' },
   '6': { name: '6', color: '#f97316' },
-  'bb7': { name: '♭♭7', color: '#a855f7' },
-  'b7': { name: '♭7', color: '#eab308' },
+  bb7: { name: '♭♭7', color: '#a855f7' },
+  b7: { name: '♭7', color: '#eab308' },
   '7': { name: '7', color: '#fbbf24' },
 } as const;
 

@@ -18,12 +18,17 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary-500 text-white shadow-guitar hover:bg-primary-600 hover:shadow-lg active:scale-95',
-        accent: 'bg-accent-500 text-neutral-900 shadow-note hover:bg-accent-400 hover:shadow-glow active:scale-95',
+        primary:
+          'bg-primary-500 text-white shadow-guitar hover:bg-primary-600 hover:shadow-lg active:scale-95',
+        accent:
+          'bg-accent-500 text-neutral-900 shadow-note hover:bg-accent-400 hover:shadow-glow active:scale-95',
         ghost: 'text-neutral-300 hover:bg-neutral-800 hover:text-white active:scale-95',
-        outline: 'border border-neutral-600 bg-transparent text-neutral-300 hover:bg-neutral-800 hover:text-white hover:border-neutral-500 active:scale-95',
-        danger: 'bg-error-500 text-white shadow-note hover:bg-error-600 hover:shadow-lg active:scale-95',
-        success: 'bg-success-500 text-white shadow-note hover:bg-success-600 hover:shadow-lg active:scale-95',
+        outline:
+          'border border-neutral-600 bg-transparent text-neutral-300 hover:bg-neutral-800 hover:text-white hover:border-neutral-500 active:scale-95',
+        danger:
+          'bg-error-500 text-white shadow-note hover:bg-error-600 hover:shadow-lg active:scale-95',
+        success:
+          'bg-success-500 text-white shadow-note hover:bg-success-600 hover:shadow-lg active:scale-95',
       },
       size: {
         sm: 'h-9 px-3 text-xs',
@@ -44,8 +49,7 @@ export type ButtonVariant = VariantProps<typeof buttonVariants>['variant'];
 export type ButtonSize = VariantProps<typeof buttonVariants>['size'];
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
 }
 

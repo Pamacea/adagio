@@ -159,7 +159,7 @@ const STYLE_FILTERS = [
   { id: 'pop', name: 'Pop', color: 'bg-void' },
 ] as const;
 
-type StyleFilter = typeof STYLE_FILTERS[number]['id'];
+type StyleFilter = (typeof STYLE_FILTERS)[number]['id'];
 
 // ============================================================================
 // COMPONENT
@@ -178,7 +178,7 @@ export function ProgressionSuggestions({
 
     if (selectedStyle === 'all') return progressions;
 
-    return progressions.filter(p => p.styles.includes(selectedStyle));
+    return progressions.filter((p) => p.styles.includes(selectedStyle));
   }, [tonality, selectedStyle]);
 
   // Générer les accords d'une progression
@@ -211,9 +211,10 @@ export function ProgressionSuggestions({
             onClick={() => setSelectedStyle(style.id)}
             className={`
               px-3 py-1 text-xs font-bold uppercase border-2 transition-all
-              ${selectedStyle === style.id
-                ? `${style.color} border-blood text-white`
-                : 'bg-blackness border-steel text-gray hover:border-rust'
+              ${
+                selectedStyle === style.id
+                  ? `${style.color} border-blood text-white`
+                  : 'bg-blackness border-steel text-gray hover:border-rust'
               }
             `}
           >
@@ -234,9 +235,7 @@ export function ProgressionSuggestions({
             >
               {/* Nom et styles */}
               <div className="flex items-start justify-between mb-2">
-                <h4 className="text-sm font-bold text-white">
-                  {progression.name}
-                </h4>
+                <h4 className="text-sm font-bold text-white">{progression.name}</h4>
                 <div className="flex gap-1">
                   {progression.styles.slice(0, 2).map((style) => (
                     <span
@@ -252,10 +251,7 @@ export function ProgressionSuggestions({
               {/* Accords de la progression */}
               <div className="flex gap-1 mb-2 flex-wrap">
                 {chords.map((chord, i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-1 text-xs bg-toxic border border-steel"
-                  >
+                  <span key={i} className="px-2 py-1 text-xs bg-toxic border border-steel">
                     {displayNote(chord.replace(/[0-9]/g, '').replace('m', 'm'))}
                     {chord.includes('m') && <span className="text-gray">m</span>}
                     {chord.match(/[0-9]/)?.[0] && (
@@ -266,14 +262,10 @@ export function ProgressionSuggestions({
               </div>
 
               {/* Degrés romains */}
-              <div className="text-[10px] text-gray mb-2">
-                {progression.degrees.join(' → ')}
-              </div>
+              <div className="text-[10px] text-gray mb-2">{progression.degrees.join(' → ')}</div>
 
               {/* Description */}
-              <p className="text-xs text-gray mb-3 line-clamp-2">
-                {progression.description}
-              </p>
+              <p className="text-xs text-gray mb-3 line-clamp-2">{progression.description}</p>
 
               {/* Bouton Appliquer */}
               <button
@@ -290,8 +282,9 @@ export function ProgressionSuggestions({
       {/* Legend */}
       <div className="mt-4 pt-4 border-t border-steel">
         <div className="text-[10px] text-gray">
-          Cliquez sur "Appliquer" pour ajouter la progression à votre composition.
-          Les accords sont générés automatiquement dans la tonalité de {root}{tonality === 'major' ? ' majeur' : ' mineur'}.
+          Cliquez sur "Appliquer" pour ajouter la progression à votre composition. Les accords sont
+          générés automatiquement dans la tonalité de {root}
+          {tonality === 'major' ? ' majeur' : ' mineur'}.
         </div>
       </div>
     </div>

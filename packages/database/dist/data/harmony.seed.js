@@ -46,7 +46,7 @@ exports.HARMONY_RULES_SEED = [
         degree: 'vii°',
         tonality: 'major',
         sensation: 'Suspens dramatique',
-        advice: 'Tension maximale. Résolution sur le I ou vi. Utilisez avec modération - c\'est intense!',
+        advice: "Tension maximale. Résolution sur le I ou vi. Utilisez avec modération - c'est intense!",
     },
     // === MINOR KEY ===
     {
@@ -64,20 +64,20 @@ exports.HARMONY_RULES_SEED = [
     {
         degree: 'III',
         tonality: 'minor',
-        sensation: 'Lueur d\'espoir',
+        sensation: "Lueur d'espoir",
         advice: 'Moment de soulagement dans la mineur. La relative majeure du bIII est très puissant!',
     },
     {
         degree: 'iv',
         tonality: 'minor',
-        sensation: 'Lueur d\'espoir',
-        advice: 'Évitez ou utilisez avec précaution. Le iv n\'appartient pas vraiment à la tonalité mineure.',
+        sensation: "Lueur d'espoir",
+        advice: "Évitez ou utilisez avec précaution. Le iv n'appartient pas vraiment à la tonalité mineure.",
     },
     {
         degree: 'v',
         tonality: 'minor',
         sensation: 'Tension sombre',
-        advice: 'Souvent remplacé par le V7 (majeur) pour plus de tension. Le V est plus stable ici qu\'en majeur.',
+        advice: "Souvent remplacé par le V7 (majeur) pour plus de tension. Le V est plus stable ici qu'en majeur.",
     },
     {
         degree: 'VI',

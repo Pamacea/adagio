@@ -31,28 +31,39 @@ export function AchievementsView() {
   const [filterUnlocked, setFilterUnlocked] = useState<'all' | 'unlocked' | 'locked'>('all');
 
   // Categories avec labels et couleurs (utilise les types de @adagio/types)
-  const CATEGORIES = useMemo(() => ({
-    progression: { label: 'Progression', color: 'text-toxic' },
-    discovery: { label: 'Decouverte', color: 'text-rust' },
-    practice: { label: 'Pratique', color: 'text-blood' },
-    mastery: { label: 'Maîtrise', color: 'text-toxic' },
-    social: { label: 'Social', color: 'text-rust' },
-    milestone: { label: 'Jalon', color: 'text-blood' },
-  }), []);
+  const CATEGORIES = useMemo(
+    () => ({
+      progression: { label: 'Progression', color: 'text-toxic' },
+      discovery: { label: 'Decouverte', color: 'text-rust' },
+      practice: { label: 'Pratique', color: 'text-blood' },
+      mastery: { label: 'Maîtrise', color: 'text-toxic' },
+      social: { label: 'Social', color: 'text-rust' },
+      milestone: { label: 'Jalon', color: 'text-blood' },
+    }),
+    []
+  );
 
   // Rarete avec labels et couleurs
-  const RARITIES = useMemo(() => ({
-    common: { label: 'Commun', color: 'text-gray', bg: 'bg-steel', border: 'border-gray' },
-    rare: { label: 'Rare', color: 'text-toxic', bg: 'bg-toxic', border: 'border-toxic' },
-    epic: { label: 'Epic', color: 'text-rust', bg: 'bg-rust', border: 'border-rust' },
-    legendary: { label: 'Legendaire', color: 'text-blood', bg: 'bg-blood', border: 'border-blood' },
-  }), []);
+  const RARITIES = useMemo(
+    () => ({
+      common: { label: 'Commun', color: 'text-gray', bg: 'bg-steel', border: 'border-gray' },
+      rare: { label: 'Rare', color: 'text-toxic', bg: 'bg-toxic', border: 'border-toxic' },
+      epic: { label: 'Epic', color: 'text-rust', bg: 'bg-rust', border: 'border-rust' },
+      legendary: {
+        label: 'Legendaire',
+        color: 'text-blood',
+        bg: 'bg-blood',
+        border: 'border-blood',
+      },
+    }),
+    []
+  );
 
   // Filter
   const filteredAchievements = useMemo(() => {
     if (!achievements) return [];
 
-    return achievements.filter(achievement => {
+    return achievements.filter((achievement) => {
       if (selectedCategory !== 'ALL' && achievement.category !== selectedCategory) return false;
       if (selectedRarity !== 'ALL' && achievement.rarity !== selectedRarity) return false;
       if (filterUnlocked === 'unlocked' && !achievement.unlocked) return false;
@@ -94,11 +105,7 @@ export function AchievementsView() {
           value={`${stats.completionPercentage}%`}
           icon={<Icons.Sessions />}
         />
-        <StatCard
-          label="XP Gagnees"
-          value={stats.totalXP.toString()}
-          icon={<Icons.Compose />}
-        />
+        <StatCard label="XP Gagnees" value={stats.totalXP.toString()} icon={<Icons.Compose />} />
         <StatCard
           label="XP Restantes"
           value={`${stats.maxXP - stats.totalXP}`}
@@ -127,7 +134,10 @@ export function AchievementsView() {
           {Object.entries(CATEGORIES).map(([key, { label, color }]) => {
             const cat = key as AchievementCategory;
             const categoryStats = stats.byCategory[cat] || { total: 0, unlocked: 0 };
-            const pct = categoryStats.total > 0 ? Math.round((categoryStats.unlocked / categoryStats.total) * 100) : 0;
+            const pct =
+              categoryStats.total > 0
+                ? Math.round((categoryStats.unlocked / categoryStats.total) * 100)
+                : 0;
             return (
               <button
                 key={key}
@@ -140,7 +150,9 @@ export function AchievementsView() {
               >
                 <div className={`${color} mb-1`}>{CATEGORY_ICONS[cat]}</div>
                 <div className="text-xs text-white font-bold">{label}</div>
-                <div className="text-xs text-gray">{categoryStats.unlocked}/{categoryStats.total}</div>
+                <div className="text-xs text-gray">
+                  {categoryStats.unlocked}/{categoryStats.total}
+                </div>
                 <div className="h-1 border border-steel bg-blackness mt-1">
                   <div className="h-full bg-toxic" style={{ width: `${pct}%` }} />
                 </div>
@@ -155,14 +167,14 @@ export function AchievementsView() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Rarity */}
           <div>
-            <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-              Rarete
-            </label>
+            <label className="text-xs text-gray uppercase tracking-wider block mb-2">Rarete</label>
             <div className="flex flex-wrap gap-1">
-              {(['ALL', ...Object.keys(RARITIES)] as const).map(rarity => (
+              {(['ALL', ...Object.keys(RARITIES)] as const).map((rarity) => (
                 <button
                   key={rarity}
-                  onClick={() => setSelectedRarity(rarity === 'ALL' ? 'ALL' : rarity as AchievementRarity)}
+                  onClick={() =>
+                    setSelectedRarity(rarity === 'ALL' ? 'ALL' : (rarity as AchievementRarity))
+                  }
                   className={`px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
                     selectedRarity === rarity
                       ? 'border-blood bg-toxic text-white'
@@ -177,9 +189,7 @@ export function AchievementsView() {
 
           {/* Status */}
           <div>
-            <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-              Statut
-            </label>
+            <label className="text-xs text-gray uppercase tracking-wider block mb-2">Statut</label>
             <div className="flex gap-1">
               <button
                 onClick={() => setFilterUnlocked('all')}
@@ -232,11 +242,15 @@ export function AchievementsView() {
 
       {/* Achievements list */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sortedAchievements.map(achievement => {
+        {sortedAchievements.map((achievement) => {
           const rarity = RARITIES[achievement.rarity];
           const category = CATEGORIES[achievement.category];
-          const showProgress = !achievement.unlocked && (achievement.progress ?? 0) < (achievement.maxProgress ?? 0);
-          const progressPct = showProgress && achievement.maxProgress ? Math.round(((achievement.progress ?? 0) / achievement.maxProgress) * 100) : 0;
+          const showProgress =
+            !achievement.unlocked && (achievement.progress ?? 0) < (achievement.maxProgress ?? 0);
+          const progressPct =
+            showProgress && achievement.maxProgress
+              ? Math.round(((achievement.progress ?? 0) / achievement.maxProgress) * 100)
+              : 0;
 
           return (
             <MetalCard
@@ -248,7 +262,9 @@ export function AchievementsView() {
                 {/* Header */}
                 <div className="flex items-start gap-3 mb-3">
                   {/* Icon */}
-                  <div className={`w-12 h-12 flex items-center justify-center text-2xl border-2 ${achievement.unlocked ? rarity.bg + ' ' + rarity.border : 'border-steel bg-blackness'}`}>
+                  <div
+                    className={`w-12 h-12 flex items-center justify-center text-2xl border-2 ${achievement.unlocked ? rarity.bg + ' ' + rarity.border : 'border-steel bg-blackness'}`}
+                  >
                     {achievement.unlocked ? (
                       <AchievementIcon name={achievement.icon} size={24} className="text-current" />
                     ) : (
@@ -266,7 +282,9 @@ export function AchievementsView() {
                         {rarity.label}
                       </span>
                     </div>
-                    <h3 className={`font-bold ${achievement.unlocked ? 'text-white' : 'text-gray'}`}>
+                    <h3
+                      className={`font-bold ${achievement.unlocked ? 'text-white' : 'text-gray'}`}
+                    >
                       {achievement.title}
                     </h3>
                     <p className="text-xs text-gray mt-0.5">{achievement.description}</p>
@@ -274,7 +292,9 @@ export function AchievementsView() {
 
                   {/* XP */}
                   <div className="text-right">
-                    <div className={`text-sm font-bold ${achievement.unlocked ? 'text-toxic' : 'text-gray'}`}>
+                    <div
+                      className={`text-sm font-bold ${achievement.unlocked ? 'text-toxic' : 'text-gray'}`}
+                    >
                       +{achievement.xp} XP
                     </div>
                     {achievement.unlockedAt && (
@@ -290,13 +310,12 @@ export function AchievementsView() {
                   <div className="mb-3">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs text-gray">Progression</span>
-                      <span className="text-xs text-white">{achievement.progress}/{achievement.maxProgress}</span>
+                      <span className="text-xs text-white">
+                        {achievement.progress}/{achievement.maxProgress}
+                      </span>
                     </div>
                     <div className="h-2 border border-steel bg-blackness">
-                      <div
-                        className="h-full bg-toxic"
-                        style={{ width: `${progressPct}%` }}
-                      />
+                      <div className="h-full bg-toxic" style={{ width: `${progressPct}%` }} />
                     </div>
                   </div>
                 )}
@@ -304,7 +323,11 @@ export function AchievementsView() {
                 {/* Footer */}
                 <div className="flex items-center justify-between pt-2 border-t border-steel">
                   <div className={`text-xs ${achievement.unlocked ? 'text-toxic' : 'text-gray'}`}>
-                    {achievement.unlocked ? '✓ Deverouille' : progressPct > 0 ? `En cours (${progressPct}%)` : 'Verrouille'}
+                    {achievement.unlocked
+                      ? '✓ Deverouille'
+                      : progressPct > 0
+                        ? `En cours (${progressPct}%)`
+                        : 'Verrouille'}
                   </div>
 
                   {/* CTA */}

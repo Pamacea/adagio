@@ -26,7 +26,15 @@ export interface ChordDetailsProps {
 }
 
 // Mini fretboard component
-function FretboardChord({ chord, width = 280, height = 200 }: { chord: string; width?: number; height?: number }) {
+function FretboardChord({
+  chord,
+  width = 280,
+  height = 200,
+}: {
+  chord: string;
+  width?: number;
+  height?: number;
+}) {
   const positions = getChordPositions(chord);
   const FRET_WIDTH = width / 5;
   const STRING_SPACING = height / 7;
@@ -79,21 +87,12 @@ function FretboardChord({ chord, width = 280, height = 200 }: { chord: string; w
       {/* Chord dots */}
       {positions.map((pos, i) => {
         if (!pos) return null;
-        const x = pos.fret === 0
-          ? NUT_POSITION - 15
-          : NUT_POSITION + (pos.fret - 0.5) * FRET_WIDTH;
+        const x = pos.fret === 0 ? NUT_POSITION - 15 : NUT_POSITION + (pos.fret - 0.5) * FRET_WIDTH;
         const y = 30 + pos.string * STRING_SPACING;
 
         return (
           <g key={i}>
-            <circle
-              cx={x}
-              cy={y}
-              r={10}
-              fill="#0a0f0a"
-              stroke="#8b1a1a"
-              strokeWidth={2}
-            />
+            <circle cx={x} cy={y} r={10} fill="#0a0f0a" stroke="#8b1a1a" strokeWidth={2} />
             <text
               x={x}
               y={y + 3}
@@ -125,13 +124,13 @@ function getChordPositions(chordName: string): ({ fret: number; string: number }
   ];
 
   const rootOffsets: Record<string, number[]> = {
-    'C': [0, 0, 0, 0, 0, 0],
-    'D': [0, 0, 0, 2, 2, 2],
-    'E': [0, 2, 2, 2, 2, 0],
-    'F': [1, 1, 2, 3, 3, 1],
-    'G': [3, 2, 0, 0, 0, 3],
-    'A': [0, 0, 2, 2, 2, 0],
-    'B': [0, 2, 4, 4, 4, 2],
+    C: [0, 0, 0, 0, 0, 0],
+    D: [0, 0, 0, 2, 2, 2],
+    E: [0, 2, 2, 2, 2, 0],
+    F: [1, 1, 2, 3, 3, 1],
+    G: [3, 2, 0, 0, 0, 3],
+    A: [0, 0, 2, 2, 2, 0],
+    B: [0, 2, 4, 4, 4, 2],
   };
 
   const offsets = rootOffsets[root] ?? rootOffsets['C']!;
@@ -174,16 +173,19 @@ export function ChordDetails({
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <p className="text-4xl font-metal text-white">
-                {selectedChord}
-              </p>
+              <p className="text-4xl font-metal text-white">{selectedChord}</p>
               {selectedVariationDetails && selectedVariationDetails.category !== 'basic' && (
-                <span className={`text-xs px-2 py-1 rounded ${
-                  selectedVariationDetails.category === 'extension' ? 'bg-toxic text-white' :
-                  selectedVariationDetails.category === 'substitution' ? 'bg-circuit text-white' :
-                  selectedVariationDetails.category === 'modal' ? 'bg-rust text-white' :
-                  'bg-void text-gray'
-                }`}>
+                <span
+                  className={`text-xs px-2 py-1 rounded ${
+                    selectedVariationDetails.category === 'extension'
+                      ? 'bg-toxic text-white'
+                      : selectedVariationDetails.category === 'substitution'
+                        ? 'bg-circuit text-white'
+                        : selectedVariationDetails.category === 'modal'
+                          ? 'bg-rust text-white'
+                          : 'bg-void text-gray'
+                  }`}
+                >
                   {selectedVariationDetails.category}
                 </span>
               )}
@@ -192,9 +194,7 @@ export function ChordDetails({
               {numeral} de {selectedKey} {keyMode === 'major' ? 'Majeur' : 'Mineur'}
             </p>
             {selectedVariationDetails && selectedVariationDetails.description && (
-              <p className="text-xs text-gray mt-1">
-                {selectedVariationDetails.description}
-              </p>
+              <p className="text-xs text-gray mt-1">{selectedVariationDetails.description}</p>
             )}
           </div>
           <div
@@ -211,14 +211,14 @@ export function ChordDetails({
 
         {/* Chord notes with intervals */}
         <div className="border-2 border-steel bg-blackness p-4 mb-4">
-          <p className="text-xs text-gray uppercase tracking-wider mb-3">
-            Notes de l'accord
-          </p>
+          <p className="text-xs text-gray uppercase tracking-wider mb-3">Notes de l'accord</p>
           <div className="flex gap-2 justify-center">
             {chordDetails.notes.map((note, i) => (
               <div key={i} className="text-center">
                 <div className="px-4 py-3 border-2 border-blood bg-toxic mb-1">
-                  <span className="text-lg font-bold text-white">{FRENCH_NOTE_NAMES[note] || note}</span>
+                  <span className="text-lg font-bold text-white">
+                    {FRENCH_NOTE_NAMES[note] || note}
+                  </span>
                 </div>
                 <span className="text-xs text-gray">{chordDetails.intervals[i]}</span>
               </div>
@@ -228,9 +228,7 @@ export function ChordDetails({
 
         {/* Fretboard visualization */}
         <div className="border-2 border-steel bg-blackness p-4 mb-4">
-          <p className="text-xs text-gray uppercase tracking-wider mb-3">
-            Diagramme du manche
-          </p>
+          <p className="text-xs text-gray uppercase tracking-wider mb-3">Diagramme du manche</p>
           <div className="flex justify-center">
             <FretboardChord chord={selectedChord} width={280} height={200} />
           </div>
@@ -259,11 +257,15 @@ export function ChordDetails({
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className={`text-xs px-2 py-1 rounded ${
-                      sub.type === 'extension' ? 'bg-toxic text-white' :
-                      sub.type === 'substitution' ? 'bg-circuit text-white' :
-                      'bg-void text-gray'
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-1 rounded ${
+                        sub.type === 'extension'
+                          ? 'bg-toxic text-white'
+                          : sub.type === 'substitution'
+                            ? 'bg-circuit text-white'
+                            : 'bg-void text-gray'
+                      }`}
+                    >
                       {sub.type}
                     </span>
                     <div>

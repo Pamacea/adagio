@@ -58,7 +58,11 @@ export interface ActivityIndicatorProps {
 }
 
 export interface AlertStatic {
-  alert(title: string, message?: string, buttons?: Array<{ text?: string; onPress?: () => void }>): void;
+  alert(
+    title: string,
+    message?: string,
+    buttons?: Array<{ text?: string; onPress?: () => void }>
+  ): void;
 }
 
 export interface StyleSheetStatic {

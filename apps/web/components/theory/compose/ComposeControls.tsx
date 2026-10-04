@@ -59,15 +59,11 @@ export function ComposeControls({
 }: ComposeControlsProps) {
   return (
     <div className="section-frame p-4 mb-6">
-      <h3 className="text-sm font-metal text-blood mb-4 tracking-wider uppercase">
-        Tonalité
-      </h3>
+      <h3 className="text-sm font-metal text-blood mb-4 tracking-wider uppercase">Tonalité</h3>
 
       {/* Sélecteur de tonique */}
       <div className="mb-4">
-        <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-          Tonique
-        </label>
+        <label className="text-xs text-gray uppercase tracking-wider block mb-2">Tonique</label>
         <div className="flex flex-wrap gap-1">
           {CHROMATIC.map((note) => {
             const _isSharp = note.includes('#');
@@ -77,9 +73,10 @@ export function ComposeControls({
                 onClick={() => onRootChange(note as NoteName)}
                 className={`
                   px-2 py-1 text-xs font-bold border-2 transition-all
-                  ${root === note
-                    ? 'bg-blood border-blood text-white'
-                    : 'bg-blackness border-steel text-gray hover:border-rust hover:text-white'
+                  ${
+                    root === note
+                      ? 'bg-blood border-blood text-white'
+                      : 'bg-blackness border-steel text-gray hover:border-rust hover:text-white'
                   }
                 `}
                 title={FRENCH_NOTE_NAMES[note] || note}
@@ -93,29 +90,29 @@ export function ComposeControls({
 
       {/* Toggle majeur/mineur */}
       <div className="mb-4">
-        <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-          Mode
-        </label>
+        <label className="text-xs text-gray uppercase tracking-wider block mb-2">Mode</label>
         <div className="flex gap-2">
           <button
             onClick={() => onTonalityChange('major')}
             className={`
               flex-1 px-4 py-2 text-xs font-bold uppercase border-2 transition-all
-              ${tonality === 'major'
-                ? 'bg-toxic border-blood text-white'
-                : 'bg-blackness border-steel text-gray hover:border-blood'
+              ${
+                tonality === 'major'
+                  ? 'bg-toxic border-blood text-white'
+                  : 'bg-blackness border-steel text-gray hover:border-blood'
               }
             `}
           >
-              Majeur
+            Majeur
           </button>
           <button
             onClick={() => onTonalityChange('minor')}
             className={`
               flex-1 px-4 py-2 text-xs font-bold uppercase border-2 transition-all
-              ${tonality === 'minor'
-                ? 'bg-toxic border-blood text-white'
-                : 'bg-blackness border-steel text-gray hover:border-blood'
+              ${
+                tonality === 'minor'
+                  ? 'bg-toxic border-blood text-white'
+                  : 'bg-blackness border-steel text-gray hover:border-blood'
               }
             `}
           >
@@ -146,7 +143,8 @@ export function ComposeControls({
       <div className="mt-4 pt-4 border-t border-steel flex items-center justify-between">
         <span className="text-xs text-gray uppercase">Tonalité actuelle</span>
         <span className="text-lg font-metal text-blood">
-          {root}{tonality === 'major' ? ' maj' : ' min'}
+          {root}
+          {tonality === 'major' ? ' maj' : ' min'}
         </span>
       </div>
     </div>
@@ -158,11 +156,21 @@ export function ComposeControls({
 // ============================================================================
 
 const _NOTE_FR: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
-  'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-  'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-  'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RÉ♭',
+  D: 'RÉ',
+  'D#': 'RÉ♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };

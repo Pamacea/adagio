@@ -9,7 +9,7 @@ export const TECHNIQUES_SEED = [
     name: 'Hammer-on',
     category: 'legato',
     difficulty: 'beginner',
-    description: 'Frapper une corde pour produire une note sans l\'attaquer à la main droite.',
+    description: "Frapper une corde pour produire une note sans l'attaquer à la main droite.",
     notation: 'HO',
     tips: JSON.stringify([
       'Commencez doucement, sans forcer',
@@ -53,7 +53,7 @@ export const TECHNIQUES_SEED = [
     notation: 'tr',
     tips: JSON.stringify([
       'Commencez lentement',
-      'Commencez avec des intervalles d\'un ton',
+      "Commencez avec des intervalles d'un ton",
       'Gardez la main détendue',
     ]),
     estimatedPracticeTime: 5,
@@ -71,11 +71,12 @@ export const TECHNIQUES_SEED = [
     name: 'Sweep Picking',
     category: 'sweep',
     difficulty: 'advanced',
-    description: 'Technique de médiator où chaque note est jouée sur une corde différente en un seul mouvement continu.',
+    description:
+      'Technique de médiator où chaque note est jouée sur une corde différente en un seul mouvement continu.',
     notation: 'sweep',
     tips: JSON.stringify([
       'Synchronisez main gauche et droite',
-      'La main gauche lève chaque doigt après l\'avoir joué',
+      "La main gauche lève chaque doigt après l'avoir joué",
       'Commencez lentement avec des arpèges simples',
     ]),
     estimatedPracticeTime: 20,
@@ -96,8 +97,8 @@ export const TECHNIQUES_SEED = [
     description: 'Utiliser le médiator de la main droite pour fretter des notes sur le manche.',
     notation: 'T',
     tips: JSON.stringify([
-      'Utilisez le bout de l\'onglet',
-      'Tirez légèrement vers le haut après l\'impact',
+      "Utilisez le bout de l'onglet",
+      "Tirez légèrement vers le haut après l'impact",
       'Commencez avec une note simple',
     ]),
     estimatedPracticeTime: 10,
@@ -125,8 +126,8 @@ export const TECHNIQUES_SEED = [
     estimatedPracticeTime: 3,
     prerequisites: JSON.stringify([]),
     milestones: JSON.stringify([
-      { id: 'bend-half-step', description: 'Bend d\'un demi-ton', xp: 30 },
-      { id: 'bend-whole-step', description: 'Bend d\'un ton entier', xp: 40 },
+      { id: 'bend-half-step', description: "Bend d'un demi-ton", xp: 30 },
+      { id: 'bend-whole-step', description: "Bend d'un ton entier", xp: 40 },
       { id: 'bend-pitch', description: 'Bend parfaitement juste', xp: 50 },
     ]),
   },
@@ -135,12 +136,12 @@ export const TECHNIQUES_SEED = [
     name: 'Vibrato',
     category: 'bend',
     difficulty: 'intermediate',
-    description: 'Oscillation rythmique de la hauteur d\'une note tenue.',
+    description: "Oscillation rythmique de la hauteur d'une note tenue.",
     notation: 'vib',
     tips: JSON.stringify([
       'Utilisez le poignet ou le doigt',
       'Gardez le rythme régulier',
-      'N\'en faites pas trop',
+      "N'en faites pas trop",
     ]),
     estimatedPracticeTime: 5,
     prerequisites: JSON.stringify(['bend']),
@@ -228,7 +229,7 @@ export const TECHNIQUES_SEED = [
     notation: '/',
     tips: JSON.stringify([
       'Gardez la pression sur la corde',
-      'Visez la frette d\'arrivée',
+      "Visez la frette d'arrivée",
       'Peut être lent ou rapide',
     ]),
     estimatedPracticeTime: 1,
@@ -236,7 +237,7 @@ export const TECHNIQUES_SEED = [
     milestones: JSON.stringify([
       { id: 'slide-basic', description: 'Slide basique', xp: 20 },
       { id: 'slide-fast', description: 'Slide rapide', xp: 40 },
-    { id: 'slide-long', description: 'Slide span de 12 frets', xp: 50 },
+      { id: 'slide-long', description: 'Slide span de 12 frets', xp: 50 },
     ]),
   },
 ];

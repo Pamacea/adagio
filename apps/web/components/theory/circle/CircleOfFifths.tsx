@@ -34,8 +34,8 @@ const round = (n: number) => Math.round(n * 100) / 100;
  * @param innerR - Rayon intérieur
  */
 export function createSegmentPath(index: number, outerR: number, innerR: number): string {
-  const start = (index * 30 - 90) * Math.PI / 180;
-  const end = ((index + 1) * 30 - 90) * Math.PI / 180;
+  const start = ((index * 30 - 90) * Math.PI) / 180;
+  const end = (((index + 1) * 30 - 90) * Math.PI) / 180;
 
   const x1 = round(200 + outerR * Math.cos(start));
   const y1 = round(200 + outerR * Math.sin(start));
@@ -96,7 +96,7 @@ function isChordDiatonic(chord: string, diatonicChords: string[]): boolean {
   if (diatonicChords.includes(chord)) return true;
 
   const normalized = normalizeChord(chord);
-  return diatonicChords.some(c => normalizeChord(c) === normalized);
+  return diatonicChords.some((c) => normalizeChord(c) === normalized);
 }
 
 /**
@@ -165,12 +165,21 @@ export function CircleOfFifths({
           const dimPosition = getChordPosition(dimChord, diatonicChords);
 
           // Couleurs spécifiques pour chaque segment
-          const majorColor = majorPosition >= 0 ? (DEGREE_COLORS[majorPosition] ?? OFF_SCALE_COLOR) : OFF_SCALE_COLOR;
-          const minorColor = minorPosition >= 0 ? (DEGREE_COLORS[minorPosition] ?? OFF_SCALE_COLOR) : OFF_SCALE_COLOR;
-          const dimColor = dimPosition >= 0 ? (DEGREE_COLORS[dimPosition] ?? OFF_SCALE_COLOR) : OFF_SCALE_COLOR;
+          const majorColor =
+            majorPosition >= 0
+              ? (DEGREE_COLORS[majorPosition] ?? OFF_SCALE_COLOR)
+              : OFF_SCALE_COLOR;
+          const minorColor =
+            minorPosition >= 0
+              ? (DEGREE_COLORS[minorPosition] ?? OFF_SCALE_COLOR)
+              : OFF_SCALE_COLOR;
+          const dimColor =
+            dimPosition >= 0 ? (DEGREE_COLORS[dimPosition] ?? OFF_SCALE_COLOR) : OFF_SCALE_COLOR;
 
-          const textAngle = (i * 30 + 15 - 90) * Math.PI / 180;
-          const outerR = 162, midR = 122, innerR = 82;
+          const textAngle = ((i * 30 + 15 - 90) * Math.PI) / 180;
+          const outerR = 162,
+            midR = 122,
+            innerR = 82;
 
           const outerX = round(200 + outerR * Math.cos(textAngle));
           const outerY = round(200 + outerR * Math.sin(textAngle));

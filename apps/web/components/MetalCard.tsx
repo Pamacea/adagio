@@ -57,12 +57,8 @@ export function MetalCardWithHeader({
         <div className="flex items-center gap-3">
           {icon && <div className="icon-box">{icon}</div>}
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-              {title}
-            </h3>
-            {subtitle && (
-              <p className="text-xs text-gray mt-0.5">{subtitle}</p>
-            )}
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white">{title}</h3>
+            {subtitle && <p className="text-xs text-gray mt-0.5">{subtitle}</p>}
           </div>
         </div>
         {action && <div>{action}</div>}
@@ -83,11 +79,7 @@ interface MetalCardGridProps {
   className?: string;
 }
 
-export function MetalCardGrid({
-  children,
-  cols = 3,
-  className = '',
-}: MetalCardGridProps) {
+export function MetalCardGrid({ children, cols = 3, className = '' }: MetalCardGridProps) {
   const colsClasses = {
     1: 'grid-cols-1',
     2: 'grid-cols-1 md:grid-cols-2',
@@ -95,11 +87,7 @@ export function MetalCardGrid({
     4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
   };
 
-  return (
-    <div className={`grid ${colsClasses[cols]} gap-4 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`grid ${colsClasses[cols]} gap-4 ${className}`}>{children}</div>;
 }
 
 /**
@@ -112,12 +100,7 @@ interface CompactCardProps {
   color?: 'white' | 'blood' | 'rust' | 'gray';
 }
 
-export function CompactCard({
-  title,
-  value,
-  unit,
-  color = 'white',
-}: CompactCardProps) {
+export function CompactCard({ title, value, unit, color = 'white' }: CompactCardProps) {
   const colorClasses = {
     white: 'text-white',
     blood: 'text-blood',

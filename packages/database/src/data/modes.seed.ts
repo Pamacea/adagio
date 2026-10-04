@@ -13,7 +13,8 @@ export const MODES_SEED = [
     feeling: 'Féerique',
     relativeTo: 'I in major',
     axisGroup: 'tonic',
-    advice: 'Utilisez pour des mélodies joyeuses et des progressions stables. Le 4e degré augmente (LYDIEN) le rend "magique".',
+    advice:
+      'Utilisez pour des mélodies joyeuses et des progressions stables. Le 4e degré augmente (LYDIEN) le rend "magique".',
   },
   {
     slug: 'dorian',
@@ -25,7 +26,8 @@ export const MODES_SEED = [
     feeling: 'Cool',
     relativeTo: 'ii in major',
     axisGroup: 'subdominant',
-    advice: 'Parfait pour le jazz et le funk. La 6te majeure lui donne une couleur "optimiste" malgré sa nature mineure.',
+    advice:
+      'Parfait pour le jazz et le funk. La 6te majeure lui donne une couleur "optimiste" malgré sa nature mineure.',
   },
   {
     slug: 'phrygian',
@@ -37,7 +39,8 @@ export const MODES_SEED = [
     feeling: 'Espagnol',
     relativeTo: 'iii in major',
     axisGroup: 'tonic',
-    advice: 'Mode emblématique du flamenco et du metal oriental. La 2de mineure crée une tension exotique unique.',
+    advice:
+      'Mode emblématique du flamenco et du metal oriental. La 2de mineure crée une tension exotique unique.',
   },
   {
     slug: 'lydian',
@@ -49,19 +52,21 @@ export const MODES_SEED = [
     feeling: 'Dreamy',
     relativeTo: 'IV in major',
     axisGroup: 'subdominant',
-    advice: 'La 4te augmentée (#4) est la note caractéristique qui lui donne son côté "magique" et "flottant".',
+    advice:
+      'La 4te augmentée (#4) est la note caractéristique qui lui donne son côté "magique" et "flottant".',
   },
   {
     slug: 'mixolydian',
     name: 'Mixolydien',
     greekName: 'Mixolydien',
     intervals: JSON.stringify([0, 2, 4, 5, 7, 9, 10]),
-    character: 'Bluesy, rock\'n\'roll, énergique',
+    character: "Bluesy, rock'n'roll, énergique",
     sensation: 'Puissant, dynamique',
     feeling: 'Rock',
     relativeTo: 'V in major',
     axisGroup: 'dominant',
-    advice: 'Mode dominant par excellence. La 7te mineure (b7) crée une tension qui demande résolution.',
+    advice:
+      'Mode dominant par excellence. La 7te mineure (b7) crée une tension qui demande résolution.',
   },
   {
     slug: 'aeolian',
@@ -85,6 +90,7 @@ export const MODES_SEED = [
     feeling: 'Dark',
     relativeTo: 'vii° in major',
     axisGroup: 'dominant',
-    advice: 'Le mode le plus instable. La 5te diminuée (b5) crée une tension extrême. Usage: horror, metal, ambiances menaçantes.',
+    advice:
+      'Le mode le plus instable. La 5te diminuée (b5) crée une tension extrême. Usage: horror, metal, ambiances menaçantes.',
   },
 ];

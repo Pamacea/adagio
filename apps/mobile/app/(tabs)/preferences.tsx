@@ -4,14 +4,7 @@
 // ============================================================================
 
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   SettingsIcon,
@@ -32,16 +25,22 @@ const TUNINGS: Tuning[] = [
   'DADF#AD', // Open D
   'CGCGCE', // Open C
   'BEADGB', // Baritone
+  'EADG', // Basse standard 4 cordes
+  'BEAD', // Basse 5 cordes
+  'DADG', // Drop D basse
 ];
 
 const TUNING_NAMES: Record<Tuning, string> = {
-  'EADGBE': 'Standard',
-  'DADGBE': 'Drop D',
-  'DADGAD': 'DADGAD',
-  'DGDGBD': 'Open G',
+  EADGBE: 'Standard',
+  DADGBE: 'Drop D',
+  DADGAD: 'DADGAD',
+  DGDGBD: 'Open G',
   'DADF#AD': 'Open D',
-  'CGCGCE': 'Open C',
-  'BEADGB': 'Baritone',
+  CGCGCE: 'Open C',
+  BEADGB: 'Baritone',
+  EADG: 'Basse 4 cordes',
+  BEAD: 'Basse 5 cordes',
+  DADG: 'Drop D basse',
 };
 
 interface Preferences {
@@ -95,9 +94,7 @@ export default function PreferencesScreen() {
           <Text style={styles.headerTitle}>PRÉFÉRENCES</Text>
         </View>
         <TouchableOpacity onPress={handleSave}>
-          <Text style={[styles.headerButton, hasChanges && styles.headerButtonActive]}>
-            SAUVER
-          </Text>
+          <Text style={[styles.headerButton, hasChanges && styles.headerButtonActive]}>SAUVER</Text>
         </TouchableOpacity>
       </View>
 
@@ -200,10 +197,7 @@ export default function PreferencesScreen() {
             {[0, 0.25, 0.5, 0.75, 1].map((val) => (
               <TouchableOpacity
                 key={val}
-                style={[
-                  styles.volumeStep,
-                  preferences.volume >= val && styles.volumeStepActive,
-                ]}
+                style={[styles.volumeStep, preferences.volume >= val && styles.volumeStepActive]}
                 onPress={() => updatePreference('volume', val)}
               >
                 <Text

@@ -90,7 +90,15 @@ export function AchievementBadge({
       >
         {unlocked ? (
           <span className={sizeStyle.icon}>
-            {icon ? <AchievementIcon name={icon} size={size === 'sm' ? 16 : size === 'md' ? 24 : 32} className="text-current" /> : <Icons.Check />}
+            {icon ? (
+              <AchievementIcon
+                name={icon}
+                size={size === 'sm' ? 16 : size === 'md' ? 24 : 32}
+                className="text-current"
+              />
+            ) : (
+              <Icons.Check />
+            )}
           </span>
         ) : (
           <span className={`${sizeStyle.icon} text-gray`}>
@@ -102,9 +110,7 @@ export function AchievementBadge({
       {/* Badge Info (for md and lg sizes) */}
       {(size === 'md' || size === 'lg') && (
         <div className="text-center">
-          <div className={`${sizeStyle.text} font-bold text-white uppercase`}>
-            {title}
-          </div>
+          <div className={`${sizeStyle.text} font-bold text-white uppercase`}>{title}</div>
           {description && size === 'lg' && (
             <div className="text-xs text-gray max-w-[150px]">{description}</div>
           )}
@@ -116,13 +122,12 @@ export function AchievementBadge({
         <div className="w-full">
           <div className="flex items-center justify-between text-xs text-gray mb-1">
             <span>Progression</span>
-            <span>{progress}/{maxProgress}</span>
+            <span>
+              {progress}/{maxProgress}
+            </span>
           </div>
           <div className="h-1.5 border border-steel bg-blackness w-full">
-            <div
-              className="h-full bg-toxic"
-              style={{ width: `${progressPercentage}%` }}
-            />
+            <div className="h-full bg-toxic" style={{ width: `${progressPercentage}%` }} />
           </div>
         </div>
       )}

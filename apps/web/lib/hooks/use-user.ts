@@ -50,15 +50,17 @@ export function useProgress() {
  * Get user saved progressions
  */
 export function useProgressions() {
-  return useQuery<Array<{
-    id: string;
-    name?: string;
-    key: string;
-    timeSignature: string;
-    chords: unknown[];
-    isFavorite?: boolean;
-    createdAt: string | Date;
-  }>>({
+  return useQuery<
+    Array<{
+      id: string;
+      name?: string;
+      key: string;
+      timeSignature: string;
+      chords: unknown[];
+      isFavorite?: boolean;
+      createdAt: string | Date;
+    }>
+  >({
     queryKey: ['user', 'progressions'],
     queryFn: () => apiClient.get('/users/me/progressions'),
     staleTime: 1000 * 60 * 5,

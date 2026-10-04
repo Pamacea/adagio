@@ -14,17 +14,17 @@ import { auth } from '@adagio/auth/server';
  * Next.js App Router expects separate named exports (GET, POST, etc.).
  */
 function toNextJsHandler(authInstance: { handler: (request: Request) => Promise<Response> }) {
-	const handler = async (request: Request) => {
-		return authInstance.handler(request);
-	};
+  const handler = async (request: Request) => {
+    return authInstance.handler(request);
+  };
 
-	return {
-		GET: handler,
-		POST: handler,
-		PATCH: handler,
-		PUT: handler,
-		DELETE: handler,
-	};
+  return {
+    GET: handler,
+    POST: handler,
+    PATCH: handler,
+    PUT: handler,
+    DELETE: handler,
+  };
 }
 
 /**

@@ -21,7 +21,7 @@ const TABS: { id: NotationTab; label: string }[] = [
 export function NotationTabs({ selectedTab, onTabChange }: NotationTabsProps) {
   return (
     <div className="flex gap-1 mb-8">
-      {TABS.map(tab => (
+      {TABS.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}

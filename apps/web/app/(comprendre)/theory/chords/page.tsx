@@ -12,7 +12,11 @@ import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { ChordsSidebar } from '@/features/chords';
 import { useChordPage } from './hooks';
 import { ChordLibrarySidebar, ChordDisplayMain } from './components';
-import { CHROMATIC_SCALE, MAJOR_DEGREE_QUALITIES_EXTENDED, MINOR_DEGREE_QUALITIES_EXTENDED } from '@adagio/theory';
+import {
+  CHROMATIC_SCALE,
+  MAJOR_DEGREE_QUALITIES_EXTENDED,
+  MINOR_DEGREE_QUALITIES_EXTENDED,
+} from '@adagio/theory';
 
 // Alias pour compatibilité
 const NOTES = [...CHROMATIC_SCALE];

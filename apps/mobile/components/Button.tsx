@@ -105,9 +105,7 @@ export function Button({
           size={size === 'sm' ? 'small' : 'small'}
         />
       ) : (
-        <Text style={[styles.text, getTextVariantStyles(), textStyle]}>
-          {children}
-        </Text>
+        <Text style={[styles.text, getTextVariantStyles(), textStyle]}>{children}</Text>
       )}
     </TouchableOpacity>
   );

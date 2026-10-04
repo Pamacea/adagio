@@ -4,12 +4,7 @@
 // ============================================================================
 
 import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { WarningIcon } from '../components';
 import { Colors, Spacing, Typography, FontWeights } from '../theme';
@@ -32,18 +27,14 @@ export default function WarningScreen() {
 
   return (
     <>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={handleDismiss}
-        activeOpacity={1}
-      >
+      <TouchableOpacity style={styles.container} onPress={handleDismiss} activeOpacity={1}>
         {/* Background Pattern */}
         <View style={styles.backgroundPattern}>
           {Array.from({ length: 20 }).map((_, i) => (
             <View
               key={i}
               style={[
-               styles.patternLine,
+                styles.patternLine,
                 {
                   left: `${i * 5}%`,
                   transform: [{ rotate: `${i * 3}deg` }],

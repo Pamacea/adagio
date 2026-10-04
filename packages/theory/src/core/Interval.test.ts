@@ -6,32 +6,44 @@
 // ============================================================================
 
 import { describe, it, expect } from 'vitest';
-import {
-  INTERVAL_SEMITONES,
-  getIntervalFromSemitones,
-  isAltered,
-  isExtension,
-} from './Interval';
+import { INTERVAL_SEMITONES, getIntervalFromSemitones, isAltered, isExtension } from './Interval';
 import type { Interval } from '@adagio/types';
 
 describe('INTERVAL_SEMITONES', () => {
   it('should have all basic intervals defined', () => {
     const basicIntervals: Interval[] = [
-      '1', '#1', 'b2', '2', '#2', 'b3', '3', '#3', 'b4', '4', '#4', 'b5',
-      '5', '#5', 'b6', 'bb6', '6', '#6', 'bb7', 'b7', '7',
+      '1',
+      '#1',
+      'b2',
+      '2',
+      '#2',
+      'b3',
+      '3',
+      '#3',
+      'b4',
+      '4',
+      '#4',
+      'b5',
+      '5',
+      '#5',
+      'b6',
+      'bb6',
+      '6',
+      '#6',
+      'bb7',
+      'b7',
+      '7',
     ];
 
-    basicIntervals.forEach(interval => {
+    basicIntervals.forEach((interval) => {
       expect(INTERVAL_SEMITONES[interval]).toBeDefined();
     });
   });
 
   it('should have all extension intervals defined', () => {
-    const extensionIntervals: Interval[] = [
-      'b9', '9', '#9', '11', '#11', 'b13', '13',
-    ];
+    const extensionIntervals: Interval[] = ['b9', '9', '#9', '11', '#11', 'b13', '13'];
 
-    extensionIntervals.forEach(interval => {
+    extensionIntervals.forEach((interval) => {
       expect(INTERVAL_SEMITONES[interval]).toBeDefined();
     });
   });
@@ -265,7 +277,7 @@ describe('isAltered', () => {
   it('should classify all diatonic major scale intervals as unaltered', () => {
     const majorScaleIntervals: Interval[] = ['1', '2', '3', '4', '5', '6', '7'];
 
-    majorScaleIntervals.forEach(interval => {
+    majorScaleIntervals.forEach((interval) => {
       expect(isAltered(interval)).toBe(false);
     });
   });
@@ -274,21 +286,32 @@ describe('isAltered', () => {
     // Natural minor: 1, 2, b3, 4, 5, b6, b7
     expect(isAltered('1')).toBe(false);
     expect(isAltered('2')).toBe(false);
-    expect(isAltered('b3')).toBe(true);  // Altered compared to major
+    expect(isAltered('b3')).toBe(true); // Altered compared to major
     expect(isAltered('4')).toBe(false);
     expect(isAltered('5')).toBe(false);
-    expect(isAltered('b6')).toBe(true);  // Altered compared to major
-    expect(isAltered('b7')).toBe(true);  // Altered compared to major
+    expect(isAltered('b6')).toBe(true); // Altered compared to major
+    expect(isAltered('b7')).toBe(true); // Altered compared to major
   });
 
   it('should identify chromatic intervals', () => {
     // All intervals outside major scale are altered
     const chromaticIntervals: Interval[] = [
-      '#1', 'b2', '#2', 'b3', '#3', 'b4', '#4', 'b5',
-      '#5', 'b6', 'bb6', 'bb7', 'b7',
+      '#1',
+      'b2',
+      '#2',
+      'b3',
+      '#3',
+      'b4',
+      '#4',
+      'b5',
+      '#5',
+      'b6',
+      'bb6',
+      'bb7',
+      'b7',
     ];
 
-    chromaticIntervals.forEach(interval => {
+    chromaticIntervals.forEach((interval) => {
       expect(isAltered(interval)).toBe(true);
     });
   });
@@ -325,11 +348,23 @@ describe('isExtension', () => {
 
   it('should return false for basic intervals within octave', () => {
     const basicIntervals: Interval[] = [
-      '1', '2', '3', '4', '5', '6', '7',
-      'b2', 'b3', '#4', 'b5', '#5', 'b6', 'b7',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      'b2',
+      'b3',
+      '#4',
+      'b5',
+      '#5',
+      'b6',
+      'b7',
     ];
 
-    basicIntervals.forEach(interval => {
+    basicIntervals.forEach((interval) => {
       expect(isExtension(interval)).toBe(false);
     });
   });
@@ -344,19 +379,44 @@ describe('isExtension', () => {
 describe('Interval classification consistency', () => {
   it('should correctly categorize all intervals', () => {
     const intervals: Interval[] = [
-      '1', '#1', 'b2', '2', '#2', 'b3', '3', '#3', 'b4', '4', '#4', 'b5',
-      '5', '#5', 'b6', 'bb6', '6', '#6', 'bb7', 'b7', '7',
-      'b9', '9', '#9', '11', '#11', 'b13', '13',
+      '1',
+      '#1',
+      'b2',
+      '2',
+      '#2',
+      'b3',
+      '3',
+      '#3',
+      'b4',
+      '4',
+      '#4',
+      'b5',
+      '5',
+      '#5',
+      'b6',
+      'bb6',
+      '6',
+      '#6',
+      'bb7',
+      'b7',
+      '7',
+      'b9',
+      '9',
+      '#9',
+      '11',
+      '#11',
+      'b13',
+      '13',
     ];
 
     // All intervals should have a valid semitone value
-    intervals.forEach(interval => {
+    intervals.forEach((interval) => {
       expect(typeof INTERVAL_SEMITONES[interval]).toBe('number');
     });
 
     // Extensions should be > 12 semitones (above octave)
     const allExtensions: Interval[] = ['b9', '9', '#9', '11', '#11', 'b13', '13'];
-    allExtensions.forEach(ext => {
+    allExtensions.forEach((ext) => {
       expect(INTERVAL_SEMITONES[ext]).toBeGreaterThan(12);
     });
   });

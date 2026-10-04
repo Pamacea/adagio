@@ -5,13 +5,7 @@
 
 import { Tabs } from 'expo-router';
 import { Text as _Text, useColorScheme as useRNColorScheme, View as _View } from 'react-native';
-import {
-  HomeIcon,
-  MusicIcon,
-  NoteIcon,
-  LibraryIcon,
-  UserIcon,
-} from '@/components';
+import { HomeIcon, MusicIcon, NoteIcon, LibraryIcon, UserIcon } from '@/components';
 import { Colors, FontWeights } from '@/theme';
 
 function useColorScheme() {

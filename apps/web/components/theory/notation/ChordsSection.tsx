@@ -19,7 +19,7 @@ export function ChordsSection() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {CHORD_DEFINITIONS.map(chord => (
+          {CHORD_DEFINITIONS.map((chord) => (
             <div key={chord.name} className="border-2 border-steel bg-blackness p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-2xl font-metal text-white">{chord.name}</span>

@@ -27,9 +27,27 @@ describe('Scale', () => {
     });
 
     it('should accept any valid note name as root', () => {
-      const notes: NoteName[] = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B'];
+      const notes: NoteName[] = [
+        'C',
+        'C#',
+        'Db',
+        'D',
+        'D#',
+        'Eb',
+        'E',
+        'F',
+        'F#',
+        'Gb',
+        'G',
+        'G#',
+        'Ab',
+        'A',
+        'A#',
+        'Bb',
+        'B',
+      ];
 
-      notes.forEach(note => {
+      notes.forEach((note) => {
         const scale = new Scale(note, ['1', '2', '3']);
         expect(scale.root).toBe(note);
       });
@@ -62,7 +80,7 @@ describe('Scale', () => {
       const scale = new Scale('C', ['1', '3', '5']);
       const notes = scale.getNotes();
 
-      notes.forEach(note => {
+      notes.forEach((note) => {
         expect(note).toBeInstanceOf(Note);
       });
     });
@@ -85,7 +103,20 @@ describe('Scale', () => {
     });
 
     it('should handle chromatic scale', () => {
-      const chromaticIntervals: Interval[] = ['1', '#1', '2', '#2', '3', '4', '#4', '5', '#5', '6', '#6', '7'];
+      const chromaticIntervals: Interval[] = [
+        '1',
+        '#1',
+        '2',
+        '#2',
+        '3',
+        '4',
+        '#4',
+        '5',
+        '#5',
+        '6',
+        '#6',
+        '7',
+      ];
       const scale = new Scale('C', chromaticIntervals, 'Chromatic');
       const notes = scale.getNotes();
 
@@ -204,34 +235,34 @@ describe('Scale', () => {
       const scale = Scale.major('C');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+      expect(notes.map((n) => n.name)).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
     });
 
     it('should create G major scale with correct notes', () => {
       const scale = Scale.major('G');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['G', 'A', 'B', 'C', 'D', 'E', 'F#']);
+      expect(notes.map((n) => n.name)).toEqual(['G', 'A', 'B', 'C', 'D', 'E', 'F#']);
     });
 
     it('should create D major scale with F# and C#', () => {
       const scale = Scale.major('D');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['D', 'E', 'F#', 'G', 'A', 'B', 'C#']);
+      expect(notes.map((n) => n.name)).toEqual(['D', 'E', 'F#', 'G', 'A', 'B', 'C#']);
     });
 
     it('should create F major scale with A# (Bb enharmonic)', () => {
       const scale = Scale.major('F');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['F', 'G', 'A', 'A#', 'C', 'D', 'E']);
+      expect(notes.map((n) => n.name)).toEqual(['F', 'G', 'A', 'A#', 'C', 'D', 'E']);
     });
 
     it('should work with all note names', () => {
       const roots: NoteName[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
-      roots.forEach(root => {
+      roots.forEach((root) => {
         const scale = Scale.major(root);
         expect(scale.root).toBe(root);
         expect(scale.getNotes()).toHaveLength(7);
@@ -257,21 +288,21 @@ describe('Scale', () => {
       const scale = Scale.minor('A');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G']);
+      expect(notes.map((n) => n.name)).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G']);
     });
 
     it('should create C minor scale with D#, G#, A# (Eb, Ab, Bb enharmonic)', () => {
       const scale = Scale.minor('C');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['C', 'D', 'D#', 'F', 'G', 'G#', 'A#']);
+      expect(notes.map((n) => n.name)).toEqual(['C', 'D', 'D#', 'F', 'G', 'G#', 'A#']);
     });
 
     it('should create E minor scale with F#, G, C# in scale', () => {
       const scale = Scale.minor('E');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['E', 'F#', 'G', 'A', 'B', 'C', 'D']);
+      expect(notes.map((n) => n.name)).toEqual(['E', 'F#', 'G', 'A', 'B', 'C', 'D']);
     });
 
     it('should have relative major relationship', () => {
@@ -279,11 +310,11 @@ describe('Scale', () => {
       const cMajor = Scale.major('C');
 
       // A minor and C major should have the same notes (different starting point)
-      const aMinorNotes = aMinor.getNotes(4).map(n => n.name);
-      const cMajorNotes = cMajor.getNotes(4).map(n => n.name);
+      const aMinorNotes = aMinor.getNotes(4).map((n) => n.name);
+      const cMajorNotes = cMajor.getNotes(4).map((n) => n.name);
 
       // Both should contain the same set of notes
-      aMinorNotes.forEach(note => {
+      aMinorNotes.forEach((note) => {
         expect(cMajorNotes).toContain(note);
       });
     });
@@ -309,22 +340,22 @@ describe('Scale', () => {
       const scale = Scale.pentatonicMajor('C');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['C', 'D', 'E', 'G', 'A']);
+      expect(notes.map((n) => n.name)).toEqual(['C', 'D', 'E', 'G', 'A']);
     });
 
     it('should exclude 4th and 7th from major scale', () => {
       const cMajor = Scale.major('C');
       const cPentatonic = Scale.pentatonicMajor('C');
 
-      const majorNotes = cMajor.getNotes(4).map(n => n.name);
-      const pentatonicNotes = cPentatonic.getNotes(4).map(n => n.name);
+      const majorNotes = cMajor.getNotes(4).map((n) => n.name);
+      const pentatonicNotes = cPentatonic.getNotes(4).map((n) => n.name);
 
       // F (4th) and B (7th) should NOT be in pentatonic
       expect(pentatonicNotes).not.toContain('F');
       expect(pentatonicNotes).not.toContain('B');
 
       // Pentatonic notes should be subset of major
-      pentatonicNotes.forEach(note => {
+      pentatonicNotes.forEach((note) => {
         expect(majorNotes).toContain(note);
       });
     });
@@ -333,7 +364,7 @@ describe('Scale', () => {
       const scale = Scale.pentatonicMajor('F#');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['F#', 'G#', 'A#', 'C#', 'D#']);
+      expect(notes.map((n) => n.name)).toEqual(['F#', 'G#', 'A#', 'C#', 'D#']);
     });
   });
 
@@ -357,29 +388,29 @@ describe('Scale', () => {
       const scale = Scale.pentatonicMinor('A');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['A', 'C', 'D', 'E', 'G']);
+      expect(notes.map((n) => n.name)).toEqual(['A', 'C', 'D', 'E', 'G']);
     });
 
     it('should create C pentatonic minor with D# and A# (Eb, Bb enharmonic)', () => {
       const scale = Scale.pentatonicMinor('C');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['C', 'D#', 'F', 'G', 'A#']);
+      expect(notes.map((n) => n.name)).toEqual(['C', 'D#', 'F', 'G', 'A#']);
     });
 
     it('should exclude 2nd and flat 6th from natural minor', () => {
       const aMinor = Scale.minor('A');
       const aPentatonicMinor = Scale.pentatonicMinor('A');
 
-      const minorNotes = aMinor.getNotes(4).map(n => n.name);
-      const pentatonicNotes = aPentatonicMinor.getNotes(4).map(n => n.name);
+      const minorNotes = aMinor.getNotes(4).map((n) => n.name);
+      const pentatonicNotes = aPentatonicMinor.getNotes(4).map((n) => n.name);
 
       // B (2nd) and F (b6) should NOT be in pentatonic minor
       expect(pentatonicNotes).not.toContain('B');
       expect(pentatonicNotes).not.toContain('F');
 
       // Pentatonic notes should be subset of natural minor
-      pentatonicNotes.forEach(note => {
+      pentatonicNotes.forEach((note) => {
         expect(minorNotes).toContain(note);
       });
     });
@@ -405,14 +436,14 @@ describe('Scale', () => {
       const scale = Scale.blues('A');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['A', 'C', 'D', 'D#', 'E', 'G']);
+      expect(notes.map((n) => n.name)).toEqual(['A', 'C', 'D', 'D#', 'E', 'G']);
     });
 
     it('should create C blues scale with blue notes (using sharps)', () => {
       const scale = Scale.blues('C');
       const notes = scale.getNotes(4);
 
-      expect(notes.map(n => n.name)).toEqual(['C', 'D#', 'F', 'F#', 'G', 'A#']);
+      expect(notes.map((n) => n.name)).toEqual(['C', 'D#', 'F', 'F#', 'G', 'A#']);
     });
 
     it('should include the "blue note" (#4/b5)', () => {
@@ -420,18 +451,18 @@ describe('Scale', () => {
       const notes = cBlues.getNotes(4);
 
       // F# is the blue note in C blues
-      expect(notes.map(n => n.name)).toContain('F#');
+      expect(notes.map((n) => n.name)).toContain('F#');
     });
 
     it('should be based on pentatonic minor with added #4', () => {
       const cPentatonicMinor = Scale.pentatonicMinor('C');
       const cBlues = Scale.blues('C');
 
-      const pentatonicNotes = cPentatonicMinor.getNotes(4).map(n => n.name);
-      const bluesNotes = cBlues.getNotes(4).map(n => n.name);
+      const pentatonicNotes = cPentatonicMinor.getNotes(4).map((n) => n.name);
+      const bluesNotes = cBlues.getNotes(4).map((n) => n.name);
 
       // Blues should contain all pentatonic minor notes
-      pentatonicNotes.forEach(note => {
+      pentatonicNotes.forEach((note) => {
         expect(bluesNotes).toContain(note);
       });
 
@@ -442,7 +473,7 @@ describe('Scale', () => {
     it('should work with different root notes', () => {
       const roots: NoteName[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
-      roots.forEach(root => {
+      roots.forEach((root) => {
         const scale = Scale.blues(root);
         expect(scale.root).toBe(root);
         expect(scale.getNotes()).toHaveLength(6);
@@ -455,8 +486,8 @@ describe('Scale', () => {
       const cMajor = Scale.major('C');
       const aMinor = Scale.minor('A');
 
-      const majorNotes = cMajor.getNotes(4).map(n => n.name);
-      const minorNotes = aMinor.getNotes(4).map(n => n.name);
+      const majorNotes = cMajor.getNotes(4).map((n) => n.name);
+      const minorNotes = aMinor.getNotes(4).map((n) => n.name);
 
       // Should have same notes, different order
       expect(new Set(majorNotes)).toEqual(new Set(minorNotes));
@@ -469,10 +500,10 @@ describe('Scale', () => {
       expect(cMajor.root).toBe(cMinor.root);
 
       // Major has 3rd, minor has b3rd
-      const majorNotes = cMajor.getNotes(4).map(n => n.name);
-      const minorNotes = cMinor.getNotes(4).map(n => n.name);
+      const majorNotes = cMajor.getNotes(4).map((n) => n.name);
+      const minorNotes = cMinor.getNotes(4).map((n) => n.name);
 
-      expect(majorNotes).toContain('E');  // Major 3rd
+      expect(majorNotes).toContain('E'); // Major 3rd
       expect(minorNotes).toContain('D#'); // Minor 3rd (Eb enharmonic, code uses sharps)
     });
   });

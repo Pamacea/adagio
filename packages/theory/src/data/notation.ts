@@ -11,13 +11,23 @@ import type { NoteName, ChordQuality } from '@adagio/types';
 
 /** Mapping des notes anglaises vers françaises */
 export const FRENCH_NOTE_NAMES: Record<string, string> = {
-  'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
-  'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-  'E': 'MI',
-  'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭',
-  'G': 'SOL', 'G#': 'SOL♯', 'Ab': 'LA♭',
-  'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭',
-  'B': 'SI',
+  C: 'DO',
+  'C#': 'DO♯',
+  Db: 'RÉ♭',
+  D: 'RÉ',
+  'D#': 'RÉ♯',
+  Eb: 'MI♭',
+  E: 'MI',
+  F: 'FA',
+  'F#': 'FA♯',
+  Gb: 'SOL♭',
+  G: 'SOL',
+  'G#': 'SOL♯',
+  Ab: 'LA♭',
+  A: 'LA',
+  'A#': 'LA♯',
+  Bb: 'SI♭',
+  B: 'SI',
 };
 
 /** Notes de la gamme en français */
@@ -47,16 +57,70 @@ export interface ChordDefinition {
 
 /** Accords communs avec leurs descriptions */
 export const CHORD_DEFINITIONS: ChordDefinition[] = [
-  { root: 'C', quality: '', name: 'C', fr: 'DO majeur', description: 'Tonique - Tierce majeure - Quinte juste' },
-  { root: 'C', quality: 'm', name: 'Cm', fr: 'DO mineur', description: 'Tonique - Tierce mineure - Quinte juste' },
+  {
+    root: 'C',
+    quality: '',
+    name: 'C',
+    fr: 'DO majeur',
+    description: 'Tonique - Tierce majeure - Quinte juste',
+  },
+  {
+    root: 'C',
+    quality: 'm',
+    name: 'Cm',
+    fr: 'DO mineur',
+    description: 'Tonique - Tierce mineure - Quinte juste',
+  },
   { root: 'C', quality: '7', name: 'C7', fr: 'DO 7', description: 'Majeur + Septième mineure' },
-  { root: 'C', quality: 'maj7', name: 'Cmaj7', fr: 'DO maj7', description: 'Majeur + Septième majeure' },
-  { root: 'C', quality: 'm7', name: 'Cm7', fr: 'DO mineur 7', description: 'Mineur + Septième mineure' },
-  { root: 'C', quality: 'dim', name: 'Cdim', fr: 'DO diminué', description: 'Tierce mineure - Quinte diminuée' },
-  { root: 'C', quality: 'dim7', name: 'Cdim7', fr: 'DO 7 diminué', description: 'Toutes tierces mineures' },
-  { root: 'C', quality: 'aug', name: 'Caug', fr: 'DO augmenté', description: 'Tierce majeure - Quinte augmentée' },
-  { root: 'C', quality: 'sus4', name: 'Csus4', fr: 'DO sus4', description: 'Tierce remplacée par quarte' },
-  { root: 'C', quality: '7sus4', name: 'C7sus4', fr: 'DO 7 sus4', description: 'Sus4 + Septième mineure' },
+  {
+    root: 'C',
+    quality: 'maj7',
+    name: 'Cmaj7',
+    fr: 'DO maj7',
+    description: 'Majeur + Septième majeure',
+  },
+  {
+    root: 'C',
+    quality: 'm7',
+    name: 'Cm7',
+    fr: 'DO mineur 7',
+    description: 'Mineur + Septième mineure',
+  },
+  {
+    root: 'C',
+    quality: 'dim',
+    name: 'Cdim',
+    fr: 'DO diminué',
+    description: 'Tierce mineure - Quinte diminuée',
+  },
+  {
+    root: 'C',
+    quality: 'dim7',
+    name: 'Cdim7',
+    fr: 'DO 7 diminué',
+    description: 'Toutes tierces mineures',
+  },
+  {
+    root: 'C',
+    quality: 'aug',
+    name: 'Caug',
+    fr: 'DO augmenté',
+    description: 'Tierce majeure - Quinte augmentée',
+  },
+  {
+    root: 'C',
+    quality: 'sus4',
+    name: 'Csus4',
+    fr: 'DO sus4',
+    description: 'Tierce remplacée par quarte',
+  },
+  {
+    root: 'C',
+    quality: '7sus4',
+    name: 'C7sus4',
+    fr: 'DO 7 sus4',
+    description: 'Sus4 + Septième mineure',
+  },
 ];
 
 // ============================================================================

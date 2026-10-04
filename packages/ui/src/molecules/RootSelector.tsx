@@ -24,51 +24,46 @@ const NOTE_SETS = {
 // Enharmonic equivalents mapping
 const ENHARMONICS: Record<NoteName, NoteName> = {
   'C#': 'Db',
-  'Db': 'C#',
+  Db: 'C#',
   'D#': 'Eb',
-  'Eb': 'D#',
+  Eb: 'D#',
   'F#': 'Gb',
-  'Gb': 'F#',
+  Gb: 'F#',
   'G#': 'Ab',
-  'Ab': 'G#',
+  Ab: 'G#',
   'A#': 'Bb',
-  'Bb': 'A#',
-  'C': 'C',
-  'D': 'D',
-  'E': 'E',
-  'F': 'F',
-  'G': 'G',
-  'A': 'A',
-  'B': 'B',
+  Bb: 'A#',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: 'F',
+  G: 'G',
+  A: 'A',
+  B: 'B',
 };
 
 // Color coding for notes (circle of fifths / signature visual)
 const NOTE_COLORS: Record<NoteName, string> = {
-  'C': 'bg-red-500/20 border-red-500/40 text-red-400',
+  C: 'bg-red-500/20 border-red-500/40 text-red-400',
   'C#': 'bg-orange-500/20 border-orange-500/40 text-orange-400',
-  'Db': 'bg-orange-500/20 border-orange-500/40 text-orange-400',
-  'D': 'bg-yellow-500/20 border-yellow-500/40 text-yellow-400',
+  Db: 'bg-orange-500/20 border-orange-500/40 text-orange-400',
+  D: 'bg-yellow-500/20 border-yellow-500/40 text-yellow-400',
   'D#': 'bg-green-500/20 border-green-500/40 text-green-400',
-  'Eb': 'bg-green-500/20 border-green-500/40 text-green-400',
-  'E': 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400',
-  'F': 'bg-teal-500/20 border-teal-500/40 text-teal-400',
+  Eb: 'bg-green-500/20 border-green-500/40 text-green-400',
+  E: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400',
+  F: 'bg-teal-500/20 border-teal-500/40 text-teal-400',
   'F#': 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400',
-  'Gb': 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400',
-  'G': 'bg-sky-500/20 border-sky-500/40 text-sky-400',
+  Gb: 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400',
+  G: 'bg-sky-500/20 border-sky-500/40 text-sky-400',
   'G#': 'bg-blue-500/20 border-blue-500/40 text-blue-400',
-  'Ab': 'bg-blue-500/20 border-blue-500/40 text-blue-400',
-  'A': 'bg-indigo-500/20 border-indigo-500/40 text-indigo-400',
+  Ab: 'bg-blue-500/20 border-blue-500/40 text-blue-400',
+  A: 'bg-indigo-500/20 border-indigo-500/40 text-indigo-400',
   'A#': 'bg-purple-500/20 border-purple-500/40 text-purple-400',
-  'Bb': 'bg-purple-500/20 border-purple-500/40 text-purple-400',
-  'B': 'bg-pink-500/20 border-pink-500/40 text-pink-400',
+  Bb: 'bg-purple-500/20 border-purple-500/40 text-purple-400',
+  B: 'bg-pink-500/20 border-pink-500/40 text-pink-400',
 };
 
-export function RootSelector({
-  value,
-  onChange,
-  showFlats = false,
-  className,
-}: RootSelectorProps) {
+export function RootSelector({ value, onChange, showFlats = false, className }: RootSelectorProps) {
   const notes = showFlats ? NOTE_SETS.flats : NOTE_SETS.sharps;
   const displayValue = showFlats && ENHARMONICS[value] !== value ? ENHARMONICS[value]! : value;
 

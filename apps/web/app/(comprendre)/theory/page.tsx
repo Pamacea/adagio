@@ -9,8 +9,7 @@ import { MetalNav, MetalFooter, Icons } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Comprendre',
-  description:
-    'Hub théorie musicale : accords, triades, modes, gammes et cercle des quintes.',
+  description: 'Hub théorie musicale : accords, triades, modes, gammes et cercle des quintes.',
 };
 
 const SECTIONS = [
@@ -73,10 +72,18 @@ const SECTIONS = [
 ];
 
 const CONCEPTS = [
-
-  { q: 'Pourquoi des quintes ?', a: 'Chaque case du cercle ajoute une dièse (ou en retire une) : la distance entre deux cases voisines est toujours une quinte juste.' },
-  { q: 'Majeur ou mineur ?', a: 'Une tonalité mineure partage sa gamme avec son relatif majeur : même notes, autre point de départ (le 6e degré).' },
-  { q: 'Degrés, c\'est quoi ?', a: 'Les degrés (I, ii, iii…) numérotent chaque note d\'une gamme. Toute la théorie d\'Adagio se raisonne en degrés.' },
+  {
+    q: 'Pourquoi des quintes ?',
+    a: 'Chaque case du cercle ajoute une dièse (ou en retire une) : la distance entre deux cases voisines est toujours une quinte juste.',
+  },
+  {
+    q: 'Majeur ou mineur ?',
+    a: 'Une tonalité mineure partage sa gamme avec son relatif majeur : même notes, autre point de départ (le 6e degré).',
+  },
+  {
+    q: "Degrés, c'est quoi ?",
+    a: "Les degrés (I, ii, iii…) numérotent chaque note d'une gamme. Toute la théorie d'Adagio se raisonne en degrés.",
+  },
 ];
 
 export default function TheoryPage() {
@@ -98,7 +105,7 @@ export default function TheoryPage() {
 
           {/* Sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {SECTIONS.map(section => (
+            {SECTIONS.map((section) => (
               <Link
                 key={section.href}
                 href={section.href}
@@ -112,7 +119,7 @@ export default function TheoryPage() {
                 </h2>
                 <p className="text-sm text-gray mb-4">{section.description}</p>
                 <div className="flex flex-wrap gap-1">
-                  {section.tags.map(tag => (
+                  {section.tags.map((tag) => (
                     <span
                       key={tag}
                       className="px-2 py-0.5 text-xs border border-steel bg-blackness text-gray"
@@ -151,7 +158,7 @@ export default function TheoryPage() {
               Concepts clés
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {CONCEPTS.map(concept => (
+              {CONCEPTS.map((concept) => (
                 <div key={concept.q} className="border-2 border-steel bg-blackness p-4">
                   <p className="text-sm font-bold text-toxic uppercase mb-2">{concept.q}</p>
                   <p className="text-xs text-gray">{concept.a}</p>

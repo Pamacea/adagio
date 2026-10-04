@@ -8,7 +8,13 @@ declare module 'react-native' {
     backgroundColor?: string;
     flex?: number;
     flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-    justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+    justifyContent?:
+      | 'flex-start'
+      | 'flex-end'
+      | 'center'
+      | 'space-between'
+      | 'space-around'
+      | 'space-evenly';
     alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     padding?: number;
     paddingHorizontal?: number;
@@ -51,7 +57,18 @@ declare module 'react-native' {
   export interface TextStyle {
     color?: string;
     fontSize?: number;
-    fontWeight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+    fontWeight?:
+      | 'normal'
+      | 'bold'
+      | '100'
+      | '200'
+      | '300'
+      | '400'
+      | '500'
+      | '600'
+      | '700'
+      | '800'
+      | '900';
     fontStyle?: 'normal' | 'italic';
     lineHeight?: number;
     textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';

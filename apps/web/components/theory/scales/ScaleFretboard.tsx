@@ -11,19 +11,19 @@ import type { FretboardNote } from '@adagio/types';
 // Cordes de guitare (de la plus aiguë à la plus grave)
 // Accordage standard : e B G D A E (Mi Si Sol Ré La Mi)
 const GUITAR_STRINGS: Array<{ note: string; name: string }> = [
-  { note: 'E', name: 'MI' },   // Corde 1 - Mi aigu
-  { note: 'B', name: 'SI' },   // Corde 2 - Si
-  { note: 'G', name: 'SOL' },  // Corde 3 - Sol
-  { note: 'D', name: 'RÉ' },   // Corde 4 - Ré
-  { note: 'A', name: 'LA' },   // Corde 5 - La
-  { note: 'E', name: 'MI' },   // Corde 6 - Mi grave
+  { note: 'E', name: 'MI' }, // Corde 1 - Mi aigu
+  { note: 'B', name: 'SI' }, // Corde 2 - Si
+  { note: 'G', name: 'SOL' }, // Corde 3 - Sol
+  { note: 'D', name: 'RÉ' }, // Corde 4 - Ré
+  { note: 'A', name: 'LA' }, // Corde 5 - La
+  { note: 'E', name: 'MI' }, // Corde 6 - Mi grave
 ];
 
 // SVG constants
 export const FRET_CONSTANTS = {
   NUT_POSITION: 60,
-  FRET_WIDTH: 100,      // Largeur uniforme par frette
-  STRING_SPACING: 55,   // Espacement entre les cordes
+  FRET_WIDTH: 100, // Largeur uniforme par frette
+  STRING_SPACING: 55, // Espacement entre les cordes
   SVG_HEIGHT: 360,
 } as const;
 
@@ -42,8 +42,8 @@ export function calculateFretPositions(fretCount: number): number[] {
 function formatInterval(interval: Interval): string {
   const symbols: Record<string, string> = {
     '#': '♯',
-    'b': '♭',
-    'bb': '♭♭',
+    b: '♭',
+    bb: '♭♭',
     '##': '♯♯',
   };
   let result: string = interval;
@@ -137,7 +137,7 @@ export function ScaleFretboard({
           })}
 
           {/* Fret markers (dots) */}
-          {[3, 5, 7, 9].map(fret => {
+          {[3, 5, 7, 9].map((fret) => {
             if (fret > fretCount) return null;
             const currentFret = fretPositions[fret];
             const prevFret = fretPositions[fret - 1];
@@ -225,9 +225,11 @@ export function ScaleFretboard({
 
             const y = firstStringY + stringIndex * FRET_CONSTANTS.STRING_SPACING;
             // Calculate note position using linear fret positions
-            const x = noteData.fret === 0
-              ? (FRET_CONSTANTS.NUT_POSITION - 20)
-              : ((fretPositions[noteData.fret - 1] ?? 0) + (fretPositions[noteData.fret] ?? 0)) / 2;
+            const x =
+              noteData.fret === 0
+                ? FRET_CONSTANTS.NUT_POSITION - 20
+                : ((fretPositions[noteData.fret - 1] ?? 0) + (fretPositions[noteData.fret] ?? 0)) /
+                  2;
 
             const shouldShow = showAllNotes || noteData.inScale;
             if (!shouldShow) return null;
@@ -236,9 +238,10 @@ export function ScaleFretboard({
             const noteBg = getNoteBg(noteData.inScale, interval);
 
             // Dynamic radius based on fret width to avoid overlap
-            const fretWidth = noteData.fret === 0
-              ? FRET_CONSTANTS.FRET_WIDTH
-              : (fretPositions[noteData.fret] ?? 0) - (fretPositions[noteData.fret - 1] ?? 0);
+            const fretWidth =
+              noteData.fret === 0
+                ? FRET_CONSTANTS.FRET_WIDTH
+                : (fretPositions[noteData.fret] ?? 0) - (fretPositions[noteData.fret - 1] ?? 0);
             const noteRadius = Math.max(12, Math.min(22, Math.floor(fretWidth * 0.45)));
 
             return (
@@ -247,7 +250,13 @@ export function ScaleFretboard({
                   cx={x}
                   cy={y}
                   r={noteRadius}
-                  fill={noteBg.includes('toxic') ? '#0a0f0a' : noteBg.includes('circuit') ? '#0d130d' : '#010101'}
+                  fill={
+                    noteBg.includes('toxic')
+                      ? '#0a0f0a'
+                      : noteBg.includes('circuit')
+                        ? '#0d130d'
+                        : '#010101'
+                  }
                   stroke={noteBg.includes('blood') ? '#8b1a1a' : '#2a2a2a'}
                   strokeWidth={noteData.inScale ? 2 : 1}
                   opacity={noteData.inScale ? 1 : 0.5}

@@ -10,11 +10,7 @@
 
 import { useMemo } from 'react';
 import type { NoteName, ChordDegree } from '@adagio/types';
-import {
-  getDegreeNote,
-  getRomanDegrees,
-  DEGREE_COLORS,
-} from '@adagio/theory';
+import { getDegreeNote, getRomanDegrees, DEGREE_COLORS } from '@adagio/theory';
 
 // ============================================================================
 // TYPES
@@ -55,10 +51,22 @@ function getContrastTextColor(hexColor: string): string {
  */
 function getChordQuality(degree: string, mode: 'major' | 'minor'): string {
   const majorQualities: Record<string, string> = {
-    'I': '', 'II': 'm', 'III': 'm', 'IV': '', 'V': '', 'VI': 'm', 'VII': 'dim'
+    I: '',
+    II: 'm',
+    III: 'm',
+    IV: '',
+    V: '',
+    VI: 'm',
+    VII: 'dim',
   };
   const minorQualities: Record<string, string> = {
-    'I': 'm', 'II': 'dim', 'III': '', 'IV': 'm', 'V': 'm', 'VI': '', 'VII': ''
+    I: 'm',
+    II: 'dim',
+    III: '',
+    IV: 'm',
+    V: 'm',
+    VI: '',
+    VII: '',
   };
 
   return mode === 'major' ? majorQualities[degree] || '' : minorQualities[degree] || 'm';
@@ -68,8 +76,8 @@ function getChordQuality(degree: string, mode: 'major' | 'minor'): string {
  * Génère le path SVG pour un segment du cercle
  */
 function createSegmentPath(index: number, total: number, outerR: number, innerR: number): string {
-  const startAngle = (index * 360 / total - 90) * Math.PI / 180;
-  const endAngle = ((index + 1) * 360 / total - 90) * Math.PI / 180;
+  const startAngle = (((index * 360) / total - 90) * Math.PI) / 180;
+  const endAngle = ((((index + 1) * 360) / total - 90) * Math.PI) / 180;
 
   const x1 = round(200 + outerR * Math.cos(startAngle));
   const y1 = round(200 + outerR * Math.sin(startAngle));
@@ -137,7 +145,8 @@ export function CircleDegreeSelector({
           const totalDegrees = degrees.length;
 
           // Position du texte
-          const textAngle = (index * 360 / totalDegrees + 180 / totalDegrees - 90) * Math.PI / 180;
+          const textAngle =
+            (((index * 360) / totalDegrees + 180 / totalDegrees - 90) * Math.PI) / 180;
           const outerR = 140;
           const innerR = 100;
 

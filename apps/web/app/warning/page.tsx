@@ -26,9 +26,7 @@ export default function WarningPage() {
             <h1 className="text-5xl lg:text-7xl font-metal text-blood tracking-tighter mb-4">
               WARNING
             </h1>
-            <p className="text-gray text-lg uppercase tracking-widest">
-              Avertissement
-            </p>
+            <p className="text-gray text-lg uppercase tracking-widest">Avertissement</p>
           </div>
 
           {/* Warning Box */}
@@ -86,9 +84,9 @@ export default function WarningPage() {
                     Risque d'addiction musicale
                   </h3>
                   <p className="text-xs text-gray">
-                    La pratique de la guitare peut entrainer des symptomes tels que: calloses aux doigts,
-                    mal au dos, envie d'acheter toujours plus de materiel, et besoin compulsif de
-                    jouer des riffs a tout moment de la journee.
+                    La pratique de la guitare peut entrainer des symptomes tels que: calloses aux
+                    doigts, mal au dos, envie d'acheter toujours plus de materiel, et besoin
+                    compulsif de jouer des riffs a tout moment de la journee.
                   </p>
                 </div>
               </div>
@@ -105,8 +103,8 @@ export default function WarningPage() {
                     Surcharge theorique
                   </h3>
                   <p className="text-xs text-gray">
-                    L'apprentissage simultane des 7 modes grecs peut provoquer des maux de tete,
-                    une confusion temporaire entre Do et C, et des reves involontaires en chiffres
+                    L'apprentissage simultane des 7 modes grecs peut provoquer des maux de tete, une
+                    confusion temporaire entre Do et C, et des reves involontaires en chiffres
                     romains.
                   </p>
                 </div>
@@ -124,9 +122,9 @@ export default function WarningPage() {
                     Syndrome d'acquisition de materiel (GAS)
                   </h3>
                   <p className="text-xs text-gray">
-                    ADAGIO decline toute responsabilite en cas d'achat compulsif de pedales
-                    d'effet, d'amplis a lampes, ou de guitares dont vous n'avez pas besoin.
-                    Veuillez consulter votre compte en banque avant de continuer.
+                    ADAGIO decline toute responsabilite en cas d'achat compulsif de pedales d'effet,
+                    d'amplis a lampes, ou de guitares dont vous n'avez pas besoin. Veuillez
+                    consulter votre compte en banque avant de continuer.
                   </p>
                 </div>
               </div>
@@ -143,9 +141,9 @@ export default function WarningPage() {
                     Alteration permanente de l'oreille
                   </h3>
                   <p className="text-xs text-gray">
-                    L'entrainement auditif peut vous rendre incapable d'ecouter de la musique
-                    sans analyser harmoniquement chaque accord. Vos amis ne comprendront plus
-                    rien quand vous parlerez de "sous-dominante" ou de "II-V-I".
+                    L'entrainement auditif peut vous rendre incapable d'ecouter de la musique sans
+                    analyser harmoniquement chaque accord. Vos amis ne comprendront plus rien quand
+                    vous parlerez de "sous-dominante" ou de "II-V-I".
                   </p>
                 </div>
               </div>
@@ -155,12 +153,8 @@ export default function WarningPage() {
           {/* Classic warning label */}
           <div className="border-4 border-blood p-8 mb-8 bg-blackness">
             <div className="text-center">
-              <p className="text-xs text-gray uppercase tracking-widest mb-2">
-                PARENTAL ADVISORY
-              </p>
-              <p className="text-blood text-xl font-metal uppercase mb-4">
-                EXPLICIT MUSIC THEORY
-              </p>
+              <p className="text-xs text-gray uppercase tracking-widest mb-2">PARENTAL ADVISORY</p>
+              <p className="text-blood text-xl font-metal uppercase mb-4">EXPLICIT MUSIC THEORY</p>
               <div className="flex justify-center gap-1">
                 {Array.from({ length: 12 }).map((_, i) => (
                   <div
@@ -201,12 +195,12 @@ export default function WarningPage() {
           <div className="border-t border-steel pt-6">
             <p className="text-xs text-gray text-center leading-relaxed">
               ADAGIO est fourni "tel quel", sans aucune garantie, explicite ou implicite.
-              L'utilisation de ce logiciel pour devenir rockstar n'est pas garantie.
-              Les resultats peuvent varier. Les solos de guitare peuvent etre dangereux
-              pour votre statut social. Ne pas utiliser si vous ettes enceinte ou si vous
-              envisagez une carrière stable. Les Side Effects peuvent inclure: des doigts
-              qui saignent, des voisins qui plaignent, et un appartement rempli de materiel.
-              Consultez votre professeur de guitare avant utilisation.
+              L'utilisation de ce logiciel pour devenir rockstar n'est pas garantie. Les resultats
+              peuvent varier. Les solos de guitare peuvent etre dangereux pour votre statut social.
+              Ne pas utiliser si vous ettes enceinte ou si vous envisagez une carrière stable. Les
+              Side Effects peuvent inclure: des doigts qui saignent, des voisins qui plaignent, et
+              un appartement rempli de materiel. Consultez votre professeur de guitare avant
+              utilisation.
             </p>
           </div>
         </div>

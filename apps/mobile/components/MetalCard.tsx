@@ -3,13 +3,7 @@
 // ============================================================================
 
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  type ViewStyle,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, type ViewStyle, TouchableOpacity } from 'react-native';
 import { Colors, Spacing, BorderRadius, Typography, FontWeights } from '../theme';
 
 export interface MetalCardProps {
@@ -43,10 +37,13 @@ export function MetalCard({
   };
 
   const CardWrapper = onPress && !disabled ? TouchableOpacity : View;
-  const wrapperProps = onPress && !disabled ? {
-    onPress,
-    activeOpacity: 0.7,
-  } : {};
+  const wrapperProps =
+    onPress && !disabled
+      ? {
+          onPress,
+          activeOpacity: 0.7,
+        }
+      : {};
 
   return (
     <CardWrapper
@@ -156,11 +153,7 @@ export function NoteCard({
       contentStyle={styles.noteCardContent}
     >
       <Text
-        style={[
-          styles.noteText,
-          isRoot && styles.noteTextRoot,
-          inScale && styles.noteTextInScale,
-        ]}
+        style={[styles.noteText, isRoot && styles.noteTextRoot, inScale && styles.noteTextInScale]}
       >
         {frenchNote || note}
       </Text>

@@ -110,13 +110,9 @@ describe('UsersController', () => {
     });
 
     it('should propagate NotFoundException from service', async () => {
-      mockUsersService.getProfile.mockRejectedValue(
-        new NotFoundException('User not found')
-      );
+      mockUsersService.getProfile.mockRejectedValue(new NotFoundException('User not found'));
 
-      await expect(controller.getProfile(mockRequest())).rejects.toThrow(
-        NotFoundException
-      );
+      await expect(controller.getProfile(mockRequest())).rejects.toThrow(NotFoundException);
     });
 
     it('should return profile with preferences', async () => {
@@ -225,13 +221,11 @@ describe('UsersController', () => {
     it('should propagate service errors', async () => {
       const updateDto: UpdateProfileDto = { name: 'Updated Name' };
 
-      mockUsersService.updateProfile.mockRejectedValue(
-        new Error('Database error')
-      );
+      mockUsersService.updateProfile.mockRejectedValue(new Error('Database error'));
 
-      await expect(
-        controller.updateProfile(mockRequest(), updateDto)
-      ).rejects.toThrow('Database error');
+      await expect(controller.updateProfile(mockRequest(), updateDto)).rejects.toThrow(
+        'Database error'
+      );
     });
   });
 
@@ -261,13 +255,11 @@ describe('UsersController', () => {
         newPassword: 'NewPass456!',
       };
 
-      mockUsersService.changePassword.mockRejectedValue(
-        new NotFoundException('User not found')
-      );
+      mockUsersService.changePassword.mockRejectedValue(new NotFoundException('User not found'));
 
-      await expect(
-        controller.changePassword(mockRequest(), changePasswordDto)
-      ).rejects.toThrow(NotFoundException);
+      await expect(controller.changePassword(mockRequest(), changePasswordDto)).rejects.toThrow(
+        NotFoundException
+      );
 
       expect(service.changePassword).toHaveBeenCalledWith('user-123', changePasswordDto);
     });
@@ -282,9 +274,9 @@ describe('UsersController', () => {
         new BadRequestException('Account uses OAuth or has no password set')
       );
 
-      await expect(
-        controller.changePassword(mockRequest(), changePasswordDto)
-      ).rejects.toThrow(BadRequestException);
+      await expect(controller.changePassword(mockRequest(), changePasswordDto)).rejects.toThrow(
+        BadRequestException
+      );
     });
 
     it('should propagate ForbiddenException for incorrect password', async () => {
@@ -297,9 +289,9 @@ describe('UsersController', () => {
         new ForbiddenException('Current password is incorrect')
       );
 
-      await expect(
-        controller.changePassword(mockRequest(), changePasswordDto)
-      ).rejects.toThrow(ForbiddenException);
+      await expect(controller.changePassword(mockRequest(), changePasswordDto)).rejects.toThrow(
+        ForbiddenException
+      );
     });
 
     it('should validate DTO constraints (currentPassword required)', async () => {
@@ -712,9 +704,7 @@ describe('UsersController', () => {
     });
 
     it('should propagate NotFoundException', async () => {
-      mockUsersService.deleteAccount.mockRejectedValue(
-        new NotFoundException('User not found')
-      );
+      mockUsersService.deleteAccount.mockRejectedValue(new NotFoundException('User not found'));
 
       await expect(
         controller.deleteAccount(mockRequest(), { password: 'Password123!' })
@@ -887,9 +877,13 @@ describe('UsersController', () => {
   describe('Error Propagation', () => {
     it('should propagate all service exceptions', async () => {
       const testCases = [
-        { method: 'getProfile', serviceMethod: 'getProfile'},
-        { method: 'updateProfile', serviceMethod: 'updateProfile', args: [{ name: 'Test' }]},
-        { method: 'changePassword', serviceMethod: 'changePassword', args: [{ currentPassword: 'Pass123!', newPassword: 'NewPass123!' }]},
+        { method: 'getProfile', serviceMethod: 'getProfile' },
+        { method: 'updateProfile', serviceMethod: 'updateProfile', args: [{ name: 'Test' }] },
+        {
+          method: 'changePassword',
+          serviceMethod: 'changePassword',
+          args: [{ currentPassword: 'Pass123!', newPassword: 'NewPass123!' }],
+        },
         { method: 'getStats', serviceMethod: 'getStats' },
         { method: 'getPracticeSessions', serviceMethod: 'getPracticeSessions' },
         { method: 'getAchievements', serviceMethod: 'getAchievementsSummary' },
@@ -897,8 +891,16 @@ describe('UsersController', () => {
         { method: 'getProgressions', serviceMethod: 'getProgressions' },
         { method: 'getProgress', serviceMethod: 'getProgress' },
         { method: 'getPreferences', serviceMethod: 'getPreferences' },
-        { method: 'updatePreferences', serviceMethod: 'updatePreferences', args: [{ theme: 'light' }]},
-        { method: 'deleteAccount', serviceMethod: 'deleteAccount', args: [{ password: 'Pass123!' }]},
+        {
+          method: 'updatePreferences',
+          serviceMethod: 'updatePreferences',
+          args: [{ theme: 'light' }],
+        },
+        {
+          method: 'deleteAccount',
+          serviceMethod: 'deleteAccount',
+          args: [{ password: 'Pass123!' }],
+        },
         { method: 'exportData', serviceMethod: 'exportUserData' },
       ];
 

@@ -4,14 +4,7 @@
 // ============================================================================
 
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { PlusIcon as _PlusIcon, TrashIcon, SaveIcon, MusicIcon } from '../../components';
 import { JaggedButton, MetalCard, NoteCard as _NoteCard } from '../../components';
@@ -51,11 +44,7 @@ export default function ComposerScreen() {
   };
 
   const updateBeats = (id: string, beats: number) => {
-    setProgression(
-      progression.map((chord) =>
-        chord.id === id ? { ...chord, beats } : chord
-      )
-    );
+    setProgression(progression.map((chord) => (chord.id === id ? { ...chord, beats } : chord)));
     setSelectedBeats({ ...selectedBeats, [id]: beats });
   };
 
@@ -65,23 +54,18 @@ export default function ComposerScreen() {
 
   const analyzeProgression = async () => {
     if (progression.length === 0) {
-      Alert.alert('Erreur', 'Ajoutez des accords d\'abord!');
+      Alert.alert('Erreur', "Ajoutez des accords d'abord!");
       return;
     }
 
     setIsAnalyzing(true);
     try {
-      const result = await apiClient.analyzeProgression(
-        progression.map((c) => c.degree)
-      );
+      const result = await apiClient.analyzeProgression(progression.map((c) => c.degree));
 
       // Navigate to results or show modal
-      Alert.alert(
-        'Analyse Terminée',
-        JSON.stringify(result, null, 2)
-      );
+      Alert.alert('Analyse Terminée', JSON.stringify(result, null, 2));
     } catch (error) {
-      Alert.alert('Erreur', 'Échec de l\'analyse');
+      Alert.alert('Erreur', "Échec de l'analyse");
       console.error(error);
     } finally {
       setIsAnalyzing(false);
@@ -90,7 +74,7 @@ export default function ComposerScreen() {
 
   const saveProgression = async () => {
     if (progression.length === 0) {
-      Alert.alert('Erreur', 'Ajoutez des accords d\'abord!');
+      Alert.alert('Erreur', "Ajoutez des accords d'abord!");
       return;
     }
 
@@ -125,18 +109,10 @@ export default function ComposerScreen() {
             {notes.map((note) => (
               <TouchableOpacity
                 key={note}
-                style={[
-                  styles.noteButton,
-                  key === note && styles.noteButtonActive,
-                ]}
+                style={[styles.noteButton, key === note && styles.noteButtonActive]}
                 onPress={() => setKey(note)}
               >
-                <Text
-                  style={[
-                    styles.noteButtonText,
-                    key === note && styles.noteButtonTextActive,
-                  ]}
-                >
+                <Text style={[styles.noteButtonText, key === note && styles.noteButtonTextActive]}>
                   {toFrenchNote(note)}
                 </Text>
               </TouchableOpacity>
@@ -223,11 +199,7 @@ export default function ComposerScreen() {
           <Text style={styles.degreeLabel}>DIATONIQUE - MAJEUR</Text>
           <View style={styles.degreeRow}>
             {diatonicMajor.map((deg) => (
-              <TouchableOpacity
-                key={deg}
-                style={styles.degreeButton}
-                onPress={() => addChord(deg)}
-              >
+              <TouchableOpacity key={deg} style={styles.degreeButton} onPress={() => addChord(deg)}>
                 <Text style={styles.degreeButtonText}>{deg}</Text>
               </TouchableOpacity>
             ))}
@@ -236,11 +208,7 @@ export default function ComposerScreen() {
           <Text style={styles.degreeLabel}>DIATONIQUE - MINEUR</Text>
           <View style={styles.degreeRow}>
             {diatonicMinor.map((deg) => (
-              <TouchableOpacity
-                key={deg}
-                style={styles.degreeButton}
-                onPress={() => addChord(deg)}
-              >
+              <TouchableOpacity key={deg} style={styles.degreeButton} onPress={() => addChord(deg)}>
                 <Text style={styles.degreeButtonText}>{deg}</Text>
               </TouchableOpacity>
             ))}

@@ -31,18 +31,12 @@ export default function LoginPage() {
           <div className="w-full text-center">
             <div className="section-frame p-8 border-2 border-toxic">
               <Icons.User size="lg" className="mx-auto mb-4 text-toxic" />
-              <h1 className="text-2xl font-metal text-white uppercase mb-2">
-                Deja Connecte
-              </h1>
+              <h1 className="text-2xl font-metal text-white uppercase mb-2">Deja Connecte</h1>
               <p className="text-gray mb-4">
                 Vous etes connecte en tant que <span className="text-toxic">{user?.email}</span>
               </p>
               <div className="flex flex-col gap-2">
-                <MetalButton
-                  onClick={() => router.push('/profile')}
-                >
-                  Mon Profil
-                </MetalButton>
+                <MetalButton onClick={() => router.push('/profile')}>Mon Profil</MetalButton>
                 <button
                   onClick={() => signOutMutation.mutate()}
                   disabled={signOutMutation.isPending}
@@ -94,9 +88,7 @@ export default function LoginPage() {
         <div className="max-w-md w-full">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-metal text-white tracking-tighter mb-2">
-              CONNEXION
-            </h1>
+            <h1 className="text-4xl font-metal text-white tracking-tighter mb-2">CONNEXION</h1>
             <p className="text-gray text-sm uppercase tracking-widest">
               Accedez a votre espace ADAGIO
             </p>
@@ -116,7 +108,10 @@ export default function LoginPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="email"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Email
                   </label>
                   <input
@@ -132,7 +127,10 @@ export default function LoginPage() {
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password" className="text-xs text-gray uppercase tracking-wider block mb-2">
+                  <label
+                    htmlFor="password"
+                    className="text-xs text-gray uppercase tracking-wider block mb-2"
+                  >
                     Mot de passe
                   </label>
                   <input
@@ -149,7 +147,10 @@ export default function LoginPage() {
 
                 {/* Forgot password */}
                 <div className="text-right">
-                  <Link href="/forgot-password" className="text-xs text-rust hover:text-white transition-colors">
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs text-rust hover:text-white transition-colors"
+                  >
                     Mot de passe oublie ?
                   </Link>
                 </div>
@@ -198,14 +199,20 @@ export default function LoginPage() {
           {/* Register link */}
           <p className="text-center text-gray text-sm mt-6">
             Pas encore de compte ?{' '}
-            <Link href="/register" className="text-toxic hover:text-white transition-colors font-bold">
+            <Link
+              href="/register"
+              className="text-toxic hover:text-white transition-colors font-bold"
+            >
               Creer un compte
             </Link>
           </p>
 
           {/* Back to home */}
           <div className="text-center mt-4">
-            <Link href="/" className="text-xs text-gray hover:text-white transition-colors flex items-center justify-center gap-1">
+            <Link
+              href="/"
+              className="text-xs text-gray hover:text-white transition-colors flex items-center justify-center gap-1"
+            >
               <Icons.ArrowLeft size="sm" />
               Retour a l'accueil
             </Link>

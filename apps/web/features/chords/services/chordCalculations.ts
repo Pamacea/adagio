@@ -12,12 +12,7 @@ import type {
   FretboardNote as FretboardNoteType,
   Interval,
 } from '@adagio/types';
-import {
-  buildChord,
-  getChordTension,
-  getChordVoicings,
-  getDegreeNote
-} from '@adagio/theory';
+import { buildChord, getChordTension, getChordVoicings, getDegreeNote } from '@adagio/theory';
 
 // ============================================================================
 // CONSTANTS - Chord qualities by degree and tonality
@@ -28,13 +23,13 @@ import {
  * Note: Utilise string[] pour inclure des variations non-standard
  */
 export const MAJOR_DEGREE_QUALITIES: Record<string, string[]> = {
-  'I': ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
-  'II': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'III': ['m', 'm7', 'm6', 'm9', 'madd9'],
-  'IV': ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
-  'V': ['7', '9', '11', '13', '7sus4', '13sus4'],
-  'VI': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'VII': ['m7b5', 'm7b5b9', 'm7b11'],
+  I: ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
+  II: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
+  III: ['m', 'm7', 'm6', 'm9', 'madd9'],
+  IV: ['', 'maj7', '6', 'add9', '6add9', 'maj9'],
+  V: ['7', '9', '11', '13', '7sus4', '13sus4'],
+  VI: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
+  VII: ['m7b5', 'm7b5b9', 'm7b11'],
 };
 
 /**
@@ -42,21 +37,30 @@ export const MAJOR_DEGREE_QUALITIES: Record<string, string[]> = {
  * Note: Utilise string[] pour inclure des variations non-standard
  */
 export const MINOR_DEGREE_QUALITIES: Record<string, string[]> = {
-  'I': ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
-  'II': ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11'],
-  'III': ['', 'maj7', '6', 'add9'],
-  'IV': ['m', 'm7', 'm6', 'm9', 'm11'],
-  'V': ['7', '7alt', '7#11', '7#9'],
-  'VI': ['', 'maj7', '6', 'add9', '6add9'],
-  'VII': ['', '7', 'maj7'],
+  I: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
+  II: ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11'],
+  III: ['', 'maj7', '6', 'add9'],
+  IV: ['m', 'm7', 'm6', 'm9', 'm11'],
+  V: ['7', '7alt', '7#11', '7#9'],
+  VI: ['', 'maj7', '6', 'add9', '6add9'],
+  VII: ['', '7', 'maj7'],
 };
 
 /**
  * Qualités d'accords supplémentaires (extensions, altérations)
  */
 export const EXTENSION_QUALITIES: string[] = [
-  'aug', 'aug7', 'dim', 'dim7', 'sus2', 'sus4', '7sus4',
-  '11', 'm11', '13', 'm13'
+  'aug',
+  'aug7',
+  'dim',
+  'dim7',
+  'sus2',
+  'sus4',
+  '7sus4',
+  '11',
+  'm11',
+  '13',
+  'm13',
 ];
 
 /**
@@ -68,7 +72,18 @@ export const GUITAR_TUNING: NoteName[] = ['E', 'B', 'G', 'D', 'A', 'E'];
  * All chromatic notes
  */
 export const CHROMATIC_NOTES: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
 ];
 
 // ============================================================================
@@ -116,9 +131,7 @@ export function getAvailableChordsForDegree(
   degree: ChordDegree,
   tonality: 'major' | 'minor'
 ): string[] {
-  const qualities = tonality === 'major'
-    ? MAJOR_DEGREE_QUALITIES
-    : MINOR_DEGREE_QUALITIES;
+  const qualities = tonality === 'major' ? MAJOR_DEGREE_QUALITIES : MINOR_DEGREE_QUALITIES;
 
   return qualities[degree] || [];
 }
@@ -144,7 +157,7 @@ export function getAllChordsForDegree(
 
   // Add extensions that aren't already in diatonic
   const diatonicSet = new Set(diatonic);
-  const extensions = EXTENSION_QUALITIES.filter(q => !diatonicSet.has(q as ChordQuality));
+  const extensions = EXTENSION_QUALITIES.filter((q) => !diatonicSet.has(q as ChordQuality));
 
   return [...diatonic, ...extensions];
 }
@@ -222,8 +235,7 @@ export function calculateExtensionChords(
   usedQualities: Set<ChordQuality>,
   fretCount = 24
 ): CalculatedChord[] {
-  return EXTENSION_QUALITIES
-    .filter(q => !usedQualities.has(q as ChordQuality))
+  return EXTENSION_QUALITIES.filter((q) => !usedQualities.has(q as ChordQuality))
     .map((quality) => {
       try {
         return calculateChord(root, quality as ChordQuality, fretCount);
@@ -248,8 +260,23 @@ export function calculateExtensionChords(
 export function getIntervalInChord(chordRoot: NoteName, note: NoteName): Interval | undefined {
   // Semitone values for notes (enharmonic equivalents)
   const semitones: Record<NoteName, number> = {
-    'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5,
-    'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
+    C: 0,
+    'C#': 1,
+    Db: 1,
+    D: 2,
+    'D#': 3,
+    Eb: 3,
+    E: 4,
+    F: 5,
+    'F#': 6,
+    Gb: 6,
+    G: 7,
+    'G#': 8,
+    Ab: 8,
+    A: 9,
+    'A#': 10,
+    Bb: 10,
+    B: 11,
   };
 
   // Interval mapping by semitone difference (12 elements = 12 semitones)
@@ -276,12 +303,19 @@ export function calculateTensionNotes(chordRoot: NoteName, quality: ChordQuality
   const transpose = (note: NoteName, semitones: number): NoteName => {
     const notes = CHROMATIC_NOTES;
     const index = notes.indexOf(note);
-    const newIndex = ((index + semitones) % 12 + 12) % 12;
+    const newIndex = (((index + semitones) % 12) + 12) % 12;
     return notes[newIndex] ?? note; // Fallback to original note
   };
 
   // The 7th and 4th create tension
-  if (quality === '7' || quality === '9' || quality === '13' || quality === 'm7' || quality === 'm9' || quality === 'm13') {
+  if (
+    quality === '7' ||
+    quality === '9' ||
+    quality === '13' ||
+    quality === 'm7' ||
+    quality === 'm9' ||
+    quality === 'm13'
+  ) {
     tensionNotes.push(transpose(chordRoot, 10)); // b7
   }
   if (quality === 'maj7' || quality === '9') {
@@ -319,11 +353,21 @@ export function analyzeChordDifficulty(
   // Analyze quality complexity
   const _simpleQualities: ChordQuality[] = ['', 'm', '7', 'm7', 'sus2', 'sus4'];
   const mediumQualities: ChordQuality[] = ['maj7', 'm6', '6', 'add9', 'madd9', '7sus4', 'm9'];
-  const hardQualities: ChordQuality[] = ['dim', 'dim7', 'm7b5', 'aug', 'aug7', '11', 'm11', '13', 'm13'];
+  const hardQualities: ChordQuality[] = [
+    'dim',
+    'dim7',
+    'm7b5',
+    'aug',
+    'aug7',
+    '11',
+    'm11',
+    '13',
+    'm13',
+  ];
 
   if (hardQualities.includes(quality)) {
     level = 'hard';
-    reasons.push('Structure d\'accord complexe avec nombreuses notes altérées');
+    reasons.push("Structure d'accord complexe avec nombreuses notes altérées");
 
     if (quality.includes('dim')) {
       reasons.push('Les accords diminués nécessitent une précision de doigté');
@@ -340,7 +384,7 @@ export function analyzeChordDifficulty(
   } else if (mediumQualities.includes(quality)) {
     level = 'medium';
     reasons.push('Accord intermédiaire avec extensions ou altérations');
-    tips.push('Maîtrisez d\'abord les accords de base (majeur, mineur, 7e)');
+    tips.push("Maîtrisez d'abord les accords de base (majeur, mineur, 7e)");
   } else {
     level = 'easy';
     reasons.push('Accord de base, essentiel pour débuter');
@@ -358,14 +402,17 @@ export function analyzeChordDifficulty(
     }
 
     // Check for barre chords
-    const fretCounts = voicing.notes.reduce((acc, note) => {
-      if (note.fret > 0) {
-        acc[note.fret] = (acc[note.fret] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<number, number>);
+    const fretCounts = voicing.notes.reduce(
+      (acc, note) => {
+        if (note.fret > 0) {
+          acc[note.fret] = (acc[note.fret] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<number, number>
+    );
 
-    const hasBarre = Object.values(fretCounts).some(count => count >= 5);
+    const hasBarre = Object.values(fretCounts).some((count) => count >= 5);
 
     if (hasBarre && level === 'easy') {
       level = 'medium';
@@ -390,10 +437,7 @@ export function analyzeChordDifficulty(
  * @param voicing - Optional voicing to analyze
  * @returns Simple difficulty level
  */
-export function getChordDifficulty(
-  quality: ChordQuality,
-  voicing?: ChordVoicing
-): ChordDifficulty {
+export function getChordDifficulty(quality: ChordQuality, voicing?: ChordVoicing): ChordDifficulty {
   return analyzeChordDifficulty(quality, voicing).level;
 }
 
@@ -431,7 +475,7 @@ export function calculateFretboardForChord(
         string: stringIdx,
         fret,
         inScale: chordNotes.includes(noteName),
-        interval: chordNotes.includes(noteName) ? '1' as Interval : undefined,
+        interval: chordNotes.includes(noteName) ? ('1' as Interval) : undefined,
       });
     }
   }
@@ -451,8 +495,8 @@ export function calculateFretboardForChord(
  * @returns Array of positions for diagram rendering
  */
 export interface DiagramPosition {
-  string: number;  // 0=E bass to 5=E treble (left to right)
-  fret: number;    // -1=muted, 0=open, >0=fret number
+  string: number; // 0=E bass to 5=E treble (left to right)
+  fret: number; // -1=muted, 0=open, >0=fret number
   finger?: number;
   note?: NoteName;
   interval?: Interval;
@@ -464,7 +508,9 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
 
   // Extract root and quality from voicing name
   const chordRoot = voicing.name.charAt(0) as NoteName;
-  const qualityMatch = voicing.name.slice(1).match(/^(maj7|m7|7|m|6|m6|dim|aug|sus|add|7sus4|maj9|m9|m11|m13|9|11|13)/);
+  const qualityMatch = voicing.name
+    .slice(1)
+    .match(/^(maj7|m7|7|m|6|m6|dim|aug|sus|add|7sus4|maj9|m9|m11|m13|9|11|13)/);
   const quality = (qualityMatch ? qualityMatch[0] : '') as ChordQuality;
 
   // Build chord to get intervals
@@ -484,7 +530,7 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
   for (let diagramString = 0; diagramString <= 5; diagramString++) {
     // Find corresponding note in voicing (inverted string numbering)
     const voicingString = 5 - diagramString;
-    const playedNote = voicing.notes.find(n => n.string === voicingString);
+    const playedNote = voicing.notes.find((n) => n.string === voicingString);
 
     if (playedNote && playedNote.fret > 0) {
       // String is played at a fret
@@ -529,9 +575,23 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
  */
 export function getFrenchNoteName(note: NoteName): string {
   const NOTE_FR: Record<string, string> = {
-    'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭', 'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
-    'E': 'MI', 'F': 'FA', 'F#': 'FA♯', 'Gb': 'SOL♭', 'G': 'SOL', 'G#': 'SOL♯',
-    'Ab': 'LA♭', 'A': 'LA', 'A#': 'LA♯', 'Bb': 'SI♭', 'B': 'SI',
+    C: 'DO',
+    'C#': 'DO♯',
+    Db: 'RÉ♭',
+    D: 'RÉ',
+    'D#': 'RÉ♯',
+    Eb: 'MI♭',
+    E: 'MI',
+    F: 'FA',
+    'F#': 'FA♯',
+    Gb: 'SOL♭',
+    G: 'SOL',
+    'G#': 'SOL♯',
+    Ab: 'LA♭',
+    A: 'LA',
+    'A#': 'LA♯',
+    Bb: 'SI♭',
+    B: 'SI',
   };
   return NOTE_FR[note] || note;
 }

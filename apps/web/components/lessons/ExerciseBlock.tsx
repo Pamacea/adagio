@@ -19,7 +19,7 @@ export function ExerciseBlock({ exercise, onComplete }: ExerciseBlockProps) {
   const [showAllCompleted, setShowAllCompleted] = useState(false);
 
   const toggleStep = (index: number) => {
-    setCompletedSteps(prev => {
+    setCompletedSteps((prev) => {
       const next = new Set(prev);
       if (next.has(index)) {
         next.delete(index);
@@ -56,7 +56,9 @@ export function ExerciseBlock({ exercise, onComplete }: ExerciseBlockProps) {
               <Icons.Check size="lg" />
             </div>
             <h4 className="text-2xl font-metal text-toxic mb-2">EXERCICE TERMINÉ!</h4>
-            <p className="text-gray mb-6">Excellent travail! Continuez à vous entraîner régulièrement.</p>
+            <p className="text-gray mb-6">
+              Excellent travail! Continuez à vous entraîner régulièrement.
+            </p>
             <button
               onClick={handleReset}
               className="px-6 py-3 border-2 border-steel bg-blackness text-gray font-bold uppercase hover:border-white transition-all"
@@ -90,14 +92,16 @@ export function ExerciseBlock({ exercise, onComplete }: ExerciseBlockProps) {
                         : 'border-steel bg-blackness hover:border-white'
                     }`}
                   >
-                    <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center font-bold text-sm ${
-                      isComplete ? 'bg-toxic text-black' : 'bg-abyss border-2 border-steel text-gray'
-                    }`}>
+                    <span
+                      className={`flex-shrink-0 w-8 h-8 flex items-center justify-center font-bold text-sm ${
+                        isComplete
+                          ? 'bg-toxic text-black'
+                          : 'bg-abyss border-2 border-steel text-gray'
+                      }`}
+                    >
                       {isComplete ? <Icons.Check size="sm" /> : i + 1}
                     </span>
-                    <p className={isComplete ? 'text-toxic line-through' : 'text-white'}>
-                      {step}
-                    </p>
+                    <p className={isComplete ? 'text-toxic line-through' : 'text-white'}>{step}</p>
                   </button>
                 );
               })}

@@ -35,7 +35,7 @@ async function bootstrap() {
   // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('Adagio API')
-    .setDescription('L\'atlas harmonique intelligent pour guitaristes')
+    .setDescription("L'atlas harmonique intelligent pour guitaristes")
     .setVersion('0.1.0')
     .addBearerAuth()
     .build();

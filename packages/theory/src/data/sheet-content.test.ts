@@ -3,12 +3,7 @@
 // ============================================================================
 
 import { describe, it, expect } from 'vitest';
-import {
-  SHEET_CONTENT,
-  SHEET_TAB_IDS,
-  getSheetTab,
-  type SheetTabId,
-} from './sheet-content';
+import { SHEET_CONTENT, SHEET_TAB_IDS, getSheetTab, type SheetTabId } from './sheet-content';
 
 describe('SHEET_CONTENT', () => {
   it('contient les 12 onglets du Sheet', () => {
@@ -29,7 +24,7 @@ describe('SHEET_CONTENT', () => {
     }
   });
 
-  it('getSheetTab retourne l\'onglet demandé', () => {
+  it("getSheetTab retourne l'onglet demandé", () => {
     const tab = getSheetTab('modes');
     expect(tab.title).toBe('Modes');
     expect(tab.sections[0]?.rows[0]?.[0]).toBe('Ionien');
@@ -43,7 +38,7 @@ describe('SHEET_CONTENT', () => {
     expect(all).toContain('Éolien (Mineure naturelle)');
   });
 
-  it('l\'onglet Anti-sèche expose les 3 lignes partiellement remplies', () => {
+  it("l'onglet Anti-sèche expose les 3 lignes partiellement remplies", () => {
     const tab = getSheetTab('anti-seche');
     expect(tab.empty).toBe(false);
     expect(tab.sections[0]?.headers).toHaveLength(0);
@@ -51,14 +46,14 @@ describe('SHEET_CONTENT', () => {
     expect(tab.sections[0]?.rows[0]?.[0]).toContain('1(Majeur)');
   });
 
-  it('l\'onglet Harmonie contient les sections Axis Theory et Coltrane', () => {
+  it("l'onglet Harmonie contient les sections Axis Theory et Coltrane", () => {
     const tab = getSheetTab('harmonie');
     const titles = tab.sections.map((s) => s.title);
     expect(titles).toContain('Axis Theory');
     expect(tab.sections.length).toBeGreaterThanOrEqual(3);
   });
 
-  it('l\'onglet Progressions a le bandeau en titre et une colonne NOTES', () => {
+  it("l'onglet Progressions a le bandeau en titre et une colonne NOTES", () => {
     const tab = getSheetTab('progressions');
     const s = tab.sections[0];
     expect(s).toBeDefined();
@@ -67,7 +62,7 @@ describe('SHEET_CONTENT', () => {
     expect(s?.rows.length).toBeGreaterThan(20);
   });
 
-  it('les en-têtes sont nettoyés (pas d\'espaces superflus)', () => {
+  it("les en-têtes sont nettoyés (pas d'espaces superflus)", () => {
     for (const id of SHEET_TAB_IDS) {
       for (const section of SHEET_CONTENT[id].sections) {
         for (const h of section.headers) {

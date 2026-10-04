@@ -6,7 +6,12 @@
 'use client';
 
 import type { NoteName } from '@adagio/types';
-import { FRENCH_NOTE_NAMES, DEGREE_COLORS, ROMAN_NUMERALS_MAJOR, ROMAN_NUMERALS_MINOR } from '@adagio/theory';
+import {
+  FRENCH_NOTE_NAMES,
+  DEGREE_COLORS,
+  ROMAN_NUMERALS_MAJOR,
+  ROMAN_NUMERALS_MINOR,
+} from '@adagio/theory';
 
 export interface ScaleNotesDisplayProps {
   scaleNotes: string[];
@@ -14,11 +19,7 @@ export interface ScaleNotesDisplayProps {
   selectedKey: NoteName;
 }
 
-export function ScaleNotesDisplay({
-  scaleNotes,
-  keyMode,
-  selectedKey,
-}: ScaleNotesDisplayProps) {
+export function ScaleNotesDisplay({ scaleNotes, keyMode, selectedKey }: ScaleNotesDisplayProps) {
   const numerals = keyMode === 'major' ? ROMAN_NUMERALS_MAJOR : ROMAN_NUMERALS_MINOR;
 
   return (
@@ -35,7 +36,7 @@ export function ScaleNotesDisplay({
                 className="w-full aspect-square border-2 flex items-center justify-center mb-2"
                 style={{
                   backgroundColor: color + '30',
-                  borderColor: color
+                  borderColor: color,
                 }}
               >
                 <span className="text-xl font-black" style={{ color }}>

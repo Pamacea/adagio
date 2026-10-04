@@ -19,7 +19,7 @@ describe('FretboardCalculator', () => {
       const result = calculateFretboard();
 
       // Get unique string indices
-      const strings = new Set(result.map(note => note.string));
+      const strings = new Set(result.map((note) => note.string));
 
       expect(strings.size).toBe(6);
     });
@@ -28,34 +28,34 @@ describe('FretboardCalculator', () => {
       const result = calculateFretboard({ fretCount: 0 });
 
       // String 0 (high E): E at fret 0
-      const highEOpen = result.find(n => n.string === 0 && n.fret === 0);
+      const highEOpen = result.find((n) => n.string === 0 && n.fret === 0);
       expect(highEOpen?.name).toBe('E');
 
       // String 1 (B): B at fret 0
-      const bOpen = result.find(n => n.string === 1 && n.fret === 0);
+      const bOpen = result.find((n) => n.string === 1 && n.fret === 0);
       expect(bOpen?.name).toBe('B');
 
       // String 2 (G): G at fret 0
-      const gOpen = result.find(n => n.string === 2 && n.fret === 0);
+      const gOpen = result.find((n) => n.string === 2 && n.fret === 0);
       expect(gOpen?.name).toBe('G');
 
       // String 3 (D): D at fret 0
-      const dOpen = result.find(n => n.string === 3 && n.fret === 0);
+      const dOpen = result.find((n) => n.string === 3 && n.fret === 0);
       expect(dOpen?.name).toBe('D');
 
       // String 4 (A): A at fret 0
-      const aOpen = result.find(n => n.string === 4 && n.fret === 0);
+      const aOpen = result.find((n) => n.string === 4 && n.fret === 0);
       expect(aOpen?.name).toBe('A');
 
       // String 5 (low E): E at fret 0
-      const lowEOpen = result.find(n => n.string === 5 && n.fret === 0);
+      const lowEOpen = result.find((n) => n.string === 5 && n.fret === 0);
       expect(lowEOpen?.name).toBe('E');
     });
 
     it('should calculate correct notes for first fret (all F)', () => {
       const result = calculateFretboard({ fretCount: 1 });
 
-      const firstFretNotes = result.filter(n => n.fret === 1);
+      const firstFretNotes = result.filter((n) => n.fret === 1);
 
       // All strings should have F or F# at fret 1
       expect(firstFretNotes).toHaveLength(6);
@@ -71,8 +71,8 @@ describe('FretboardCalculator', () => {
       const result12 = calculateFretboard({ fretCount: 12 });
       const result24 = calculateFretboard({ fretCount: 24 });
 
-      const maxFret12 = Math.max(...result12.map(n => n.fret));
-      const maxFret24 = Math.max(...result24.map(n => n.fret));
+      const maxFret12 = Math.max(...result12.map((n) => n.fret));
+      const maxFret24 = Math.max(...result24.map((n) => n.fret));
 
       expect(maxFret12).toBe(12);
       expect(maxFret24).toBe(24);
@@ -87,18 +87,22 @@ describe('FretboardCalculator', () => {
     });
 
     it('should mark inScale correctly for C major', () => {
-      const result = calculateFretboard({ key: 'C', scale: ['1', '2', '3', '4', '5', '6', '7'], fretCount: 0 });
+      const result = calculateFretboard({
+        key: 'C',
+        scale: ['1', '2', '3', '4', '5', '6', '7'],
+        fretCount: 0,
+      });
 
       // Open strings in C major: E (yes), B (yes), G (yes), D (yes), A (yes), E (yes)
       // C major scale: C, D, E, F, G, A, B - ALL open strings except maybe some are in the scale
       // Open strings: E(high), B, G, D, A, E(low)
       // Actually checking: C major contains C, D, E, F, G, A, B
       // D is IN C major (it's the 2nd degree), A is IN C major (it's the 6th degree)
-      const eOpen = result.find(n => n.string === 0 && n.fret === 0); // High E - IN scale
-      const bOpen = result.find(n => n.string === 1 && n.fret === 0);  // B - IN scale
-      const gOpen = result.find(n => n.string === 2 && n.fret === 0);  // G - IN scale
-      const dOpen = result.find(n => n.string === 3 && n.fret === 0);  // D - IN scale (2nd degree)
-      const aOpen = result.find(n => n.string === 4 && n.fret === 0);  // A - IN scale (6th degree)
+      const eOpen = result.find((n) => n.string === 0 && n.fret === 0); // High E - IN scale
+      const bOpen = result.find((n) => n.string === 1 && n.fret === 0); // B - IN scale
+      const gOpen = result.find((n) => n.string === 2 && n.fret === 0); // G - IN scale
+      const dOpen = result.find((n) => n.string === 3 && n.fret === 0); // D - IN scale (2nd degree)
+      const aOpen = result.find((n) => n.string === 4 && n.fret === 0); // A - IN scale (6th degree)
 
       expect(eOpen?.inScale).toBe(true);
       expect(bOpen?.inScale).toBe(true);
@@ -107,15 +111,23 @@ describe('FretboardCalculator', () => {
       expect(aOpen?.inScale).toBe(true); // A is in C major!
 
       // Notes NOT in C major would be F#, C#, G# - these are the black keys
-      const fsNotes = result.filter(n => n.name === 'F#');
-      fsNotes.forEach(note => {
+      const fsNotes = result.filter((n) => n.name === 'F#');
+      fsNotes.forEach((note) => {
         expect(note.inScale).toBe(false);
       });
     });
 
     it('should work with different keys', () => {
-      const gMajor = calculateFretboard({ key: 'G', scale: ['1', '2', '3', '4', '5', '6', '7'], fretCount: 0 });
-      const dMajor = calculateFretboard({ key: 'D', scale: ['1', '2', '3', '4', '5', '6', '7'], fretCount: 0 });
+      const gMajor = calculateFretboard({
+        key: 'G',
+        scale: ['1', '2', '3', '4', '5', '6', '7'],
+        fretCount: 0,
+      });
+      const dMajor = calculateFretboard({
+        key: 'D',
+        scale: ['1', '2', '3', '4', '5', '6', '7'],
+        fretCount: 0,
+      });
 
       expect(gMajor.length).toBeGreaterThan(0);
       expect(dMajor.length).toBeGreaterThan(0);
@@ -126,7 +138,7 @@ describe('FretboardCalculator', () => {
       const result = calculateFretboard({ key: 'C', scale: pentatonic, fretCount: 4 });
 
       // Check that some notes are not in scale
-      const notesNotInScale = result.filter(n => !n.inScale);
+      const notesNotInScale = result.filter((n) => !n.inScale);
       expect(notesNotInScale.length).toBeGreaterThan(0);
     });
 
@@ -142,13 +154,16 @@ describe('FretboardCalculator', () => {
       const result = calculateFretboard({ tuning: dropD, fretCount: 0 });
 
       // Low E string (string 5) should now be D
-      const lowString = result.find(n => n.string === 5 && n.fret === 0);
+      const lowString = result.find((n) => n.string === 5 && n.fret === 0);
       expect(lowString?.name).toBe('D');
     });
 
     it('should handle Open D tuning', () => {
       const openD: NoteName[] = ['E', 'B', 'G', 'D', 'A', 'D']; // Actually Open D is DADF#AD, but let's test with a valid array
-      const result = calculateFretboard({ tuning: ['D', 'A', 'D', 'F#', 'A', 'D'] as NoteName[], fretCount: 0 });
+      const result = calculateFretboard({
+        tuning: ['D', 'A', 'D', 'F#', 'A', 'D'] as NoteName[],
+        fretCount: 0,
+      });
 
       expect(result.length).toBe(6);
     });
@@ -170,7 +185,7 @@ describe('FretboardCalculator', () => {
     it('should assign correct octaves', () => {
       const result = calculateFretboard({ fretCount: 12 });
 
-      result.forEach(note => {
+      result.forEach((note) => {
         expect(note.octave).toBeGreaterThanOrEqual(0);
         expect(typeof note.octave).toBe('number');
       });
@@ -182,12 +197,12 @@ describe('FretboardCalculator', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
 
       // Notes in scale should have interval info
-      const rootNotes = result.filter(n => n.interval === '1');
+      const rootNotes = result.filter((n) => n.interval === '1');
       expect(rootNotes.length).toBeGreaterThan(0);
 
       // All C notes should be marked as root (1)
-      const cNotes = result.filter(n => n.name === 'C');
-      cNotes.forEach(note => {
+      const cNotes = result.filter((n) => n.name === 'C');
+      cNotes.forEach((note) => {
         expect(note.interval).toBeDefined();
       });
     });
@@ -196,15 +211,15 @@ describe('FretboardCalculator', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
 
       // Notes in scale should have degree info
-      const notesWithDegree = result.filter(n => n.degree !== undefined);
+      const notesWithDegree = result.filter((n) => n.degree !== undefined);
       expect(notesWithDegree.length).toBeGreaterThan(0);
     });
 
     it('should correctly identify roots in C major', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
 
-      const cNotes = result.filter(n => n.name === 'C');
-      cNotes.forEach(note => {
+      const cNotes = result.filter((n) => n.name === 'C');
+      cNotes.forEach((note) => {
         expect(note.interval).toBe('1');
         expect(note.degree).toBe('1');
       });
@@ -213,8 +228,8 @@ describe('FretboardCalculator', () => {
     it('should correctly identify thirds in C major', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
 
-      const eNotes = result.filter(n => n.name === 'E');
-      eNotes.forEach(note => {
+      const eNotes = result.filter((n) => n.name === 'E');
+      eNotes.forEach((note) => {
         if (note.inScale) {
           expect(note.interval).toBe('3');
           expect(note.degree).toBe('3');
@@ -225,8 +240,8 @@ describe('FretboardCalculator', () => {
     it('should correctly identify fifths in C major', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 12);
 
-      const gNotes = result.filter(n => n.name === 'G');
-      gNotes.forEach(note => {
+      const gNotes = result.filter((n) => n.name === 'G');
+      gNotes.forEach((note) => {
         if (note.inScale) {
           expect(note.interval).toBe('5');
           expect(note.degree).toBe('5');
@@ -238,11 +253,11 @@ describe('FretboardCalculator', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', 'b3', '4', '5', 'b6', 'b7'], 12);
 
       // Eb/D# should be the b3 (minor third) - enharmonic spelling may vary
-      const minorThirdNotes = result.filter(n => n.name === 'Eb' || n.name === 'D#');
+      const minorThirdNotes = result.filter((n) => n.name === 'Eb' || n.name === 'D#');
       expect(minorThirdNotes.length).toBeGreaterThan(0);
 
       // Check that notes marked as b3 have correct interval
-      const b3Notes = result.filter(n => n.interval === 'b3');
+      const b3Notes = result.filter((n) => n.interval === 'b3');
       expect(b3Notes.length).toBeGreaterThan(0);
     });
 
@@ -250,7 +265,7 @@ describe('FretboardCalculator', () => {
       const pentatonicMajor: Interval[] = ['1', '2', '3', '5', '6'];
       const result = getFretboardNotesForKey('C', pentatonicMajor, 12);
 
-      const rootNotes = result.filter(n => n.interval === '1');
+      const rootNotes = result.filter((n) => n.interval === '1');
       expect(rootNotes.length).toBeGreaterThan(0);
     });
 
@@ -258,7 +273,7 @@ describe('FretboardCalculator', () => {
       const pentatonicMinor: Interval[] = ['1', 'b3', '4', '5', 'b7'];
       const result = getFretboardNotesForKey('C', pentatonicMinor, 12);
 
-      const rootNotes = result.filter(n => n.interval === '1');
+      const rootNotes = result.filter((n) => n.interval === '1');
       expect(rootNotes.length).toBeGreaterThan(0);
     });
 
@@ -267,7 +282,7 @@ describe('FretboardCalculator', () => {
       const result = getFretboardNotesForKey('C', blues, 12);
 
       // Blues scale has 6 notes, check for blue note (b5)
-      const blueNotes = result.filter(n => n.interval === 'b5');
+      const blueNotes = result.filter((n) => n.interval === 'b5');
       expect(blueNotes.length).toBeGreaterThan(0);
     });
 
@@ -296,7 +311,7 @@ describe('FretboardCalculator', () => {
     it('should include all note properties', () => {
       const result = getFretboardNotesForKey('C', ['1', '2', '3', '4', '5', '6', '7'], 0);
 
-      result.forEach(note => {
+      result.forEach((note) => {
         expect(note.name).toBeDefined();
         expect(note.octave).toBeDefined();
         expect(note.string).toBeGreaterThanOrEqual(0);
@@ -404,19 +419,19 @@ describe('FretboardCalculator', () => {
       // String 5 (E low): 8th fret (E + 8 semitones = C)
       // String 0 (E high): 8th fret (E + 8 semitones = C)
 
-      const cNotes = result.filter(n => n.name === 'C');
+      const cNotes = result.filter((n) => n.name === 'C');
 
-      expect(cNotes.some(n => n.string === 4 && n.fret === 3)).toBe(true);
-      expect(cNotes.some(n => n.string === 3 && n.fret === 10)).toBe(true);
-      expect(cNotes.some(n => n.string === 2 && n.fret === 5)).toBe(true);
-      expect(cNotes.some(n => n.string === 1 && n.fret === 1)).toBe(true);
+      expect(cNotes.some((n) => n.string === 4 && n.fret === 3)).toBe(true);
+      expect(cNotes.some((n) => n.string === 3 && n.fret === 10)).toBe(true);
+      expect(cNotes.some((n) => n.string === 2 && n.fret === 5)).toBe(true);
+      expect(cNotes.some((n) => n.string === 1 && n.fret === 1)).toBe(true);
     });
 
     it('should find octave patterns', () => {
       const result = calculateFretboard({ fretCount: 12 });
 
       // Find all E notes
-      const eNotes = result.filter(n => n.name === 'E');
+      const eNotes = result.filter((n) => n.name === 'E');
 
       // With fretCount 12, E appears at:
       // String 0 (E): frets 0, 12
@@ -429,8 +444,8 @@ describe('FretboardCalculator', () => {
       expect(eNotes.length).toBe(8);
 
       // Should find E notes on both E strings
-      const highE = eNotes.filter(n => n.string === 0);
-      const lowE = eNotes.filter(n => n.string === 5);
+      const highE = eNotes.filter((n) => n.string === 0);
+      const lowE = eNotes.filter((n) => n.string === 5);
       expect(highE.length).toBe(2); // frets 0 and 12
       expect(lowE.length).toBe(2); // frets 0 and 12
     });
@@ -443,8 +458,8 @@ describe('FretboardCalculator', () => {
       });
 
       // In the 5th position (starting at 5th fret), we should have the classic box pattern
-      const fifthPosNotes = result.filter(n => n.fret >= 5 && n.fret <= 8);
-      const inScaleFifthPos = fifthPosNotes.filter(n => n.inScale);
+      const fifthPosNotes = result.filter((n) => n.fret >= 5 && n.fret <= 8);
+      const inScaleFifthPos = fifthPosNotes.filter((n) => n.inScale);
 
       // Should have several in-scale notes in this position
       expect(inScaleFifthPos.length).toBeGreaterThan(0);
@@ -461,8 +476,8 @@ describe('FretboardCalculator', () => {
       // Note: Implementation uses octave 4 for all open strings
       // Standard tuning: ['E', 'B', 'G', 'D', 'A', 'E'] (0=high E, 4=A)
 
-      const aOnD = result.find(n => n.string === 3 && n.fret === 7);
-      const aOnA = result.find(n => n.string === 4 && n.fret === 0);
+      const aOnD = result.find((n) => n.string === 3 && n.fret === 7);
+      const aOnA = result.find((n) => n.string === 4 && n.fret === 0);
 
       expect(aOnD?.name).toBe('A');
       expect(aOnA?.name).toBe('A');
@@ -476,8 +491,8 @@ describe('FretboardCalculator', () => {
       // G on string 2 (G) at fret 0 (open) = string 3 (D) at 5th fret
       // Standard tuning: ['E', 'B', 'G', 'D', 'A', 'E']
 
-      const gOnG = result.find(n => n.string === 2 && n.fret === 0);
-      const gOnD = result.find(n => n.string === 3 && n.fret === 5);
+      const gOnG = result.find((n) => n.string === 2 && n.fret === 0);
+      const gOnD = result.find((n) => n.string === 3 && n.fret === 5);
 
       expect(gOnG?.name).toBe('G');
       expect(gOnD?.name).toBe('G');
@@ -496,8 +511,8 @@ describe('FretboardCalculator', () => {
       // - String 2 (G string): 5th fret = C
       // - String 1 (B string): 1st fret = C (or string 0 high E at 8th fret)
 
-      const cOnG = result.find(n => n.string === 2 && n.fret === 5);
-      const cOnB = result.find(n => n.string === 1 && n.fret === 1);
+      const cOnG = result.find((n) => n.string === 2 && n.fret === 5);
+      const cOnB = result.find((n) => n.string === 1 && n.fret === 1);
 
       expect(cOnG?.name).toBe('C');
       expect(cOnB?.name).toBe('C');
@@ -511,8 +526,8 @@ describe('FretboardCalculator', () => {
       });
 
       // In first position (frets 0-4), check we have reasonable coverage
-      const firstPosNotes = result.filter(n => n.fret >= 0 && n.fret <= 4);
-      const inScaleFirstPos = firstPosNotes.filter(n => n.inScale);
+      const firstPosNotes = result.filter((n) => n.fret >= 0 && n.fret <= 4);
+      const inScaleFirstPos = firstPosNotes.filter((n) => n.inScale);
 
       // Should have at least some notes in scale in first position
       expect(inScaleFirstPos.length).toBeGreaterThan(10);
@@ -539,25 +554,41 @@ describe('FretboardCalculator', () => {
     });
 
     it('should handle empty tuning (should skip incomplete strings)', () => {
-      const result = calculateFretboard({ tuning: ['E', '', 'G', 'D', 'A', 'E'] as NoteName[], fretCount: 0 });
+      const result = calculateFretboard({
+        tuning: ['E', '', 'G', 'D', 'A', 'E'] as NoteName[],
+        fretCount: 0,
+      });
 
       // Should skip the empty string position
       expect(result.length).toBeLessThan(6);
     });
 
     it('should handle chromatic scale', () => {
-      const chromatic: Interval[] = ['1', 'b2', '2', 'b3', '3', '4', '#4', '5', 'b6', '6', '#6', '7'];
+      const chromatic: Interval[] = [
+        '1',
+        'b2',
+        '2',
+        'b3',
+        '3',
+        '4',
+        '#4',
+        '5',
+        'b6',
+        '6',
+        '#6',
+        '7',
+      ];
       const result = calculateFretboard({ key: 'C', scale: chromatic, fretCount: 12 });
 
       // All notes should be in scale
-      const notInScale = result.filter(n => !n.inScale);
+      const notInScale = result.filter((n) => !n.inScale);
       expect(notInScale.length).toBe(0);
     });
 
     it('should handle all standard guitar keys', () => {
       const keys: NoteName[] = ['C', 'G', 'D', 'A', 'E', 'F', 'Bb', 'Eb'];
 
-      keys.forEach(key => {
+      keys.forEach((key) => {
         const result = getFretboardNotesForKey(key, ['1', '2', '3', '4', '5', '6', '7'], 12);
         expect(result.length).toBe(6 * 13);
       });
@@ -573,7 +604,7 @@ describe('FretboardCalculator', () => {
       });
 
       // Should have notes for CAGED pattern visualization
-      const inScale = result.filter(n => n.inScale);
+      const inScale = result.filter((n) => n.inScale);
       expect(inScale.length).toBeGreaterThan(0);
     });
 
@@ -585,7 +616,7 @@ describe('FretboardCalculator', () => {
       });
 
       // For 3NPS patterns, we need good coverage across frets
-      const middleFrets = result.filter(n => n.fret >= 5 && n.fret <= 9);
+      const middleFrets = result.filter((n) => n.fret >= 5 && n.fret <= 9);
       expect(middleFrets.length).toBeGreaterThan(20);
     });
 
@@ -593,19 +624,19 @@ describe('FretboardCalculator', () => {
       const result = getFretboardNotesForKey('C', ['1', '3', '5', 'b7'], 12);
 
       // Roots (1) should be marked
-      const roots = result.filter(n => n.interval === '1');
+      const roots = result.filter((n) => n.interval === '1');
       expect(roots.length).toBeGreaterThan(0);
 
       // Thirds should be marked
-      const thirds = result.filter(n => n.interval === '3');
+      const thirds = result.filter((n) => n.interval === '3');
       expect(thirds.length).toBeGreaterThan(0);
 
       // Fifths should be marked
-      const fifths = result.filter(n => n.interval === '5');
+      const fifths = result.filter((n) => n.interval === '5');
       expect(fifths.length).toBeGreaterThan(0);
 
       // Minor sevenths should be marked
-      const sevenths = result.filter(n => n.interval === 'b7');
+      const sevenths = result.filter((n) => n.interval === 'b7');
       expect(sevenths.length).toBeGreaterThan(0);
     });
   });
@@ -619,7 +650,7 @@ describe('FretboardCalculator', () => {
       });
 
       // The "blue note" (b5) should be in scale
-      const blueNotes = result.filter(n => n.name === 'F#');
+      const blueNotes = result.filter((n) => n.name === 'F#');
       expect(blueNotes.length).toBeGreaterThan(0);
     });
 
@@ -632,7 +663,7 @@ describe('FretboardCalculator', () => {
       });
 
       // Mixolydian is like major with b7
-      const inScale = result.filter(n => n.inScale);
+      const inScale = result.filter((n) => n.inScale);
       expect(inScale.length).toBeGreaterThan(0);
     });
 
@@ -645,7 +676,7 @@ describe('FretboardCalculator', () => {
       });
 
       // Dorian is like natural minor with major 6th
-      const inScale = result.filter(n => n.inScale);
+      const inScale = result.filter((n) => n.inScale);
       expect(inScale.length).toBeGreaterThan(0);
     });
 

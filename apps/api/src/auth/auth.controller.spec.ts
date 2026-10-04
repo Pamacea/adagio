@@ -41,10 +41,12 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        ThrottlerModule.forRoot([{
-          ttl: 60000,
-          limit: 10,
-        }]),
+        ThrottlerModule.forRoot([
+          {
+            ttl: 60000,
+            limit: 10,
+          },
+        ]),
       ],
       controllers: [AuthController],
       providers: [
@@ -96,13 +98,9 @@ describe('AuthController', () => {
         name: 'Existing User',
       };
 
-      mockAuthService.register.mockRejectedValue(
-        new ConflictException('User already exists')
-      );
+      mockAuthService.register.mockRejectedValue(new ConflictException('User already exists'));
 
-      await expect(controller.register(registerDto)).rejects.toThrow(
-        ConflictException
-      );
+      await expect(controller.register(registerDto)).rejects.toThrow(ConflictException);
 
       expect(service.register).toHaveBeenCalledWith(registerDto);
     });
@@ -153,13 +151,9 @@ describe('AuthController', () => {
         password: 'WrongPassword123!',
       };
 
-      mockAuthService.login.mockRejectedValue(
-        new UnauthorizedException('Invalid credentials')
-      );
+      mockAuthService.login.mockRejectedValue(new UnauthorizedException('Invalid credentials'));
 
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        UnauthorizedException
-      );
+      await expect(controller.login(loginDto)).rejects.toThrow(UnauthorizedException);
     });
 
     it('should include emailVerified in response', async () => {
@@ -230,13 +224,9 @@ describe('AuthController', () => {
     it('should throw UnauthorizedException with invalid token', async () => {
       const invalidToken = 'invalid-token';
 
-      mockAuthService.refreshTokens.mockRejectedValue(
-        new UnauthorizedException('Invalid token')
-      );
+      mockAuthService.refreshTokens.mockRejectedValue(new UnauthorizedException('Invalid token'));
 
-      await expect(controller.refresh(invalidToken)).rejects.toThrow(
-        UnauthorizedException
-      );
+      await expect(controller.refresh(invalidToken)).rejects.toThrow(UnauthorizedException);
     });
 
     it('should return new tokens with expiresIn', async () => {
@@ -324,13 +314,9 @@ describe('AuthController', () => {
         password: 'password123',
       };
 
-      mockAuthService.register.mockRejectedValue(
-        new Error('Database error')
-      );
+      mockAuthService.register.mockRejectedValue(new Error('Database error'));
 
-      await expect(controller.register(registerDto)).rejects.toThrow(
-        'Database error'
-      );
+      await expect(controller.register(registerDto)).rejects.toThrow('Database error');
     });
 
     it('should propagate service errors on login', async () => {
@@ -339,23 +325,15 @@ describe('AuthController', () => {
         password: 'password123',
       };
 
-      mockAuthService.login.mockRejectedValue(
-        new Error('Authentication failed')
-      );
+      mockAuthService.login.mockRejectedValue(new Error('Authentication failed'));
 
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        'Authentication failed'
-      );
+      await expect(controller.login(loginDto)).rejects.toThrow('Authentication failed');
     });
 
     it('should propagate service errors on refresh', async () => {
-      mockAuthService.refreshTokens.mockRejectedValue(
-        new Error('Token validation failed')
-      );
+      mockAuthService.refreshTokens.mockRejectedValue(new Error('Token validation failed'));
 
-      await expect(controller.refresh('token')).rejects.toThrow(
-        'Token validation failed'
-      );
+      await expect(controller.refresh('token')).rejects.toThrow('Token validation failed');
     });
   });
 

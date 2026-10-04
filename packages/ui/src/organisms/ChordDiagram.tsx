@@ -69,15 +69,13 @@ export function ChordDiagram({
 }: ChordDiagramProps) {
   // Calculate starting fret
   const validPositions = positions.filter((p) => p.fret > 0);
-  const startFret = validPositions.length > 0
-    ? Math.min(...validPositions.map((p) => p.fret))
-    : 1;
+  const startFret = validPositions.length > 0 ? Math.min(...validPositions.map((p) => p.fret)) : 1;
 
   // Build position map
   const _positionMap = new Map(positions.map((p) => [p.string, p]));
 
-  const hasMuted = positions.some(p => p.fret === -1);
-  const hasOpen = positions.some(p => p.fret === 0);
+  const hasMuted = positions.some((p) => p.fret === -1);
+  const hasOpen = positions.some((p) => p.fret === 0);
 
   return (
     <div className={cn('inline-block', className)}>
@@ -89,10 +87,7 @@ export function ChordDiagram({
 
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        className={cn(
-          'drop-shadow-lg',
-          compact ? 'w-20 h-28' : 'w-36 h-44'
-        )}
+        className={cn('drop-shadow-lg', compact ? 'w-20 h-28' : 'w-36 h-44')}
         style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))' }}
       >
         {/* Fret numbers */}
@@ -189,13 +184,7 @@ export function ChordDiagram({
                   strokeWidth={2.2}
                 />
                 {/* Inner fill */}
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={8}
-                  fill={COLORS.fingerRootFill}
-                  opacity={0.9}
-                />
+                <circle cx={x} cy={y} r={8} fill={COLORS.fingerRootFill} opacity={0.9} />
                 {/* Finger number */}
                 {pos.finger && (
                   <text
@@ -274,31 +263,32 @@ export function ChordDiagram({
         )}
 
         {/* Barre indicator */}
-        {positions.some(p => p.finger === 1) && (() => {
-          const barrePositions = positions.filter(p => p.finger === 1 && p.fret > 0);
-          if (barrePositions.length < 2) return null;
+        {positions.some((p) => p.finger === 1) &&
+          (() => {
+            const barrePositions = positions.filter((p) => p.finger === 1 && p.fret > 0);
+            if (barrePositions.length < 2) return null;
 
-          const minString = Math.min(...barrePositions.map(p => p.string));
-          const maxString = Math.max(...barrePositions.map(p => p.string));
-          const fret = barrePositions[0]?.fret ?? 0;
+            const minString = Math.min(...barrePositions.map((p) => p.string));
+            const maxString = Math.max(...barrePositions.map((p) => p.string));
+            const fret = barrePositions[0]?.fret ?? 0;
 
-          const x1 = MARGIN_LEFT + STRING_SPACING * minString;
-          const x2 = MARGIN_LEFT + STRING_SPACING * maxString;
-          const fretIndex = fret - startFret;
-          const y = MARGIN_TOP + FRET_HEIGHT * fretIndex + FRET_HEIGHT / 2;
+            const x1 = MARGIN_LEFT + STRING_SPACING * minString;
+            const x2 = MARGIN_LEFT + STRING_SPACING * maxString;
+            const fretIndex = fret - startFret;
+            const y = MARGIN_TOP + FRET_HEIGHT * fretIndex + FRET_HEIGHT / 2;
 
-          return (
-            <line
-              x1={x1}
-              y1={y}
-              x2={x2}
-              y2={y}
-              stroke={COLORS.barre}
-              strokeWidth={3}
-              strokeLinecap="round"
-            />
-          );
-        })()}
+            return (
+              <line
+                x1={x1}
+                y1={y}
+                x2={x2}
+                y2={y}
+                stroke={COLORS.barre}
+                strokeWidth={3}
+                strokeLinecap="round"
+              />
+            );
+          })()}
 
         {/* Compact name overlay */}
         {name && compact && (

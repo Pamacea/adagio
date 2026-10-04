@@ -13,11 +13,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { apiClient as _apiClient } from '@adagio/api-client';
-import type {
-  AchievementCategory,
-  AchievementRarity,
-  UserAchievement,
-} from '@adagio/types';
+import type { AchievementCategory, AchievementRarity, UserAchievement } from '@adagio/types';
 
 type FilterType = 'all' | AchievementCategory | 'unlocked';
 
@@ -249,9 +245,7 @@ export default function AchievementsScreen() {
             onPress={() => setFilter(cat)}
           >
             <Text style={styles.categoryTabIcon}>{CATEGORY_ICONS[cat]}</Text>
-            <Text
-              style={[styles.categoryTabText, filter === cat && styles.categoryTabTextActive]}
-            >
+            <Text style={[styles.categoryTabText, filter === cat && styles.categoryTabTextActive]}>
               {CATEGORY_NAMES[cat]}
             </Text>
           </TouchableOpacity>
@@ -282,17 +276,9 @@ export default function AchievementsScreen() {
                 ]}
               >
                 <View style={styles.achievementHeader}>
-                  <View
-                    style={[
-                      styles.iconContainer,
-                      isUnlocked && styles.iconContainerUnlocked,
-                    ]}
-                  >
+                  <View style={[styles.iconContainer, isUnlocked && styles.iconContainerUnlocked]}>
                     <Text
-                      style={[
-                        styles.achievementIcon,
-                        !isUnlocked && styles.achievementIconLocked,
-                      ]}
+                      style={[styles.achievementIcon, !isUnlocked && styles.achievementIconLocked]}
                     >
                       {item.achievement.icon}
                     </Text>
@@ -310,12 +296,7 @@ export default function AchievementsScreen() {
                       {item.achievement.description}
                     </Text>
                   </View>
-                  <View
-                    style={[
-                      styles.rarityBadge,
-                      { backgroundColor: RARITY_COLORS[rarity] },
-                    ]}
-                  >
+                  <View style={[styles.rarityBadge, { backgroundColor: RARITY_COLORS[rarity] }]}>
                     <Text style={styles.rarityText}>
                       {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
                     </Text>
@@ -340,9 +321,7 @@ export default function AchievementsScreen() {
                 {/* XP Reward */}
                 <View style={styles.xpReward}>
                   <Text style={styles.xpText}>+{item.achievement.xp} XP</Text>
-                  {isUnlocked && (
-                    <Text style={styles.unlockedText}>✓ Unlocked</Text>
-                  )}
+                  {isUnlocked && <Text style={styles.unlockedText}>✓ Unlocked</Text>}
                 </View>
               </View>
             );

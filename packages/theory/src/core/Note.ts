@@ -5,13 +5,38 @@
 import type { NoteName } from '@adagio/types';
 
 const NOTE_INDICES: Record<NoteName, number> = {
-  'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
-  'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8,
-  'A': 9, 'A#': 10, 'Bb': 10, 'B': 11,
+  C: 0,
+  'C#': 1,
+  Db: 1,
+  D: 2,
+  'D#': 3,
+  Eb: 3,
+  E: 4,
+  F: 5,
+  'F#': 6,
+  Gb: 6,
+  G: 7,
+  'G#': 8,
+  Ab: 8,
+  A: 9,
+  'A#': 10,
+  Bb: 10,
+  B: 11,
 };
 
 const CHROMATIC_SCALE: NoteName[] = [
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
 ];
 
 export class Note {
@@ -60,15 +85,15 @@ export class Note {
   getEnharmonic(): Note | null {
     const enharmonics: Record<string, NoteName> = {
       'C#': 'Db',
-      'Db': 'C#',
+      Db: 'C#',
       'D#': 'Eb',
-      'Eb': 'D#',
+      Eb: 'D#',
       'F#': 'Gb',
-      'Gb': 'F#',
+      Gb: 'F#',
       'G#': 'Ab',
-      'Ab': 'G#',
+      Ab: 'G#',
       'A#': 'Bb',
-      'Bb': 'A#',
+      Bb: 'A#',
     };
 
     const enharmonicName = enharmonics[this.name];
@@ -99,7 +124,9 @@ export class Note {
     }
 
     const enharmonic = this.getEnharmonic();
-    return enharmonic !== null && enharmonic.name === other.name && enharmonic.octave === other.octave;
+    return (
+      enharmonic !== null && enharmonic.name === other.name && enharmonic.octave === other.octave
+    );
   }
 
   /**

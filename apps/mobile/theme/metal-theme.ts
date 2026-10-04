@@ -3,11 +3,16 @@
 // ============================================================================
 
 import { StyleSheet as _StyleSheet } from 'react-native';
-import { Colors, Spacing, BorderRadius, Typography, FontWeights, Shadows as _Shadows } from './index';
+import {
+  Colors,
+  Spacing,
+  BorderRadius,
+  Typography,
+  FontWeights,
+  Shadows as _Shadows,
+} from './index';
 
-export const createMetalStyles = <T extends Record<string, unknown>>(
-  styles: T
-): T => styles as T;
+export const createMetalStyles = <T extends Record<string, unknown>>(styles: T): T => styles as T;
 
 // Common reusable styles
 export const baseStyles = createMetalStyles({

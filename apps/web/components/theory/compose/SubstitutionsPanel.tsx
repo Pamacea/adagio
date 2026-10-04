@@ -7,11 +7,7 @@
 
 import { useMemo } from 'react';
 import type { NoteName, ChordDegree } from '@adagio/types';
-import {
-  getSecondaryDominants,
-  getModalInterchangeChords,
-  getDegreeNote,
-} from '@adagio/theory';
+import { getSecondaryDominants, getModalInterchangeChords, getDegreeNote } from '@adagio/theory';
 import { NOTE_FR } from '@/lib/theory';
 
 // ============================================================================
@@ -32,42 +28,45 @@ export interface SubstitutionsPanelProps {
 // ============================================================================
 
 const SECONDARY_DOMINANT_INFO: Record<string, { name: string; description: string }> = {
-  'II': { name: 'II7', description: 'V7/II - Prépare le II' },
-  'III': { name: 'III7', description: 'V7/III - Prépare le III' },
-  'IV': { name: 'IV7', description: 'V7/IV - Prépare le IV' },
-  'V': { name: 'V7', description: 'Dominant principal' },
-  'VI': { name: 'VI7', description: 'V7/VI - Prépare le VI' },
+  II: { name: 'II7', description: 'V7/II - Prépare le II' },
+  III: { name: 'III7', description: 'V7/III - Prépare le III' },
+  IV: { name: 'IV7', description: 'V7/IV - Prépare le IV' },
+  V: { name: 'V7', description: 'Dominant principal' },
+  VI: { name: 'VI7', description: 'V7/VI - Prépare le VI' },
 };
 
 // ============================================================================
 // MODAL INTERCHANGE DATA
 // ============================================================================
 
-const MODAL_INTERCHANGE_INFO: Record<string, {
-  degrees: ChordDegree[];
-  name: string;
-  description: string;
-  target: string;
-}> = {
-  'lydian': {
+const MODAL_INTERCHANGE_INFO: Record<
+  string,
+  {
+    degrees: ChordDegree[];
+    name: string;
+    description: string;
+    target: string;
+  }
+> = {
+  lydian: {
     degrees: ['IV'],
     name: 'Lydien',
     description: 'IV#4 - Sonnerie brillante et mystérieuse',
     target: 'IV',
   },
-  'mixolydian': {
+  mixolydian: {
     degrees: ['V'],
     name: 'Mixolydien',
     description: 'V7 - Sonnerie bluesy et résolutive',
     target: 'V',
   },
-  'dorian': {
+  dorian: {
     degrees: ['II'],
     name: 'Dorien',
     description: 'IV (en majeur) - Sonnerie jazz mineure',
     target: 'II',
   },
-  'phrygian': {
+  phrygian: {
     degrees: ['bII'],
     name: 'Phrygien',
     description: 'bII - Sonnerie espagnole/flamenco',
@@ -86,25 +85,54 @@ const getParallelKeyChords = (root: NoteName, currentTonality: 'major' | 'minor'
   if (currentTonality === 'major') {
     // Vers mineur parallèle
     return [
-      `${root}m`,       // i
-      `${root}m7`,      // i7
+      `${root}m`, // i
+      `${root}m7`, // i7
     ];
   } else {
     // Vers majeur parallèle
     return [
-      `${root}`,        // I
-      `${root}maj7`,    // Imaj7
+      `${root}`, // I
+      `${root}maj7`, // Imaj7
     ];
   }
 };
 
-const getRelativeKeyChords = (root: NoteName, currentTonality: 'major' | 'minor'): {
+const getRelativeKeyChords = (
+  root: NoteName,
+  currentTonality: 'major' | 'minor'
+): {
   key: string;
   chords: string[];
   description: string;
 } => {
-  const majorScales = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'F', 'Bb', 'Eb', 'Ab'] as NoteName[];
-  const minorScales = ['A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'D', 'G', 'C', 'F'] as NoteName[];
+  const majorScales = [
+    'C',
+    'G',
+    'D',
+    'A',
+    'E',
+    'B',
+    'F#',
+    'C#',
+    'F',
+    'Bb',
+    'Eb',
+    'Ab',
+  ] as NoteName[];
+  const minorScales = [
+    'A',
+    'E',
+    'B',
+    'F#',
+    'C#',
+    'G#',
+    'D#',
+    'A#',
+    'D',
+    'G',
+    'C',
+    'F',
+  ] as NoteName[];
 
   if (currentTonality === 'major') {
     // Relative mineure: 3 demi-tons plus bas
@@ -112,10 +140,7 @@ const getRelativeKeyChords = (root: NoteName, currentTonality: 'major' | 'minor'
     const relativeMinor = minorScales[rootIndex];
     return {
       key: `${relativeMinor} min`,
-      chords: [
-        `${relativeMinor}m`,
-        `${relativeMinor}m7`,
-      ],
+      chords: [`${relativeMinor}m`, `${relativeMinor}m7`],
       description: `Relative mineure de ${root}`,
     };
   } else {
@@ -124,10 +149,7 @@ const getRelativeKeyChords = (root: NoteName, currentTonality: 'major' | 'minor'
     const relativeMajor = majorScales[rootIndex];
     return {
       key: `${relativeMajor} maj`,
-      chords: [
-        `${relativeMajor}`,
-        `${relativeMajor}maj7`,
-      ],
+      chords: [`${relativeMajor}`, `${relativeMajor}maj7`],
       description: `Relative majeure de ${root}`,
     };
   }
@@ -301,9 +323,7 @@ export function SubstitutionsPanel({
             Même armure, tonique différente ({relativeInfo.key})
           </p>
           <div className="bg-blackness border border-steel p-2">
-            <div className="text-[10px] text-gray mb-1">
-              {relativeInfo.description}
-            </div>
+            <div className="text-[10px] text-gray mb-1">{relativeInfo.description}</div>
             <div className="flex flex-wrap gap-1">
               {relativeInfo.chords.map((chord) => (
                 <button
@@ -322,9 +342,7 @@ export function SubstitutionsPanel({
 
       {/* Quick Switch */}
       <div className="mt-4 pt-4 border-t border-steel">
-        <h4 className="text-xs text-gray uppercase tracking-wider mb-2">
-          Changements Rapides
-        </h4>
+        <h4 className="text-xs text-gray uppercase tracking-wider mb-2">Changements Rapides</h4>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => onSubstitutionApply?.(`${root}${tonality === 'major' ? 'm' : ''}`)}
@@ -334,10 +352,13 @@ export function SubstitutionsPanel({
           </button>
           <button
             onClick={() => {
-              const relativeRoot = tonality === 'major'
-                ? getDegreeNote(root, 'VI', 'major')
-                : getDegreeNote(root, 'III', 'minor');
-              onSubstitutionApply?.(`${displayNote(relativeRoot)}${tonality === 'major' ? 'm' : ''}`);
+              const relativeRoot =
+                tonality === 'major'
+                  ? getDegreeNote(root, 'VI', 'major')
+                  : getDegreeNote(root, 'III', 'minor');
+              onSubstitutionApply?.(
+                `${displayNote(relativeRoot)}${tonality === 'major' ? 'm' : ''}`
+              );
             }}
             className="px-3 py-1 text-xs bg-toxic border border-steel hover:border-rust transition-all"
           >

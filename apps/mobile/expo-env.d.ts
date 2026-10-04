@@ -13,7 +13,9 @@ declare module 'react-native' {
     testID?: string;
     accessible?: boolean;
     accessibilityLabel?: string;
-    onLayout?: (event: { nativeEvent: { layout: { x: number; y: number; width: number; height: number } } }) => void;
+    onLayout?: (event: {
+      nativeEvent: { layout: { x: number; y: number; width: number; height: number } };
+    }) => void;
   }
 
   export const View: ComponentType<ViewProps>;
@@ -119,7 +121,12 @@ declare module 'react-native' {
   export const Image: ComponentType<ImageProps>;
 
   export interface Dimensions {
-    get(dim: 'window' | 'screen'): { width: number; height: number; scale: number; fontScale: number };
+    get(dim: 'window' | 'screen'): {
+      width: number;
+      height: number;
+      scale: number;
+      fontScale: number;
+    };
   }
 
   export const Dimensions: Dimensions;
@@ -177,8 +184,18 @@ declare module 'react-native' {
   }
 
   export interface AlertStatic {
-    alert(title: string, message?: string, buttons?: AlertButton[], options?: { cancelable?: boolean }): void;
-    prompt(title: string, message?: string, buttons?: AlertButton[], options?: { cancelable?: boolean; placeholder?: string }): void;
+    alert(
+      title: string,
+      message?: string,
+      buttons?: AlertButton[],
+      options?: { cancelable?: boolean }
+    ): void;
+    prompt(
+      title: string,
+      message?: string,
+      buttons?: AlertButton[],
+      options?: { cancelable?: boolean; placeholder?: string }
+    ): void;
   }
 
   export const Alert: AlertStatic;
@@ -194,7 +211,7 @@ declare module 'react-native' {
 }
 
 declare module '@expo/vector-icons' {
-  import type { ComponentType, ReactNode } from 'react';
+  import type { ComponentType } from 'react';
 
   export interface MaterialIconsProps {
     name: string;

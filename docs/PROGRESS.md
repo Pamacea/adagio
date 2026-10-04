@@ -1,6 +1,6 @@
 # Progress Tracker — ADAGIO
 
-> *Suivi de l'avancement complet du développement*
+> _Suivi de l'avancement complet du développement_
 
 ---
 
@@ -34,22 +34,25 @@
 ### ✅ Nouvelles Pages & Features Ajoutées
 
 #### Pages Ajoutées
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 6.1.1 | Page /lessons (catalogue leçons) | ✅ | P0 |
-| 6.1.2 | Page /lessons/[id] (détail leçon) | ✅ | P0 |
-| 6.1.3 | Page /achievements (système succès) | ✅ | P0 |
-| 6.1.4 | Pages auth (login/register) | ✅ | P0 |
+
+| ID    | Tâche                               | Status | Priorité |
+| ----- | ----------------------------------- | ------ | -------- |
+| 6.1.1 | Page /lessons (catalogue leçons)    | ✅     | P0       |
+| 6.1.2 | Page /lessons/[id] (détail leçon)   | ✅     | P0       |
+| 6.1.3 | Page /achievements (système succès) | ✅     | P0       |
+| 6.1.4 | Pages auth (login/register)         | ✅     | P0       |
 
 #### Infrastructure Auth
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 6.2.1 | middleware.ts (protection routes) | ✅ | P0 |
-| 6.2.2 | useAuth hook (Zustand-like) | ✅ | P0 |
-| 6.2.3 | AchievementBadge component | ✅ | P0 |
-| 6.2.4 | AuthProvider dans layout | ✅ | P0 |
+
+| ID    | Tâche                             | Status | Priorité |
+| ----- | --------------------------------- | ------ | -------- |
+| 6.2.1 | middleware.ts (protection routes) | ✅     | P0       |
+| 6.2.2 | useAuth hook (Zustand-like)       | ✅     | P0       |
+| 6.2.3 | AchievementBadge component        | ✅     | P0       |
+| 6.2.4 | AuthProvider dans layout          | ✅     | P0       |
 
 #### Fichiers Créés/Mis à Jour
+
 ```
 apps/web/
 ├── app/
@@ -77,6 +80,7 @@ apps/web/
 ```
 
 #### Système de Leçons
+
 - **18 leçons** couvrant: Théorie, Manche, Accords, Notation, Progressions, Composition
 - **3 niveaux**: BEGINNER, INTERMEDIATE, ADVANCED
 - **7 catégories**: THEORY, FRETBOARD, CHORDS, NOTATION, PROGRESSIONS, COMPOSITION
@@ -84,6 +88,7 @@ apps/web/
 - **XP rewards** de 50 à 200 points par leçon
 
 #### Système d'Achievements
+
 - **20+ achievements** définis
 - **6 catégories**: Progression, Découverte, Pratique, Maîtrise, Social, Jalon
 - **4 niveaux de rareté**: Common, Rare, Epic, Legendary
@@ -98,19 +103,22 @@ apps/web/
 ### ✅ Corrections & Améliorations
 
 #### Navigation
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 5.1.1 | Bouton ACCORDS dans navbar | ✅ | P0 |
-| 5.1.2 | Icône Chords (guitare headstock) | ✅ | P0 |
+
+| ID    | Tâche                            | Status | Priorité |
+| ----- | -------------------------------- | ------ | -------- |
+| 5.1.1 | Bouton ACCORDS dans navbar       | ✅     | P0       |
+| 5.1.2 | Icône Chords (guitare headstock) | ✅     | P0       |
 
 #### TypeScript & Types
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 5.2.1 | Correction tailwind-preset.ts (content) | ✅ | P0 |
-| 5.2.2 | Résolution conflit React types | ✅ | P0 |
-| 5.2.3 | Génération Prisma Client | ✅ | P0 |
+
+| ID    | Tâche                                   | Status | Priorité |
+| ----- | --------------------------------------- | ------ | -------- |
+| 5.2.1 | Correction tailwind-preset.ts (content) | ✅     | P0       |
+| 5.2.2 | Résolution conflit React types          | ✅     | P0       |
+| 5.2.3 | Génération Prisma Client                | ✅     | P0       |
 
 #### Fichiers Modifiés
+
 ```
 apps/web/
 ├── components/
@@ -127,6 +135,7 @@ packages/database/
 ```
 
 #### Résultat
+
 ```
 apps/web:    ✅ 0 TypeScript errors
 packages/ui:  ✅ 0 TypeScript errors
@@ -144,44 +153,44 @@ packages/ui:  ✅ 0 TypeScript errors
 
 #### Core Mobile Features
 
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 3.1.1 | Expo configuration | ✅ | P0 |
-| 3.1.2 | Navigation (tabs) | ✅ | P0 |
-| 3.1.3 | Auth state (Zustand) | ✅ | P0 |
-| 3.1.4 | Login page | ✅ | P0 |
-| 3.2.1 | Fretboard component (React Native) | ✅ | P0 |
-| 3.2.2 | Fretboard gestures (tap, zoom) | ✅ | P0 |
-| 3.2.3 | Haptic feedback integration | ✅ | P0 |
-| 3.3.1 | AsyncStorage pour caching | ✅ | P0 |
-| 3.3.2 | Offline mode data sync | ✅ | P1 |
-| 3.3.3 | Network detection | ✅ | P1 |
-| 3.4.1 | Audio player (Synthétiseur expo-av) | ✅ | P1 |
-| 3.4.2 | Metronome component | ✅ | P2 |
+| ID    | Tâche                               | Status | Priorité |
+| ----- | ----------------------------------- | ------ | -------- |
+| 3.1.1 | Expo configuration                  | ✅     | P0       |
+| 3.1.2 | Navigation (tabs)                   | ✅     | P0       |
+| 3.1.3 | Auth state (Zustand)                | ✅     | P0       |
+| 3.1.4 | Login page                          | ✅     | P0       |
+| 3.2.1 | Fretboard component (React Native)  | ✅     | P0       |
+| 3.2.2 | Fretboard gestures (tap, zoom)      | ✅     | P0       |
+| 3.2.3 | Haptic feedback integration         | ✅     | P0       |
+| 3.3.1 | AsyncStorage pour caching           | ✅     | P0       |
+| 3.3.2 | Offline mode data sync              | ✅     | P1       |
+| 3.3.3 | Network detection                   | ✅     | P1       |
+| 3.4.1 | Audio player (Synthétiseur expo-av) | ✅     | P1       |
+| 3.4.2 | Metronome component                 | ✅     | P2       |
 
 #### Pages Mobile
 
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 3.5.1 | Harmonic Engine tab | ✅ | P0 |
-| 3.5.2 | Composer tab | ✅ | P0 |
-| 3.5.3 | Grimoire tab | ✅ | P0 |
-| 3.5.4 | Profile tab | ✅ | P1 |
+| ID    | Tâche               | Status | Priorité |
+| ----- | ------------------- | ------ | -------- |
+| 3.5.1 | Harmonic Engine tab | ✅     | P0       |
+| 3.5.2 | Composer tab        | ✅     | P0       |
+| 3.5.3 | Grimoire tab        | ✅     | P0       |
+| 3.5.4 | Profile tab         | ✅     | P1       |
 
 ---
 
 ### 🟢 Phase 4 : Social & Auth - ✅ 100% Complet
 
-| ID | Tâche | Status | Priorité |
-|----|------|--------|----------|
-| 4.1.1 | BetterAuth integration | ✅ | P0 |
-| 4.1.2 | Login/Register pages | ✅ | P0 |
-| 4.1.3 | User profile page | ✅ | P1 |
-| 4.1.4 | Preferences page | ✅ | P2 |
-| 4.2.1 | Sync API endpoints | ✅ | P1 |
-| 4.2.2 | User progress sync | ✅ | P1 |
-| 4.2.3 | Share progression UI | ✅ | P2 |
-| 4.2.4 | Achievement system (15+ achievements) | ✅ | P3 |
+| ID    | Tâche                                 | Status | Priorité |
+| ----- | ------------------------------------- | ------ | -------- |
+| 4.1.1 | BetterAuth integration                | ✅     | P0       |
+| 4.1.2 | Login/Register pages                  | ✅     | P0       |
+| 4.1.3 | User profile page                     | ✅     | P1       |
+| 4.1.4 | Preferences page                      | ✅     | P2       |
+| 4.2.1 | Sync API endpoints                    | ✅     | P1       |
+| 4.2.2 | User progress sync                    | ✅     | P1       |
+| 4.2.3 | Share progression UI                  | ✅     | P2       |
+| 4.2.4 | Achievement system (15+ achievements) | ✅     | P3       |
 
 ---
 
@@ -330,6 +339,7 @@ npx playwright test
 ## 📝 Release Notes v0.3.0
 
 ### Nouvelles fonctionnalités
+
 - ✅ Page /lessons avec catalogue de 18 leçons
 - ✅ Page /lessons/[id] avec détail et progression
 - ✅ Page /achievements avec 20+ succès
@@ -339,16 +349,18 @@ npx playwright test
 - ✅ AchievementBadge composant
 
 ### Améliorations
+
 - ✅ Système de leçons complet avec catégories et niveaux
 - ✅ Système d'achievements avec raretés et progression
 - ✅ Auth Provider intégré au layout
 - ✅ Constantes ACHIEVEMENTS ajoutées
 
 ### Corrections
+
 - ✅ 0 erreurs TypeScript
 - ✅ Imports et exports organisés
 - ✅ Barrel exports complets
 
 ---
 
-*Version 0.2.0 - Pages auth, leçons et achievements ajoutés*
+_Version 0.2.0 - Pages auth, leçons et achievements ajoutés_

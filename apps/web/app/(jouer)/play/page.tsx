@@ -31,6 +31,14 @@ const TOOLS = [
     tags: ['Lecture'],
   },
   {
+    title: 'RYTHME',
+    href: '/rythme',
+    icon: Icons.Play,
+    description:
+      'Subdivisions et drive : croches, triolets, doubles croches — comptage et sensation.',
+    tags: ['Groove', 'Subdivisions'],
+  },
+  {
     title: 'ANTISÈCHE',
     href: '/notes',
     icon: Icons.Notes,

@@ -5,8 +5,8 @@
  */
 
 import { useMemo, useState } from 'react';
-import type { NoteName, ModeName, Interval } from '@adagio/types';
-import { getFretboardNotesForKey } from '@adagio/theory';
+import type { NoteName, ModeName, Interval, Instrument } from '@adagio/types';
+import { getFretboardNotesForKey, getInstrument } from '@adagio/theory';
 import { calculateFretPositions } from '@/components/theory/scales/ScaleFretboard';
 
 // Intervalles pour chaque mode (notation string comme '1', 'b3', etc.)
@@ -25,6 +25,7 @@ export interface FretboardStateOptions {
   initialMode?: ModeName;
   initialFretCount?: 12 | 15 | 17 | 19 | 21 | 24;
   initialShowAllNotes?: boolean;
+  initialInstrument?: Instrument;
 }
 
 export interface UseFretboardStateReturn {
@@ -33,12 +34,16 @@ export interface UseFretboardStateReturn {
   mode: ModeName;
   fretCount: 12 | 15 | 17 | 19 | 21 | 24;
   showAllNotes: boolean;
+  instrument: Instrument;
+  /** Accordage de l'instrument (aigu → grave) */
+  tuning: NoteName[];
 
   // Setters
   setRoot: (root: NoteName) => void;
   setMode: (mode: ModeName) => void;
   setFretCount: (count: UseFretboardStateReturn['fretCount']) => void;
   setShowAllNotes: (show: boolean) => void;
+  setInstrument: (instrument: Instrument) => void;
 
   // Actions
   toggleShowAllNotes: () => void;
@@ -68,6 +73,7 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     initialMode = 'ionian',
     initialFretCount = 12,
     initialShowAllNotes = false,
+    initialInstrument = 'guitar',
   } = options;
 
   // Utiliser useState pour l'état (sera géré par le composant parent)
@@ -75,6 +81,13 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
   const [mode, setMode] = useState<ModeName>(initialMode);
   const [fretCount, setFretCount] = useState<UseFretboardStateReturn['fretCount']>(initialFretCount);
   const [showAllNotes, setShowAllNotes] = useState(initialShowAllNotes);
+  const [instrument, setInstrument] = useState<Instrument>(initialInstrument);
+
+  // Accordage de l'instrument courant (aigu → grave, ordre visuel)
+  const tuning = useMemo(
+    () => [...getInstrument(instrument).tuningDisplay],
+    [instrument]
+  );
 
   // Calculer les positions des frettes
   const fretPositions = useMemo(() => calculateFretPositions(fretCount), [fretCount]);
@@ -88,8 +101,8 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
   // Calculer les données du manche
   const fretboardData = useMemo(() => {
     const intervals = MODE_INTERVALS[mode] ?? ['1', '2', '3', '4', '5', '6', '7'];
-    return getFretboardNotesForKey(root, intervals);
-  }, [root, mode]);
+    return getFretboardNotesForKey(root, intervals, fretCount, tuning);
+  }, [root, mode, fretCount, tuning]);
 
   // Fonction d'affichage des notes en français
   const displayNote = (note: string): string => {
@@ -115,12 +128,15 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     mode,
     fretCount,
     showAllNotes,
+    instrument,
+    tuning,
 
     // Setters
     setRoot,
     setMode,
     setFretCount,
     setShowAllNotes,
+    setInstrument,
 
     // Actions
     toggleShowAllNotes,

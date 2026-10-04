@@ -7,8 +7,8 @@
 'use client';
 
 import { useMemo } from 'react';
-import type { NoteName, Interval } from '@adagio/types';
-import { getFretboardNotesForKey } from '@adagio/theory';
+import type { NoteName, Interval, Instrument } from '@adagio/types';
+import { getFretboardNotesForKey, getInstrument } from '@adagio/theory';
 import { NOTE_FR } from '@/lib/theory';
 import { ScaleFretboard, calculateFretPositions } from '../scales/ScaleFretboard';
 
@@ -28,6 +28,7 @@ interface FretboardDisplayProps {
   mode: string;
   fretCount: number;
   showAllNotes: boolean;
+  instrument?: Instrument;
 }
 
 export function FretboardDisplay({
@@ -35,16 +36,27 @@ export function FretboardDisplay({
   mode,
   fretCount,
   showAllNotes,
+  instrument = 'guitar',
 }: FretboardDisplayProps) {
   const intervals = useMemo((): Interval[] => {
     const found = (MODE_INTERVALS as Record<string, Interval[]>)[mode];
     return found ?? ['1', '2', '3', '4', '5', '6', '7'];
   }, [mode]);
 
+  // Accordage + cordes (aigu → grave) de l'instrument courant
+  const { tuning, stringRows } = useMemo(() => {
+    const def = getInstrument(instrument);
+    const acc: NoteName[] = [...def.tuningDisplay];
+    return {
+      tuning: acc,
+      stringRows: acc.map((note) => ({ note, name: NOTE_FR[note] ?? note })),
+    };
+  }, [instrument]);
+
   // Calculer les données du manche
   const fretboardData = useMemo(() => {
-    return getFretboardNotesForKey(root, intervals);
-  }, [root, intervals]);
+    return getFretboardNotesForKey(root, intervals, fretCount, tuning);
+  }, [root, intervals, fretCount, tuning]);
 
   // Calculer les positions des frettes
   const fretPositions = useMemo(() => {
@@ -63,6 +75,7 @@ export function FretboardDisplay({
       fretCount={fretCount}
       showAllNotes={showAllNotes}
       displayNote={displayNote}
+      strings={stringRows}
     />
   );
 }

@@ -336,7 +336,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Neon PostgreSQL setup with Prisma
 - [ ] NestJS backend foundation
 - [ ] Next.js 16 frontend with App Router
-- [ ] CSV data import pipeline
+- [x] CSV data import pipeline (scripts/import-sheet.mjs, pnpm sheet:import)
 - [ ] Tonal.js integration
 
 ---

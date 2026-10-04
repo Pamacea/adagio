@@ -60,14 +60,21 @@ function _getDifficultyColor(level: DifficultyLevel): string {
   }
 }
 
+// Accordage visuel guitare (aigu → grave) — ordre des cordes affichées
+const GUITAR_DISPLAY_TUNING: NoteName[] = ['E', 'B', 'G', 'D', 'A', 'E'];
+
 /**
  * Convertit un voicing en données de fretboard pour l'affichage
+ * displayTuning : accordage aigu → grave (défaut guitare)
  */
-function voicingToFretboardData(voicing: ChordVoicing): FretboardNote[] {
+function voicingToFretboardData(
+  voicing: ChordVoicing,
+  displayTuning: NoteName[] = GUITAR_DISPLAY_TUNING
+): FretboardNote[] {
   const fretboardData: FretboardNote[] = [];
 
   // Générer les notes du manche autour du voicing
-  for (let string = 0; string < 6; string++) {
+  for (let string = 0; string < displayTuning.length; string++) {
     const voicingNote = voicing.notes.find(n => n.string === string);
 
     if (voicingNote) {
@@ -82,9 +89,8 @@ function voicingToFretboardData(voicing: ChordVoicing): FretboardNote[] {
       });
     } else {
       // Case vide (on marque avec la frette 0 mais pas inScale)
-      const stringNote = ['E', 'B', 'G', 'D', 'A', 'E'][5 - string] as NoteName;
       fretboardData.push({
-        name: stringNote,
+        name: displayTuning[string] ?? 'E',
         octave: 4,
         string,
         fret: 0,

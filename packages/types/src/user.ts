@@ -41,6 +41,7 @@ export interface UserPreferences {
   showDegrees: boolean;
 
   // Instrument
+  instrument: Instrument;
   tuning: Tuning;
   fretCount: number;
 
@@ -53,16 +54,26 @@ export interface UserPreferences {
 }
 
 /**
- * Guitar tunings
+ * Instrument supporté
+ */
+export type Instrument = 'guitar' | 'bass';
+
+/**
+ * Tunings (guitare + basse)
  */
 export type Tuning =
+  // Guitare
   | 'EADGBE' // Standard
   | 'DADGBE' // Drop D
   | 'DADGAD' // DADGAD
   | 'DGDGBD' // Open G
   | 'DADF#AD' // Open D
   | 'CGCGCE' // Open C
-  | 'BEADGB'; // Baritone
+  | 'BEADGB' // Baritone
+  // Basse
+  | 'EADG' // Standard 4 cordes
+  | 'BEAD' // Standard 5 cordes (grave)
+  | 'DADG' // Drop D basse
 
 /**
  * User progress on a technique

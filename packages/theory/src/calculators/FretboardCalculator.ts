@@ -33,7 +33,7 @@ export function calculateFretboard(options: FretboardOptions = {}): FretboardNot
   const scaleNotes = scaleObj.getNotes();
 
   // Generate notes for each string and fret
-  for (let string = 0; string < 6; string++) {
+  for (let string = 0; string < tuning.length; string++) {
     // Open string note (at fret 0)
     const tuningNote = tuning[string];
     if (!tuningNote) continue; // Skip if tuning is incomplete
@@ -62,9 +62,10 @@ export function calculateFretboard(options: FretboardOptions = {}): FretboardNot
 export function getFretboardNotesForKey(
   key: NoteName,
   scale: Interval[],
-  fretCount?: number
+  fretCount?: number,
+  tuning?: NoteName[]
 ): FretboardNote[] {
-  const notes = calculateFretboard({ key, scale, fretCount });
+  const notes = calculateFretboard({ key, scale, fretCount, tuning });
 
   // Add interval information
   const rootNote = new Note(key, 4);

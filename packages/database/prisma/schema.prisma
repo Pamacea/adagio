@@ -103,6 +103,7 @@ model UserPreferences {
   showDegrees     Boolean  @default(false)
 
   // Instrument preferences
+  instrument      String   @default("guitar")
   tuning          String   @default("EADGBE")
   fretCount       Int      @default(24)
 

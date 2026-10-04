@@ -67,6 +67,8 @@ interface ScaleFretboardProps {
   fretCount: number;
   showAllNotes: boolean;
   displayNote: (note: string) => string;
+  /** Cordes à afficher, du plus aigu au plus grave (défaut : guitare 6 cordes) */
+  strings?: Array<{ note: string; name: string }>;
 }
 
 export function ScaleFretboard({
@@ -75,7 +77,18 @@ export function ScaleFretboard({
   fretCount,
   showAllNotes,
   displayNote,
+  strings,
 }: ScaleFretboardProps) {
+  // Cordes (ordre visuel : plus aigu → plus grave)
+  const stringRows = strings ?? GUITAR_STRINGS;
+  const stringCount = stringRows.length;
+
+  // Géométrie verticale dérivée du nombre de cordes
+  const firstStringY = 40;
+  const lastStringY = firstStringY + (stringCount - 1) * FRET_CONSTANTS.STRING_SPACING;
+  const centerY = firstStringY + ((stringCount - 1) * FRET_CONSTANTS.STRING_SPACING) / 2;
+  const SVG_HEIGHT = lastStringY + 45;
+
   // Calculate SVG width based on fret count
   const lastFretPosition = fretPositions[fretPositions.length - 1] ?? 800;
   const SVG_WIDTH = Math.max(lastFretPosition + 30, 800);
@@ -84,16 +97,16 @@ export function ScaleFretboard({
     <div className="section-frame p-2 mb-8 -mx-2 px-4">
       <div className="w-full overflow-hidden">
         <svg
-          viewBox={`0 0 ${SVG_WIDTH} ${FRET_CONSTANTS.SVG_HEIGHT}`}
+          viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
           className="w-full h-auto"
           preserveAspectRatio="none"
         >
           {/* Background */}
-          <rect x="0" y="0" width={SVG_WIDTH} height={FRET_CONSTANTS.SVG_HEIGHT} fill="#010101" />
+          <rect x="0" y="0" width={SVG_WIDTH} height={SVG_HEIGHT} fill="#010101" />
 
           {/* Strings */}
-          {GUITAR_STRINGS.map((_, i) => {
-            const y = 40 + i * FRET_CONSTANTS.STRING_SPACING;
+          {stringRows.map((_, i) => {
+            const y = firstStringY + i * FRET_CONSTANTS.STRING_SPACING;
             return (
               <line
                 key={i}
@@ -102,7 +115,7 @@ export function ScaleFretboard({
                 x2={SVG_WIDTH - 10}
                 y2={y}
                 stroke="#2a2a2a"
-                strokeWidth={i === 0 || i === 5 ? 2 : 1.5}
+                strokeWidth={i === 0 || i === stringCount - 1 ? 2 : 1.5}
               />
             );
           })}
@@ -116,7 +129,7 @@ export function ScaleFretboard({
                 x1={x}
                 y1="20"
                 x2={x}
-                y2="310"
+                y2={lastStringY - 5}
                 stroke={isNut ? '#8b1a1a' : '#2a2a2a'}
                 strokeWidth={isNut ? 4 : 2}
               />
@@ -134,7 +147,7 @@ export function ScaleFretboard({
               <circle
                 key={fret}
                 cx={x}
-                cy="175"
+                cy={centerY}
                 r="7"
                 fill="#0a0f0a"
                 stroke="#2a2a2a"
@@ -148,7 +161,7 @@ export function ScaleFretboard({
             <>
               <circle
                 cx={((fretPositions[12] ?? 0) + (fretPositions[11] ?? 0)) / 2}
-                cy="125"
+                cy={centerY - 50}
                 r="7"
                 fill="#0a0f0a"
                 stroke="#2a2a2a"
@@ -156,7 +169,7 @@ export function ScaleFretboard({
               />
               <circle
                 cx={((fretPositions[12] ?? 0) + (fretPositions[11] ?? 0)) / 2}
-                cy="225"
+                cy={centerY + 50}
                 r="7"
                 fill="#0a0f0a"
                 stroke="#2a2a2a"
@@ -175,7 +188,7 @@ export function ScaleFretboard({
               <text
                 key={fretNum}
                 x={labelX}
-                y="335"
+                y={SVG_HEIGHT - 25}
                 textAnchor="middle"
                 fill="#666666"
                 fontSize="10"
@@ -187,8 +200,8 @@ export function ScaleFretboard({
           })}
 
           {/* String names */}
-          {GUITAR_STRINGS.map((s, i) => {
-            const y = 40 + i * FRET_CONSTANTS.STRING_SPACING + 4;
+          {stringRows.map((s, i) => {
+            const y = firstStringY + i * FRET_CONSTANTS.STRING_SPACING + 4;
             return (
               <text
                 key={`string-${i}`}
@@ -210,7 +223,7 @@ export function ScaleFretboard({
             const stringIndex = noteData.string;
             if (stringIndex === undefined) return null;
 
-            const y = 40 + stringIndex * FRET_CONSTANTS.STRING_SPACING;
+            const y = firstStringY + stringIndex * FRET_CONSTANTS.STRING_SPACING;
             // Calculate note position using linear fret positions
             const x = noteData.fret === 0
               ? (FRET_CONSTANTS.NUT_POSITION - 20)

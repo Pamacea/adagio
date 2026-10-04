@@ -15,6 +15,7 @@ import {
   CAGEDInfo,
 } from '@/components/theory/fretboard';
 import { useFretboardState } from '@/features/theory/hooks';
+import { getInstrument } from '@adagio/theory';
 
 export default function FretboardPage() {
   // État de la page via hook personnalisé
@@ -23,11 +24,13 @@ export default function FretboardPage() {
     mode,
     fretCount,
     showAllNotes,
+    instrument,
     setRoot,
     setMode,
     setFretCount,
     setShowAllNotes: _setShowAllNotes,
     toggleShowAllNotes,
+    setInstrument,
     fretboardData,
     displayNote,
   } = useFretboardState();
@@ -41,7 +44,7 @@ export default function FretboardPage() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              MANCHE DE GUITARE
+              MANCHE DE {getInstrument(instrument).label.toUpperCase()}
             </h1>
             <p className="text-gray text-sm uppercase tracking-widest">
               Visualisez les notes sur le manche
@@ -54,10 +57,12 @@ export default function FretboardPage() {
             currentMode={mode}
             fretCount={fretCount}
             showAllNotes={showAllNotes}
+            instrument={instrument}
             onRootChange={setRoot}
             onModeChange={setMode}
             onFretCountChange={setFretCount}
             onToggleNotes={toggleShowAllNotes}
+            onInstrumentChange={setInstrument}
           />
 
           {/* Current scale info */}
@@ -74,13 +79,14 @@ export default function FretboardPage() {
             mode={mode}
             fretCount={fretCount}
             showAllNotes={showAllNotes}
+            instrument={instrument}
           />
 
           {/* Legend */}
           <FretboardLegend />
 
-          {/* CAGED info */}
-          <CAGEDInfo />
+          {/* CAGED info (guitare uniquement) */}
+          {instrument === 'guitar' && <CAGEDInfo />}
         </div>
       </main>
 

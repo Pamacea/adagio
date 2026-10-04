@@ -29,6 +29,20 @@ const SECTIONS = [
     tags: ['Fondamentaux'],
   },
   {
+    title: 'RENVERSEMENTS',
+    href: '/theory/renversements',
+    icon: Icons.Triads,
+    description: 'Fondamentale, sixte, sixte et quarte — les trois positions d’une triade.',
+    tags: ['Accords'],
+  },
+  {
+    title: 'EXTENSIONS',
+    href: '/theory/extensions',
+    icon: Icons.Chords,
+    description: '9è, 11è, 13è — la gamme composée et ses équivalences sur le manche.',
+    tags: ['Tensions'],
+  },
+  {
     title: 'MODES',
     href: '/theory/modes',
     icon: Icons.Modes,
@@ -49,9 +63,17 @@ const SECTIONS = [
     description: 'Cercle des quintes : tonalités parentes, relatives et modulations.',
     tags: ['Tonalités'],
   },
+  {
+    title: 'HARMONIE',
+    href: '/theory/harmonie',
+    icon: Icons.Compose,
+    description: 'Tensions, Axis Theory, Coltrane changes et rythme harmonique.',
+    tags: ['Substitutions', 'Axis'],
+  },
 ];
 
 const CONCEPTS = [
+
   { q: 'Pourquoi des quintes ?', a: 'Chaque case du cercle ajoute une dièse (ou en retire une) : la distance entre deux cases voisines est toujours une quinte juste.' },
   { q: 'Majeur ou mineur ?', a: 'Une tonalité mineure partage sa gamme avec son relatif majeur : même notes, autre point de départ (le 6e degré).' },
   { q: 'Degrés, c\'est quoi ?', a: 'Les degrés (I, ii, iii…) numérotent chaque note d\'une gamme. Toute la théorie d\'Adagio se raisonne en degrés.' },

@@ -25,8 +25,11 @@ export const PILLARS: NavPillar[] = [
     children: [
       { label: 'ACCORDS', href: '/theory/chords', icon: Icons.Chords },
       { label: 'TRIADES', href: '/theory/triades', icon: Icons.Triads },
+      { label: 'RENVERSEMENTS', href: '/theory/renversements', icon: Icons.Triads },
+      { label: 'EXTENSIONS', href: '/theory/extensions', icon: Icons.Chords },
       { label: 'MODES', href: '/theory/modes', icon: Icons.Modes },
       { label: 'GAMMES', href: '/theory/scales', icon: Icons.Scales },
+      { label: 'HARMONIE', href: '/theory/harmonie', icon: Icons.Compose },
       { label: 'CERCLE', href: '/theory/circle', icon: Icons.Circle },
     ],
   },
@@ -37,6 +40,7 @@ export const PILLARS: NavPillar[] = [
     children: [
       { label: 'MANCHE', href: '/fretboard', icon: Icons.Fretboard },
       { label: 'NOTATION', href: '/notation', icon: Icons.Notation },
+      { label: 'RYTHME', href: '/rythme', icon: Icons.Play },
       { label: 'ANTISÈCHE', href: '/notes', icon: Icons.Notes },
     ],
   },

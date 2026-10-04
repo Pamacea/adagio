@@ -12,3 +12,4 @@ export * from './cheatsheet';
 export * from './lessons-content';
 export * from './chord-variants';
 export * from './harmonic-suggestions';
+export * from './sheet-content';

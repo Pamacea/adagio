@@ -348,6 +348,7 @@ export class UsersService {
           showIntervals: true,
           showNotes: true,
           showDegrees: false,
+          instrument: 'guitar',
           tuning: 'EADGBE',
           fretCount: 24,
           volume: 0.7,
@@ -366,6 +367,7 @@ export class UsersService {
     showIntervals?: boolean;
     showNotes?: boolean;
     showDegrees?: boolean;
+    instrument?: string;
     tuning?: string;
     fretCount?: number;
     volume?: number;
@@ -379,6 +381,7 @@ export class UsersService {
         showIntervals: preferencesData.showIntervals ?? true,
         showNotes: preferencesData.showNotes ?? true,
         showDegrees: preferencesData.showDegrees ?? false,
+        instrument: preferencesData.instrument ?? 'guitar',
         tuning: preferencesData.tuning ?? 'EADGBE',
         fretCount: preferencesData.fretCount ?? 24,
         volume: preferencesData.volume ?? 0.7,

@@ -421,10 +421,15 @@ export function getTendencyTones(chordRoot: NoteName, quality: ChordQuality): No
  * Calcule les voicings possibles pour un accord donné
  *
  * IMPORTANT: Convention de numérotation des cordes:
- * - GUITAR_TUNING = ['E', 'A', 'D', 'G', 'B', 'E'] (grave → aigu)
- * - VoicingNote.string: 0 = high E (aigu), 5 = low E (grave)
+ * - tuning est passé grave → aigu (défaut GUITAR_TUNING = E A D G B E)
+ * - VoicingNote.string: 0 = corde la plus aigu(e), stringCount-1 = corde la plus grave
  */
-export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fretCount = 12): ChordVoicing[] {
+export function getChordVoicings(
+  chordRoot: NoteName,
+  quality: ChordQuality,
+  fretCount = 12,
+  tuning: readonly NoteName[] = GUITAR_TUNING
+): ChordVoicing[] {
   const voicings: ChordVoicing[] = [];
   const chordNotes = buildChord(chordRoot, quality);
   const seenFingerprints = new Set<string>();
@@ -437,9 +442,9 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
     let minFret = 24;
     let maxFret = 0;
 
-    // GUITAR_TUNING est [E(low), A, D, G, B, E(high)]
-    for (let stringIdx = 0; stringIdx < 6; stringIdx++) {
-      const openNote = GUITAR_TUNING[stringIdx] as NoteName;
+    // tuning est [grave → aigu] : [E(low), A, D, G, B, E(high)] pour la guitare
+    for (let stringIdx = 0; stringIdx < tuning.length; stringIdx++) {
+      const openNote = tuning[stringIdx] as NoteName;
       const openNoteIndex = getNoteIndex(openNote);
 
       // Chercher la note de l'accord sur cette corde (jusqu'à 5 frettes plus loin)
@@ -448,7 +453,7 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
         const note = CHROMATIC_SCALE[noteIndex] as NoteName | undefined;
 
         if (note && chordNotes.includes(note)) {
-          const voicingString = 5 - stringIdx;
+          const voicingString = tuning.length - 1 - stringIdx;
           const octave = 4 + Math.floor((openNoteIndex + fret) / 12) - (stringIdx >= 2 ? 1 : 0);
 
           voicingNotes.push({

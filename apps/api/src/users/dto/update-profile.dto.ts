@@ -18,6 +18,7 @@ export class UpdateProfileDto {
     showIntervals?: boolean;
     showNotes?: boolean;
     showDegrees?: boolean;
+    instrument?: string;
     tuning?: string;
     fretCount?: number;
     volume?: number;

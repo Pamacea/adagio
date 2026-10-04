@@ -6,8 +6,9 @@
 
 'use client';
 
-import type { NoteName, ModeName } from '@adagio/types';
+import type { NoteName, ModeName, Instrument } from '@adagio/types';
 import { NOTE_FR } from '@/lib/theory';
+import { INSTRUMENTS, INSTRUMENT_IDS } from '@adagio/theory';
 
 // Toutes les notes chromatiques (avec dièses)
 const CHROMATIC_ROOTS: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -43,10 +44,12 @@ interface FretboardControlsProps {
   currentMode: ModeName;
   fretCount: FretCountOption;
   showAllNotes: boolean;
+  instrument: Instrument;
   onRootChange: (root: NoteName) => void;
   onModeChange: (mode: ModeName) => void;
   onFretCountChange: (count: FretCountOption) => void;
   onToggleNotes: () => void;
+  onInstrumentChange: (instrument: Instrument) => void;
 }
 
 export function FretboardControls({
@@ -54,10 +57,12 @@ export function FretboardControls({
   currentMode,
   fretCount,
   showAllNotes,
+  instrument,
   onRootChange,
   onModeChange,
   onFretCountChange,
   onToggleNotes,
+  onInstrumentChange,
 }: FretboardControlsProps) {
   const displayNote = (note: NoteName): string => {
     return NOTE_FR[note] || note;
@@ -66,6 +71,30 @@ export function FretboardControls({
   return (
     <div className="section-frame p-4 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Instrument selection */}
+        <div>
+          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
+            INSTRUMENT
+          </label>
+          <div className="flex gap-1">
+            {INSTRUMENT_IDS.map(id => (
+              <button
+                key={id}
+                onClick={() => onInstrumentChange(id)}
+                className={`px-3 py-2 text-sm font-bold uppercase border-2 transition-all ${
+                  instrument === id
+                    ? 'border-blood bg-toxic text-white'
+                    : 'border-steel bg-abyss text-gray hover:border-white'
+                }`}
+                aria-label={INSTRUMENTS[id].label}
+                aria-pressed={instrument === id}
+              >
+                {INSTRUMENTS[id].label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Root selection */}
         <div>
           <label className="text-xs text-gray uppercase tracking-wider block mb-2">

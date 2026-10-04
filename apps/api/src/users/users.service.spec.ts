@@ -651,6 +651,7 @@ describe('UsersService', () => {
         showIntervals: true,
         showNotes: true,
         showDegrees: false,
+        instrument: 'guitar',
         tuning: 'EADGBE',
         fretCount: 24,
         volume: 0.7,

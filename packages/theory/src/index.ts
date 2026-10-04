@@ -1,4 +1,5 @@
 export * from './core/Note';
+export * from './instruments';
 export * from './core/Interval';
 export * from './core/Scale';
 export * from './core/Chord';

@@ -11,7 +11,11 @@
       "Bash(rm:*)",
       "Bash(rtk ls *)",
       "Bash(mv .git/index.lock .git/index.lock.bak-p1f)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(rm -f \".claude/tmp-fretboard-bass.png\")",
+      "Bash(C:\\\\Users\\\\Yanis\\\\.cargo\\\\bin\\\\argus.exe remember *)",
+      "Bash(rm -f .git/index.lock)",
+      "Bash(rtk git *)"
     ]
   }
 }

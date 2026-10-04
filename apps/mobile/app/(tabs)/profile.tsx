@@ -17,14 +17,14 @@ import {
   TrophyIcon,
   SettingsIcon,
   UserIcon,
-  GuitarIcon,
+  GuitarIcon as _GuitarIcon,
   InfoIcon,
   ChevronRightIcon,
-  MetalCard,
+  MetalCard as _MetalCard,
   MetalCardWithHeader,
 } from '@/components';
 import { Colors, Spacing, Typography, FontWeights } from '@/theme';
-import { authClient, getCurrentUser, apiClient } from '@adagio/api-client';
+import { authClient, getCurrentUser, apiClient as _apiClient } from '@adagio/api-client';
 import type { User, UserPreferences } from '@adagio/types';
 
 interface MenuItem {
@@ -39,7 +39,7 @@ interface MenuItem {
 export default function ProfileScreen() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [preferences, setPreferences] = useState<UserPreferences | null>(null);
+  const [_preferences, _setPreferences] = useState<UserPreferences | null>(null);
 
   useEffect(() => {
     loadUserData();

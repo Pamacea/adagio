@@ -350,36 +350,36 @@ describe('ChordCalculator', () => {
       it('should handle bII (Neapolitan)', () => {
         const result = getDegreeNote('C', 'bII', 'major');
 
-        // Note: bII means "one semitone below II" which gives I in the implementation
-        expect(result).toBe('C');
+        // bII = II abaissé d'un demi-ton : D → Db
+        expect(result).toBe('Db');
       });
 
       it('should handle bIII', () => {
         const result = getDegreeNote('C', 'bIII', 'major');
 
-        // Note: bIII means "one semitone below III" which gives II in the implementation
-        expect(result).toBe('D');
+        // bIII = III abaissé d'un demi-ton : E → Eb
+        expect(result).toBe('Eb');
       });
 
       it('should handle #IV (Lydian)', () => {
         const result = getDegreeNote('C', '#IV', 'major');
 
-        // Note: #IV means "one semitone above IV" which gives V in the implementation
-        expect(result).toBe('G');
+        // #IV = IV haussé d'un demi-ton : F → F#
+        expect(result).toBe('F#');
       });
 
       it('should handle bVI', () => {
         const result = getDegreeNote('C', 'bVI', 'major');
 
-        // Note: bVI means "one semitone below VI" which gives V in the implementation
-        expect(result).toBe('G');
+        // bVI = VI abaissé d'un demi-ton : A → Ab
+        expect(result).toBe('Ab');
       });
 
       it('should handle bVII', () => {
         const result = getDegreeNote('C', 'bVII', 'major');
 
-        // Note: bVII means "one semitone below VII" which gives VI in the implementation
-        expect(result).toBe('A');
+        // bVII = VII abaissé d'un demi-ton : B → Bb
+        expect(result).toBe('Bb');
       });
     });
   });

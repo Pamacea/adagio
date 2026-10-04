@@ -16,7 +16,7 @@ import { Svg, Line, Ellipse, Path, G, Circle, Text as SvgText } from 'react-nati
 import {
   NoteIcon,
   MusicIcon,
-  MetalCard,
+  MetalCard as _MetalCard,
   MetalCardWithHeader,
   ChevronRightIcon,
 } from '../../components';
@@ -240,7 +240,7 @@ function DurationSymbol({ type }: { type: 'whole' | 'half' | 'quarter' | 'eighth
 }
 
 export default function NotationScreen() {
-  const router = useRouter();
+  const _router = useRouter();
   const [activeView, setActiveView] = useState<NotationView>('staff');
   const [selectedKey, setSelectedKey] = useState<NoteName>('C');
   const [notes, setNotes] = useState<NoteEvent[]>([]);

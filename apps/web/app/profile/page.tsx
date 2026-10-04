@@ -7,19 +7,15 @@
 'use client';
 
 import { useState } from 'react';
-import { MetalNav, MetalFooter, MetalCard, StatCard, MetalButton, Icons, PreferencesSection, AccountActions } from '@/components';
+import { MetalNav, MetalFooter, MetalButton, Icons, PreferencesSection, AccountActions, AchievementsView } from '@/components';
 import { MetalLink } from '@/components/MetalButton';
-import { useUserProfile, useUserStats, useUserAchievements } from '@/lib';
+import { useUserProfile, useUserStats } from '@/lib';
 import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
   const router = useRouter();
   const { data: profile, isLoading: profileLoading, isAuthenticated } = useUserProfile();
   const { data: stats } = useUserStats();
-  const { data: achievementsData } = useUserAchievements();
-
-  // Limiter à 6 achievements pour le profil
-  const achievements = achievementsData?.slice(0, 6);
 
   const [activeTab, setActiveTab] = useState<'profile' | 'stats' | 'achievements' | 'settings'>('profile');
   const [editMode, setEditMode] = useState(false);
@@ -30,7 +26,7 @@ export default function ProfilePage() {
       <div className="min-h-screen flex flex-col bg-abyss">
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="mx-auto text-center">
             <div className="section-frame p-12 border-2 border-steel">
               <Icons.User size="lg" className="mx-auto mb-6" />
               <h1 className="text-3xl font-metal text-white uppercase mb-4">
@@ -65,7 +61,7 @@ export default function ProfilePage() {
       <div className="min-h-screen flex flex-col bg-abyss">
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto">
             <div className="section-frame p-12 text-center">
               <Icons.User size="lg" />
               <p className="text-gray mt-4">Chargement du profil...</p>
@@ -83,7 +79,7 @@ export default function ProfilePage() {
       <div className="min-h-screen flex flex-col bg-abyss">
         <MetalNav />
         <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="mx-auto text-center">
             <div className="section-frame p-12 border-2 border-steel">
               <Icons.User size="lg" className="mx-auto mb-6" />
               <h1 className="text-3xl font-metal text-white uppercase mb-4">
@@ -110,7 +106,7 @@ export default function ProfilePage() {
       <MetalNav />
 
       <main className="flex-1 px-4 py-24 mt-16">
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
@@ -404,40 +400,7 @@ export default function ProfilePage() {
             </div>
           )}
 
-          {activeTab === 'achievements' && (
-            <div>
-              {!achievements || achievements.length === 0 ? (
-                <div className="section-frame p-12 text-center">
-                  <Icons.Fire size="lg" />
-                  <p className="text-gray mt-4">Aucun succès débloqué pour le moment.</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {achievements.map(achievement => (
-                <div
-                  key={achievement.id}
-                  className={`section-frame p-4 ${achievement.unlocked ? 'border-toxic' : 'border-steel opacity-50'}`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`icon-box ${achievement.unlocked ? 'border-toxic' : 'border-steel'}`}>
-                      <span className="text-2xl">{achievement.icon}</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className={`font-bold ${achievement.unlocked ? 'text-white' : 'text-gray'}`}>
-                          {achievement.title}
-                        </h4>
-                        {!achievement.unlocked && <span className="text-xs text-blood">VERROUILLE</span>}
-                      </div>
-                      <p className="text-xs text-gray">{achievement.description}</p>
-                    </div>
-                  </div>
-                </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          {activeTab === 'achievements' && <AchievementsView />}
 
           {activeTab === 'settings' && (
             <div className="space-y-4">

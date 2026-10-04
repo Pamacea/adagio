@@ -7,7 +7,6 @@
 
 import { cn } from '@adagio/ui';
 import type { TriadInfo, ExtendedChordInfo } from '../services';
-import { formatIntervalFr } from '../services';
 
 export interface TriadsInfoProps {
   triadInfo: TriadInfo;

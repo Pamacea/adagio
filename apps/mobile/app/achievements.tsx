@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { apiClient } from '@adagio/api-client';
+import { apiClient as _apiClient } from '@adagio/api-client';
 import type {
   AchievementCategory,
   AchievementRarity,
@@ -132,7 +132,7 @@ const MOCK_ACHIEVEMENTS: UserAchievement[] = [
 
 export default function AchievementsScreen() {
   const router = useRouter();
-  const [achievements, setAchievements] = useState<UserAchievement[]>(MOCK_ACHIEVEMENTS);
+  const [achievements, _setAchievements] = useState<UserAchievement[]>(MOCK_ACHIEVEMENTS);
   const [filtered, setFiltered] = useState<UserAchievement[]>(MOCK_ACHIEVEMENTS);
   const [filter, setFilter] = useState<FilterType>('all');
   const [isLoading, setIsLoading] = useState(false);
@@ -141,7 +141,7 @@ export default function AchievementsScreen() {
     applyFilters();
   }, [filter, achievements]);
 
-  async function loadAchievements() {
+  async function _loadAchievements() {
     setIsLoading(true);
     try {
       // In real app, fetch from API

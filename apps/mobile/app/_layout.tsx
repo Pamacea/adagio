@@ -5,7 +5,7 @@
 
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme as useRNColorScheme, Platform } from 'react-native';
+import { useColorScheme as useRNColorScheme, Platform as _Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Colors } from '../theme';
 

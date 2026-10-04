@@ -16,9 +16,9 @@ import { useRouter } from 'expo-router';
 import {
   SettingsIcon,
   BackIcon,
-  CheckIcon,
+  CheckIcon as _CheckIcon,
   MetalCard,
-  MetalCardWithHeader,
+  MetalCardWithHeader as _MetalCardWithHeader,
 } from '../../components';
 import { Toggle } from '../../components';
 import { Colors, Spacing, Typography, FontWeights } from '../../theme';

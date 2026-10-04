@@ -12,7 +12,7 @@ import {
   ROMAN_NUMERALS_MINOR,
   DEGREE_COLORS,
   DEGREE_EMOTIONS,
-  FRENCH_NOTE_NAMES,
+  FRENCH_NOTE_NAMES
 } from '@adagio/theory';
 
 // Types disponibles pour les gammes
@@ -300,7 +300,7 @@ export interface Progression {
   genre: string[];
 }
 
-export function getCommonProgressions(key: NoteName): Progression[] {
+export function getCommonProgressions(_key: NoteName): Progression[] {
   return [
     {
       name: 'I-V-vi-IV',

@@ -2,7 +2,7 @@
 // TOGGLE - Custom toggle switch component
 // ============================================================================
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef as _useRef, useEffect as _useEffect } from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 
 export interface ToggleProps {

@@ -37,7 +37,7 @@ const WIDTH = 140;
 const HEIGHT = 160;
 const MARGIN_LEFT = 20;
 const MARGIN_TOP = 28;
-const MARGIN_BOTTOM = 25;
+const _MARGIN_BOTTOM = 25;
 const STRING_SPACING = 20;
 const FRET_HEIGHT = 28;
 
@@ -59,7 +59,7 @@ const COLORS = {
 
 export function ChordDiagram({
   name,
-  root,
+  root: _root,
   positions,
   frets = 4,
   showFretNumbers = true,
@@ -74,7 +74,7 @@ export function ChordDiagram({
     : 1;
 
   // Build position map
-  const positionMap = new Map(positions.map((p) => [p.string, p]));
+  const _positionMap = new Map(positions.map((p) => [p.string, p]));
 
   const hasMuted = positions.some(p => p.fret === -1);
   const hasOpen = positions.some(p => p.fret === 0);

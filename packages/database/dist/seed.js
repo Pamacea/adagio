@@ -1,21 +1,23 @@
+"use strict";
 // ============================================================================
 // PRISMA SEED - Adagio Database
 // ============================================================================
-import { PrismaClient } from '@prisma/client';
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("@prisma/client");
 // Import seed data
-import { MODES_SEED } from './data/modes.seed';
-import { SCALES_SEED } from './data/scales.seed';
-import { CHORDS_SEED } from './data/chords.seed';
-import { TECHNIQUES_SEED } from './data/techniques.seed';
-import { ACHIEVEMENTS_SEED } from './data/achievements.seed';
-import { LESSONS_SEED } from './data/lessons.seed';
-import { HARMONY_RULES_SEED } from './data/harmony.seed';
-const prisma = new PrismaClient();
+const modes_seed_1 = require("./data/modes.seed");
+const scales_seed_1 = require("./data/scales.seed");
+const chords_seed_1 = require("./data/chords.seed");
+const techniques_seed_1 = require("./data/techniques.seed");
+const achievements_seed_1 = require("./data/achievements.seed");
+const lessons_seed_1 = require("./data/lessons.seed");
+const harmony_seed_1 = require("./data/harmony.seed");
+const prisma = new client_1.PrismaClient();
 async function main() {
     console.log('🌱 Seeding database...');
     // ============ MODES ============
     console.log('  Seeding modes...');
-    for (const mode of MODES_SEED) {
+    for (const mode of modes_seed_1.MODES_SEED) {
         await prisma.mode.upsert({
             where: { slug: mode.slug },
             update: {},
@@ -24,7 +26,7 @@ async function main() {
     }
     // ============ SCALES ============
     console.log('  Seeding scales...');
-    for (const scale of SCALES_SEED) {
+    for (const scale of scales_seed_1.SCALES_SEED) {
         await prisma.scale.upsert({
             where: { slug: scale.slug },
             update: {},
@@ -33,7 +35,7 @@ async function main() {
     }
     // ============ CHORDS ============
     console.log('  Seeding chords...');
-    for (const chord of CHORDS_SEED) {
+    for (const chord of chords_seed_1.CHORDS_SEED) {
         await prisma.chord.upsert({
             where: { root_quality: { root: chord.root, quality: chord.quality } },
             update: {},
@@ -42,7 +44,7 @@ async function main() {
     }
     // ============ HARMONY RULES ============
     console.log('  Seeding harmony rules...');
-    for (const rule of HARMONY_RULES_SEED) {
+    for (const rule of harmony_seed_1.HARMONY_RULES_SEED) {
         await prisma.harmonyRule.upsert({
             where: { degree_tonality: { degree: rule.degree, tonality: rule.tonality } },
             update: {},
@@ -80,7 +82,7 @@ async function main() {
     }
     // ============ TECHNIQUES ============
     console.log('  Seeding techniques...');
-    for (const technique of TECHNIQUES_SEED) {
+    for (const technique of techniques_seed_1.TECHNIQUES_SEED) {
         await prisma.technique.upsert({
             where: { slug: technique.slug },
             update: {},
@@ -89,7 +91,7 @@ async function main() {
     }
     // ============ ACHIEVEMENTS ============
     console.log('  Seeding achievements...');
-    for (const achievement of ACHIEVEMENTS_SEED) {
+    for (const achievement of achievements_seed_1.ACHIEVEMENTS_SEED) {
         await prisma.achievement.upsert({
             where: { slug: achievement.slug },
             update: {},
@@ -98,7 +100,7 @@ async function main() {
     }
     // ============ LESSONS ============
     console.log('  Seeding lessons...');
-    for (const lesson of LESSONS_SEED) {
+    for (const lesson of lessons_seed_1.LESSONS_SEED) {
         await prisma.lesson.upsert({
             where: { slug: lesson.slug },
             update: {},

@@ -1,7 +1,14 @@
 import type { NextConfig } from 'next';
+import path from 'node:path';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+
+  // Racine workspace explicite : un pnpm-lock.yaml parasite dans le home
+  // faisait inférer C:\Users\Yanis comme root, ce qui plantait Turbopack.
+  turbopack: {
+    root: path.join(__dirname, '../..'),
+  },
 
   // Transpiler les packages workspace pour Turbopack
   transpilePackages: ['@adagio/ui', '@adagio/theory', '@adagio/types', '@adagio/api-client'],
@@ -27,6 +34,15 @@ const nextConfig: NextConfig = {
         source: '/api/v1/:path*',
         destination: `${backendUrl}/api/v1/:path*`,
       },
+    ];
+  },
+
+  // Pages fusionnées (Phase 1) : /sessions → /lessons, /achievements → /profile
+  async redirects() {
+    return [
+      { source: '/sessions/:path*', destination: '/lessons', permanent: false },
+      { source: '/sessions', destination: '/lessons', permanent: false },
+      { source: '/achievements', destination: '/profile', permanent: false },
     ];
   },
 };

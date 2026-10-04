@@ -70,7 +70,7 @@ export function ComposeControls({
         </label>
         <div className="flex flex-wrap gap-1">
           {CHROMATIC.map((note) => {
-            const isSharp = note.includes('#');
+            const _isSharp = note.includes('#');
             return (
               <button
                 key={note}
@@ -157,7 +157,7 @@ export function ComposeControls({
 // UTILS
 // ============================================================================
 
-const NOTE_FR: Record<string, string> = {
+const _NOTE_FR: Record<string, string> = {
   'C': 'DO', 'C#': 'DO♯', 'Db': 'RÉ♭',
   'D': 'RÉ', 'D#': 'RÉ♯', 'Eb': 'MI♭',
   'E': 'MI',

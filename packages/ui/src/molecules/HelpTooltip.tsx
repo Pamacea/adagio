@@ -53,7 +53,7 @@ export function HelpTooltip({
   ...props
 }: HelpTooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [_isFocused, setIsFocused] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const triggerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);

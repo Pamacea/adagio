@@ -148,7 +148,7 @@ describe('FretboardCalculator', () => {
 
     it('should handle Open D tuning', () => {
       const openD: NoteName[] = ['E', 'B', 'G', 'D', 'A', 'D']; // Actually Open D is DADF#AD, but let's test with a valid array
-      const result = calculateFretboard({ tuning: ['D', 'A', 'D', 'F#', 'A', 'D'] as NoteName, fretCount: 0 });
+      const result = calculateFretboard({ tuning: ['D', 'A', 'D', 'F#', 'A', 'D'] as NoteName[], fretCount: 0 });
 
       expect(result.length).toBe(6);
     });
@@ -539,7 +539,7 @@ describe('FretboardCalculator', () => {
     });
 
     it('should handle empty tuning (should skip incomplete strings)', () => {
-      const result = calculateFretboard({ tuning: ['E', '', 'G', 'D', 'A', 'E'] as NoteName, fretCount: 0 });
+      const result = calculateFretboard({ tuning: ['E', '', 'G', 'D', 'A', 'E'] as NoteName[], fretCount: 0 });
 
       // Should skip the empty string position
       expect(result.length).toBeLessThan(6);

@@ -27,7 +27,7 @@ export class UsersService {
     const { preferences, ...userData } = updateProfileDto;
 
     // Update user
-    const user = await prisma.user.update({
+    await prisma.user.update({
       where: { id: userId },
       data: userData,
       select: {

@@ -1,10 +1,10 @@
 /**
  * ADAGIO - Footer Metal
- * Footer avec design brutal
+ * Footer avec design brutal — miroir des 4 piliers
  */
 
 import Link from 'next/link';
-import { MAIN_NAV, ACCOUNT_NAV } from '@/lib/navigation';
+import { PILLARS, ACCOUNT_NAV } from '@/lib/navigation';
 
 export function MetalFooter() {
   return (
@@ -12,9 +12,9 @@ export function MetalFooter() {
       <div className="py-6 px-4 w-full">
         <div className="w-full">
           {/* Main content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6 w-full">
             {/* Brand */}
-            <div>
+            <div className="md:col-span-1">
               <h3 className="text-lg font-metal text-white uppercase tracking-tighter mb-2">
                 ADAGIO
               </h3>
@@ -26,23 +26,27 @@ export function MetalFooter() {
               </p>
             </div>
 
-            {/* Links */}
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
-                Navigation
-              </h4>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                {MAIN_NAV.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-xs text-gray hover:text-white transition-colors"
-                  >
-                    {item.label.charAt(0) + item.label.slice(1).toLowerCase()}
+            {/* 4 piliers */}
+            {PILLARS.map(pillar => (
+              <div key={pillar.href}>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
+                  <Link href={pillar.href} className="hover:text-toxic transition-colors">
+                    {pillar.label.charAt(0) + pillar.label.slice(1).toLowerCase()}
                   </Link>
-                ))}
+                </h4>
+                <div className="flex flex-col gap-1">
+                  {pillar.children.map(item => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="text-xs text-gray hover:text-white transition-colors"
+                    >
+                      {item.label.charAt(0) + item.label.slice(1).toLowerCase()}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            ))}
 
             {/* Account */}
             <div>

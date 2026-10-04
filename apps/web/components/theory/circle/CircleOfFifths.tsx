@@ -5,7 +5,6 @@
 
 'use client';
 
-import type { NoteName } from '@adagio/types';
 import {
   CIRCLE_OF_FIFTHS,
   NOTE_POSITIONS,

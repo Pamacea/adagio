@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { prisma } from '@adagio/database';
 
 // Helper function to safely parse JSON fields
-function parseJsonField<T>(value: unknown): T {
+function _parseJsonField<T>(value: unknown): T {
   if (value === null || value === undefined) {
     return [] as T;
   }

@@ -87,7 +87,7 @@ export function RootSelector({
         <button
           onClick={() => {
             // Toggle between sharps and flats
-            const currentIsSharp = !showFlats;
+            const _currentIsSharp = !showFlats;
             // Will be handled by parent re-render with different showFlats prop
           }}
           className="text-xs text-neutral-500 hover:text-neutral-400 transition-colors"

@@ -6,7 +6,7 @@
  */
 
 import { apiClient } from '@adagio/api-client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useUserProfileQuery, useUserStatsQuery, useUpdateProfileMutation } from './use-query';
 
 /**

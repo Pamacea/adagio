@@ -88,19 +88,19 @@ export default function RegisterPage() {
 
     try {
       // BetterAuth sign up
-      const response = await fetch('/api/auth/sign-up', {
+      const response = await fetch('/api/auth/sign-up/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: formData.username,
+          name: formData.username,
           email: formData.email,
           password: formData.password,
         }),
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Erreur d\'inscription');
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.message || data.error || 'Erreur d\'inscription');
       }
 
       // Redirect to login or home after successful registration

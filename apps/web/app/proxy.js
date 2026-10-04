@@ -25,7 +25,7 @@ const BACKEND_URL = process.env.NESTJS_API_URL || 'http://localhost:3001';
 /**
  * Routes publiques (ne nécessitent pas d'authentification)
  */
-const publicRoutes = new Set([
+const _publicRoutes = new Set([
   '/',
   '/login',
   '/register',
@@ -114,7 +114,7 @@ async function proxyToBackend(request: NextRequest) {
       method: request.method,
       headers,
       body: request.body,
-      // @ts-ignore - duplex est requis pour Node 18+ avec streaming
+      // @ts-expect-error - duplex est requis pour Node 18+ avec streaming
       duplex: 'half',
     });
 

@@ -17,7 +17,7 @@ import type { NoteName, Interval } from '@adagio/types';
 import { MetalCard, GuitarIcon } from '../../components';
 import { Colors, Spacing, Typography, FontWeights, toFrenchNote } from '../../theme';
 
-const { width } = Dimensions.get('window');
+const { width: _width } = Dimensions.get('window');
 
 const NOTES: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -31,7 +31,7 @@ const SCALES: Record<string, Interval[]> = {
 
 // String names in French
 const STRING_NAMES = ['Mi', 'Si', 'Sol', 'Ré', 'La', 'Mi']; // High to low
-const STRING_NAMES_EN = ['E', 'B', 'G', 'D', 'A', 'E'];
+const _STRING_NAMES_EN = ['E', 'B', 'G', 'D', 'A', 'E'];
 
 export default function FretboardScreen() {
   const [selectedKey, setSelectedKey] = useState<NoteName>('C');

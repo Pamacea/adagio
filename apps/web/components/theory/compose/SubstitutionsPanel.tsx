@@ -80,7 +80,7 @@ const MODAL_INTERCHANGE_INFO: Record<string, {
 // ============================================================================
 
 const getParallelKeyChords = (root: NoteName, currentTonality: 'major' | 'minor'): string[] => {
-  const parallelTonality = currentTonality === 'major' ? 'minor' : 'major';
+  const _parallelTonality = currentTonality === 'major' ? 'minor' : 'major';
 
   // Accords de la tonalité parallèle
   if (currentTonality === 'major') {

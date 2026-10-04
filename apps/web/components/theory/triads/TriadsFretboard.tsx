@@ -9,7 +9,6 @@
 import { useMemo } from 'react';
 import type { Interval } from '@adagio/types';
 import type { FretboardTriadNote } from '@/features/triades/services';
-import { NOTE_FR } from '@/lib/theory';
 
 // Cordes de guitare (de la plus aiguë à la plus grave)
 const GUITAR_STRINGS: Array<{ note: string; name: string }> = [

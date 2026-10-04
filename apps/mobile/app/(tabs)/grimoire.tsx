@@ -54,7 +54,7 @@ export default function GrimoireScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<LibraryTab>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [folders, setFolders] = useState<Folder[]>(MOCK_FOLDERS);
+  const [folders, _setFolders] = useState<Folder[]>(MOCK_FOLDERS);
   const [progressions, setProgressions] = useState<SavedProgressionWithId[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -5,7 +5,7 @@
 
 'use client';
 
-import { FRENCH_SCALE_NOTES, FRENCH_NOTE_NAMES } from '@adagio/theory';
+import { FRENCH_SCALE_NOTES } from '@adagio/theory';
 
 const ENGLISH_NOTES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'] as const;
 

@@ -2,8 +2,8 @@
 // METAL THEME STYLES - StyleSheet factory for React Native
 // ============================================================================
 
-import { StyleSheet } from 'react-native';
-import { Colors, Spacing, BorderRadius, Typography, FontWeights, Shadows } from './index';
+import { StyleSheet as _StyleSheet } from 'react-native';
+import { Colors, Spacing, BorderRadius, Typography, FontWeights, Shadows as _Shadows } from './index';
 
 export const createMetalStyles = <T extends Record<string, unknown>>(
   styles: T

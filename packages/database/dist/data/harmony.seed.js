@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Harmony Rules (Axis Theory)
 // ============================================================================
-export const HARMONY_RULES_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HARMONY_RULES_SEED = void 0;
+exports.HARMONY_RULES_SEED = [
     // === MAJOR KEY ===
     {
         degree: 'I',

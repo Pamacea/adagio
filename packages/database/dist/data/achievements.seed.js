@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Achievements
 // ============================================================================
-export const ACHIEVEMENTS_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ACHIEVEMENT_CATEGORIES = exports.ACHIEVEMENTS_SEED = void 0;
+exports.ACHIEVEMENTS_SEED = [
     // === PROGRESSION ===
     {
         slug: 'first-riff',
@@ -252,7 +255,7 @@ export const ACHIEVEMENTS_SEED = [
         rarity: 'rare',
     },
 ];
-export const ACHIEVEMENT_CATEGORIES = [
+exports.ACHIEVEMENT_CATEGORIES = [
     'progression',
     'discovery',
     'practice',

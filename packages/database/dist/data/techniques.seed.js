@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Techniques
 // ============================================================================
-export const TECHNIQUES_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TECHNIQUE_CATEGORIES = exports.TECHNIQUES_SEED = void 0;
+exports.TECHNIQUES_SEED = [
     // === LEGATO ===
     {
         slug: 'hammer-on',
@@ -232,7 +235,7 @@ export const TECHNIQUES_SEED = [
         ]),
     },
 ];
-export const TECHNIQUE_CATEGORIES = [
+exports.TECHNIQUE_CATEGORIES = [
     'legato',
     'sweep',
     'tapping',

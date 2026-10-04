@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Modes Grecs
 // ============================================================================
-export const MODES_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MODES_SEED = void 0;
+exports.MODES_SEED = [
     {
         slug: 'ionian',
         name: 'Ionien',

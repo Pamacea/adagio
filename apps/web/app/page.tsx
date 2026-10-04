@@ -5,7 +5,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import { MetalNav, MetalFooter, MetalLink } from '@/components';
 
 const frenchNotes = ['DO', 'RE', 'MI', 'FA', 'SOL', 'LA', 'SI'];

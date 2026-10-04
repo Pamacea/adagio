@@ -53,7 +53,7 @@ export function TriadsControls({
   onQualityChange,
   onFretCountChange,
 }: TriadsControlsProps) {
-  const qualityColors = QUALITY_COLORS[quality];
+  const _qualityColors = QUALITY_COLORS[quality];
 
   return (
     <div className="space-y-6">

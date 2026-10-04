@@ -132,7 +132,7 @@ describe('ChordCalculator - getChordVoicings', () => {
     voicings.forEach(voicing => {
       expect(voicing.notes.length).toBeGreaterThanOrEqual(3);
       // Db devient C# en interne
-      expect(voicing.notes[0].note).toMatch(/^(C#|D#|F#|G#|A#|E|G|B)$/);
+      expect(voicing.notes[0]?.note).toMatch(/^(C#|D#|F#|G#|A#|E|G|B)$/);
     });
   });
 

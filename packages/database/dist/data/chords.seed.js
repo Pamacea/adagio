@@ -1,6 +1,9 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Accords
 // ============================================================================
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CHORDS_SEED = void 0;
 // Fingerings pour accord de C (adapter pour chaque racine)
 const basicFingerings = {
     'C': [
@@ -39,7 +42,7 @@ const basicFingerings = {
         { fret: 0, string: 3 },
     ],
 };
-export const CHORDS_SEED = [
+exports.CHORDS_SEED = [
     // === ACCORDS OUVERTS ===
     {
         name: 'C',

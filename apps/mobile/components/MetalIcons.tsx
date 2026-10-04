@@ -6,8 +6,8 @@
 // ============================================================================
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Path, Circle, Rect, Line, Polygon, Ellipse } from 'react-native-svg';
+import { View as _View, StyleSheet as _StyleSheet } from 'react-native';
+import Svg, { Path, Circle, Rect, Line, Polygon, Ellipse as _Ellipse } from 'react-native-svg';
 
 export interface IconProps {
   size?: number;

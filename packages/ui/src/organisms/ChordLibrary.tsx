@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { type NoteName, type ChordQuality, type AxisGroup } from '@adagio/types';
 import { ChordCard } from '../molecules/ChordCard';
 import { RootSelector } from '../molecules/RootSelector';
-import { Button } from '../atoms/Button';
+import { Button as _Button } from '../atoms/Button';
 import { cn } from '../lib/cn';
 
 // Basic chord fingerings for open position chords
@@ -181,7 +181,7 @@ export function ChordLibrary({
   };
 
   const transposeName = (baseName: string, targetRoot: NoteName): string => {
-    const baseRoot = baseName.charAt(0) as NoteName;
+    const _baseRoot = baseName.charAt(0) as NoteName;
     const quality = baseName.substring(1);
     return targetRoot + quality;
   };

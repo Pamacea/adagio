@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { Tabs } from 'expo-router';
-import { Text, useColorScheme as useRNColorScheme, View } from 'react-native';
+import { Text as _Text, useColorScheme as useRNColorScheme, View as _View } from 'react-native';
 import {
   HomeIcon,
   MusicIcon,
@@ -23,7 +23,7 @@ const screenOptions = {
 };
 
 export default function TabsLayout() {
-  const colorScheme = useColorScheme();
+  const _colorScheme = useColorScheme();
 
   return (
     <Tabs

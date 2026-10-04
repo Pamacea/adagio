@@ -11,8 +11,7 @@ import {
   parseChordName,
   getFrenchNoteName,
 } from '../chordCalculations';
-import type { NoteName, ChordQuality, ChordVoicing } from '@adagio/types';
-import { buildChord } from '@adagio/theory';
+import type { NoteName, ChordVoicing } from '@adagio/types';
 
 describe('chordCalculations - getIntervalInChord', () => {
   // Tests de régression pour le bug de mapping d'intervalles

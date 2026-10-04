@@ -6,7 +6,7 @@
 'use client';
 
 import { cn } from '@adagio/ui';
-import type { NoteName, ChordDegree } from '@adagio/types';
+import type { NoteName } from '@adagio/types';
 import { getDiatonicChordsByDegree } from '@adagio/theory';
 
 // ============================================================================

@@ -28,7 +28,7 @@ export default function LoginPage() {
         <MetalNav />
 
         <main className="flex-1 px-4 py-24 mt-16 flex items-center justify-center">
-          <div className="max-w-md w-full text-center">
+          <div className="w-full text-center">
             <div className="section-frame p-8 border-2 border-toxic">
               <Icons.User size="lg" className="mx-auto mb-4 text-toxic" />
               <h1 className="text-2xl font-metal text-white uppercase mb-2">
@@ -65,15 +65,15 @@ export default function LoginPage() {
 
     try {
       // BetterAuth sign in
-      const response = await fetch('/api/auth/sign-in', {
+      const response = await fetch('/api/auth/sign-in/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Erreur de connexion');
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.message || data.error || 'Erreur de connexion');
       }
 
       // Redirect to home or profile after successful login

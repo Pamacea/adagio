@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsArray, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AnalyzeProgressionDto {

@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Leçons
 // ============================================================================
-export const LESSONS_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LESSON_LEVELS = exports.LESSON_CATEGORIES = exports.LESSONS_SEED = void 0;
+exports.LESSONS_SEED = [
     // === THEORY ===
     {
         slug: 'modes-grecs-intro',
@@ -193,7 +196,7 @@ export const LESSONS_SEED = [
         }),
     },
 ];
-export const LESSON_CATEGORIES = [
+exports.LESSON_CATEGORIES = [
     'THEORY',
     'FRETBOARD',
     'CHORDS',
@@ -201,4 +204,4 @@ export const LESSON_CATEGORIES = [
     'PROGRESSIONS',
     'COMPOSITION',
 ];
-export const LESSON_LEVELS = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'];
+exports.LESSON_LEVELS = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'];

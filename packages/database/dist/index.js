@@ -1,28 +1,48 @@
+"use strict";
 // ============================================================================
 // PRISMA CLIENT - Singleton instance
 // ============================================================================
-import { PrismaClient } from '@prisma/client';
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.prisma = void 0;
+exports.userExists = userExists;
+exports.getUserWithPreferences = getUserWithPreferences;
+exports.getOrCreatePreferences = getOrCreatePreferences;
+const client_1 = require("@prisma/client");
 const globalForPrisma = globalThis;
-export const prisma = globalForPrisma.prisma ??
-    new PrismaClient({
+exports.prisma = globalForPrisma.prisma ??
+    new client_1.PrismaClient({
         log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
     });
 if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.prisma = prisma;
+    globalForPrisma.prisma = exports.prisma;
 }
-export default prisma;
+exports.default = exports.prisma;
 // ============================================================================
 // TYPES - Export Prisma types
 // ============================================================================
-export * from '@prisma/client';
+__exportStar(require("@prisma/client"), exports);
 // ============================================================================
 // HELPERS - Common database operations
 // ============================================================================
 /**
  * Check if a user exists by ID
  */
-export async function userExists(userId) {
-    const user = await prisma.user.findUnique({
+async function userExists(userId) {
+    const user = await exports.prisma.user.findUnique({
         where: { id: userId },
         select: { id: true },
     });
@@ -31,8 +51,8 @@ export async function userExists(userId) {
 /**
  * Get user with preferences
  */
-export async function getUserWithPreferences(userId) {
-    return prisma.user.findUnique({
+async function getUserWithPreferences(userId) {
+    return exports.prisma.user.findUnique({
         where: { id: userId },
         include: {
             preferences: true,
@@ -42,12 +62,12 @@ export async function getUserWithPreferences(userId) {
 /**
  * Create or get user preferences
  */
-export async function getOrCreatePreferences(userId) {
-    let prefs = await prisma.userPreferences.findUnique({
+async function getOrCreatePreferences(userId) {
+    let prefs = await exports.prisma.userPreferences.findUnique({
         where: { userId },
     });
     if (!prefs) {
-        prefs = await prisma.userPreferences.create({
+        prefs = await exports.prisma.userPreferences.create({
             data: { userId },
         });
     }

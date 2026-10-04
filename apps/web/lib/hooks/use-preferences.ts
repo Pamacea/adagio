@@ -38,7 +38,7 @@ const DEFAULT_PREFERENCES: UserPreferences = {
 export { DEFAULT_PREFERENCES };
 
 const STORAGE_KEY = 'adagio_preferences';
-const SYNC_QUEUE_KEY = 'adagio_preferences_sync_queue';
+const _SYNC_QUEUE_KEY = 'adagio_preferences_sync_queue';
 
 // ----------------------------------------------------------------------------
 // LOCAL STORAGE HELPERS
@@ -119,7 +119,7 @@ export function usePreferences() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
             setIsUsingFallback(false);
           }
-        } catch (error) {
+        } catch {
           // API unavailable, use localStorage
           if (mounted) {
             setIsUsingFallback(true);

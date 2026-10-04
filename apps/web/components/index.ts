@@ -12,3 +12,4 @@ export * from './theory';
 export * from './notes';
 export { PreferencesSection } from './profile/PreferencesSection';
 export { AccountActions } from './profile/AccountActions';
+export { AchievementsView } from './profile/AchievementsView';

@@ -16,7 +16,7 @@ import {
   buildChord,
   getChordTension,
   getChordVoicings,
-  getDegreeNote,
+  getDegreeNote
 } from '@adagio/theory';
 
 // ============================================================================
@@ -317,7 +317,7 @@ export function analyzeChordDifficulty(
   let level: ChordDifficulty = 'easy';
 
   // Analyze quality complexity
-  const simpleQualities: ChordQuality[] = ['', 'm', '7', 'm7', 'sus2', 'sus4'];
+  const _simpleQualities: ChordQuality[] = ['', 'm', '7', 'm7', 'sus2', 'sus4'];
   const mediumQualities: ChordQuality[] = ['maj7', 'm6', '6', 'add9', 'madd9', '7sus4', 'm9'];
   const hardQualities: ChordQuality[] = ['dim', 'dim7', 'm7b5', 'aug', 'aug7', '11', 'm11', '13', 'm13'];
 

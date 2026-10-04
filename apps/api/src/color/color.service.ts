@@ -4,7 +4,6 @@ import {
   getModeColor,
   getEmotionForMode,
   getDegreeColor,
-  getDegreeEmotion,
   getAllDegreeColors,
   getChordQualityColor,
   getChordVisualStyle,

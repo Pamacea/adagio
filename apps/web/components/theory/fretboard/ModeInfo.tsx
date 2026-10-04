@@ -7,7 +7,6 @@
 'use client';
 
 import type { NoteName, ModeName } from '@adagio/types';
-import { NOTE_FR } from '@/lib/theory';
 import { getEmotionForMode } from '@adagio/theory';
 import type { FretboardNote } from '@adagio/types';
 

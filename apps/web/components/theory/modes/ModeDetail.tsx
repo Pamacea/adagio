@@ -76,7 +76,7 @@ export function ModeDetail({
         </p>
         <div className="flex gap-2">
           {modeNotes.map((note, i) => {
-            const degree = modeDegrees[i];
+            const _degree = modeDegrees[i];
             const degreeDynamic = modeDegreesDynamic[i];
             const isRoot = i === 0;
 

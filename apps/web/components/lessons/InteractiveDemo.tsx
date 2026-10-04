@@ -11,7 +11,7 @@ import type { NoteName, ModeName } from '@adagio/types';
 import { FretboardDisplay } from '@/components/theory/fretboard/FretboardDisplay';
 import { CircleOfFifths } from '@/components/theory/circle/CircleOfFifths';
 import { ModeCircle } from '@/components/theory/modes/ModeCircle';
-import type { DemoBlock, DemoConfig } from '@adagio/theory';
+import type { DemoBlock } from '@adagio/theory';
 
 // ============================================================================
 // TYPES

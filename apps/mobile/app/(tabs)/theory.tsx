@@ -26,10 +26,10 @@ import {
 } from '@adagio/theory';
 import type { NoteName, ModeName } from '@adagio/types';
 import {
-  MetalCard,
+  MetalCard as _MetalCard,
   MetalCardWithHeader,
   NoteCard,
-  ChevronRightIcon,
+  ChevronRightIcon as _ChevronRightIcon,
   ModeIcon,
   CircleIcon,
   ScaleIcon
@@ -53,7 +53,7 @@ const MODE_NAMES: { name: string; greekName: ModeName }[] = [
 
 // Roman numerals for degrees
 const MAJOR_NUMERALS = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'];
-const MINOR_NUMERALS = ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'];
+const _MINOR_NUMERALS = ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'];
 
 // Get major scale notes
 function getMajorScale(key: NoteName): NoteName[] {
@@ -85,7 +85,7 @@ function getMajorChords(key: NoteName): string[] {
 }
 
 // Get minor key diatonic chords
-function getMinorChords(root: NoteName): string[] {
+function _getMinorChords(root: NoteName): string[] {
   const scale = getMinorScale(root);
   return [
     scale[0]! + 'm',     // i
@@ -110,7 +110,7 @@ function toFrenchChord(chord: string): string {
 }
 
 export default function TheoryScreen() {
-  const router = useRouter();
+  const _router = useRouter();
   const [activeTab, setActiveTab] = useState<TheoryTab>('modes');
   const [selectedNote, setSelectedNote] = useState<NoteName>('C');
 
@@ -390,7 +390,7 @@ function ScalesContent({
           variant="default"
         >
           <View style={styles.intervalsContainer}>
-            {scale.intervals.map((interval, i) => (
+            {scale.intervals.map((interval, _i) => (
               <View key={interval} style={styles.intervalBadge}>
                 <Text style={styles.intervalBadgeText}>{interval}</Text>
               </View>

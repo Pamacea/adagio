@@ -9,7 +9,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Alert,
+  Alert as _Alert,
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,

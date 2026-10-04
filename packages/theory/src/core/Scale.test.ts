@@ -8,7 +8,7 @@
 import { describe, it, expect } from 'vitest';
 import { Scale } from './Scale';
 import { Note } from './Note';
-import type { NoteName } from '@adagio/types';
+import type { NoteName, Interval } from '@adagio/types';
 
 describe('Scale', () => {
   describe('constructor', () => {
@@ -36,7 +36,7 @@ describe('Scale', () => {
     });
 
     it('should accept any interval array', () => {
-      const intervals = ['1', 'b3', '4', '#4', '5', 'b7'];
+      const intervals: Interval[] = ['1', 'b3', '4', '#4', '5', 'b7'];
       const scale = new Scale('C', intervals, 'Blues');
 
       expect(scale.intervals).toEqual(intervals);
@@ -85,7 +85,7 @@ describe('Scale', () => {
     });
 
     it('should handle chromatic scale', () => {
-      const chromaticIntervals = ['1', '#1', '2', '#2', '3', '4', '#4', '5', '#5', '6', '#6', '7'];
+      const chromaticIntervals: Interval[] = ['1', '#1', '2', '#2', '3', '4', '#4', '5', '#5', '6', '#6', '7'];
       const scale = new Scale('C', chromaticIntervals, 'Chromatic');
       const notes = scale.getNotes();
 

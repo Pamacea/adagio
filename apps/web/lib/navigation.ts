@@ -1,5 +1,6 @@
 /**
  * ADAGIO - Liens de navigation (source unique : MetalNav + MetalFooter)
+ * Nav en 4 piliers : Comprendre / Jouer / Composer / Apprendre (+ Compte)
  */
 
 import type { ComponentType } from 'react';
@@ -11,24 +12,52 @@ export interface NavLink {
   icon: ComponentType<{ className?: string; size?: 'sm' | 'md' | 'lg' }>;
 }
 
-// Outils & théorie (pilier principal)
-export const MAIN_NAV: NavLink[] = [
-  { label: 'COMPOSE', href: '/compose', icon: Icons.Compose },
-  { label: 'ACCORDS', href: '/theory/chords', icon: Icons.Chords },
-  { label: 'NOTES', href: '/notes', icon: Icons.Notes },
-  { label: 'LEÇONS', href: '/lessons', icon: Icons.Lessons },
-  { label: 'TRIADES', href: '/theory/triades', icon: Icons.Triads },
-  { label: 'MODES', href: '/theory/modes', icon: Icons.Modes },
-  { label: 'GAMMES', href: '/theory/scales', icon: Icons.Scales },
-  { label: 'CERCLE', href: '/theory/circle', icon: Icons.Circle },
-  { label: 'MANCHE', href: '/fretboard', icon: Icons.Fretboard },
-  { label: 'NOTATION', href: '/notation', icon: Icons.Notation },
+export interface NavPillar extends NavLink {
+  /** Sous-pages du pilier (dropdown desktop / groupe mobile). Vide = lien direct. */
+  children: NavLink[];
+}
+
+export const PILLARS: NavPillar[] = [
+  {
+    label: 'COMPRENDRE',
+    href: '/theory',
+    icon: Icons.Modes,
+    children: [
+      { label: 'ACCORDS', href: '/theory/chords', icon: Icons.Chords },
+      { label: 'TRIADES', href: '/theory/triades', icon: Icons.Triads },
+      { label: 'MODES', href: '/theory/modes', icon: Icons.Modes },
+      { label: 'GAMMES', href: '/theory/scales', icon: Icons.Scales },
+      { label: 'CERCLE', href: '/theory/circle', icon: Icons.Circle },
+    ],
+  },
+  {
+    label: 'JOUER',
+    href: '/play',
+    icon: Icons.Fretboard,
+    children: [
+      { label: 'MANCHE', href: '/fretboard', icon: Icons.Fretboard },
+      { label: 'NOTATION', href: '/notation', icon: Icons.Notation },
+      { label: 'ANTISÈCHE', href: '/notes', icon: Icons.Notes },
+    ],
+  },
+  {
+    label: 'COMPOSER',
+    href: '/compose',
+    icon: Icons.Compose,
+    children: [],
+  },
+  {
+    label: 'APPRENDRE',
+    href: '/lessons',
+    icon: Icons.Lessons,
+    children: [
+      { label: 'LEÇONS', href: '/lessons', icon: Icons.Lessons },
+    ],
+  },
 ];
 
-// Compte & parcours
+// Compte & infos
 export const ACCOUNT_NAV: NavLink[] = [
-  { label: 'SESSIONS', href: '/sessions', icon: Icons.Sessions },
-  { label: 'SUCCÈS', href: '/achievements', icon: Icons.Fire },
   { label: 'PROFILE', href: '/profile', icon: Icons.User },
   { label: 'WARNING', href: '/warning', icon: Icons.Warning },
 ];

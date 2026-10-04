@@ -13,8 +13,8 @@ import {
   Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { PlusIcon, TrashIcon, SaveIcon, MusicIcon } from '../../components';
-import { JaggedButton, MetalCard, NoteCard } from '../../components';
+import { PlusIcon as _PlusIcon, TrashIcon, SaveIcon, MusicIcon } from '../../components';
+import { JaggedButton, MetalCard, NoteCard as _NoteCard } from '../../components';
 import { Colors, Spacing, Typography, FontWeights, toFrenchNote } from '../../theme';
 import { apiClient } from '@adagio/api-client';
 import type { NoteName, ProgressionDegree } from '@adagio/types';
@@ -34,7 +34,7 @@ interface ChordItem {
 const BEAT_OPTIONS = [1, 2, 4];
 
 export default function ComposerScreen() {
-  const router = useRouter();
+  const _router = useRouter();
   const [key, setKey] = useState<NoteName>('C');
   const [progression, setProgression] = useState<ChordItem[]>([]);
   const [selectedBeats, setSelectedBeats] = useState<Record<string, number>>({});

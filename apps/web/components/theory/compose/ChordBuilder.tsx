@@ -38,7 +38,7 @@ type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
 const MAJOR_DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'] as const;
 const MINOR_DEGREES = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii°'] as const;
 
-const CAGED_SHAPES = ['C', 'A', 'G', 'E', 'D'] as const;
+const _CAGED_SHAPES = ['C', 'A', 'G', 'E', 'D'] as const;
 
 // ============================================================================
 // UTILITIES
@@ -52,7 +52,7 @@ function getDifficultyLabel(level: DifficultyLevel): string {
   }
 }
 
-function getDifficultyColor(level: DifficultyLevel): string {
+function _getDifficultyColor(level: DifficultyLevel): string {
   switch (level) {
     case 'beginner': return 'text-toxic';
     case 'intermediate': return 'text-rust';
@@ -194,7 +194,7 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
           const chordQuality = chordName.replace(/^[A-G][#b]?/, '') as ChordQuality;
 
           // Obtenir les notes de l'accord
-          const chordNotes = buildChord(chordRoot, chordQuality);
+          const _chordNotes = buildChord(chordRoot, chordQuality);
 
           return (
             <button

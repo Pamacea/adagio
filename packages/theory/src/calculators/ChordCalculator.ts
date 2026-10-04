@@ -76,7 +76,7 @@ function getNoteIndex(note: NoteName): number {
  * Retourne toujours la version en dièse pour la cohérence interne
  * (L'affichage gérera la conversion enharmonique si nécessaire)
  */
-function transposeNote(note: NoteName, semitones: number): NoteName {
+export function transposeNote(note: NoteName, semitones: number): NoteName {
   const index = getNoteIndex(note);
   const newIndex = ((index + semitones) % 12 + 12) % 12;
   return CHROMATIC_SCALE[newIndex] as NoteName;
@@ -215,7 +215,8 @@ export function getChordName(root: NoteName, quality: ChordQuality, extensions?:
 export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'major' | 'minor'): NoteName {
   const scaleNotes = tonality === 'major' ? getMajorScaleNotes(key) : getMinorScaleNotes(key);
 
-  // Gérer les altérations (b, #)
+  // Gérer les altérations (b, #) : abaissent/haussent la note DU degré d'un demi-ton
+  // ex: bII de C = Db (D abaissé), #IV de C = F# (F haussé)
   const baseDegree = degree.replace(/^[b#]/, '');
   const alteration = degree.startsWith('b') ? -1 : degree.startsWith('#') ? 1 : 0;
 
@@ -224,9 +225,21 @@ export function getDegreeNote(key: NoteName, degree: ChordDegree, tonality: 'maj
   };
 
   const index = degreeIndexMap[baseDegree] ?? 0;
-  const noteIndex = (index + alteration + 7) % 7;
+  const note = scaleNotes[index] ?? key;
 
-  return scaleNotes[noteIndex] ?? key;
+  if (alteration === 0) return note;
+
+  const altered = transposeNote(note, alteration);
+
+  if (alteration === -1) {
+    // Nommer en bémol quand la transposition donne un dièse (D-1 = C# → Db)
+    const toFlat: Partial<Record<NoteName, NoteName>> = {
+      'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb',
+    };
+    return toFlat[altered] ?? altered;
+  }
+
+  return altered;
 }
 
 /**
@@ -489,10 +502,14 @@ export function getChordVoicings(chordRoot: NoteName, quality: ChordQuality, fre
  * Obtenir l'intervalle d'une note dans un accord
  * Mapping complet des demi-tons vers les intervalles
  */
-function getIntervalInChord(root: NoteName, note: NoteName, _quality: ChordQuality): Interval {
+function getIntervalInChord(root: NoteName, note: NoteName, quality: ChordQuality): Interval {
   const rootIndex = getNoteIndex(root);
   const noteIndex = getNoteIndex(note);
   const semitones = ((noteIndex - rootIndex) + 12) % 12;
+
+  // Selon la qualité de l'accord, 6 et 9 demi-tons se nomment autrement
+  if (semitones === 6 && (quality === 'dim' || quality === 'dim7' || quality === 'm7b5')) return 'b5';
+  if (semitones === 9 && (quality === 'aug' || quality === 'aug7')) return '#5';
 
   // Mapping complet demi-tons → intervalles
   const semitoneToInterval: Record<number, Interval> = {
@@ -503,11 +520,11 @@ function getIntervalInChord(root: NoteName, note: NoteName, _quality: ChordQuali
     4: '3',
     5: '4',
     6: '#4',
-    7: 'b5',
-    8: '5',
-    9: '#5',
-    10: 'b7',  // Corrigé: 10 demi-tons = b7 (7ème mineure)
-    11: '7',   // Corrigé: 11 demi-tons = 7 (7ème majeure)
+    7: '5',
+    8: 'b6',
+    9: '6',
+    10: 'b7',
+    11: '7',
   };
 
   return semitoneToInterval[semitones] ?? '1';

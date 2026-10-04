@@ -444,7 +444,7 @@ export function calculateFretboardForTriad(
 ): FretboardTriadNote[] {
   const chordInfo = getExtendedChordInfo(root, quality, extensions);
   const allNotes = chordInfo.allNotes;
-  const allIntervals = chordInfo.allIntervals;
+  const _allIntervals = chordInfo.allIntervals;
   const triadIntervals = TRIAD_INTERVALS[quality];
 
   // Créer un mapping note -> intervalle correct

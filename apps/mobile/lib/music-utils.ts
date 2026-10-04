@@ -169,7 +169,7 @@ export function noteToFrequency(note: NoteName, octave: number): number {
   }
 
   // Safe check for noteIndex
-  const safeIndex = noteIndex >= 0 ? noteIndex : 0;
+  const _safeIndex = noteIndex >= 0 ? noteIndex : 0;
 
   return A4 * Math.pow(2, (octave - 4) + (noteIndex - 9) / 12);
 }

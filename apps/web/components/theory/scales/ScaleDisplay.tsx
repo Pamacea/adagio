@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import type { FretboardNote } from '@adagio/types';
 
 // Mapping des notes anglaises vers françaises
-const NOTE_FR: Record<string, string> = {
+const _NOTE_FR: Record<string, string> = {
   'C': 'DO', 'C#': 'DO♯', 'Db': 'RE♭',
   'D': 'RE', 'D#': 'RE♯', 'Eb': 'MI♭',
   'E': 'MI',
@@ -90,7 +90,7 @@ interface ScaleDisplayProps {
 export function ScaleDisplay({
   root,
   scaleDef,
-  scaleNotes,
+  scaleNotes: _scaleNotes,
   fretboardData,
   displayNote,
 }: ScaleDisplayProps) {

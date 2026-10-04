@@ -23,3 +23,5 @@ export type { SubstitutionsPanelProps } from './SubstitutionsPanel';
 
 export { ProgressionSuggestions } from './ProgressionSuggestions';
 export type { ProgressionSuggestionsProps } from './ProgressionSuggestions';
+
+export { FretboardChord, getChordPositions, getContrastColor } from './FretboardChord';

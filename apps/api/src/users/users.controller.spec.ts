@@ -17,7 +17,6 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
-  let jwtService: JwtService;
 
   // Mock data
   const mockUser = {
@@ -83,7 +82,6 @@ describe('UsersController', () => {
 
     controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
-    jwtService = module.get<JwtService>(JwtService);
 
     // Reset mocks
     jest.clearAllMocks();

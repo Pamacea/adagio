@@ -1,7 +1,10 @@
+"use strict";
 // ============================================================================
 // SEED DATA - Gammes
 // ============================================================================
-export const SCALES_SEED = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SCALES_SEED = void 0;
+exports.SCALES_SEED = [
     // === GAMMES MAJEURES ===
     {
         slug: 'major',

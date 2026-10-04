@@ -47,7 +47,7 @@ export function useAuth(): UseAuthReturn {
         isAuthenticated: authenticated,
         error: null,
       });
-    } catch (error) {
+    } catch (_error) {
       setState({
         user: null,
         isLoading: false,
@@ -81,7 +81,7 @@ export function useAuth(): UseAuthReturn {
       });
 
       return true;
-    } catch (error) {
+    } catch (_error) {
       setState({
         ...state,
         isLoading: false,
@@ -119,7 +119,7 @@ export function useAuth(): UseAuthReturn {
       });
 
       return true;
-    } catch (error) {
+    } catch (_error) {
       setState({
         ...state,
         isLoading: false,
@@ -141,7 +141,7 @@ export function useAuth(): UseAuthReturn {
         error: null,
       });
       router.replace('/(auth)/login');
-    } catch (error) {
+    } catch (_error) {
       setState({
         ...state,
         isLoading: false,

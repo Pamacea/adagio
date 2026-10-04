@@ -43,7 +43,7 @@ const axisGroupStyles: Record<string, string> = {
 export function ChordCard({
   name,
   root,
-  quality,
+  quality: _quality,
   positions,
   function: chordFunction,
   degree,

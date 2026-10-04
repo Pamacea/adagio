@@ -8,7 +8,10 @@
       "Bash(ls:*)",
       "Bash(true:*)",
       "Bash(head:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(rtk ls *)",
+      "Bash(mv .git/index.lock .git/index.lock.bak-p1f)",
+      "Bash(git rm *)"
     ]
   }
 }

@@ -18,11 +18,13 @@ import {
   getChordTension,
   getChordVoicings,
   getDegreeNote,
+  parseChord,
   CHROMATIC_SCALE,
   GUITAR_TUNING_DISPLAY,
   MAJOR_DEGREE_QUALITIES_EXTENDED,
   MINOR_DEGREE_QUALITIES_EXTENDED,
   EXTENSION_QUALITIES,
+  type DiatonicDegree,
 } from '@adagio/theory';
 import type { FretboardNote } from '../components/FretboardView';
 
@@ -167,9 +169,10 @@ export function useChordPage(): UseChordPageReturn {
 
   // Qualités disponibles par catégorie
   const diatonicQualities = useMemo(() => {
+    const degree = selectedDegree as DiatonicDegree;
     return tonality === 'major'
-      ? MAJOR_DEGREE_QUALITIES[selectedDegree] || []
-      : MINOR_DEGREE_QUALITIES[selectedDegree] || [];
+      ? MAJOR_DEGREE_QUALITIES[degree] || []
+      : MINOR_DEGREE_QUALITIES[degree] || [];
   }, [tonality, selectedDegree]);
 
   const diatonicQualitySet = useMemo(() => new Set(diatonicQualities), [diatonicQualities]);
@@ -306,11 +309,10 @@ export function useChordPage(): UseChordPageReturn {
 
     // Standard tuning for diagram (E A D G B E - low to high, displayed left to right)
     const openNotes: NoteName[] = ['E', 'A', 'D', 'G', 'B', 'E'];
-    const chordRoot = voicing.name.charAt(0) as NoteName;
-    const qualityMatch = voicing.name
-      .slice(1)
-      .match(/^(maj7|m7|7|m|6|m6|dim|aug|sus|add|7sus4|maj9|m9|m11|m13|9|11|13)/);
-    const quality = (qualityMatch ? qualityMatch[0] : '') as ChordQuality;
+    // Parser unique (ChordRef) : racine + qualité du nom de voicing
+    const ref = parseChord(voicing.name);
+    const chordRoot = (ref?.root ?? voicing.name.charAt(0)) as NoteName;
+    const quality = (ref?.quality ?? '') as ChordQuality;
     const chordNotes = buildChord(chordRoot, quality);
 
     // CORRIGÉ: Mapping intervalles complet

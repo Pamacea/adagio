@@ -3,6 +3,7 @@ export * from './instruments';
 export * from './core/Interval';
 export * from './core/Scale';
 export * from './core/Chord';
+export * from './core/chord-ref';
 export * from './constants';
 export * from './calculators/CircleOfFifthsCalculator';
 export * from './calculators/ChordCalculator';

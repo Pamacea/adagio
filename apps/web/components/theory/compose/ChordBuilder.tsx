@@ -7,8 +7,13 @@
 
 import { useState, useMemo } from 'react';
 import type { NoteName, ChordQuality, ChordVoicing } from '@adagio/types';
-import { getDiatonicChordsByDegree, getChordVoicings, buildChord } from '@adagio/theory';
-import { NOTE_FR } from '@/lib/theory';
+import {
+  getDiatonicChordsByDegree,
+  getChordVoicings,
+  buildChord,
+  parseChord,
+  FRENCH_NOTE_NAMES as NOTE_FR,
+} from '@adagio/theory';
 import { ScaleFretboard, calculateFretPositions } from '../scales/ScaleFretboard';
 import type { FretboardNote } from '@adagio/types';
 
@@ -120,6 +125,8 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
 
   const degrees = tonality === 'major' ? MAJOR_DEGREES : MINOR_DEGREES;
   const selectedChord = diatonicChords[selectedDegree];
+  // Parser unique (ChordRef) de l'accord sélectionné
+  const selectedChordRef = selectedChord ? parseChord(selectedChord.diatonic[0] ?? '') : null;
 
   // Calculer les voicings pour l'accord sélectionné
   const chordVoicings = useMemo(() => {
@@ -128,13 +135,11 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
     const chordName = selectedChord.diatonic[0];
     if (!chordName) return [];
 
-    const match = chordName.match(/^([A-G][#b]?)(.*)$/);
-    if (!match) return [];
+    // Parser unique (ChordRef)
+    const ref = parseChord(chordName);
+    if (!ref) return [];
 
-    const chordRoot = match[1] as NoteName;
-    const chordQuality = (match[2] || '') as ChordQuality;
-
-    return getChordVoicings(chordRoot, chordQuality, 12);
+    return getChordVoicings(ref.root as NoteName, ref.quality as ChordQuality, 12);
   }, [selectedChord]);
 
   // Filtrer les voicings par difficulté
@@ -201,8 +206,10 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
         {diatonicChords.map((chord, index) => {
           const isSelected = selectedDegree === index;
           const chordName = chord.diatonic[0] || '';
-          const chordRoot = (chordName.match(/^([A-G][#b]?)/)?.[1] as NoteName) || root;
-          const chordQuality = chordName.replace(/^[A-G][#b]?/, '') as ChordQuality;
+          // Parser unique (ChordRef)
+          const chordRef = parseChord(chordName);
+          const chordRoot = (chordRef?.root as NoteName) || root;
+          const chordQuality = (chordRef?.quality as ChordQuality) || '';
 
           // Obtenir les notes de l'accord
           const _chordNotes = buildChord(chordRoot, chordQuality);
@@ -248,8 +255,8 @@ export function ChordBuilder({ root, tonality, onChordSelect }: ChordBuilderProp
           {/* Notes de l'accord */}
           <div className="flex gap-2 mb-2">
             {buildChord(
-              (selectedChord.diatonic[0]?.match(/^([A-G][#b]?)/)?.[1] || root) as NoteName,
-              (selectedChord.diatonic[0]?.replace(/^[A-G][#b]?/, '') as ChordQuality) || ''
+              (selectedChordRef?.root as NoteName) || root,
+              (selectedChordRef?.quality as ChordQuality) || ''
             ).map((note) => (
               <span key={note} className="px-2 py-1 text-xs bg-toxic border border-steel">
                 {displayNote(note)}

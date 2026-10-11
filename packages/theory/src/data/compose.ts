@@ -7,12 +7,12 @@
  *
  * Contient:
  * - CAGED_VOICINGS: Système complet de voicings CAGED
- * - CHORD_PROGRESSIONS_ADVANCED: Progressions avec émotions et genres
  * - CHORD_SUBSTITUTIONS: Mapping des substitutions harmoniques
  * - CHORD_VARIATIONS: Variations d'accords par degré
  */
 
 import type { NoteName } from '@adagio/types';
+import { parseChord } from '../core/chord-ref';
 
 // ============================================================================
 // TYPES
@@ -34,14 +34,6 @@ export interface ChordSubstitution {
   chord: string;
   description: string;
   type: 'substitution' | 'extension' | 'voicing' | 'modal';
-}
-
-export interface ChordProgressionAdvanced {
-  name: string;
-  degrees: string[];
-  description: string;
-  emotion: string;
-  genre: string[];
 }
 
 export interface ChordVoicing {
@@ -985,10 +977,30 @@ export function getVariationsForDegree(
 // ============================================================================
 
 /**
+ * Catégories de substitutions (clés de `CHORD_SUBSTITUTIONS`).
+ * Union stricte — étape 5 P1.
+ */
+export type SubstitutionCategory =
+  | 'dominant'
+  | 'tonic'
+  | 'subdominant'
+  | 'ii'
+  | 'iii'
+  | 'vi'
+  | 'vii';
+
+/**
+ * Code de fonction harmonique synthétique (index `byFunction`) :
+ * T = tonique, S = sous-dominante / prédominante, D = dominante,
+ * D7 = dominante instable (vii°).
+ */
+export type HarmonicFunctionCode = 'T' | 'S' | 'D' | 'D7';
+
+/**
  * Mapping des substitutions d'accords par type
  * Contient les substitutions harmoniques les plus courantes
  */
-export const CHORD_SUBSTITUTIONS: Record<string, ChordSubstitution[]> = {
+export const CHORD_SUBSTITUTIONS: Record<SubstitutionCategory, ChordSubstitution[]> = {
   // Substitutions de dominante
   dominant: [
     {
@@ -1061,6 +1073,17 @@ export const CHORD_SUBSTITUTIONS: Record<string, ChordSubstitution[]> = {
 };
 
 /**
+ * Index des substitutions par fonction harmonique, construit au chargement
+ * du module (étape 5 P1). Regroupe les catégories par code T/S/D/D7.
+ */
+export const CHORD_SUBSTITUTIONS_BY_FUNCTION: Record<HarmonicFunctionCode, ChordSubstitution[]> = {
+  T: [...CHORD_SUBSTITUTIONS.tonic, ...CHORD_SUBSTITUTIONS.iii, ...CHORD_SUBSTITUTIONS.vi],
+  S: [...CHORD_SUBSTITUTIONS.subdominant, ...CHORD_SUBSTITUTIONS.ii],
+  D: [...CHORD_SUBSTITUTIONS.dominant],
+  D7: [...CHORD_SUBSTITUTIONS.vii],
+};
+
+/**
  * Obtenir les substitutions pour un accord donné (avancé)
  * @param chord - Accord de base (ex: 'C', 'Am', 'G7')
  * @param degree - Degré dans la gamme (0-6)
@@ -1074,7 +1097,8 @@ export function getChordSubstitutionsByDegree(
 ): ChordSubstitution[] {
   const subs: ChordSubstitution[] = [];
 
-  const root = chord.replace(/m|dim|°|7|maj|add/g, '');
+  // Parser unique ChordRef (l'ancien replace détruisait 'Dbmaj7' → 'Dbaj')
+  const root = parseChord(chord)?.root ?? chord;
   const isMinor = chord.endsWith('m') && !chord.includes('aj');
   const isDim = chord.includes('dim') || chord.endsWith('°');
   const isMajor = !isMinor && !isDim;
@@ -1215,18 +1239,298 @@ export function getChordSubstitutionsByDegree(
     });
   }
 
+  // === SUBSTITUTIONS DIATONIQUES (dépendantes de l'échelle) ===
+  // Section migrée de useComposeState.getSubstitutions (étape 6 P1).
+  const scale = getMajorScale(key);
+  if (degree === 0 && scale[5]) {
+    subs.push({
+      name: 'Relative mineure',
+      chord: scale[5] + 'm',
+      description: 'Mêmes notes que I, ambiance triste',
+      type: 'substitution',
+    });
+  }
+  if (degree === 5 && scale[0]) {
+    subs.push({
+      name: 'Relative majeure',
+      chord: scale[0],
+      description: 'Résolution stable',
+      type: 'substitution',
+    });
+  }
+  if (degree === 4 && scale[3]) {
+    subs.push({
+      name: 'Substitution triton',
+      chord: scale[3] + '7',
+      description: 'II♭7, même notes que V7',
+      type: 'substitution',
+    });
+  }
+
   return subs;
 }
 
 // ============================================================================
-// CHORD PROGRESSIONS (ADVANCED)
+// MAJOR KEYS
 // ============================================================================
 
 /**
- * Progressions d'accords avancées avec métadonnées émotionnelles
- * Plus détaillées que CHORD_PROGRESSIONS de notation.ts
+ * Tonalités majeures disponibles
  */
-export const CHORD_PROGRESSIONS_ADVANCED: ChordProgressionAdvanced[] = [
+export const MAJOR_KEYS: NoteName[] = [
+  'C',
+  'G',
+  'D',
+  'A',
+  'E',
+  'B',
+  'F#',
+  'Db',
+  'Ab',
+  'Eb',
+  'Bb',
+  'F',
+] as const;
+
+// ============================================================================
+// COMPOSE — GAMMES, ACCORDS DIATONIQUES & PROGRESSIONS
+// Migrés depuis apps/web useComposeState (étape 6 P1). Le spelling FLAT_KEYS
+// (bémols pour Db/Eb/Gb/Ab/Bb/F) est préservé pour un affichage identique.
+// ============================================================================
+
+/**
+ * Ids de gammes disponibles sur la page Compose.
+ * Sous-ensemble de `ScaleType` avec libellés propres à l'UI Compose.
+ */
+export type ComposeScaleType =
+  | 'major'
+  | 'minor'
+  | 'harmonicMinor'
+  | 'melodicMinor'
+  | 'dorian'
+  | 'phrygian'
+  | 'lydian'
+  | 'mixolydian'
+  | 'aeolian'
+  | 'locrian';
+
+export interface ComposeScaleDefinition {
+  id: ComposeScaleType;
+  name: string;
+  nameFr: string;
+  intervals: string[];
+  description: string;
+}
+
+/**
+ * Gammes affichées dans le sélecteur « Modes disponibles » de la page Compose.
+ */
+export const COMPOSE_SCALE_TYPES: ComposeScaleDefinition[] = [
+  // Majeures
+  {
+    id: 'major',
+    name: 'Major (Ionian)',
+    nameFr: 'Majeur',
+    intervals: ['1', '2', '3', '4', '5', '6', '7'],
+    description: 'Heureux, stable',
+  },
+  {
+    id: 'lydian',
+    name: 'Lydian',
+    nameFr: 'Lydien',
+    intervals: ['1', '2', '3', '#4', '5', '6', '7'],
+    description: 'Dreamy, spatial',
+  },
+  {
+    id: 'mixolydian',
+    name: 'Mixolydian',
+    nameFr: 'Mixolydien',
+    intervals: ['1', '2', '3', '4', '5', '6', 'b7'],
+    description: 'Bluesy, dominant',
+  },
+  // Mineures
+  {
+    id: 'minor',
+    name: 'Minor (Aeolian)',
+    nameFr: 'Mineur',
+    intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
+    description: 'Mélancolique',
+  },
+  {
+    id: 'harmonicMinor',
+    name: 'Harmonic Minor',
+    nameFr: 'Mineur Harmonique',
+    intervals: ['1', '2', 'b3', '4', '5', 'b6', '7'],
+    description: 'Classique, metal',
+  },
+  {
+    id: 'melodicMinor',
+    name: 'Melodic Minor',
+    nameFr: 'Mineur Mélodique',
+    intervals: ['1', '2', 'b3', '4', '5', '6', '7'],
+    description: 'Jazz, ascendant',
+  },
+  {
+    id: 'dorian',
+    name: 'Dorian',
+    nameFr: 'Dorien',
+    intervals: ['1', '2', 'b3', '4', '5', '6', 'b7'],
+    description: 'Jazz, soulful',
+  },
+  {
+    id: 'phrygian',
+    name: 'Phrygian',
+    nameFr: 'Phrygien',
+    intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'],
+    description: 'Flamenco, espagnol',
+  },
+  {
+    id: 'locrian',
+    name: 'Locrian',
+    nameFr: 'Locrien',
+    intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
+    description: 'Instable, tensé',
+  },
+];
+
+// Tableau chromatique avec DIÈSES
+const SHARP_CHROMATIC: NoteName[] = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+];
+// Tableau chromatique avec BÉMOLS
+const FLAT_CHROMATIC: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11];
+const MINOR_INTERVALS = [0, 2, 3, 5, 7, 8, 10];
+// Tonalités qui utilisent les bémols
+const FLAT_KEYS: NoteName[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb', 'F'];
+
+/**
+ * Gamme majeure avec spelling dièses/bémols selon la tonalité.
+ */
+export function getMajorScale(key: NoteName): string[] {
+  const useFlats = FLAT_KEYS.includes(key);
+  const chromatic = useFlats ? FLAT_CHROMATIC : SHARP_CHROMATIC;
+  const keyIndex = chromatic.indexOf(key as string);
+
+  if (keyIndex === -1) return ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+
+  return MAJOR_INTERVALS.map((i) => chromatic[(keyIndex + i) % 12]!);
+}
+
+/**
+ * Accords diatoniques d'une tonalité majeure (suffixes m/dim).
+ */
+export function getMajorChords(key: NoteName): string[] {
+  const scale = getMajorScale(key);
+  if (!scale || scale.length < 7) return ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'];
+
+  return [
+    scale[0]!, // I
+    scale[1]! + 'm', // ii
+    scale[2]! + 'm', // iii
+    scale[3]!, // IV
+    scale[4]!, // V
+    scale[5]! + 'm', // vi
+    scale[6]! + 'dim', // vii°
+  ];
+}
+
+/**
+ * Gamme mineure naturelle avec spelling dièses/bémols selon la tonalité.
+ */
+export function getMinorScale(key: NoteName): string[] {
+  const useFlats = FLAT_KEYS.includes(key);
+  const chromatic = useFlats ? FLAT_CHROMATIC : SHARP_CHROMATIC;
+  const keyIndex = chromatic.indexOf(key as string);
+
+  if (keyIndex === -1) return ['C', 'D', 'Eb', 'F', 'G', 'Ab', 'Bb'];
+
+  return MINOR_INTERVALS.map((i) => chromatic[(keyIndex + i) % 12]!);
+}
+
+/**
+ * Accords diatoniques d'une tonalité mineure (suffixes m/dim).
+ */
+export function getMinorChords(key: NoteName): string[] {
+  const scale = getMinorScale(key);
+  if (!scale || scale.length < 7) return ['Cm', 'Ddim', 'Eb', 'Fm', 'Gm', 'Ab', 'Bb'];
+
+  return [
+    scale[0]! + 'm', // i
+    scale[1]! + 'dim', // ii°
+    scale[2]!, // III
+    scale[3]! + 'm', // iv
+    scale[4]! + 'm', // v
+    scale[5]!, // VI
+    scale[6]!, // VII
+  ];
+}
+
+/**
+ * Notes d'un accord avec leurs intervalles libellés.
+ * Utilise le parser unique ChordRef pour racine + qualité.
+ */
+export function getChordNotes(chord: string): { notes: string[]; intervals: string[] } {
+  const ref = parseChord(chord);
+  const root = ref?.root ?? chord;
+  const quality = ref?.quality ?? '';
+
+  const useFlats = root.includes('b');
+  const chromatic = useFlats ? FLAT_CHROMATIC : SHARP_CHROMATIC;
+  const rootIndex = chromatic.indexOf(root);
+
+  if (rootIndex === -1) return { notes: [root], intervals: ['1'] };
+
+  const intervalPatterns: Record<string, { semitones: number[]; names: string[] }> = {
+    '': { semitones: [0, 4, 7], names: ['1', '3', '5'] },
+    m: { semitones: [0, 3, 7], names: ['1', 'b3', '5'] },
+    dim: { semitones: [0, 3, 6], names: ['1', 'b3', 'b5'] },
+    dim7: { semitones: [0, 3, 6, 9], names: ['1', 'b3', 'b5', 'bb7'] },
+    '6': { semitones: [0, 4, 7, 9], names: ['1', '3', '5', '6'] },
+    '7': { semitones: [0, 4, 7, 10], names: ['1', '3', '5', 'b7'] },
+    maj7: { semitones: [0, 4, 7, 11], names: ['1', '3', '5', '7'] },
+    m7: { semitones: [0, 3, 7, 10], names: ['1', 'b3', '5', 'b7'] },
+    '9': { semitones: [0, 4, 7, 10, 14], names: ['1', '3', '5', 'b7', '9'] },
+    '11': { semitones: [0, 4, 7, 10, 14, 17], names: ['1', '3', '5', 'b7', '9', '11'] },
+    '13': { semitones: [0, 4, 7, 10, 14, 17, 21], names: ['1', '3', '5', 'b7', '9', '11', '13'] },
+    add9: { semitones: [0, 4, 7, 14], names: ['1', '3', '5', '9'] },
+  };
+
+  const pattern = intervalPatterns[quality] || intervalPatterns['']!;
+  const notes = pattern.semitones.map((i) => {
+    const noteIndex = (rootIndex + i) % 12;
+    return chromatic[noteIndex]!;
+  });
+
+  return { notes, intervals: pattern.names };
+}
+
+/**
+ * Progressions communes affichées sur la page Compose.
+ * Distinct de `ChordCalculator.getCommonProgressions(tonality)` et de
+ * `CHORD_PROGRESSIONS` (notation.ts) : libellés + émotion + genres propres
+ * à l'UI Compose.
+ */
+export interface ComposeProgression {
+  name: string;
+  degrees: string[];
+  description: string;
+  emotion: string;
+  genre: string[];
+}
+
+export const COMPOSE_PROGRESSIONS: ComposeProgression[] = [
   {
     name: 'I-V-vi-IV',
     degrees: ['I', 'V', 'vi', 'IV'],
@@ -1263,83 +1567,10 @@ export const CHORD_PROGRESSIONS_ADVANCED: ChordProgressionAdvanced[] = [
     genre: ['Jazz', 'R&B'],
   },
   {
-    name: 'iii-vi-ii-V',
-    degrees: ['iii', 'vi', 'ii', 'V'],
-    description: 'Turnaround avec médiant, plus de couleurs',
-    emotion: 'Doux et mélodique',
-    genre: ['Jazz', 'Pop'],
-  },
-  {
-    name: 'I-IV-vii°-I',
-    degrees: ['I', 'IV', 'vii°', 'I'],
-    description: 'Progression classique avec sensible',
-    emotion: 'Dramatique et cinématique',
-    genre: ['Classique', 'Soundtrack'],
-  },
-  {
     name: 'Cycle de quintes',
     degrees: ['iii', 'vi', 'ii', 'V', 'I'],
     description: 'Descente par quintes diatoniques',
     emotion: 'Naturel et fluide',
     genre: ['Jazz', 'Bossa Nova'],
   },
-  {
-    name: 'I-bVII-bVI-I (Andalou)',
-    degrees: ['I', 'bVII', 'bVI', 'I'],
-    description: 'Progression phrygienne/flamenco',
-    emotion: 'Exotique et dramatique',
-    genre: ['Flamenco', 'Metal', 'Rock'],
-  },
-  {
-    name: 'i-VII-VI (Metal Doom)',
-    degrees: ['i', 'VII', 'VI'],
-    description: 'Progression mineure sombre',
-    emotion: 'Lourd et épique',
-    genre: ['Metal', 'Doom', 'Gothic'],
-  },
-  {
-    name: 'I-VI-ii-V (R&B)',
-    degrees: ['I', 'VI', 'ii', 'V'],
-    description: 'Variation R&B du turnaround',
-    emotion: 'Groovy et soul',
-    genre: ['R&B', 'Soul'],
-  },
-  {
-    name: 'I-iii-IV-V',
-    degrees: ['I', 'iii', 'IV', 'V'],
-    description: 'Progression avec médiant lumineux',
-    emotion: 'Optimiste et lumineux',
-    genre: ['Pop', 'Folk'],
-  },
 ];
-
-/**
- * Obtenir les progressions pour une tonalité donnée
- * @param key - Tonalité principale
- * @returns Progressions disponibles
- */
-export function getChordProgressions(key: NoteName): ChordProgressionAdvanced[] {
-  return CHORD_PROGRESSIONS_ADVANCED;
-}
-
-// ============================================================================
-// MAJOR KEYS
-// ============================================================================
-
-/**
- * Tonalités majeures disponibles
- */
-export const MAJOR_KEYS: NoteName[] = [
-  'C',
-  'G',
-  'D',
-  'A',
-  'E',
-  'B',
-  'F#',
-  'Db',
-  'Ab',
-  'Eb',
-  'Bb',
-  'F',
-] as const;

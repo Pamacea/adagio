@@ -34,10 +34,6 @@ export interface ComposeControlsProps {
 const SCALE_TYPES = [
   { id: 'major', name: 'Majeure', fr: 'Ionien' },
   { id: 'minor', name: 'Mineure naturelle', fr: 'Aéolien' },
-  { id: 'harmonic-minor', name: 'Mineure harmonique', fr: 'Harmonique' },
-  { id: 'melodic-minor', name: 'Mineure mélodique', fr: 'Mélodique' },
-  { id: 'pentatonic-major', name: 'Pentatonique majeure', fr: 'Penta Majeur' },
-  { id: 'pentatonic-minor', name: 'Pentatonique mineure', fr: 'Penta Mineur' },
   { id: 'blues', name: 'Blues', fr: 'Blues' },
   { id: 'dorian', name: 'Dorien', fr: 'ii majeur' },
   { id: 'phrygian', name: 'Phrygien', fr: 'iii majeur' },
@@ -150,27 +146,3 @@ export function ComposeControls({
     </div>
   );
 }
-
-// ============================================================================
-// UTILS
-// ============================================================================
-
-const _NOTE_FR: Record<string, string> = {
-  C: 'DO',
-  'C#': 'DO♯',
-  Db: 'RÉ♭',
-  D: 'RÉ',
-  'D#': 'RÉ♯',
-  Eb: 'MI♭',
-  E: 'MI',
-  F: 'FA',
-  'F#': 'FA♯',
-  Gb: 'SOL♭',
-  G: 'SOL',
-  'G#': 'SOL♯',
-  Ab: 'LA♭',
-  A: 'LA',
-  'A#': 'LA♯',
-  Bb: 'SI♭',
-  B: 'SI',
-};

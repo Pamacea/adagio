@@ -4,6 +4,3 @@
 
 // Hooks
 export * from './hooks';
-
-// Lib
-export * from './lib/notation-constants';

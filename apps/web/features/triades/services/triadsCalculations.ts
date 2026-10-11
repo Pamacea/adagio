@@ -4,7 +4,7 @@
 // ============================================================================
 
 import type { NoteName, Interval } from '@adagio/types';
-import { CHROMATIC_SCALE } from '@adagio/theory';
+import { CHROMATIC_SCALE, FRENCH_NOTE_NAMES } from '@adagio/theory';
 
 // ============================================================================
 // TYPES
@@ -518,28 +518,8 @@ export function calculateFretboardForTriad(
 // FRENCH NOTATION
 // ============================================================================
 
-export const NOTE_FR: Record<string, string> = {
-  C: 'DO',
-  'C#': 'DO♯',
-  Db: 'RÉ♭',
-  D: 'RÉ',
-  'D#': 'RÉ♯',
-  Eb: 'MI♭',
-  E: 'MI',
-  F: 'FA',
-  'F#': 'FA♯',
-  Gb: 'SOL♭',
-  G: 'SOL',
-  'G#': 'SOL♯',
-  Ab: 'LA♭',
-  A: 'LA',
-  'A#': 'LA♯',
-  Bb: 'SI♭',
-  B: 'SI',
-};
-
 export function formatNoteFr(note: NoteName): string {
-  return NOTE_FR[note] || note;
+  return FRENCH_NOTE_NAMES[note] || note;
 }
 
 export function formatIntervalFr(interval: Interval): string {

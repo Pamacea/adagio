@@ -8,8 +8,11 @@
 
 import { useMemo } from 'react';
 import type { NoteName, Interval, Instrument } from '@adagio/types';
-import { getFretboardNotesForKey, getInstrument } from '@adagio/theory';
-import { NOTE_FR } from '@/lib/theory';
+import {
+  getFretboardNotesForKey,
+  getInstrument,
+  FRENCH_NOTE_NAMES as NOTE_FR,
+} from '@adagio/theory';
 import { ScaleFretboard, calculateFretPositions } from '../scales/ScaleFretboard';
 
 // Intervalles pour chaque mode (utilisés dans fretboard/page.tsx)

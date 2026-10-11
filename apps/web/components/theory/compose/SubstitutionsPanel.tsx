@@ -7,8 +7,12 @@
 
 import { useMemo } from 'react';
 import type { NoteName, ChordDegree } from '@adagio/types';
-import { getSecondaryDominants, getModalInterchangeChords, getDegreeNote } from '@adagio/theory';
-import { NOTE_FR } from '@/lib/theory';
+import {
+  getSecondaryDominants,
+  getModalInterchangeChords,
+  getDegreeNote,
+  FRENCH_NOTE_NAMES as NOTE_FR,
+} from '@adagio/theory';
 
 // ============================================================================
 // TYPES

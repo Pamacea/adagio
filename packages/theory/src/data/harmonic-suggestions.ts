@@ -13,39 +13,12 @@
  */
 
 import type { NoteName } from '@adagio/types';
+import type { ScaleType } from './scales';
+import { chordKey, parseChord } from '../core/chord-ref';
 
 // ============================================================================
 // TYPES
 // ============================================================================
-
-/**
- * Identifiants des gammes disponibles
- */
-export type ScaleId =
-  | 'major'
-  | 'minor'
-  | 'harmonic-minor'
-  | 'melodic-minor'
-  | 'dorian'
-  | 'phrygian'
-  | 'lydian'
-  | 'mixolydian'
-  | 'aeolian'
-  | 'locrian'
-  | 'pentatonic-major'
-  | 'pentatonic-minor'
-  | 'blues'
-  | 'pentatonic-blues'
-  | 'dorian-b2'
-  | 'lydian-augmented'
-  | 'lydian-dominant'
-  | 'mixolydian-b13'
-  | 'locrian-natural2'
-  | 'altered'
-  | 'half-diminished'
-  | 'whole-tone'
-  | 'diminished'
-  | 'chromatic';
 
 /**
  * Niveau de compatibilité entre accord et gamme
@@ -56,8 +29,8 @@ export type MatchLevel = 'perfect' | 'good' | 'possible' | 'experimental';
  * Suggestion de gamme pour un accord donné
  */
 export interface ScaleSuggestion {
-  /** Identifiant unique de la gamme */
-  scaleId: ScaleId;
+  /** Identifiant unique de la gamme (canon : ScaleType, data/scales.ts) */
+  scaleId: ScaleType;
   /** Nom de la gamme (français) */
   name: string;
   /** Nom alternatif */
@@ -87,7 +60,7 @@ export interface ChordScaleMapping {
   /** Toutes les gammes compatibles */
   scales: ScaleSuggestion[];
   /** Fonction harmonique principale */
-  primaryFunction?: 'tonic' | 'subdominant' | 'dominant' | 'sub-dominant' | 'modal-interchange';
+  primaryFunction?: 'tonic' | 'subdominant' | 'dominant' | 'modal-interchange';
 }
 
 // ============================================================================
@@ -95,39 +68,74 @@ export interface ChordScaleMapping {
 // ============================================================================
 
 /**
- * Définitions des gammes pour référence
+ * Définitions des gammes pour référence (canon : clés ScaleType)
  */
-export const SCALE_DEFINITIONS: Record<ScaleId, { name: string; intervals: string[] }> = {
+export const SCALE_DEFINITIONS: Record<ScaleType, { name: string; intervals: string[] }> = {
   major: { name: 'Majeur (Ionien)', intervals: ['1', '2', '3', '4', '5', '6', '7'] },
-  minor: { name: 'Mineur Naturel (Aeolian)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
-  'harmonic-minor': { name: 'Mineur Harmonique', intervals: ['1', '2', 'b3', '4', '5', 'b6', '7'] },
-  'melodic-minor': { name: 'Mineur Mélodique', intervals: ['1', '2', 'b3', '4', '5', '6', '7'] },
-  dorian: { name: 'Dorien', intervals: ['1', '2', 'b3', '4', '5', '6', 'b7'] },
-  phrygian: { name: 'Phrygien', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
+  harmonicMajor: { name: 'Majeur Harmonique', intervals: ['1', '2', '3', '4', '5', 'b6', '7'] },
+  melodicMajor: { name: 'Majeur Mélodique', intervals: ['1', '2', '3', '4', '5', '6', '7'] },
   lydian: { name: 'Lydien', intervals: ['1', '2', '3', '#4', '5', '6', '7'] },
+  lydianAugmented: { name: 'Lydien Augmenté', intervals: ['1', '2', '3', '#4', '#5', '6', '7'] },
+  lydianDominant: { name: 'Lydien Dominant', intervals: ['1', '2', '3', '#4', '5', '6', 'b7'] },
   mixolydian: { name: 'Mixolydien', intervals: ['1', '2', '3', '4', '5', '6', 'b7'] },
-  aeolian: { name: 'Aeolian (Mineur)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
+  mixolydianB13: { name: 'Mixolydien b13', intervals: ['1', '2', '3', '4', '5', 'b6', 'b7'] },
+  minor: { name: 'Mineur Naturel (Aeolian)', intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
+  harmonicMinor: { name: 'Mineur Harmonique', intervals: ['1', '2', 'b3', '4', '5', 'b6', '7'] },
+  melodicMinor: { name: 'Mineur Mélodique', intervals: ['1', '2', 'b3', '4', '5', '6', '7'] },
+  dorian: { name: 'Dorien', intervals: ['1', '2', 'b3', '4', '5', '6', 'b7'] },
+  dorianB2: { name: 'Dorien b2', intervals: ['1', 'b2', 'b3', '4', '5', '6', 'b7'] },
+  phrygian: { name: 'Phrygien', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
   locrian: { name: 'Locrien', intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
-  'pentatonic-major': { name: 'Pentatonique Majeure', intervals: ['1', '2', '3', '5', '6'] },
-  'pentatonic-minor': { name: 'Pentatonique Mineure', intervals: ['1', 'b3', '4', '5', 'b7'] },
-  blues: { name: 'Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
-  'pentatonic-blues': { name: 'Pentatonique Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
-  'dorian-b2': { name: 'Dorien b2', intervals: ['1', 'b2', 'b3', '4', '5', '6', 'b7'] },
-  'lydian-augmented': { name: 'Lydien Augmenté', intervals: ['1', '2', '3', '#4', '#5', '6', '7'] },
-  'lydian-dominant': { name: 'Lydien Dominant', intervals: ['1', '2', '3', '#4', '5', '6', 'b7'] },
-  'mixolydian-b13': { name: 'Mixolydien b13', intervals: ['1', '2', '3', '4', '5', 'b6', 'b7'] },
-  'locrian-natural2': { name: 'Locrien nat2', intervals: ['1', '2', 'b3', '4', 'b5', 'b6', 'b7'] },
+  locrianNatural2: { name: 'Locrien nat2', intervals: ['1', '2', 'b3', '4', 'b5', 'b6', 'b7'] },
   altered: { name: 'Altéré', intervals: ['1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'] },
-  'half-diminished': {
-    name: 'Half-Diminished',
-    intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
+  halfDiminished: { name: 'Half-Diminished', intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
+  napolitanMajor: { name: 'Napolitain Majeur', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
+  napolitanMinor: { name: 'Napolitain Mineur', intervals: ['1', 'b2', 'b3', '4', '5', 'b6', '7'] },
+  augmentedMajor: { name: 'Majeure Augmentée', intervals: ['1', '2', '3', '#4', '5', '#6', '7'] },
+  augmentedMinor: {
+    name: 'Mineur Augmenté (Hongrois)',
+    intervals: ['1', '2', 'b3', '4', '#5', '6', '7'],
   },
-  'whole-tone': { name: 'Tons Entiers', intervals: ['1', '2', '3', '#4', '#5', 'b7'] },
+  pentatonicMajor: { name: 'Pentatonique Majeure', intervals: ['1', '2', '3', '5', '6'] },
+  pentatonicMinor: { name: 'Pentatonique Mineure', intervals: ['1', 'b3', '4', '5', 'b7'] },
+  blues: { name: 'Blues', intervals: ['1', 'b3', '4', 'b5', '5', 'b7'] },
+  wholeTone: { name: 'Tons Entiers', intervals: ['1', '2', '3', '#4', '#5', 'b7'] },
   diminished: { name: 'Diminué', intervals: ['1', 'b2', 'b3', '3', '#4', '5', '6', 'b7'] },
   chromatic: {
     name: 'Chromatique',
     intervals: ['1', 'b2', '2', 'b3', '3', '4', '#4', '5', '#5', '6', 'b7', '7'],
   },
+};
+
+/**
+ * Table de conversion des anciens ids kebab-case (historique ScaleId) vers ScaleType.
+ * Les alias fusionnés : `aeolian` → `minor`, `pentatonic-blues` → `blues`.
+ */
+export const SCALE_ID_TO_TYPE: Record<string, ScaleType> = {
+  major: 'major',
+  minor: 'minor',
+  'harmonic-minor': 'harmonicMinor',
+  'melodic-minor': 'melodicMinor',
+  dorian: 'dorian',
+  phrygian: 'phrygian',
+  lydian: 'lydian',
+  mixolydian: 'mixolydian',
+  aeolian: 'minor',
+  locrian: 'locrian',
+  'pentatonic-major': 'pentatonicMajor',
+  'pentatonic-minor': 'pentatonicMinor',
+  blues: 'blues',
+  'pentatonic-blues': 'blues',
+  'dorian-b2': 'dorianB2',
+  'lydian-augmented': 'lydianAugmented',
+  'lydian-dominant': 'lydianDominant',
+  'mixolydian-b13': 'mixolydianB13',
+  'locrian-natural2': 'locrianNatural2',
+  altered: 'altered',
+  'half-diminished': 'halfDiminished',
+  'whole-tone': 'wholeTone',
+  diminished: 'diminished',
+  chromatic: 'chromatic',
 };
 
 // ============================================================================
@@ -175,7 +183,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'Son dominant sans tension résolutive',
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Simple, mélodique, fonctionne partout',
@@ -219,7 +227,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'Standard sur les accords maj7#11',
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Simplicité mélodique',
@@ -227,7 +235,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Pop', 'Country'],
     },
     {
-      scaleId: 'lydian-augmented',
+      scaleId: 'lydianAugmented',
       name: 'Lydien Augmenté',
       intervals: ['1', '2', '3', '#4', '#5', '6', '7'],
       reason: 'Son exotique, très dissonant',
@@ -245,7 +253,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
 
   Am: [
     {
-      scaleId: 'aeolian',
+      scaleId: 'minor',
       name: 'Mineur Naturel (Aeolian)',
       intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
       reason: 'Gamme relative mineure, son triste standard',
@@ -264,7 +272,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'Le mode le plus utilisé en jazz sur accords mineurs',
     },
     {
-      scaleId: 'pentatonic-minor',
+      scaleId: 'pentatonicMinor',
       name: 'Pentatonique Mineure',
       intervals: ['1', 'b3', '4', '5', 'b7'],
       reason: 'Base du blues et du rock',
@@ -284,7 +292,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'Très caractéristique, son espagnol',
     },
     {
-      scaleId: 'harmonic-minor',
+      scaleId: 'harmonicMinor',
       name: 'Mineur Harmonique',
       intervals: ['1', '2', 'b3', '4', '5', 'b6', '7'],
       reason: '7 majeure crée une tension orientale/metal',
@@ -293,7 +301,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Metal', 'Classique', 'Néo-classique'],
     },
     {
-      scaleId: 'melodic-minor',
+      scaleId: 'melodicMinor',
       name: 'Mineur Mélodique',
       intervals: ['1', '2', 'b3', '4', '5', '6', '7'],
       reason: 'Son jazz ascendant',
@@ -315,7 +323,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'ii-V-I jazz: utiliser Dorien sur le ii',
     },
     {
-      scaleId: 'aeolian',
+      scaleId: 'minor',
       name: 'Aeolian',
       intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
       reason: 'Son mineur naturel plus sombre',
@@ -323,7 +331,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Pop', 'Rock'],
     },
     {
-      scaleId: 'pentatonic-minor',
+      scaleId: 'pentatonicMinor',
       name: 'Pentatonique Mineure',
       intervals: ['1', 'b3', '4', '5', 'b7'],
       reason: 'Simple et efficace',
@@ -331,7 +339,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Blues', 'Rock'],
     },
     {
-      scaleId: 'dorian-b2',
+      scaleId: 'dorianB2',
       name: 'Dorien b2',
       intervals: ['1', 'b2', 'b3', '4', '5', '6', 'b7'],
       reason: 'Modal interchange, son exotique',
@@ -366,7 +374,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Blues', 'Rock'],
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Son country/clean sur 7',
@@ -374,7 +382,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Country', 'Rockabilly'],
     },
     {
-      scaleId: 'pentatonic-blues',
+      scaleId: 'blues',
       name: 'Pentatonique Blues',
       intervals: ['1', 'b3', '4', 'b5', '5', 'b7'],
       reason: 'Base blues avec blue note',
@@ -382,7 +390,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Blues', 'Rock'],
     },
     {
-      scaleId: 'mixolydian-b13',
+      scaleId: 'mixolydianB13',
       name: 'Mixolydien b13',
       intervals: ['1', '2', '3', '4', '5', 'b6', 'b7'],
       reason: 'b6 ajoute une couleur soul/R&B',
@@ -411,7 +419,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Blues'],
     },
     {
-      scaleId: 'lydian-dominant',
+      scaleId: 'lydianDominant',
       name: 'Lydien Dominant',
       intervals: ['1', '2', '3', '#4', '5', '6', 'b7'],
       reason: '#4 crée un son fusion moderne',
@@ -434,7 +442,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'Standard sur les accords V7alt en jazz',
     },
     {
-      scaleId: 'whole-tone',
+      scaleId: 'wholeTone',
       name: 'Tons Entiers',
       intervals: ['1', '2', '3', '#4', '#5', 'b7'],
       reason: 'Son symétrique, très instable',
@@ -453,7 +461,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Jazz'],
     },
     {
-      scaleId: 'lydian-dominant',
+      scaleId: 'lydianDominant',
       name: 'Lydien Dominant',
       intervals: ['1', '2', '3', '#4', '5', '6', 'b7'],
       reason: 'Alternative moins dissonante',
@@ -464,7 +472,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
 
   'G7#11': [
     {
-      scaleId: 'lydian-dominant',
+      scaleId: 'lydianDominant',
       name: 'Lydien Dominant',
       intervals: ['1', '2', '3', '#4', '5', '6', 'b7'],
       reason: 'Contient le #11, choix évident',
@@ -512,7 +520,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Jazz', 'Classique'],
     },
     {
-      scaleId: 'half-diminished',
+      scaleId: 'halfDiminished',
       name: 'Half-Diminished',
       intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
       reason: 'Similaire au Locrien, plus jazz',
@@ -561,7 +569,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       context: 'vii en majeur, ii en mineur',
     },
     {
-      scaleId: 'half-diminished',
+      scaleId: 'halfDiminished',
       name: 'Half-Diminished',
       intervals: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
       reason: 'Alternative jazz',
@@ -576,7 +584,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
 
   Caug: [
     {
-      scaleId: 'whole-tone',
+      scaleId: 'wholeTone',
       name: 'Tons Entiers',
       intervals: ['1', '2', '3', '#4', '#5', 'b7'],
       reason: 'Gamme par tons entiers pour augmenté',
@@ -585,7 +593,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Jazz', 'Classique'],
     },
     {
-      scaleId: 'lydian-augmented',
+      scaleId: 'lydianAugmented',
       name: 'Lydien Augmenté',
       intervals: ['1', '2', '3', '#4', '#5', '6', '7'],
       reason: 'Mode III du mineur mélodique',
@@ -611,7 +619,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Pop', 'Rock'],
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Contient le sus2',
@@ -694,7 +702,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Jazz', 'Pop'],
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Contient 6 et pas de 7',
@@ -705,7 +713,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
 
   C69: [
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Contient exactement 1, 2, 3, 5, 6',
@@ -745,7 +753,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Pop', 'Jazz'],
     },
     {
-      scaleId: 'pentatonic-major',
+      scaleId: 'pentatonicMajor',
       name: 'Pentatonique Majeure',
       intervals: ['1', '2', '3', '5', '6'],
       reason: 'Contient la 9 (2)',
@@ -778,7 +786,7 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
       styles: ['Jazz', 'Soul'],
     },
     {
-      scaleId: 'aeolian',
+      scaleId: 'minor',
       name: 'Aeolian',
       intervals: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
       reason: 'Plus sombre, b6 présent',
@@ -854,12 +862,31 @@ export const CHORD_TO_SCALE: Record<string, ScaleSuggestion[]> = {
 // ============================================================================
 
 /**
+ * Indexe une table littérale par `chordKey` au chargement du module
+ * (étape 5 P1). Les clés non parsables (degrés romains) sont conservées telles quelles.
+ */
+function indexByChord<T>(table: Record<string, T>): Map<string, T> {
+  const index = new Map<string, T>();
+  for (const [symbol, value] of Object.entries(table)) {
+    const ref = parseChord(symbol);
+    index.set(ref ? chordKey(ref) : symbol, value);
+  }
+  return index;
+}
+
+/** Index de `CHORD_TO_SCALE` lookup par chordKey (construit au chargement). */
+const CHORD_TO_SCALE_INDEX = indexByChord(CHORD_TO_SCALE);
+
+/**
  * Obtient les suggestions de gammes pour un accord donné
  */
 export function getScalesForChord(chord: string): ScaleSuggestion[] {
-  // Recherche exacte
-  if (CHORD_TO_SCALE[chord]) {
-    return CHORD_TO_SCALE[chord]!;
+  // Recherche exacte : littéral d'abord, puis index chordKey (normalisation alias)
+  const ref = parseChord(chord);
+  const exact =
+    CHORD_TO_SCALE[chord] ?? (ref ? CHORD_TO_SCALE_INDEX.get(chordKey(ref)) : undefined);
+  if (exact) {
+    return exact;
   }
 
   // Normalisation et recherche partielle

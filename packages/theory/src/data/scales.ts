@@ -22,10 +22,17 @@ export type ScaleType =
   | 'pentatonicMinor'
   | 'blues'
   | 'dorian'
+  | 'dorianB2'
   | 'phrygian'
   | 'lydian'
+  | 'lydianAugmented'
+  | 'lydianDominant'
   | 'mixolydian'
+  | 'mixolydianB13'
   | 'locrian'
+  | 'locrianNatural2'
+  | 'altered'
+  | 'halfDiminished'
   | 'napolitanMajor'
   | 'napolitanMinor'
   | 'augmentedMajor'
@@ -58,27 +65,34 @@ export const SCALE_INTERVALS: Record<ScaleType, Interval[]> = {
   harmonicMajor: ['1', '2', '3', '4', '5', 'b6', '7'],
   melodicMajor: ['1', '2', '3', '4', '5', '6', '7'], // Ascending
   lydian: ['1', '2', '3', '#4', '5', '6', '7'],
+  lydianAugmented: ['1', '2', '3', '#4', '#5', '6', '7'],
+  lydianDominant: ['1', '2', '3', '#4', '5', '6', 'b7'],
   mixolydian: ['1', '2', '3', '4', '5', '6', 'b7'],
+  mixolydianB13: ['1', '2', '3', '4', '5', 'b6', 'b7'],
   // Gammes mineures
   minor: ['1', '2', 'b3', '4', '5', 'b6', 'b7'],
   harmonicMinor: ['1', '2', 'b3', '4', '5', 'b6', '7'],
   melodicMinor: ['1', '2', 'b3', '4', '5', '6', '7'], // Ascending (jazz)
   dorian: ['1', '2', 'b3', '4', '5', '6', 'b7'],
+  dorianB2: ['1', 'b2', 'b3', '4', '5', '6', 'b7'],
   phrygian: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'],
   locrian: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
+  locrianNatural2: ['1', '2', 'b3', '4', 'b5', 'b6', 'b7'],
+  altered: ['1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'],
+  halfDiminished: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'],
   // Napolitain
   napolitanMajor: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'],
   napolitanMinor: ['1', 'b2', 'b3', '4', '5', 'b6', '7'],
   // Gammes augmentées et spéciales
   augmentedMajor: ['1', '2', '3', '#4', '5', '#6', '7'], // Lydien #5
   augmentedMinor: ['1', '2', 'b3', '4', '#5', '6', '7'], // Mineure #5
-  wholeTone: ['1', '2', '3', '#4', '#5', '#6', 'b7'], // Gamme par tons
-  diminished: ['1', 'b2', 'b3', 'b4', 'b5', 'bb6', 'bb7'], // Diminuée (symétrique)
-  chromatic: ['1', '#1', '2', '#2', '3', '#3', '4', '#4', '5', '#5', '6', '#6'], // 12 demi-tons
+  wholeTone: ['1', '2', '3', '#4', '#5', 'b7'], // Gamme par tons (6 notes)
+  diminished: ['1', 'b2', 'b3', '3', '#4', '5', '6', 'b7'], // Diminuée half-whole (octatonique)
+  chromatic: ['1', 'b2', '2', 'b3', '3', '4', '#4', '5', '#5', '6', 'b7', '7'], // 12 demi-tons
   // Pentatoniques & Blues
   pentatonicMajor: ['1', '2', '3', '5', '6'],
   pentatonicMinor: ['1', 'b3', '4', '5', 'b7'],
-  blues: ['1', 'b3', '4', '#4', '5', 'b7'],
+  blues: ['1', 'b3', '4', 'b5', '5', 'b7'],
 };
 
 // ============================================================================

@@ -9,27 +9,6 @@ import type { Interval } from '@adagio/types';
 import { useMemo } from 'react';
 import type { FretboardNote } from '@adagio/types';
 
-// Mapping des notes anglaises vers françaises
-const _NOTE_FR: Record<string, string> = {
-  C: 'DO',
-  'C#': 'DO♯',
-  Db: 'RE♭',
-  D: 'RE',
-  'D#': 'RE♯',
-  Eb: 'MI♭',
-  E: 'MI',
-  F: 'FA',
-  'F#': 'FA♯',
-  Gb: 'SOL♭',
-  G: 'SOL',
-  'G#': 'SOL♯',
-  Ab: 'LA♭',
-  A: 'LA',
-  'A#': 'LA♯',
-  Bb: 'SI♭',
-  B: 'SI',
-};
-
 // Convertir les intervalles vers notation musicale avec symboles (♯, ♭, ♮)
 function formatInterval(interval: Interval): string {
   const symbols: Record<string, string> = {

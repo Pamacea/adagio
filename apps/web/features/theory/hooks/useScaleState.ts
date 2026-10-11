@@ -6,30 +6,7 @@
 
 import { useState } from 'react';
 import type { NoteName } from '@adagio/types';
-
-// Import ScaleType from @adagio/theory data
-type ScaleType =
-  | 'major'
-  | 'minor'
-  | 'harmonicMajor'
-  | 'harmonicMinor'
-  | 'melodicMajor'
-  | 'melodicMinor'
-  | 'pentatonicMajor'
-  | 'pentatonicMinor'
-  | 'blues'
-  | 'dorian'
-  | 'phrygian'
-  | 'lydian'
-  | 'mixolydian'
-  | 'locrian'
-  | 'napolitanMajor'
-  | 'napolitanMinor'
-  | 'augmentedMajor'
-  | 'augmentedMinor'
-  | 'wholeTone'
-  | 'diminished'
-  | 'chromatic';
+import type { ScaleType } from '@adagio/theory';
 
 export interface ScaleState {
   root: NoteName;

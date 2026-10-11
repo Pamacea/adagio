@@ -3,6 +3,7 @@
 // ============================================================================
 
 import type { NoteName } from '@adagio/types';
+import { ENHARMONIC_EQUIVALENTS } from '../data/circle';
 
 // Circle of fifths order
 const CIRCLE_OF_FIFTHS: NoteName[] = [
@@ -20,19 +21,16 @@ const CIRCLE_OF_FIFTHS: NoteName[] = [
   'F',
 ];
 
-// Enharmonic equivalents
-const ENHARMONICS: Record<string, NoteName> = {
-  'F#': 'Gb',
-  Gb: 'F#',
-  Db: 'C#',
-  'C#': 'Db',
-  Ab: 'G#',
-  'G#': 'Ab',
-  Eb: 'D#',
-  'D#': 'Eb',
-  Bb: 'A#',
-  'A#': 'Bb',
-};
+// Paires enharmoniques dérivées de la table unique (data/circle.ts) :
+// les paires impliquant E# / B# sont exclues, comme dans la table historique
+// (seules les 10 paires réellement utiles au cercle sont conservées).
+const ENHARMONICS: Record<string, NoteName> = {};
+for (const [note, equivs] of Object.entries(ENHARMONIC_EQUIVALENTS)) {
+  const equiv = equivs[0];
+  if (equiv !== undefined && note !== 'E#' && note !== 'B#' && equiv !== 'E#' && equiv !== 'B#') {
+    ENHARMONICS[note] = equiv as NoteName;
+  }
+}
 
 function getNoteAtIndex(index: number): NoteName {
   const note = CIRCLE_OF_FIFTHS[index];

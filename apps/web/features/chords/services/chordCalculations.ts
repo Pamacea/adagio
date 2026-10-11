@@ -12,7 +12,14 @@ import type {
   FretboardNote as FretboardNoteType,
   Interval,
 } from '@adagio/types';
-import { buildChord, getChordTension, getChordVoicings, getDegreeNote } from '@adagio/theory';
+import {
+  buildChord,
+  getChordTension,
+  getChordVoicings,
+  getDegreeNote,
+  parseChord,
+  FRENCH_NOTE_NAMES,
+} from '@adagio/theory';
 
 // ============================================================================
 // CONSTANTS - Chord qualities by degree and tonality
@@ -506,12 +513,10 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
   // Standard tuning for diagram (E A D G B E - low to high, displayed left to right)
   const openNotes: NoteName[] = ['E', 'A', 'D', 'G', 'B', 'E'];
 
-  // Extract root and quality from voicing name
-  const chordRoot = voicing.name.charAt(0) as NoteName;
-  const qualityMatch = voicing.name
-    .slice(1)
-    .match(/^(maj7|m7|7|m|6|m6|dim|aug|sus|add|7sus4|maj9|m9|m11|m13|9|11|13)/);
-  const quality = (qualityMatch ? qualityMatch[0] : '') as ChordQuality;
+  // Extract root and quality from voicing name (parser unique : ChordRef)
+  const ref = parseChord(voicing.name);
+  const chordRoot = (ref?.root ?? voicing.name.charAt(0)) as NoteName;
+  const quality = (ref?.quality ?? '') as ChordQuality;
 
   // Build chord to get intervals
   const chordNotes = buildChord(chordRoot, quality);
@@ -574,26 +579,7 @@ export function voicingToDiagramPositions(voicing: ChordVoicing): DiagramPositio
  * @returns French note name
  */
 export function getFrenchNoteName(note: NoteName): string {
-  const NOTE_FR: Record<string, string> = {
-    C: 'DO',
-    'C#': 'DO♯',
-    Db: 'RÉ♭',
-    D: 'RÉ',
-    'D#': 'RÉ♯',
-    Eb: 'MI♭',
-    E: 'MI',
-    F: 'FA',
-    'F#': 'FA♯',
-    Gb: 'SOL♭',
-    G: 'SOL',
-    'G#': 'SOL♯',
-    Ab: 'LA♭',
-    A: 'LA',
-    'A#': 'LA♯',
-    Bb: 'SI♭',
-    B: 'SI',
-  };
-  return NOTE_FR[note] || note;
+  return FRENCH_NOTE_NAMES[note] || note;
 }
 
 /**
@@ -603,22 +589,15 @@ export function getFrenchNoteName(note: NoteName): string {
  * @returns Object with root and quality
  */
 export function parseChordName(chordName: string): { root: NoteName; quality: ChordQuality } {
-  // Match root note (including sharps/flats) followed by quality
-  const match = chordName.match(/^([A-G][#b]?)(.*)$/);
+  // Parser unique partagé (@adagio/theory) — normalisation incluse
+  const ref = parseChord(chordName);
 
-  if (!match) {
+  if (!ref) {
     return { root: 'C', quality: '' };
   }
 
-  const [, root, quality] = match;
-
-  // Normalize quality
-  let normalizedQuality = quality as ChordQuality;
-  if (quality === 'major' || quality === 'M') normalizedQuality = '' as ChordQuality;
-  if (quality === '-' || quality === 'min') normalizedQuality = 'm' as ChordQuality;
-
   return {
-    root: root as NoteName,
-    quality: normalizedQuality,
+    root: ref.root as NoteName,
+    quality: ref.quality as ChordQuality,
   };
 }

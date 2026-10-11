@@ -11,6 +11,7 @@ import {
   DEGREE_EMOTIONS,
   ROMAN_NUMERALS_MAJOR,
   ROMAN_NUMERALS_MINOR,
+  parseChord,
   type ChordSubstitution,
   type ChordVariation,
 } from '@adagio/theory';
@@ -111,7 +112,8 @@ function FretboardChord({
 }
 
 function getChordPositions(chordName: string): ({ fret: number; string: number } | null)[] {
-  const root = chordName.replace(/m|dim|°|7|maj|add/g, '');
+  // Parser unique (ChordRef) : extraction de la racine
+  const root = parseChord(chordName)?.root ?? chordName;
   const isMinor = chordName.endsWith('m') && !chordName.includes('aj');
 
   const basePosition: Array<{ fret: number | null; string: number }> = [

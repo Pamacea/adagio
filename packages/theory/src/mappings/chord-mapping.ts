@@ -3,6 +3,7 @@
 // ============================================================================
 
 import type { NoteName, Interval, ChordDegree, ChordFunction } from '@adagio/types';
+import { CHROMATIC_SCALE } from '../constants';
 
 /**
  * Chord entry with all its properties
@@ -17,11 +18,28 @@ export interface ChordEntry {
 }
 
 /**
- * Chords available for each scale degree in major key
+ * Clé d'index degrés → accords : `${degré}-${tonalité}`.
+ * Même grammaire que les clés de `degree-feelings` (étape 5 P1).
  */
-const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
+export type DegreeChordKey = `${string}-${'major' | 'minor'}`;
+
+/**
+ * Construit la clé d'index d'un degré pour une tonalité.
+ * @example degreeKey('ii', 'major')  // 'ii-major'
+ */
+export function degreeKey(degree: string, tonality: 'major' | 'minor'): DegreeChordKey {
+  return `${degree}-${tonality}`;
+}
+
+/**
+ * Table unique degrés → accords (tonique / médiant / sous-dominante / dominante).
+ * Fusion des anciennes tables MAJOR_DEGREE_CHORDS et MINOR_DEGREE_CHORDS,
+ * reindexée par `DegreeChordKey` (étape 5 P1).
+ */
+export const DEGREE_CHORDS: Record<DegreeChordKey, ChordEntry[]> = {
+  // ===== Tonalité majeure =====
   // I - TONIC (Stability, Home)
-  I: [
+  'I-major': [
     {
       name: 'I',
       symbol: '',
@@ -72,7 +90,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // ii - PRE-DOMINANT (Movement, Preparation)
-  ii: [
+  'ii-major': [
     {
       name: 'iim',
       symbol: 'm',
@@ -115,7 +133,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // iii - TONIC (Relative minor)
-  iii: [
+  'iii-major': [
     {
       name: 'iiim',
       symbol: 'm',
@@ -150,7 +168,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // IV - PRE-DOMINANT (Departure)
-  IV: [
+  'IV-major': [
     {
       name: 'IV',
       symbol: '',
@@ -193,7 +211,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // V - DOMINANT (Tension)
-  V: [
+  'V-major': [
     {
       name: 'V',
       symbol: '',
@@ -276,7 +294,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // vi - TONIC (Relative minor)
-  vi: [
+  'vi-major': [
     {
       name: 'vim',
       symbol: 'm',
@@ -327,7 +345,7 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // vii° - DOMINANT (Leading tone)
-  vii: [
+  'vii-major': [
     {
       name: 'vii°',
       symbol: '°',
@@ -353,14 +371,10 @@ const MAJOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
       function: 'dominant',
     },
   ],
-};
 
-/**
- * Chords available for each scale degree in minor key (natural minor)
- */
-const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
+  // ===== Tonalité mineure =====
   // i - TONIC (Minor home)
-  i: [
+  'i-minor': [
     {
       name: 'i',
       symbol: 'm',
@@ -419,7 +433,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // ii° - DOMINANT (Diminished)
-  ii: [
+  'ii-minor': [
     {
       name: 'ii°',
       symbol: '°',
@@ -438,7 +452,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // III - TONIC (Relative major)
-  III: [
+  'III-minor': [
     {
       name: 'III',
       symbol: '',
@@ -465,7 +479,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // iv - PRE-DOMINANT (Minor subdominant)
-  iv: [
+  'iv-minor': [
     {
       name: 'iv',
       symbol: 'm',
@@ -500,7 +514,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // v - DOMINANT (Minor dominant)
-  v: [
+  'v-minor': [
     {
       name: 'v',
       symbol: 'm',
@@ -528,7 +542,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // VI - PRE-DOMINANT (Major submediant)
-  VI: [
+  'VI-minor': [
     {
       name: 'VI',
       symbol: '',
@@ -555,7 +569,7 @@ const MINOR_DEGREE_CHORDS: Record<string, ChordEntry[]> = {
     },
   ],
   // VII - DOMINANT (Leading tone)
-  VII: [
+  'VII-minor': [
     {
       name: 'VII',
       symbol: '',
@@ -603,8 +617,7 @@ export function getChordsByDegree(
   degree: string,
   tonality: 'major' | 'minor' = 'major'
 ): ChordEntry[] {
-  const chords = tonality === 'major' ? MAJOR_DEGREE_CHORDS : MINOR_DEGREE_CHORDS;
-  return chords[degree] || [];
+  return DEGREE_CHORDS[degreeKey(degree, tonality)] ?? [];
 }
 
 /**
@@ -703,19 +716,17 @@ export function getChordsForKey(
  * @returns Array of 7 note names
  */
 function getScaleNotes(root: NoteName, tonality: 'major' | 'minor'): string[] {
-  const CHROMATIC: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
   // Major key intervals (semitones from root)
   const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11];
   // Minor key intervals (natural minor)
   const MINOR_INTERVALS = [0, 2, 3, 5, 7, 8, 10];
 
   const intervals = tonality === 'major' ? MAJOR_INTERVALS : MINOR_INTERVALS;
-  const rootIndex = CHROMATIC.indexOf(root);
+  const rootIndex = CHROMATIC_SCALE.indexOf(root);
 
   if (rootIndex === -1) return ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
-  return intervals.map((i) => CHROMATIC[(rootIndex + i) % 12]!);
+  return intervals.map((i) => CHROMATIC_SCALE[(rootIndex + i) % 12]!);
 }
 
 /**

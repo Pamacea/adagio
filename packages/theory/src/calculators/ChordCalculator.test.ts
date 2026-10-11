@@ -21,6 +21,8 @@ import {
   getCAGEDShape,
   getKeyChordLibrary,
   getCommonProgressions,
+  transposeNote,
+  toFlatIfAppropriate,
 } from './ChordCalculator';
 
 describe('ChordCalculator', () => {
@@ -343,6 +345,12 @@ describe('ChordCalculator', () => {
         const result = getDegreeNote('A', 'III', 'minor');
 
         expect(result).toBe('C');
+      });
+
+      it('should return correct note for II in A minor', () => {
+        const result = getDegreeNote('A', 'II', 'minor');
+
+        expect(result).toBe('B');
       });
     });
 
@@ -997,6 +1005,42 @@ describe('ChordCalculator', () => {
 
       expect(cShape).toBeDefined();
       expect(cShape?.shape).toBe('C');
+    });
+  });
+
+  describe('transposeNote', () => {
+    it('should transpose notes correctly', () => {
+      expect(transposeNote('C', 2)).toBe('D');
+      expect(transposeNote('C', 4)).toBe('E');
+      expect(transposeNote('C', 7)).toBe('G');
+      expect(transposeNote('E', -4)).toBe('C');
+      expect(transposeNote('F', 5)).toBe('A#'); // Bb
+    });
+
+    it('should handle wraparound correctly', () => {
+      expect(transposeNote('A', 4)).toBe('C#');
+      expect(transposeNote('G', 8)).toBe('D#');
+    });
+  });
+
+  describe('toFlatIfAppropriate', () => {
+    it('should convert sharps to flats in flat keys', () => {
+      expect(toFlatIfAppropriate('C#', 'F')).toBe('Db');
+      expect(toFlatIfAppropriate('D#', 'F')).toBe('Eb');
+      expect(toFlatIfAppropriate('F#', 'Bb')).toBe('Gb');
+      expect(toFlatIfAppropriate('G#', 'Eb')).toBe('Ab');
+      expect(toFlatIfAppropriate('A#', 'Bb')).toBe('Bb');
+    });
+
+    it('should keep sharps in sharp keys', () => {
+      expect(toFlatIfAppropriate('C#', 'G')).toBe('C#');
+      expect(toFlatIfAppropriate('D#', 'D')).toBe('D#');
+      expect(toFlatIfAppropriate('F#', 'A')).toBe('F#');
+    });
+
+    it('should not modify notes without flat equivalents', () => {
+      expect(toFlatIfAppropriate('C', 'F')).toBe('C');
+      expect(toFlatIfAppropriate('E', 'Bb')).toBe('E');
     });
   });
 

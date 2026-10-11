@@ -4,6 +4,8 @@
  * Type definitions for fretboard calculations and components.
  */
 
+import { CHROMATIC } from '../constants';
+
 /**
  * Musical string names (standard guitar tuning)
  */
@@ -18,11 +20,6 @@ export const FRET_COUNT = 12;
  * MIDI frequencies for open guitar strings (E2 to E4)
  */
 export const STRING_FREQUENCIES = [82.41, 110.0, 146.83, 196.0, 246.94, 329.63] as const;
-
-/**
- * Chromatic scale notes
- */
-export const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] as const;
 
 /**
  * Base octaves for each open string

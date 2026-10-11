@@ -9,6 +9,11 @@
 // - Police Archivo Black (titres), Space Mono (texte)
 // ============================================================================
 
+import { FRENCH_NOTE_NAMES } from '@adagio/theory';
+import type { NoteName } from '@adagio/types';
+
+export type { NoteName };
+
 export const Colors = {
   // Primary colors
   black: '#000000',
@@ -111,31 +116,11 @@ export const Shadows = {
   },
 };
 
-// French note names
-export const FrenchNotes = {
-  C: 'Do',
-  'C#': 'Do#',
-  Db: 'Réb',
-  D: 'Ré',
-  'D#': 'Ré#',
-  Eb: 'Mib',
-  E: 'Mi',
-  F: 'Fa',
-  'F#': 'Fa#',
-  Gb: 'Solb',
-  G: 'Sol',
-  'G#': 'Sol#',
-  Ab: 'Lab',
-  A: 'La',
-  'A#': 'La#',
-  Bb: 'Sib',
-  B: 'Si',
-} as const;
-
-export type NoteName = keyof typeof FrenchNotes;
+// French note names — canon unique : @adagio/theory (symboles ♯/♭)
+export const FrenchNotes: Record<string, string> = FRENCH_NOTE_NAMES;
 
 export function toFrenchNote(note: string): string {
-  return FrenchNotes[note as NoteName] || note;
+  return FrenchNotes[note] || note;
 }
 
 // French intervals

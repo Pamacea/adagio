@@ -7,8 +7,7 @@
 'use client';
 
 import type { NoteName, ModeName, Instrument } from '@adagio/types';
-import { NOTE_FR } from '@/lib/theory';
-import { INSTRUMENTS, INSTRUMENT_IDS } from '@adagio/theory';
+import { INSTRUMENTS, INSTRUMENT_IDS, FRENCH_NOTE_NAMES as NOTE_FR } from '@adagio/theory';
 
 // Toutes les notes chromatiques (avec dièses)
 const CHROMATIC_ROOTS: NoteName[] = [

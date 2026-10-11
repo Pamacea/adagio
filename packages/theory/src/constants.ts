@@ -9,45 +9,14 @@ import type { NoteName, ChordQuality } from '@adagio/types';
 // ============================================================================
 
 /**
- * Notes de la gamme chromatique (ordre standard)
+ * Notes chromatiques — source unique (ordre standard)
  */
-export const CHROMATIC_SCALE: readonly NoteName[] = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-] as const;
+export const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] as const;
 
 /**
- * Mapping note → nom français
+ * Notes de la gamme chromatique (ordre standard)
  */
-export const NOTE_FR: Record<string, string> = {
-  C: 'DO',
-  'C#': 'DO♯',
-  Db: 'RÉ♭',
-  D: 'RÉ',
-  'D#': 'RÉ♯',
-  Eb: 'MI♭',
-  E: 'MI',
-  F: 'FA',
-  'F#': 'FA♯',
-  Gb: 'SOL♭',
-  G: 'SOL',
-  'G#': 'SOL♯',
-  Ab: 'LA♭',
-  A: 'LA',
-  'A#': 'LA♯',
-  Bb: 'SI♭',
-  B: 'SI',
-};
+export const CHROMATIC_SCALE: readonly NoteName[] = CHROMATIC;
 
 /**
  * Accordage standard de la guitare (du plus grave au plus aigu)
@@ -113,11 +82,16 @@ export const MINOR_DEGREE_QUALITIES: Record<string, ChordQuality> = {
 // ============================================================================
 
 /**
+ * Degrés diatoniques — union stricte pour les tables indexées par degré
+ */
+export type DiatonicDegree = 'I' | 'II' | 'III' | 'IV' | 'V' | 'VI' | 'VII';
+
+/**
  * Qualités d'accords diatoniques par degré (majeur) - Format étendu pour l'UI
  * Liste de toutes les variations d'accords pour chaque degré
  * Note: Utilise string[] au lieu de ChordQuality[] pour inclure des variations UI non-standard
  */
-export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
+export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<DiatonicDegree, string[]> = {
   I: ['', 'maj7', '6', 'add9', '6add9', 'maj9', 'maj13', 'sus2', 'add4', '5add9'],
   II: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9', '6/9', '7sus4'],
   III: ['m', 'm7', 'm6', 'm9', 'madd9', '7', '7sus2', '7b9', 'add9'],
@@ -131,7 +105,7 @@ export const MAJOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
  * Qualités d'accords diatoniques par degré (mineur) - Format étendu pour l'UI
  * Note: Utilise string[] au lieu de ChordQuality[] pour inclure des variations UI non-standard
  */
-export const MINOR_DEGREE_QUALITIES_EXTENDED: Record<string, string[]> = {
+export const MINOR_DEGREE_QUALITIES_EXTENDED: Record<DiatonicDegree, string[]> = {
   I: ['m', 'm7', 'm6', 'm9', 'm11', 'madd9'],
   II: ['m7b5', 'm7b5b9', 'dim7', 'm7b5b11', '13'],
   III: ['', 'maj7', '6', 'add9', 'maj9'],

@@ -7,8 +7,14 @@
 
 import { useMemo } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
-import { getEmotionForMode, MODE_INTERVALS, ROMAN_DEGREES, MODE_ORDER } from '@adagio/theory';
-import { NOTE_FR, CHROMATIC } from '@/lib/theory';
+import {
+  getEmotionForMode,
+  MODE_INTERVALS,
+  ROMAN_DEGREES,
+  MODE_ORDER,
+  CHROMATIC,
+  FRENCH_NOTE_NAMES as NOTE_FR,
+} from '@adagio/theory';
 import { ModeSelector, ModeCircle, ModeList, ModeDetail } from '@/components/theory/modes';
 import { useModeState } from '@/features/theory/hooks';
 import type { ModeName } from '@adagio/types';

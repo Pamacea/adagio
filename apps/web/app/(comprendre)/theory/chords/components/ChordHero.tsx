@@ -12,7 +12,7 @@
 
 import { NoteBadge } from './NoteBadge';
 import type { NoteName } from '@adagio/types';
-import { NOTE_FR } from '@adagio/theory';
+import { FRENCH_NOTE_NAMES as NOTE_FR } from '@adagio/theory';
 
 export interface ChordHeroProps {
   name: string;

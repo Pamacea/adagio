@@ -212,13 +212,3 @@ export const ENHARMONIC_CANONICAL: Record<string, string> = {
   'B#dim': 'Cdim',
   'B#°': 'Cdim',
 };
-
-/**
- * Mapping enharmonique pour les NOTES SEULEMENT (pour les diminés spéciaux)
- */
-export const NOTE_ENHARMONICS: Record<string, string[]> = {
-  'E#': ['F'],
-  'B#': ['C'],
-  F: ['E#'],
-  C: ['B#'],
-};

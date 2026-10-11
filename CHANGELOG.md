@@ -7,6 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0] - 2026-10-11
+
+### P1 — Purification des liens musicaux (`@adagio/theory`)
+
+#### Unification des gammes
+
+- **`ScaleType` canonique à 28 ids** : les ids kebab-case (`ScaleId`) sont supprimés ; `SCALE_DEFINITIONS` est réécrit en clés camelCase et `SCALE_ID_TO_TYPE` assure la rétrocompatibilité des anciennes clés à la lecture
+- **`SCALE_INTERVALS` unifié** avec `SCALE_DEFINITIONS` (blues `b5`, whole-tone, diminished corrigés) — test de cohérence `scale-intervals-consistency.test.ts`
+- **`primaryFunction`** : union stricte, `'sub-dominant'` → `'subdominant'`
+- **`MAJOR/MINOR_DEGREE_QUALITIES_EXTENDED`** typés `Record<DiatonicDegree, string[]>`
+
+#### Parser unique d'accords — `ChordRef`
+
+- **Nouveau module `core/chord-ref.ts`** : `parseChord` / `formatChord` / `chordKey` (racine `[A-G](#|b)?` + qualité normalisée, bass optionnelle `C/E`)
+- **~10 sites de parsing ad hoc migrés** (regex/`replace` chaînés) : `useComposeState`, `chordCalculations`, `useChordPage`, `ChordBuilder`, `ChordDetails`, `FretboardChord`, page `compose`
+
+#### Tables indexées par entités
+
+- **`DEGREE_CHORDS`** : `MAJOR/MINOR_DEGREE_CHORDS` → clés `` `${1..7}-major|minor` `` via `degreeKey()` (même grammaire que `degree-feelings`)
+- **`CHORD_TO_SCALE`** : index construit au module load via `indexByChord()` + `getScalesForChord()`
+- **`CHORD_SUBSTITUTIONS_BY_FUNCTION`** : index secondaire par fonction `'T'|'S'|'D'|'D7'`
+
+#### Canon FR + doublons supprimés
+
+- **`FRENCH_NOTE_NAMES`** : canon unique des noms français ; réexport COMPAT `NOTE_FR` supprimé (étape 7)
+- **Un seul `CHROMATIC`** (constants.ts) et **une seule table `ENHARMONIC`** (`data/circle.ts`) ; réexports `./fretboard/*` préservés
+- **ASCII `'DO#'` supprimé** — aucune table FR ASCII ne survit ; `FrenchNotes` (mobile) réexporte le canon
+- **`apps/web/lib/theory/constants.ts`** supprimé (0 importeur) ; `notation-constants.ts`, `_NOTE_FR`, `NOTE_FR_COMPOSE` supprimés
+
+#### Code mort supprimé (delete-first)
+
+- **`CHORD_PROGRESSIONS_ADVANCED`** + `ChordProgressionAdvanced` + `getChordProgressions(key)` (ignorait `key`, 0 consommateur, 0 test)
+- **Test doublon** `calculators/__tests__/ChordCalculator.test.ts` (245 lignes, couvert par le fichier frère)
+
+#### Purge de la théorie locale front
+
+- **`useComposeState` : 908 → 175 lignes** — gammes, accords diatoniques, notes d'accord, variations, substitutions, progressions délégués à `@adagio/theory` ; TODO « Migrer tous les imports » résolu ; l'UI gagne les entrées canoniques (ex. degré I : 9 variations, substitutions d'échelle relative/tritone)
+- **`useCircleState`** : tables chromatiques locales supprimées → `getMajorScale`/`getMajorChords` de `@adagio/theory`
+- **`compose/page.tsx`** : `SCALE_TYPES` local → `COMPOSE_SCALE_TYPES` (canon)
+
+#### Tests
+
+- **Filet de non-régression** (étape 0) : `harmonic-suggestions`, `notation`, `circle`, `chord-mapping`, `degree-feelings` — snapshots réécrits délibérément à l'étape 3
+- **633 tests theory** verts (17 fichiers)
+
+---
+
 ## [0.4.0] - 2026-03-21
 
 ### Chord System Overhaul

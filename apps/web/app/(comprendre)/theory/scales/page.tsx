@@ -7,8 +7,12 @@
 
 import { useMemo } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
-import { getFretboardNotesForKey, SCALES, SCALE_CATEGORIES } from '@adagio/theory';
-import { NOTE_FR } from '@/lib/theory';
+import {
+  getFretboardNotesForKey,
+  SCALES,
+  SCALE_CATEGORIES,
+  FRENCH_NOTE_NAMES as NOTE_FR,
+} from '@adagio/theory';
 import {
   ScaleSelector,
   ScaleDisplay,

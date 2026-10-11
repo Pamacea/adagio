@@ -4,6 +4,8 @@
  * Extrait de app/(composer)/compose/page.tsx
  */
 
+import { parseChord } from '@adagio/theory';
+
 export function getContrastColor(hexColor: string) {
   const hex = hexColor.replace('#', '');
   const r = parseInt(hex.substring(0, 2), 16);
@@ -257,17 +259,8 @@ export function getChordPositions(chordName: string): ({ fret: number; string: n
   const isSus2 = chordName.includes('sus2');
   const isSus4 = chordName.includes('sus4');
 
-  // Extraire la racine
-  let root = chordName
-    .replace('maj7', '')
-    .replace('7', '')
-    .replace('m7b5', '')
-    .replace('add9', '')
-    .replace('sus2', '')
-    .replace('sus4', '')
-    .replace('dim', '')
-    .replace('°', '')
-    .replace('m', '');
+  // Extraire la racine (parser unique ChordRef)
+  const root = parseChord(chordName)?.root ?? chordName;
 
   // Positions de base pour accord ouvert (E shape)
   // Format: [Mi, La, Ré, Sol, Si, Mi] - de la corde 6 (Mi grave) à la corde 1 (Mi aigu)

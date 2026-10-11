@@ -6,7 +6,7 @@
 
 import { useMemo } from 'react';
 import type { NoteName } from '@adagio/types';
-import { MAJOR_FROM_MINOR } from '@adagio/theory';
+import { MAJOR_FROM_MINOR, getMajorScale, getMajorChords } from '@adagio/theory';
 
 export interface CircleState {
   selectedKey: NoteName | string; // Peut être "Am", "Em", etc.
@@ -21,68 +21,9 @@ export interface CircleData {
   relativeKey: string;
 }
 
-// Tableau chromatique avec DIÈSES
-const SHARP_CHROMATIC: NoteName[] = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-];
-// Tableau chromatique avec BÉMOLS
-const FLAT_CHROMATIC: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-
-// Intervalles de la gamme majeure
-const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11];
-
-// Tonalités qui utilisent les bémols
-const FLAT_KEYS: NoteName[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb', 'F'] as const;
-
-/**
- * Obtenir la gamme majeure pour une tonique donnée
- */
-function getMajorScale(key: NoteName): string[] {
-  const useFlats = FLAT_KEYS.includes(key);
-  const chromatic = useFlats ? FLAT_CHROMATIC : SHARP_CHROMATIC;
-  const keyIndex = chromatic.indexOf(key as string);
-
-  if (keyIndex === -1) {
-    return ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-  }
-
-  return MAJOR_INTERVALS.map((i) => chromatic[(keyIndex + i) % 12]!);
-}
-
-/**
- * Obtenir les accords majeurs diatoniques
- */
-function getMajorChords(key: NoteName): string[] {
-  const scale = getMajorScale(key);
-
-  if (!scale || scale.length < 7) {
-    return ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'];
-  }
-
-  return [
-    scale[0] || 'C', // I
-    (scale[1] || 'D') + 'm', // ii
-    (scale[2] || 'E') + 'm', // iii
-    scale[3] || 'F', // IV
-    scale[4] || 'G', // V
-    (scale[5] || 'A') + 'm', // vi
-    (scale[6] || 'B') + 'dim', // vii°
-  ];
-}
-
 /**
  * Obtenir les accords mineurs diatoniques
+ * La gamme majeure relative provient de @adagio/theory (étape 6 P1).
  */
 function getMinorChords(root: string): string[] {
   const majorKey = MAJOR_FROM_MINOR[root] || root.replace('m', '');

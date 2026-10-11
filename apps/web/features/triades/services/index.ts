@@ -10,7 +10,6 @@ export {
   calculateFretboardForTriad,
   formatNoteFr,
   formatIntervalFr,
-  NOTE_FR,
   COMMON_EXTENSION_PRESETS,
   type TriadQuality,
   type TriadExtension,

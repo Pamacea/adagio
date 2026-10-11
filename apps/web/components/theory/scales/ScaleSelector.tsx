@@ -6,33 +6,13 @@
 'use client';
 
 import type { NoteName } from '@adagio/types';
+import type { ScaleType } from '@adagio/theory';
+
+// Réexport pour les consommateurs du barrel (components/theory/scales/index.ts)
+export type { ScaleType };
 
 // Liste des notes pour le sélecteur de tonique
 const NOTES: NoteName[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
-// Types de gammes disponibles
-export type ScaleType =
-  | 'major'
-  | 'minor'
-  | 'harmonicMajor'
-  | 'harmonicMinor'
-  | 'melodicMajor'
-  | 'melodicMinor'
-  | 'pentatonicMajor'
-  | 'pentatonicMinor'
-  | 'blues'
-  | 'dorian'
-  | 'phrygian'
-  | 'lydian'
-  | 'mixolydian'
-  | 'locrian'
-  | 'napolitanMajor'
-  | 'napolitanMinor'
-  | 'augmentedMajor'
-  | 'augmentedMinor'
-  | 'wholeTone'
-  | 'diminished'
-  | 'chromatic';
 
 export interface ScaleDefinition {
   id: ScaleType;

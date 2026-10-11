@@ -6,7 +6,7 @@
 
 import { useMemo, useState } from 'react';
 import type { NoteName, ModeName, Interval, Instrument } from '@adagio/types';
-import { getFretboardNotesForKey, getInstrument } from '@adagio/theory';
+import { getFretboardNotesForKey, getInstrument, FRENCH_NOTE_NAMES } from '@adagio/theory';
 import { calculateFretPositions } from '@/components/theory/scales/ScaleFretboard';
 
 // Intervalles pour chaque mode (notation string comme '1', 'b3', etc.)
@@ -104,26 +104,7 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
 
   // Fonction d'affichage des notes en français
   const displayNote = (note: string): string => {
-    const NOTE_FR: Record<string, string> = {
-      C: 'DO',
-      'C#': 'DO♯',
-      Db: 'RÉ♭',
-      D: 'RÉ',
-      'D#': 'RÉ♯',
-      Eb: 'MI♭',
-      E: 'MI',
-      F: 'FA',
-      'F#': 'FA♯',
-      Gb: 'SOL♭',
-      G: 'SOL',
-      'G#': 'SOL♯',
-      Ab: 'LA♭',
-      A: 'LA',
-      'A#': 'LA♯',
-      Bb: 'SI♭',
-      B: 'SI',
-    };
-    return NOTE_FR[note] || note;
+    return FRENCH_NOTE_NAMES[note] || note;
   };
 
   const toggleShowAllNotes = () => {

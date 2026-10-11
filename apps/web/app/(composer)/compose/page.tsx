@@ -9,7 +9,7 @@
 
 import { MetalNav, MetalFooter } from '@/components';
 import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
-import { useComposeState, SCALE_TYPES } from '@/features/theory';
+import { useComposeState } from '@/features/theory';
 import { ScaleNotesDisplay, FretboardChord, getContrastColor } from '@/components/theory/compose';
 import {
   FRENCH_NOTE_NAMES as NOTE_FR,
@@ -18,6 +18,8 @@ import {
   ROMAN_NUMERALS_MAJOR,
   ROMAN_NUMERALS_MINOR,
   MAJOR_KEYS,
+  parseChord,
+  COMPOSE_SCALE_TYPES,
 } from '@adagio/theory';
 import type { NoteName } from '@adagio/types';
 
@@ -500,7 +502,7 @@ export default function ComposePage() {
                   Modes disponibles
                 </h3>
                 <div className="space-y-2">
-                  {SCALE_TYPES.map((scaleDef) => {
+                  {COMPOSE_SCALE_TYPES.map((scaleDef) => {
                     const isCompatible =
                       scaleDef.id === keyMode ||
                       scaleDef.id === 'dorian' ||
@@ -547,7 +549,7 @@ export default function ComposePage() {
                           key={i}
                           className="px-3 py-1 text-xs border-2 border-steel bg-abyss hover:border-toxic transition-all"
                         >
-                          {chord.replace('m', '')}7
+                          {parseChord(chord)?.root ?? chord}7
                         </button>
                       ))}
                     </div>

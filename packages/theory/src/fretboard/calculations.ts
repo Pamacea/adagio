@@ -5,9 +5,9 @@
  * Shared between web and mobile components.
  */
 
+import { CHROMATIC } from '../constants';
 import {
   STRINGS,
-  CHROMATIC,
   STRING_BASE_OCTAVES,
   INTERVALS,
   type NoteData,

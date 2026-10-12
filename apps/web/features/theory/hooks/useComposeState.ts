@@ -44,6 +44,8 @@ export interface UseComposeStateReturn {
   keyMode: KeyMode;
   selectedDegree: number | null;
   selectedVariations: Record<number, string>;
+  /** Accord imposé manuellement (substitution/emprunt) — null = suivi du degré */
+  manualChord: string | null;
 
   // Données calculées
   scaleNotes: string[];
@@ -51,6 +53,8 @@ export interface UseComposeStateReturn {
   progressions: ComposeProgression[];
   chordVariations: Record<number, ChordVariation[]>;
   selectedChord: string | null;
+  /** Accord effectivement affiché : manualChord, sinon le chord du degré */
+  effectiveChord: string | null;
   chordSubstitutions: ChordSubstitution[];
   chordDetails: { notes: string[]; intervals: string[] } | null;
   selectedVariationDetails: ChordVariation | null;
@@ -61,6 +65,8 @@ export interface UseComposeStateReturn {
   setSelectedDegree: (degree: number | null) => void;
   setSelectedVariation: (degree: number, variationId: string) => void;
   resetVariations: () => void;
+  /** Pose (ou efface avec null) l'accord manuel ; n'importe quel clic de degré le réinitialise */
+  applyManualChord: (chord: string | null) => void;
 }
 
 export interface UseComposeStateOptions {
@@ -83,9 +89,10 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
 
   const [selectedKey, setSelectedKey] = useState<NoteName>(initialKey);
   const [keyMode, setKeyMode] = useState<KeyMode>(initialKeyMode);
-  const [selectedDegree, setSelectedDegree] = useState<number | null>(null);
+  const [selectedDegree, setSelectedDegreeState] = useState<number | null>(null);
   const [selectedVariations, setSelectedVariations] =
     useState<Record<number, string>>(DEFAULT_VARIATIONS);
+  const [manualChord, setManualChord] = useState<string | null>(null);
 
   // Données calculées
   const scaleNotes = useMemo(() => {
@@ -117,15 +124,18 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
     return variation?.symbol || chords[selectedDegree] || null;
   }, [selectedDegree, selectedVariations, chordVariations, chords]);
 
+  // Accord affiché : manuel (substitution) prioritaire, sinon celui du degré
+  const effectiveChord = manualChord ?? selectedChord;
+
   const chordSubstitutions = useMemo(() => {
     if (selectedDegree === null) return [];
     return getChordSubstitutionsByDegree(chords[selectedDegree]!, selectedDegree, selectedKey);
   }, [selectedDegree, chords, selectedKey]);
 
   const chordDetails = useMemo(() => {
-    if (!selectedChord) return null;
-    return getChordNotes(selectedChord);
-  }, [selectedChord]);
+    if (!effectiveChord) return null;
+    return getChordNotes(effectiveChord);
+  }, [effectiveChord]);
 
   const selectedVariationDetails = useMemo(() => {
     if (selectedDegree === null) return null;
@@ -135,6 +145,16 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
   }, [selectedDegree, selectedVariations, chordVariations]);
 
   // Actions
+  const setSelectedDegree = (degree: number | null) => {
+    setSelectedDegreeState(degree);
+    // Un clic sur un degré annule un accord manuel imposé
+    setManualChord(null);
+  };
+
+  const applyManualChord = (chord: string | null) => {
+    setManualChord(chord);
+  };
+
   const resetVariations = () => {
     setSelectedVariations(DEFAULT_VARIATIONS);
   };
@@ -157,6 +177,7 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
     keyMode,
     selectedDegree,
     selectedVariations,
+    manualChord,
 
     // Données calculées
     scaleNotes,
@@ -164,6 +185,7 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
     progressions,
     chordVariations,
     selectedChord,
+    effectiveChord,
     chordSubstitutions,
     chordDetails,
     selectedVariationDetails,
@@ -174,5 +196,6 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
     setSelectedDegree,
     setSelectedVariation,
     resetVariations,
+    applyManualChord,
   };
 }

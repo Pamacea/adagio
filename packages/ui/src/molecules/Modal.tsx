@@ -163,7 +163,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                 <button
                   onClick={onClose}
                   className="ml-auto text-neutral-400 hover:text-white transition-colors"
-                  aria-label="Close modal"
+                  aria-label="Fermer la fenêtre"
                 >
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path

@@ -27,10 +27,17 @@ export interface ChordDiagramProps {
   showFretNumbers?: boolean;
   showStringNames?: boolean;
   compact?: boolean; // Compact mode for grids
+  /**
+   * Ordre visuel des cordes (de la gauche vers la droite) :
+   * - 'high-first' (défaut) : mi aigu à gauche — convention interne des positions
+   * - 'low-first' : mi grave à gauche — convention tab / diagrammes d'accords
+   */
+  stringOrder?: 'high-first' | 'low-first';
   className?: string;
 }
 
 const STRING_NAMES = ['E', 'B', 'G', 'D', 'A', 'E'] as const; // High to low
+const LOW_FIRST_STRING_NAMES = [...STRING_NAMES].reverse() as (typeof STRING_NAMES)[number][];
 
 // SVG dimensions
 const WIDTH = 140;
@@ -65,6 +72,7 @@ export function ChordDiagram({
   showFretNumbers = true,
   showStringNames = true,
   compact = false,
+  stringOrder = 'high-first',
   className,
 }: ChordDiagramProps) {
   // Calculate starting fret
@@ -76,6 +84,10 @@ export function ChordDiagram({
 
   const hasMuted = positions.some((p) => p.fret === -1);
   const hasOpen = positions.some((p) => p.fret === 0);
+
+  // Index visuel d'une corde (0 = colonne la plus à gauche)
+  const visualString = (s: number) => (stringOrder === 'low-first' ? 5 - s : s);
+  const displayedStringNames = stringOrder === 'low-first' ? LOW_FIRST_STRING_NAMES : STRING_NAMES;
 
   return (
     <div className={cn('inline-block', className)}>
@@ -112,7 +124,7 @@ export function ChordDiagram({
         {/* String names */}
         {showStringNames && !compact && (
           <g>
-            {STRING_NAMES.map((s, i) => (
+            {displayedStringNames.map((s, i) => (
               <text
                 key={i}
                 x={MARGIN_LEFT + STRING_SPACING * i}
@@ -130,7 +142,7 @@ export function ChordDiagram({
 
         {/* Vertical string lines */}
         <g>
-          {STRING_NAMES.map((_, i) => (
+          {displayedStringNames.map((_, i) => (
             <line
               key={i}
               x1={MARGIN_LEFT + STRING_SPACING * i}
@@ -168,7 +180,7 @@ export function ChordDiagram({
           {positions.map((pos) => {
             if (pos.fret <= 0) return null;
 
-            const x = MARGIN_LEFT + STRING_SPACING * pos.string;
+            const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
             const fretIndex = pos.fret - startFret;
             const y = MARGIN_TOP + FRET_HEIGHT * fretIndex + FRET_HEIGHT / 2;
 
@@ -209,7 +221,7 @@ export function ChordDiagram({
           <g>
             {positions.map((pos) => {
               if (pos.fret !== 0) return null;
-              const x = MARGIN_LEFT + STRING_SPACING * pos.string;
+              const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
               const y = MARGIN_TOP - 13;
 
               return (
@@ -232,7 +244,7 @@ export function ChordDiagram({
           <g>
             {positions.map((pos) => {
               if (pos.fret !== -1) return null;
-              const x = MARGIN_LEFT + STRING_SPACING * pos.string;
+              const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
               const y = MARGIN_TOP - 11;
               const size = 6;
 
@@ -268,8 +280,9 @@ export function ChordDiagram({
             const barrePositions = positions.filter((p) => p.finger === 1 && p.fret > 0);
             if (barrePositions.length < 2) return null;
 
-            const minString = Math.min(...barrePositions.map((p) => p.string));
-            const maxString = Math.max(...barrePositions.map((p) => p.string));
+            const visStrings = barrePositions.map((p) => visualString(p.string));
+            const minString = Math.min(...visStrings);
+            const maxString = Math.max(...visStrings);
             const fret = barrePositions[0]?.fret ?? 0;
 
             const x1 = MARGIN_LEFT + STRING_SPACING * minString;

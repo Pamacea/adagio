@@ -254,7 +254,7 @@ export function SubstitutionsPanel({
                 <div className="text-xs text-blood mb-1">{info.name}</div>
                 <div className="text-[10px] text-gray mb-2">{info.description}</div>
                 <button
-                  onClick={() => onSubstitutionApply?.(`${displayNote(targetNote)}`)}
+                  onClick={() => onSubstitutionApply?.(targetNote)}
                   className="w-full px-2 py-1 text-xs bg-toxic border border-steel hover:border-rust transition-all"
                 >
                   {displayNote(targetNote)}
@@ -360,9 +360,7 @@ export function SubstitutionsPanel({
                 tonality === 'major'
                   ? getDegreeNote(root, 'VI', 'major')
                   : getDegreeNote(root, 'III', 'minor');
-              onSubstitutionApply?.(
-                `${displayNote(relativeRoot)}${tonality === 'major' ? 'm' : ''}`
-              );
+              onSubstitutionApply?.(`${relativeRoot}${tonality === 'major' ? 'm' : ''}`);
             }}
             className="px-3 py-1 text-xs bg-toxic border border-steel hover:border-rust transition-all"
           >

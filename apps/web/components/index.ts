@@ -3,6 +3,7 @@
  */
 
 export { MetalNav, LocalNav } from './MetalNav';
+export { FadeIn } from './FadeIn';
 export { MetalButton, MetalLink, ButtonGroup } from './MetalButton';
 export { MetalFooter, MetalFooterCompact } from './MetalFooter';
 export { MetalCard, MetalCardWithHeader, MetalCardGrid, CompactCard, StatCard } from './MetalCard';

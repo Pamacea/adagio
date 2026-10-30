@@ -10,10 +10,10 @@
   "dependencies": {
     "@adagio/auth": "workspace:*",
     "@adagio/types": "workspace:*",
-    "better-auth": "^1.5.1"
+    "better-auth": "^1.7.14"
   },
   "devDependencies": {
     "@adagio/config": "workspace:*",
-    "typescript": "^5.7.2"
+    "typescript": "^5.9.3"
   }
 }

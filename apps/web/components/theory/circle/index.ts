@@ -7,13 +7,11 @@
 export { CircleOfFifths } from './CircleOfFifths';
 export { ChordDisplay } from './ChordDisplay';
 export { RelativeKey } from './RelativeKey';
-export { CircleControls } from './CircleControls';
 
 // Types
 export type { CircleOfFifthsProps } from './CircleOfFifths';
 export type { ChordDisplayProps } from './ChordDisplay';
 export type { RelativeKeyProps } from './RelativeKey';
-export type { CircleControlsProps } from './CircleControls';
 
 // Utilities
 export { createSegmentPath, getContrastTextColor } from './CircleOfFifths';

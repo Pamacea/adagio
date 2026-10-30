@@ -11,6 +11,8 @@ import {
   getInstrument,
   getInstrumentTuning,
   getStringCount,
+  TUNING_PRESETS,
+  getTuningPreset,
 } from './instruments';
 import { calculateFretboard, getFretboardNotesForKey } from './calculators/FretboardCalculator';
 import { getChordVoicings } from './calculators/ChordCalculator';
@@ -45,6 +47,43 @@ describe('instruments', () => {
       expect(getStringCount(id)).toBe(def.stringCount);
       expect(getInstrumentTuning(id)).toBe(def.tuning);
     }
+  });
+});
+
+describe('getTuningPreset', () => {
+  it('expose les libellés français des presets', () => {
+    expect(TUNING_PRESETS.map((preset) => preset.label)).toEqual([
+      'Standard',
+      'Drop D',
+      '1/2 ton plus bas',
+    ]);
+  });
+
+  it('guitare standard = E A D G B E', () => {
+    expect(getTuningPreset('guitar', 'standard')).toEqual(['E', 'A', 'D', 'G', 'B', 'E']);
+  });
+
+  it('guitare drop D = D A D G B E', () => {
+    expect(getTuningPreset('guitar', 'drop-d')).toEqual(['D', 'A', 'D', 'G', 'B', 'E']);
+  });
+
+  it('guitare 1/2 ton plus bas = D# G# C# F# A# D#', () => {
+    expect(getTuningPreset('guitar', 'half-step-down')).toEqual([
+      'D#',
+      'G#',
+      'C#',
+      'F#',
+      'A#',
+      'D#',
+    ]);
+  });
+
+  it('basse standard = E A D G', () => {
+    expect(getTuningPreset('bass', 'standard')).toEqual(['E', 'A', 'D', 'G']);
+  });
+
+  it('basse drop D retombe sur le standard', () => {
+    expect(getTuningPreset('bass', 'drop-d')).toEqual(getTuningPreset('bass', 'standard'));
   });
 });
 

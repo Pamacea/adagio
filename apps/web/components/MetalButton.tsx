@@ -54,10 +54,10 @@ export const MetalButton = forwardRef<HTMLButtonElement, MetalButtonProps>(
 
     const variantClasses = {
       primary:
-        'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
+        'bg-surface border-steelwarm hover:bg-amber-400/10 hover:border-amber-400 hover:text-amber-400 hover:-translate-x-px hover:-translate-y-px',
       blood: 'btn-blood hover:-translate-x-px hover:-translate-y-px',
       ghost: 'bg-transparent border-transparent text-gray hover:text-white hover:bg-void',
-      outline: 'bg-transparent border-steel text-white hover:bg-toxic hover:border-blood',
+      outline: 'bg-transparent border-steelwarm text-white hover:bg-amber-400/10 hover:border-amber-400 hover:text-amber-400',
     };
 
     const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${shapeClasses[shape]} ${className}`;
@@ -109,10 +109,10 @@ export function MetalLink({
 
   const variantClasses = {
     primary:
-      'bg-blackness border-steel hover:bg-toxic hover:border-blood hover:-translate-x-px hover:-translate-y-px',
+      'bg-surface border-steelwarm hover:bg-amber-400/10 hover:border-amber-400 hover:text-amber-400 hover:-translate-x-px hover:-translate-y-px',
     blood: 'btn-blood hover:-translate-x-px hover:-translate-y-px',
     ghost: 'bg-transparent border-transparent text-gray hover:text-white hover:bg-void',
-    outline: 'bg-transparent border-steel text-white hover:bg-toxic hover:border-blood',
+    outline: 'bg-transparent border-steelwarm text-white hover:bg-amber-400/10 hover:border-amber-400 hover:text-amber-400',
   };
 
   const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${shapeClasses[shape]} ${className}`;

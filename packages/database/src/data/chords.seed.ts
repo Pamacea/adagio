@@ -99,7 +99,7 @@ export const CHORDS_SEED = [
   },
   {
     name: 'Am',
-    root: 'C',
+    root: 'A',
     quality: 'm',
     intervals: JSON.stringify([0, 3, 7]),
     extensions: JSON.stringify([]),

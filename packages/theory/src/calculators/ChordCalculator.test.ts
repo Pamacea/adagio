@@ -729,6 +729,19 @@ describe('ChordCalculator', () => {
       expect(result.length).toBeGreaterThan(0);
     });
 
+    it('should keep minor voicings distinct from major ones (Am/Dm/Em)', () => {
+      // La qualité mineure ne doit pas être ignorée (régression Am → positions de A).
+      const signature = (root: NoteName, quality: ChordQuality) =>
+        getChordVoicings(root, quality, 24)[0]!
+          .notes.map((n) => `${n.string}:${n.fret}`)
+          .sort()
+          .join('|');
+
+      expect(signature('A', 'm')).not.toBe(signature('A', ''));
+      expect(signature('D', 'm')).not.toBe(signature('D', ''));
+      expect(signature('E', 'm')).not.toBe(signature('E', ''));
+    });
+
     it('should include voicing metadata', () => {
       const result = getChordVoicings('C', '');
 

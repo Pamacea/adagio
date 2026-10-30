@@ -17,7 +17,7 @@ import {
   getChordNotes,
   getVariationsForDegree,
   getChordSubstitutionsByDegree,
-  COMPOSE_PROGRESSIONS,
+  getComposeProgressions,
 } from '@adagio/theory';
 import type {
   KeyMode,
@@ -103,7 +103,7 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
     return keyMode === 'major' ? getMajorChords(selectedKey) : getMinorChords(selectedKey);
   }, [selectedKey, keyMode]);
 
-  const progressions = useMemo(() => COMPOSE_PROGRESSIONS, []);
+  const progressions = useMemo(() => getComposeProgressions(keyMode), [keyMode]);
 
   const chordVariations = useMemo(() => {
     const variations: Record<number, ChordVariation[]> = {};
@@ -111,7 +111,7 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
       const chordSym = chords[i] ?? '';
       // Parser unique (ChordRef) : extraction de la racine diatonique
       const rootNote = parseChord(chordSym)?.root ?? chordSym;
-      variations[i] = getVariationsForDegree(i, rootNote, keyMode === 'minor');
+      variations[i] = getVariationsForDegree(i, rootNote, keyMode === 'minor', chordSym);
     }
     return variations;
   }, [chords, keyMode]);
@@ -160,6 +160,8 @@ export function useComposeState(options: UseComposeStateOptions = {}): UseCompos
   };
 
   const setSelectedVariation = (degree: number, variationId: string) => {
+    // Changer de variation annule l'accord manuel, sinon il masque le nouveau choix.
+    setManualChord(null);
     setSelectedVariations((prev) => ({ ...prev, [degree]: variationId }));
   };
 

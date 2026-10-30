@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@adagio/database": "workspace:*",
-    "better-auth": "^1.5.1"
+    "better-auth": "^1.7.14"
   },
   "devDependencies": {
     "@adagio/config": "workspace:*",
     "@adagio/types": "workspace:*",
-    "typescript": "^5.7.2"
+    "typescript": "^5.9.3"
   }
 }

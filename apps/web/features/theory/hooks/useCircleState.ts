@@ -6,7 +6,7 @@
 
 import { useMemo } from 'react';
 import type { NoteName } from '@adagio/types';
-import { MAJOR_FROM_MINOR, getMajorScale, getMajorChords } from '@adagio/theory';
+import { MAJOR_FROM_MINOR, MINOR_MAP, getMajorScale, getMajorChords } from '@adagio/theory';
 
 export interface CircleState {
   selectedKey: NoteName | string; // Peut être "Am", "Em", etc.
@@ -61,7 +61,8 @@ export function useCircleState(options: UseCircleStateOptions = {}) {
 
     const scale = getMajorScale(majKey as NoteName);
     const chordList = minor ? getMinorChords(initialKey) : getMajorChords(majKey as NoteName);
-    const relKey = minor ? majKey : MAJOR_FROM_MINOR[majKey] || '?';
+    // Majeur -> relative mineure (MINOR_MAP), mineur -> relative majeure (majKey)
+    const relKey = minor ? majKey : (MINOR_MAP[majKey] ?? '?');
 
     return {
       scaleNotes: scale,

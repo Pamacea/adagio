@@ -1,11 +1,5 @@
-export { ChordDiagram } from './ChordDiagram';
-export type { ChordDiagramProps } from './ChordDiagram';
-export { NoteBadge } from './NoteBadge';
-export type { NoteBadgeProps } from './NoteBadge';
 export { FretboardView } from './FretboardView';
 export type { FretboardViewProps, FretboardNote } from './FretboardView';
-export { ChordHero } from './ChordHero';
-export type { ChordHeroProps } from './ChordHero';
 export { ChordInfoCards } from './ChordInfoCards';
 export type { ChordInfoCardsProps } from './ChordInfoCards';
 export { VoicingSelector } from './VoicingSelector';

@@ -1,13 +1,14 @@
 /**
  * ADAGIO - FretboardControls Component
  * Contrôles pour la page fretboard
- * Sélecteur de tonique, mode, nombre de frettes, et options d'affichage
+ * Sélecteur d'instrument, accordage, tonique, mode, nombre de frettes, affichage
  */
 
 'use client';
 
 import type { NoteName, ModeName, Instrument } from '@adagio/types';
-import { INSTRUMENTS, INSTRUMENT_IDS, FRENCH_NOTE_NAMES as NOTE_FR } from '@adagio/theory';
+import { FRENCH_NOTE_NAMES as NOTE_FR, type TuningPreset } from '@adagio/theory';
+import { InstrumentPicker, SegmentedControl, TuningSelect } from '@/components/ui';
 
 // Toutes les notes chromatiques (avec dièses)
 const CHROMATIC_ROOTS: NoteName[] = [
@@ -57,11 +58,13 @@ interface FretboardControlsProps {
   fretCount: FretCountOption;
   showAllNotes: boolean;
   instrument: Instrument;
+  tuningPreset: TuningPreset;
   onRootChange: (root: NoteName) => void;
   onModeChange: (mode: ModeName) => void;
   onFretCountChange: (count: FretCountOption) => void;
   onToggleNotes: () => void;
   onInstrumentChange: (instrument: Instrument) => void;
+  onTuningPresetChange: (preset: TuningPreset) => void;
 }
 
 export function FretboardControls({
@@ -70,118 +73,76 @@ export function FretboardControls({
   fretCount,
   showAllNotes,
   instrument,
+  tuningPreset,
   onRootChange,
   onModeChange,
   onFretCountChange,
   onToggleNotes,
   onInstrumentChange,
+  onTuningPresetChange,
 }: FretboardControlsProps) {
   const displayNote = (note: NoteName): string => {
     return NOTE_FR[note] || note;
   };
 
   return (
-    <div className="section-frame p-4 mb-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Instrument selection */}
-        <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-            INSTRUMENT
-          </label>
-          <div className="flex gap-1">
-            {INSTRUMENT_IDS.map((id) => (
-              <button
-                key={id}
-                onClick={() => onInstrumentChange(id)}
-                className={`px-3 py-2 text-sm font-bold uppercase border-2 transition-all ${
-                  instrument === id
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
-                }`}
-                aria-label={INSTRUMENTS[id].label}
-                aria-pressed={instrument === id}
-              >
-                {INSTRUMENTS[id].label}
-              </button>
-            ))}
-          </div>
-        </div>
+    <div className="panel mb-8 p-4 [&_.control:hover]:text-rust">
+      <div className="flex flex-wrap items-start gap-x-6 gap-y-4">
+        <InstrumentPicker value={instrument} onChange={onInstrumentChange} label="Instrument" />
 
-        {/* Root selection */}
-        <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">TONIQUE</label>
-          <div className="flex flex-wrap gap-1">
-            {CHROMATIC_ROOTS.map((root) => (
-              <button
-                key={root}
-                onClick={() => onRootChange(root)}
-                className={`px-3 py-2 text-sm font-bold uppercase border-2 transition-all ${
-                  currentRoot === root
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
-                }`}
-                aria-label={`Note ${displayNote(root)}`}
-                aria-pressed={currentRoot === root}
-              >
-                {displayNote(root)}
-              </button>
-            ))}
-          </div>
-        </div>
+        <TuningSelect
+          instrument={instrument}
+          value={tuningPreset}
+          onChange={onTuningPresetChange}
+          label="Accordage"
+        />
 
-        {/* Mode selection */}
-        <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">MODE</label>
-          <select
-            value={currentMode}
-            onChange={(e) => onModeChange(e.target.value as ModeName)}
-            className="w-full px-3 py-2 text-sm font-bold uppercase border-2 border-steel bg-abyss text-white"
-          >
-            {GREEK_MODES.map((mode) => (
-              <option key={mode} value={mode}>
-                {MODE_FR_NAMES[mode]}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SegmentedControl
+          label="Tonique"
+          options={CHROMATIC_ROOTS.map((root) => ({
+            value: root,
+            label: displayNote(root),
+            ariaLabel: `Note ${displayNote(root)}`,
+          }))}
+          value={currentRoot}
+          onChange={(value) => onRootChange(value as NoteName)}
+          wrap
+        />
 
-        {/* Fret count */}
-        <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">FRETTES</label>
-          <div className="flex gap-1 flex-wrap">
-            {FRET_COUNT_OPTIONS.map((frets) => (
-              <button
-                key={frets}
-                onClick={() => onFretCountChange(frets)}
-                className={`px-3 py-2 text-sm font-bold border-2 transition-all ${
-                  fretCount === frets
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
-                }`}
-                aria-label={`${frets} frettes`}
-                aria-pressed={fretCount === frets}
-              >
-                {frets}
-              </button>
-            ))}
-          </div>
-        </div>
+        <SegmentedControl
+          label="Mode"
+          options={GREEK_MODES.map((mode) => ({
+            value: mode,
+            label: MODE_FR_NAMES[mode],
+            ariaLabel: MODE_FR_NAMES[mode],
+          }))}
+          value={currentMode}
+          onChange={(value) => onModeChange(value as ModeName)}
+          wrap
+        />
 
-        {/* Display toggle */}
-        <div>
-          <label className="text-xs text-gray uppercase tracking-wider block mb-2">AFFICHAGE</label>
-          <button
-            onClick={onToggleNotes}
-            className={`w-full px-4 py-2 text-sm font-bold uppercase border-2 transition-all ${
-              showAllNotes
-                ? 'border-blood bg-toxic text-white'
-                : 'border-steel bg-abyss text-gray hover:border-white'
-            }`}
-            aria-pressed={showAllNotes}
-          >
-            {showAllNotes ? 'MODE SEUL' : 'TOUTES NOTES'}
-          </button>
-        </div>
+        <SegmentedControl
+          label="Frettes"
+          options={FRET_COUNT_OPTIONS.map((frets) => ({
+            value: String(frets),
+            label: frets,
+            ariaLabel: `${frets} frettes`,
+          }))}
+          value={String(fretCount)}
+          onChange={(value) => onFretCountChange(Number(value) as FretCountOption)}
+        />
+
+        <SegmentedControl
+          label="Affichage"
+          options={[
+            { value: 'scale', label: 'Mode seul' },
+            { value: 'all', label: 'Toutes notes' },
+          ]}
+          value={showAllNotes ? 'all' : 'scale'}
+          onChange={(value) => {
+            if ((value === 'all') !== showAllNotes) onToggleNotes();
+          }}
+        />
       </div>
     </div>
   );

@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 /**
- * ADAGIO - METAL BRUTAL DESIGN
- * Style: Metallica / Steve Vai
- * Noir dominant, boutons polygonaux, icons SVG
+ * ADAGIO - DESIGN SYSTEM SOBRE
+ * Fond noir absolu, accent sang #8b1a1a, filets fins, typographie calme.
  *
  * Fonts: Chargées via next/font dans layout.tsx
  */
@@ -18,6 +17,7 @@
     --font-archivo: 'Archivo Black', 'Impact', sans-serif;
     --font-space: 'Space Mono', 'Courier New', monospace;
 
+    /* DA d'origine (v0.6.0) : noirs absolus, accent sang. */
     --color-abyss: #000000;
     --color-void: #010101;
     --color-blackness: #020202;
@@ -28,10 +28,24 @@
     --color-steel: #2a2a2a;
     --color-white: #e0e0e0;
     --color-gray: #666666;
+    --color-text: #e0e0e0;
+    --color-hairline: rgba(255, 255, 255, 0.16);
+
+    /* Accents remappés sur le sang : plus aucune teinte ambre. */
+    --color-ember: #8b1a1a;
+    --color-amber: #8b1a1a;
+    --color-gold: #b84a1a;
+    /* Aucun fond teinté : panneaux et contrôles restent sur le noir du body.
+       « raised » est un noir neutre, juste assez clair pour porter un survol. */
+    --color-surface: #000000;
+    --color-raised: #0a0a0a;
+    --color-steel-warm: #2a2a2a;
+    /* Charte Triades : aucun arrondi */
+    --radius-control: 0px;
   }
 
   * {
-    border-color: var(--color-steel);
+    border-color: var(--color-hairline);
   }
 
   html {
@@ -40,30 +54,30 @@
 
   body {
     background-color: var(--color-abyss);
-    color: var(--color-white);
+    color: var(--color-text);
     font-family: var(--font-space);
-    font-size: 14px;
-    letter-spacing: 0.01em;
-    line-height: 1.5;
+    font-size: 15px;
+    letter-spacing: 0;
+    line-height: 1.65;
     overflow-x: hidden;
   }
 
-  /* Scrollbar sombre */
+  /* Scrollbar discrète */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-abyss);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-steel);
+    background: #2a2a2a;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-gray);
+    background: #3d3d3d;
   }
 
   /* Selection */
@@ -77,9 +91,9 @@
    BRUTAL UTILITIES
    ============================================ */
 @layer utilities {
-  /* Bordure fine */
+  /* Filet fin : plus aucune bordure épaisse */
   .brutal-border {
-    border: 2px solid var(--color-steel);
+    border: 1px solid var(--color-hairline);
   }
 
   /* Bordure accent sang */
@@ -87,22 +101,15 @@
     border-color: var(--color-blood);
   }
 
-  /* Container style album */
+  /* Cadre album : un simple filet, pas de fond ni de double bordure */
   .album-frame {
-    border: 2px solid var(--color-steel);
+    border: 1px solid var(--color-hairline);
     position: relative;
-    background: var(--color-void);
+    background: transparent;
   }
 
   .album-frame::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    border: 1px solid var(--color-toxic);
-    pointer-events: none;
+    content: none;
   }
 
   /* Text shadow brutal léger */
@@ -156,15 +163,18 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: var(--color-blackness);
-    border: 2px solid var(--color-steel);
+    background: transparent;
+    border: 1px solid var(--color-hairline);
     color: var(--color-white);
     font-family: var(--font-space);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: none;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
     position: relative;
   }
 
@@ -173,13 +183,12 @@
   }
 
   .btn-poly:hover {
-    background: var(--color-toxic);
-    border-color: var(--color-blood);
-    transform: translate(-1px, -1px);
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.35);
   }
 
   .btn-poly:active {
-    transform: translate(0, 0);
+    background: #202020;
   }
 
   /* Bouton sanglant */
@@ -194,15 +203,101 @@
     border-color: var(--color-rust);
   }
 
-  /* Section frame */
+  /* Section : même cadre que .panel — les anciennes pages suivent la charte sans retouche */
   .section-frame {
-    border: 2px solid var(--color-steel);
-    background: linear-gradient(
-      180deg,
-      var(--color-abyss) 0%,
-      var(--color-blackness) 100%
-    );
     position: relative;
+    border: 1px solid var(--color-steel-warm);
+    background: var(--color-surface);
+    border-radius: var(--radius-control);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  /* Panneau : surface chaude, filet 1 px, rayon unique (charte Fretboard) */
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-steel-warm);
+    border-radius: var(--radius-control);
+  }
+
+  /* Libellé de champ, identique partout */
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gray);
+  }
+
+  /* Contrôle de base : même hauteur, même focus, même transition partout */
+  .control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 2.25rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-steel-warm);
+    border-radius: var(--radius-control);
+    background: var(--color-raised);
+    color: var(--color-gray);
+    font-family: inherit;
+    font-size: 0.8125rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .control:hover {
+    color: var(--color-white);
+    border-color: #4a4a4a;
+  }
+
+  .control:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(139, 26, 26, 0.6);
+  }
+
+  /* État actif : sang, comme la sélection du cercle des quintes */
+  .control[aria-pressed='true'],
+  .control[data-active='true'],
+  .control.is-active {
+    color: var(--color-white);
+    border-color: var(--color-blood);
+    background: rgba(139, 26, 26, 0.28);
+  }
+
+  /* Variante dédiée au select natif (même gabarit que .control) */
+  .control-select {
+    width: 100%;
+    min-height: 2.25rem;
+    padding: 0 2rem 0 0.75rem;
+    border: 1px solid var(--color-steel-warm);
+    border-radius: var(--radius-control);
+    background-color: var(--color-raised);
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: 0.8125rem;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #a3a3a3 50%),
+      linear-gradient(135deg, #a3a3a3 50%, transparent 50%);
+    background-position: calc(100% - 15px) 15px, calc(100% - 10px) 15px;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .control-select:hover {
+    border-color: #4a4a4a;
+  }
+
+  .control-select:focus-visible {
+    outline: none;
+    border-color: var(--color-blood);
+    box-shadow: 0 0 0 2px rgba(139, 26, 26, 0.6);
   }
 
   /* Navigation link */
@@ -213,25 +308,24 @@
     padding: 0.5rem 1rem;
     color: var(--color-gray);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.04em;
     text-decoration: none;
-    border-left: 2px solid transparent;
-    transition: all 0.15s ease;
+    border-left: 1px solid transparent;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .nav-link:hover {
     color: var(--color-white);
-    border-left-color: var(--color-blood);
-    background: var(--color-blackness);
-    padding-left: 1.25rem;
+    border-left-color: rgba(255, 255, 255, 0.35);
   }
 
   .nav-link.active {
     color: var(--color-white);
-    border-left-color: var(--color-blood);
-    background: linear-gradient(90deg, var(--color-toxic), transparent);
+    border-left-color: var(--color-white);
   }
 
   /* Icon container */
@@ -241,12 +335,12 @@
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    border: 2px solid var(--color-steel);
-    background: var(--color-blackness);
+    border: 1px solid var(--color-hairline);
+    background: transparent;
   }
 
   .icon-box:hover {
-    border-color: var(--color-blood);
+    border-color: rgba(255, 255, 255, 0.35);
   }
 
   /* Notation française */
@@ -307,6 +401,54 @@
    CUSTOM TEXT SIZES
    ============================================ */
 @layer utilities {
+  /* Filet horizontal unique, à la place d'une bordure de carte */
+  .hairline {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  /* Info-bulle DA : remplace les `title` natifs (fond crème du navigateur) */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 4px);
+    z-index: 50;
+    padding: 0.25rem 0.5rem;
+    border: 2px solid var(--color-steel);
+    background: var(--color-void);
+    color: var(--color-gray);
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+  }
+
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* Masque la barre de défilement sans couper le scroll */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Texte secondaire (contraste 6.6:1 sur #0d0d0d) */
+  .text-muted {
+    color: var(--color-gray);
+  }
+
   .text-massive {
     font-size: clamp(4rem, 20vw, 12rem);
     line-height: 0.9;
@@ -333,7 +475,7 @@
   .text-steel { color: var(--color-steel); }
   .text-white { color: var(--color-white); }
   .text-gray { color: var(--color-gray); }
-  .text-toxic { color: #1a2f1a; }
+  .text-toxic { color: #22c55e; }
 
   .border-blood { border-color: var(--color-blood); }
   .border-rust { border-color: var(--color-rust); }

@@ -21,13 +21,13 @@ import type { ModeName } from '@adagio/types';
 
 // Mapping des couleurs pour chaque mode (classes CSS)
 const MODE_COLORS: Record<ModeName, string> = {
-  ionian: 'border-white',
-  dorian: 'border-rust',
-  phrygian: 'border-blood',
-  lydian: 'border-toxic',
-  mixolydian: 'border-steel',
-  aeolian: 'border-gray',
-  locrian: 'border-blackness',
+  ionian: 'border-amber-400',
+  dorian: 'border-emerald-500',
+  phrygian: 'border-red-500',
+  lydian: 'border-sky-400',
+  mixolydian: 'border-orange-400',
+  aeolian: 'border-violet-400',
+  locrian: 'border-rose-500',
 };
 
 // Retourne les notes du mode pour une tonique donnée
@@ -73,14 +73,15 @@ export default function ModesPage() {
       <MetalNav />
 
       <main className="flex-1 px-4 py-24 mt-16">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto" style={{ maxWidth: '72rem' }}>
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              MODES GRECS
+          <div className="mb-10">
+            <p className="text-xs uppercase tracking-widest text-gray">Théorie · Modes</p>
+            <h1 className="mt-2 text-3xl font-metal uppercase tracking-tighter text-white sm:text-4xl">
+              Modes grecs
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Les 7 emotions de la musique
+            <p className="mt-2 text-sm uppercase tracking-widest text-gray">
+              Les 7 émotions de la musique
             </p>
           </div>
 
@@ -128,13 +129,17 @@ export default function ModesPage() {
                   <button
                     key={mode}
                     onClick={() => setSelectedMode(mode)}
-                    className={`p-3 border-2 text-left transition-all ${
+                    className={`p-3 border text-left transition-colors ${
                       isActive
-                        ? 'border-blood bg-toxic'
-                        : 'border-steel bg-blackness hover:border-white'
+                        ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                        : 'border-steelwarm hover:border-amber-400/50'
                     }`}
                   >
-                    <p className="text-xs font-bold text-white uppercase">{info.name}</p>
+                    <p
+                      className={`text-xs font-bold uppercase ${isActive ? 'text-amber-400' : 'text-white'}`}
+                    >
+                      {info.name}
+                    </p>
                     <p className="text-xs text-gray mt-1 line-clamp-2">{info.character}</p>
                   </button>
                 );

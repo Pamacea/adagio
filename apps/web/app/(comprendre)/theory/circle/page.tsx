@@ -10,71 +10,77 @@
 import { useState } from 'react';
 import { MetalNav, MetalFooter } from '@/components';
 import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
-import { DEGREE_COLORS } from '@adagio/theory';
 import { CircleOfFifths, ChordDisplay, RelativeKey } from '@/components/theory/circle';
 import { useCircleState } from '@/features/theory/hooks';
 
 export default function CirclePage() {
-  // État de la page via hook personnalisé
-  const { data: _data, initialKey } = useCircleState({ initialKey: 'C' });
+  const [selectedKey, setSelectedKey] = useState<string>('C');
 
-  // État local pour la sélection (le hook retourne les données calculées)
-  const [selectedKey, setSelectedKey] = useState<string>(initialKey);
-
-  // Recalculer les données quand la tonique change
+  // Données recalculées quand la tonique change
   const circleData = useCircleState({ initialKey: selectedKey }).data;
 
-  // Couleur de la tonique pour le cercle central
-  const tonicColor = DEGREE_COLORS[0];
-
   return (
-    <div className="min-h-screen flex flex-col bg-abyss">
+    <div className="min-h-screen flex flex-col bg-abyss font-sans">
       <MetalNav />
 
-      <main className="flex-1 px-4 py-24 mt-16">
-        <div className="max-w-2xl mx-auto">
+      <main className="flex-1 px-5 pb-20 pt-14 mt-16 sm:px-6">
+        <div className="mx-auto" style={{ maxWidth: '72rem' }}>
           {/* En-tête */}
-          <div className="mb-6 text-center">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <h1 className="text-3xl lg:text-4xl font-metal text-white tracking-tighter">
-                CIRCLE OF FIFTHS
+          <header className="mb-10">
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-gray">Théorie</p>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <h1 className="text-4xl font-metal uppercase tracking-tighter text-white lg:text-5xl">
+                Cercle des quintes
               </h1>
               <HelpTooltip topicId="circle.fifths">
                 <HelpButton topicId="circle.fifths" useModal size="md" variant="subtle" />
               </HelpTooltip>
             </div>
-            <p className="text-xs text-gray uppercase tracking-widest">Cercle des Quintes</p>
-            <p className="text-sm text-gray-300 mt-2">
-              Tonique:{' '}
-              <span className="font-bold" style={{ color: tonicColor }}>
-                {selectedKey}
-              </span>
+            <p className="mt-3 text-sm leading-relaxed text-gray" style={{ maxWidth: '44rem' }}>
+              Sélectionnez une tonalité pour visualiser sa gamme, ses sept accords diatoniques et sa
+              tonalité relative.
             </p>
-          </div>
+          </header>
 
-          {/* Cercle des quintes interactif */}
-          <CircleOfFifths
-            selectedKey={selectedKey}
-            onKeyChange={setSelectedKey}
-            diatonicChords={circleData.chords}
-            isMinor={circleData.isMinor}
-          />
+          {/* Cercle à gauche, synthèse à droite */}
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
+            <section aria-label="Cercle des quintes" className="panel bg-raised p-4 sm:p-6">
+              <CircleOfFifths
+                selectedKey={selectedKey}
+                onKeyChange={setSelectedKey}
+                diatonicChords={circleData.chords}
+              />
+            </section>
 
-          {/* Accords diatoniques */}
-          <ChordDisplay chords={circleData.chords} label={`${selectedKey} - ACCORDS`} />
+            <aside className="space-y-4">
+              {/* Tonalité courante */}
+              <section className="panel p-5">
+                <p className="field-label">Tonalité actuelle</p>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-metal text-4xl tracking-tighter text-white">
+                    {selectedKey}
+                  </span>
+                  <span className="text-sm text-gray">
+                    {circleData.isMinor ? 'mineur' : 'majeur'}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-gray">
+                  {circleData.isMinor
+                    ? `Gamme mineure naturelle — relative de ${circleData.majorKey} majeur.`
+                    : `Gamme majeure — relative mineure ${circleData.relativeKey}.`}
+                </p>
+              </section>
 
-          {/* Tonalité relative */}
-          <RelativeKey
-            relativeKey={circleData.relativeKey}
-            isMinor={circleData.isMinor}
-            majorKey={circleData.majorKey}
-          />
+              {/* Accords diatoniques */}
+              <ChordDisplay chords={circleData.chords} label="Accords diatoniques" />
 
-          {/* Indication de la couleur sélectionnée */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-gray-500">
-              Les notes colorées appartiennent à la gamme de {selectedKey}
-            </p>
+              {/* Tonalité relative */}
+              <RelativeKey
+                relativeKey={circleData.relativeKey}
+                isMinor={circleData.isMinor}
+                majorKey={circleData.majorKey}
+              />
+            </aside>
           </div>
         </div>
       </main>

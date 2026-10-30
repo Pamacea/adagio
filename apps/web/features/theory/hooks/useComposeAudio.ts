@@ -55,6 +55,14 @@ export function useComposeAudio(): UseComposeAudioResult {
   const runIdRef = useRef(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Précharge Tone hors du geste : sinon le fetch du chunk au premier clic
+  // peut faire expirer l'activation audio et le premier « Écouter » reste muet.
+  useEffect(() => {
+    void import('tone').then((tone) => {
+      toneRef.current ??= tone;
+    });
+  }, []);
+
   // Dispose au démontage
   useEffect(() => {
     return () => {
@@ -70,10 +78,11 @@ export function useComposeAudio(): UseComposeAudioResult {
     }
     const tone = toneRef.current;
     if (!synthRef.current) {
+      // Un PolySynth n'est relié à aucune sortie par défaut : sans toDestination, silence total.
       const synth = new tone.PolySynth(tone.Synth, {
         oscillator: { type: 'triangle' },
         envelope: { attack: 0.02, decay: 0.15, sustain: 0.5, release: 0.6 },
-      });
+      }).toDestination();
       synth.volume.value = -8;
       synthRef.current = synth;
     }

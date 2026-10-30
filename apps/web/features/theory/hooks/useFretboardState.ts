@@ -6,7 +6,12 @@
 
 import { useMemo, useState } from 'react';
 import type { NoteName, ModeName, Interval, Instrument } from '@adagio/types';
-import { getFretboardNotesForKey, getInstrument, FRENCH_NOTE_NAMES } from '@adagio/theory';
+import {
+  getFretboardNotesForKey,
+  getTuningPreset,
+  FRENCH_NOTE_NAMES,
+  type TuningPreset,
+} from '@adagio/theory';
 import { calculateFretPositions } from '@/components/theory/scales/ScaleFretboard';
 
 // Intervalles pour chaque mode (notation string comme '1', 'b3', etc.)
@@ -26,6 +31,7 @@ export interface FretboardStateOptions {
   initialFretCount?: 12 | 15 | 17 | 19 | 21 | 24;
   initialShowAllNotes?: boolean;
   initialInstrument?: Instrument;
+  initialTuningPreset?: TuningPreset;
 }
 
 export interface UseFretboardStateReturn {
@@ -35,7 +41,8 @@ export interface UseFretboardStateReturn {
   fretCount: 12 | 15 | 17 | 19 | 21 | 24;
   showAllNotes: boolean;
   instrument: Instrument;
-  /** Accordage de l'instrument (aigu → grave) */
+  tuningPreset: TuningPreset;
+  /** Accordage effectif de l'instrument (aigu → grave) */
   tuning: NoteName[];
 
   // Setters
@@ -44,6 +51,7 @@ export interface UseFretboardStateReturn {
   setFretCount: (count: UseFretboardStateReturn['fretCount']) => void;
   setShowAllNotes: (show: boolean) => void;
   setInstrument: (instrument: Instrument) => void;
+  setTuningPreset: (preset: TuningPreset) => void;
 
   // Actions
   toggleShowAllNotes: () => void;
@@ -74,6 +82,7 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     initialFretCount = 12,
     initialShowAllNotes = false,
     initialInstrument = 'guitar',
+    initialTuningPreset = 'standard',
   } = options;
 
   // Utiliser useState pour l'état (sera géré par le composant parent)
@@ -83,9 +92,20 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     useState<UseFretboardStateReturn['fretCount']>(initialFretCount);
   const [showAllNotes, setShowAllNotes] = useState(initialShowAllNotes);
   const [instrument, setInstrument] = useState<Instrument>(initialInstrument);
+  const [tuningPreset, setTuningPreset] = useState<TuningPreset>(initialTuningPreset);
 
-  // Accordage de l'instrument courant (aigu → grave, ordre visuel)
-  const tuning = useMemo(() => [...getInstrument(instrument).tuningDisplay], [instrument]);
+  // Changer d'instrument remet l'accordage à standard : un preset peut ne pas exister
+  // pour le nouvel instrument (Drop D en basse) et laisserait sinon aucun bouton actif.
+  const changeInstrument = (next: Instrument) => {
+    setInstrument(next);
+    setTuningPreset('standard');
+  };
+
+  // getTuningPreset renvoie grave → aigu et gère le repli standard d'un preset invalide
+  const tuning = useMemo(
+    () => [...getTuningPreset(instrument, tuningPreset)].reverse(),
+    [instrument, tuningPreset]
+  );
 
   // Calculer les positions des frettes
   const fretPositions = useMemo(() => calculateFretPositions(fretCount), [fretCount]);
@@ -118,6 +138,7 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     fretCount,
     showAllNotes,
     instrument,
+    tuningPreset,
     tuning,
 
     // Setters
@@ -125,7 +146,8 @@ export function useFretboardState(options: FretboardStateOptions = {}): UseFretb
     setMode,
     setFretCount,
     setShowAllNotes,
-    setInstrument,
+    setInstrument: changeInstrument,
+    setTuningPreset,
 
     // Actions
     toggleShowAllNotes,

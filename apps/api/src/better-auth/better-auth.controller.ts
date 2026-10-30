@@ -61,7 +61,7 @@ export class BetterAuthController {
   /**
    * Proxy all requests to Better Auth handler
    */
-  @All('*')
+  @All('*path')
   @Header('Access-Control-Allow-Origin', '*')
   @Header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   @Header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
@@ -76,9 +76,8 @@ export class BetterAuthController {
       // Convert Express request to Web Standard request
       const webRequest = this.toWebRequest(req);
 
-      // Log request details for debugging
+      // Jamais le corps : il contient les mots de passe et les tokens de session.
       this.logger.debug(`Request URL: ${webRequest.url}`);
-      this.logger.debug(`Request body: ${JSON.stringify(req.body)}`);
 
       // Call Better Auth handler
       const webResponse = await auth.handler(webRequest);
@@ -91,7 +90,6 @@ export class BetterAuthController {
       // Send body
       const body = await webResponse.text();
       this.logger.debug(`Response status: ${webResponse.status}`);
-      this.logger.debug(`Response body: ${body}`);
 
       // Set status
       res.status(webResponse.status);

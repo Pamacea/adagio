@@ -25,12 +25,14 @@ export default function FretboardPage() {
     fretCount,
     showAllNotes,
     instrument,
+    tuningPreset,
+    tuning,
     setRoot,
     setMode,
     setFretCount,
-    setShowAllNotes: _setShowAllNotes,
     toggleShowAllNotes,
     setInstrument,
+    setTuningPreset,
     fretboardData,
     displayNote,
   } = useFretboardState();
@@ -43,7 +45,7 @@ export default function FretboardPage() {
         <div className="w-3/4 mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
+            <h1 className="text-4xl lg:text-5xl font-metal text-white uppercase tracking-tighter mb-2">
               MANCHE DE {getInstrument(instrument).label.toUpperCase()}
             </h1>
             <p className="text-gray text-sm uppercase tracking-widest">
@@ -58,24 +60,29 @@ export default function FretboardPage() {
             fretCount={fretCount}
             showAllNotes={showAllNotes}
             instrument={instrument}
+            tuningPreset={tuningPreset}
             onRootChange={setRoot}
             onModeChange={setMode}
             onFretCountChange={setFretCount}
             onToggleNotes={toggleShowAllNotes}
             onInstrumentChange={setInstrument}
+            onTuningPresetChange={setTuningPreset}
           />
 
           {/* Current scale info */}
           <ModeInfo root={root} mode={mode} scaleNotes={fretboardData} displayNote={displayNote} />
 
           {/* Fretboard */}
-          <FretboardDisplay
-            root={root}
-            mode={mode}
-            fretCount={fretCount}
-            showAllNotes={showAllNotes}
-            instrument={instrument}
-          />
+          <div className="panel mb-8 p-4">
+            <FretboardDisplay
+              root={root}
+              mode={mode}
+              fretCount={fretCount}
+              showAllNotes={showAllNotes}
+              instrument={instrument}
+              tuning={tuning}
+            />
+          </div>
 
           {/* Legend */}
           <FretboardLegend />

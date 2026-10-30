@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Archivo_Black, Space_Mono } from 'next/font/google';
-import { AuthProvider } from '@/lib/auth';
 import { HelpProvider } from '@/components/HelpProvider';
 import { Providers } from './providers';
 import { Analytics } from '@vercel/analytics/react';
@@ -42,9 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" className="dark">
       <body className={`${archivoBlack.variable} ${spaceMono.variable}`}>
         <Providers>
-          <AuthProvider>
-            <HelpProvider>{children}</HelpProvider>
-          </AuthProvider>
+          <HelpProvider>{children}</HelpProvider>
         </Providers>
         <Analytics />
       </body>

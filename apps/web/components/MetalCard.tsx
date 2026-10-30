@@ -17,12 +17,12 @@ export function MetalCard({
   hover = false,
 }: MetalCardProps) {
   const variantClasses = {
-    default: 'border-steel',
+    default: 'border-steelwarm',
     blood: 'border-blood',
     toxic: 'border-toxic',
   };
 
-  const hoverClass = hover ? 'hover:border-blood hover:bg-void transition-all cursor-pointer' : '';
+  const hoverClass = hover ? 'hover:border-amber-400/50 hover:bg-raised transition-all cursor-pointer' : '';
 
   return (
     <div className={`section-frame ${variantClasses[variant]} ${hoverClass} ${className}`}>
@@ -53,7 +53,7 @@ export function MetalCardWithHeader({
   return (
     <MetalCard className={className} variant={variant}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-steel">
+      <div className="flex items-center justify-between p-4 border-b border-steelwarm">
         <div className="flex items-center gap-3">
           {icon && <div className="icon-box">{icon}</div>}
           <div>
@@ -109,7 +109,7 @@ export function CompactCard({ title, value, unit, color = 'white' }: CompactCard
   };
 
   return (
-    <div className="border-2 border-steel bg-blackness p-3">
+    <div className="border border-steelwarm bg-surface p-3">
       <p className="text-xs text-gray uppercase tracking-wider mb-1">{title}</p>
       <p className={`text-xl font-metal ${colorClasses[color]}`}>
         {value}
@@ -134,7 +134,7 @@ interface StatCardProps {
 
 export function StatCard({ label, value, icon, trend }: StatCardProps) {
   return (
-    <div className="border-2 border-steel bg-blackness p-4">
+    <div className="border border-steelwarm bg-surface p-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs text-gray uppercase tracking-wider">{label}</p>

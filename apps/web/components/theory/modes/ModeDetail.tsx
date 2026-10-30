@@ -45,7 +45,7 @@ export function ModeDetail({
       <div className="flex items-start justify-between mb-6">
         <div>
           <h2 className="text-3xl font-metal text-white uppercase">{modeInfo.name}</h2>
-          <p className="text-blood font-bold mt-1">{modeInfo.character}</p>
+          <p className="text-amber-400 font-bold mt-1">{modeInfo.character}</p>
         </div>
         <div className="text-right">
           <p className="text-4xl font-metal text-white">{noteFr[root] || root}</p>
@@ -55,18 +55,18 @@ export function ModeDetail({
 
       {/* Emotion tags */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steel bg-blackness">
+        <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steelwarm bg-blackness">
           {modeInfo.sensation}
         </span>
         {modeInfo.feeling && (
-          <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steel bg-blackness">
+          <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steelwarm bg-blackness">
             {modeInfo.feeling}
           </span>
         )}
       </div>
 
       {/* Mode notes */}
-      <div className="border-2 border-steel bg-blackness p-4 mb-6">
+      <div className="border-2 border-steelwarm bg-blackness p-4 mb-6">
         <p className="text-xs text-gray uppercase tracking-wider mb-3">Notes du mode</p>
         <div className="flex gap-2">
           {modeNotes.map((note, i) => {
@@ -78,13 +78,13 @@ export function ModeDetail({
               <div
                 key={note}
                 className={`flex-1 text-center p-3 border-2 ${
-                  isRoot ? 'border-blood bg-toxic' : 'border-steel bg-void'
+                  isRoot ? 'border-amber-400 bg-amber-400/20' : 'border-steelwarm bg-void'
                 }`}
               >
                 <p className={`text-2xl font-metal ${isRoot ? 'text-white' : 'text-gray'}`}>
                   {noteFr[note] || note}
                 </p>
-                <p className={`text-sm font-mono mt-1 ${isRoot ? 'text-blood' : 'text-gray'}`}>
+                <p className={`text-sm font-mono mt-1 ${isRoot ? 'text-amber-400' : 'text-gray'}`}>
                   {degreeDynamic}
                 </p>
               </div>
@@ -94,11 +94,11 @@ export function ModeDetail({
       </div>
 
       {/* Description */}
-      <div className="border-2 border-steel bg-blackness p-4">
+      <div className="border-2 border-steelwarm bg-blackness p-4">
         <p className="text-sm text-gray leading-relaxed">
           Le mode <span className="text-white font-bold">{modeInfo.name.toLowerCase()}</span> est
           caractérisé par son ambiance{' '}
-          <span className="text-blood">{modeInfo.character.toLowerCase()}</span>.
+          <span className="text-amber-400">{modeInfo.character.toLowerCase()}</span>.
           {modeDescriptions[selectedMode]}
         </p>
       </div>

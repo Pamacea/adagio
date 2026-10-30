@@ -1,11 +1,9 @@
 /**
  * ADAGIO - ChordDisplay Component
- * Affichage des 7 accords diatoniques avec cercles colorés et badges de qualité
+ * Affichage typographique des 7 accords diatoniques
  */
 
 'use client';
-
-import { DEGREE_COLORS, OFF_SCALE_COLOR, getContrastTextColor } from './CircleOfFifths';
 
 // ============================================================================
 // TYPES
@@ -14,8 +12,6 @@ import { DEGREE_COLORS, OFF_SCALE_COLOR, getContrastTextColor } from './CircleOf
 export interface ChordDisplayProps {
   /** Liste des 7 accords diatoniques */
   chords: string[];
-  /** Couleurs personnalisées pour les degrés (optionnel) */
-  degreeColors?: string[];
   /** Label pour la section */
   label?: string;
 }
@@ -38,9 +34,9 @@ export function getChordQuality(chord: string): 'major' | 'minor' | 'diminished'
  * Obtient la couleur associée à une qualité d'accord
  */
 export function getChordQualityColor(quality: 'major' | 'minor' | 'diminished'): string {
-  if (quality === 'major') return '#F59E0B'; // Gold
-  if (quality === 'minor') return '#3B82F6'; // Bleu
-  return '#64748B'; // Gris foncé
+  if (quality === 'major') return 'var(--color-gold)';
+  if (quality === 'minor') return 'var(--color-ember)';
+  return 'var(--color-rust)';
 }
 
 /**
@@ -52,73 +48,56 @@ export function getChordQualitySymbol(quality: 'major' | 'minor' | 'diminished')
   return '°';
 }
 
+const DEGREE_ROMANS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'] as const;
+
+const QUALITY_LABELS: Record<'major' | 'minor' | 'diminished', string> = {
+  major: 'Majeur',
+  minor: 'Mineur',
+  diminished: 'Diminué',
+};
+
+/**
+ * Degré romain : majuscule pour les accords majeurs, minuscule sinon,
+ * avec ° pour les accords diminués (I, ii, iii, IV, V, vi, vii°).
+ */
+function getDegreeRoman(index: number, quality: 'major' | 'minor' | 'diminished'): string {
+  const base = DEGREE_ROMANS[index] ?? `${index + 1}`;
+  if (quality === 'major') return base;
+  if (quality === 'diminished') return `${base.toLowerCase()}°`;
+  return base.toLowerCase();
+}
+
 // ============================================================================
 // COMPONENT
 // ============================================================================
 
-export function ChordDisplay({ chords, degreeColors = DEGREE_COLORS, label }: ChordDisplayProps) {
+export function ChordDisplay({ chords, label }: ChordDisplayProps) {
   return (
-    <div className="my-8">
-      {label && <p className="text-sm text-gray uppercase mb-2 text-center">{label}</p>}
-      <div className="flex justify-center items-center gap-3 flex-wrap">
+    <section aria-label={label ?? 'Accords diatoniques'} className="panel p-5">
+      {label && (
+        <h2 className="font-metal text-sm uppercase tracking-tighter text-white">{label}</h2>
+      )}
+
+      <ul className="mt-3 divide-y divide-steelwarm">
         {chords.map((chord, i) => {
           if (!chord) return null;
 
-          const color = degreeColors[i] ?? OFF_SCALE_COLOR;
           const quality = getChordQuality(chord);
-          const qualityColor = getChordQualityColor(quality);
-          const textColor = getContrastTextColor(color);
-          const qualityTextColor = getContrastTextColor(qualityColor);
 
           return (
-            <div key={i} className="flex flex-col items-center">
-              <div className="relative">
-                {/* Cercle principal avec le degré */}
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-black border-2 shadow-lg"
-                  style={{
-                    backgroundColor: color,
-                    color: textColor,
-                    borderColor: qualityColor,
-                  }}
-                >
-                  {i + 1}
-                </div>
+            <li key={`${chord}-${i}`} className="flex items-baseline gap-4 py-2.5">
+              {/* Degré romain discret */}
+              <span className="w-7 shrink-0 font-mono text-xs text-gray">
+                {getDegreeRoman(i, quality)}
+              </span>
 
-                {/* Badge qualité */}
-                <div
-                  className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 border-black"
-                  style={{
-                    backgroundColor: qualityColor,
-                    color: qualityTextColor,
-                  }}
-                >
-                  {getChordQualitySymbol(quality)}
-                </div>
-              </div>
-
-              {/* Nom de l'accord */}
-              <span className="text-sm text-white mt-2 font-bold">{chord}</span>
-            </div>
+              {/* Nom de l'accord + qualité */}
+              <span className="min-w-0 flex-1 text-[15px] font-medium text-white">{chord}</span>
+              <span className="shrink-0 text-xs text-gray">{QUALITY_LABELS[quality]}</span>
+            </li>
           );
         })}
-      </div>
-
-      {/* Légende */}
-      <div className="flex justify-center items-center gap-6 mt-6 text-xs text-gray">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: DEGREE_COLORS[0] }}></div>
-          <span>1 (Tonique)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: DEGREE_COLORS[4] }}></div>
-          <span>5 (Dominante)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: DEGREE_COLORS[3] }}></div>
-          <span>4 (Sous-dominante)</span>
-        </div>
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

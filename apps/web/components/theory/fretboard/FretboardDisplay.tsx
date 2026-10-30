@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import type { NoteName, Interval, Instrument } from '@adagio/types';
 import {
   getFretboardNotesForKey,
-  getInstrument,
+  getTuningPreset,
   FRENCH_NOTE_NAMES as NOTE_FR,
 } from '@adagio/theory';
 import { ScaleFretboard, calculateFretPositions } from '../scales/ScaleFretboard';
@@ -32,6 +32,8 @@ interface FretboardDisplayProps {
   fretCount: number;
   showAllNotes: boolean;
   instrument?: Instrument;
+  /** Accordage effectif, aigu → grave (défaut : celui de l'instrument) */
+  tuning?: readonly NoteName[];
 }
 
 export function FretboardDisplay({
@@ -40,21 +42,23 @@ export function FretboardDisplay({
   fretCount,
   showAllNotes,
   instrument = 'guitar',
+  tuning: tuningProp,
 }: FretboardDisplayProps) {
   const intervals = useMemo((): Interval[] => {
     const found = (MODE_INTERVALS as Record<string, Interval[]>)[mode];
     return found ?? ['1', '2', '3', '4', '5', '6', '7'];
   }, [mode]);
 
-  // Accordage + cordes (aigu → grave) de l'instrument courant
+  // Accordage + cordes (aigu → grave) : prop explicite ou accordage standard instrument
   const { tuning, stringRows } = useMemo(() => {
-    const def = getInstrument(instrument);
-    const acc: NoteName[] = [...def.tuningDisplay];
+    const acc: NoteName[] = tuningProp
+      ? [...tuningProp]
+      : [...getTuningPreset(instrument, 'standard')].reverse();
     return {
       tuning: acc,
       stringRows: acc.map((note) => ({ note, name: NOTE_FR[note] ?? note })),
     };
-  }, [instrument]);
+  }, [instrument, tuningProp]);
 
   // Calculer les données du manche
   const fretboardData = useMemo(() => {
@@ -72,13 +76,15 @@ export function FretboardDisplay({
   };
 
   return (
-    <ScaleFretboard
-      fretboardData={fretboardData}
-      fretPositions={fretPositions}
-      fretCount={fretCount}
-      showAllNotes={showAllNotes}
-      displayNote={displayNote}
-      strings={stringRows}
-    />
+    <div className="[&_svg_g:hover>circle]:stroke-amber-400 [&_svg_g:hover>text]:fill-amber-400">
+      <ScaleFretboard
+        fretboardData={fretboardData}
+        fretPositions={fretPositions}
+        fretCount={fretCount}
+        showAllNotes={showAllNotes}
+        displayNote={displayNote}
+        strings={stringRows}
+      />
+    </div>
   );
 }

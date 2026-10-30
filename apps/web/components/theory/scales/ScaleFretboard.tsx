@@ -56,9 +56,8 @@ function formatInterval(interval: Interval): string {
 // Obtenir la couleur de fond pour une note
 function getNoteBg(inScale: boolean, interval?: Interval | string): string {
   if (!inScale) return 'bg-void';
-  if (interval === '1') return 'bg-toxic border-blood';
-  if (interval === '5') return 'bg-circuit border-steel';
-  return 'bg-blackness border-steel';
+  if (interval === '1') return 'bg-amber-400/20 border-amber-400';
+  return 'bg-surface border-steelwarm';
 }
 
 interface ScaleFretboardProps {
@@ -149,7 +148,7 @@ export function ScaleFretboard({
                 cx={x}
                 cy={centerY}
                 r="7"
-                fill="#0a0f0a"
+                fill="#1a1a1a"
                 stroke="#2a2a2a"
                 strokeWidth="1"
               />
@@ -163,7 +162,7 @@ export function ScaleFretboard({
                 cx={((fretPositions[12] ?? 0) + (fretPositions[11] ?? 0)) / 2}
                 cy={centerY - 50}
                 r="7"
-                fill="#0a0f0a"
+                fill="#1a1a1a"
                 stroke="#2a2a2a"
                 strokeWidth="1"
               />
@@ -171,7 +170,7 @@ export function ScaleFretboard({
                 cx={((fretPositions[12] ?? 0) + (fretPositions[11] ?? 0)) / 2}
                 cy={centerY + 50}
                 r="7"
-                fill="#0a0f0a"
+                fill="#1a1a1a"
                 stroke="#2a2a2a"
                 strokeWidth="1"
               />
@@ -250,14 +249,8 @@ export function ScaleFretboard({
                   cx={x}
                   cy={y}
                   r={noteRadius}
-                  fill={
-                    noteBg.includes('toxic')
-                      ? '#0a0f0a'
-                      : noteBg.includes('circuit')
-                        ? '#0d130d'
-                        : '#010101'
-                  }
-                  stroke={noteBg.includes('blood') ? '#8b1a1a' : '#2a2a2a'}
+                  fill={noteBg.includes('amber-400') ? '#1a0505' : '#000000'}
+                  stroke={noteBg.includes('amber-400') ? '#8b1a1a' : '#2a2a2a'}
                   strokeWidth={noteData.inScale ? 2 : 1}
                   opacity={noteData.inScale ? 1 : 0.5}
                 />
@@ -265,7 +258,7 @@ export function ScaleFretboard({
                   x={x}
                   y={y + Math.floor(noteRadius * 0.3)}
                   textAnchor="middle"
-                  fill={noteData.inScale ? '#e0e0e0' : '#666666'}
+                  fill={noteData.interval === '1' ? '#8b1a1a' : noteData.inScale ? '#e0e0e0' : '#666666'}
                   fontSize={Math.max(7, Math.floor(noteRadius * 0.7))}
                   fontWeight={noteData.interval === '1' ? 'bold' : 'normal'}
                 >

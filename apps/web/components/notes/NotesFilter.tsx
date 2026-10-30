@@ -31,7 +31,7 @@ export function NotesFilter({
   onSearchChange,
 }: NotesFilterProps) {
   return (
-    <div className="border-b border-steel/30 bg-blackness/50 p-4">
+    <div className="border-b border-steelwarm bg-surface p-4">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         {/* Recherche */}
         <div className="relative w-full md:w-96">
@@ -53,7 +53,7 @@ export function NotesFilter({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Rechercher dans l'antisèche..."
-            className="w-full bg-void border border-steel/50 rounded-lg py-2 pl-10 pr-4 text-white text-sm placeholder:text-gray focus:outline-none focus:border-blood"
+            className="w-full bg-void border border-steelwarm py-2 pl-10 pr-4 text-white text-sm placeholder:text-gray focus:outline-none focus:border-amber-400"
           />
         </div>
 
@@ -63,10 +63,10 @@ export function NotesFilter({
             <button
               key={cat.value}
               onClick={() => onCategoryChange(cat.value)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-4 py-2 text-sm font-medium transition-all border ${
                 selectedCategory === cat.value
-                  ? 'bg-blood text-white border border-blood'
-                  : 'bg-void text-gray border border-steel/50 hover:border-toxic'
+                  ? 'bg-amber-400/20 text-amber-400 border-amber-400'
+                  : 'bg-void text-gray border-steelwarm hover:border-amber-400/50'
               }`}
             >
               <span className="mr-2 inline-flex">{CATEGORY_ICONS[cat.icon] ?? cat.icon}</span>

@@ -28,10 +28,7 @@ export interface FretboardViewProps {
 export function FretboardView({ root, fretboardNotes, className }: FretboardViewProps) {
   return (
     <div className={className}>
-      <h3 className="text-lg font-metal text-white mb-4 flex items-center gap-2">
-        <span className="w-2.5 h-2.5 rounded-none bg-toxic"></span>
-        Manche de guitare (24 frets)
-      </h3>
+      <h3 className="mb-4 text-sm text-muted">Manche de guitare (24 frets)</h3>
       <svg viewBox="0 0 1900 340" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="fretboardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -40,8 +37,8 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
             <stop offset="100%" stopColor="#1a1510" />
           </linearGradient>
           <radialGradient id="noteRootGrad" cx="50%" cy="30%" r="70%">
-            <stop offset="0%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#f59e0b" />
+            <stop offset="0%" stopColor="#8b1a1a" />
+            <stop offset="100%" stopColor="#6a1313" />
           </radialGradient>
           <radialGradient id="noteScaleGrad" cx="50%" cy="30%" r="70%">
             <stop offset="0%" stopColor="#22c55e" />
@@ -180,7 +177,7 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
                   cy={y}
                   r={noteRadius + 3}
                   fill="none"
-                  stroke="#fbbf24"
+                  stroke="#8b1a1a"
                   strokeWidth={1}
                   opacity={0.4}
                 >
@@ -203,7 +200,7 @@ export function FretboardView({ root, fretboardNotes, className }: FretboardView
                 cy={y}
                 r={noteRadius}
                 fill={isRoot ? 'url(#noteRootGrad)' : 'url(#noteScaleGrad)'}
-                stroke={isRoot ? '#fbbf24' : '#22c55e'}
+                stroke={isRoot ? '#8b1a1a' : '#22c55e'}
                 strokeWidth={1.5}
                 filter="url(#glow)"
               />

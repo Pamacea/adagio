@@ -139,14 +139,10 @@ function getMinorScaleNotes(root: NoteName): NoteName[] {
 // ============================================================================
 
 /**
- * Construire un accord à partir de sa fondamentale et sa qualité
+ * Intervalles constitutifs de chaque qualité.
+ * Source unique : `buildChord` et `getChordNotes` (data/compose) en dérivent.
  */
-export function buildChord(
-  root: NoteName,
-  quality: ChordQuality,
-  extensions?: Interval[]
-): NoteName[] {
-  const qualityIntervals: Record<ChordQuality, Interval[]> = {
+export const CHORD_QUALITY_INTERVALS: Record<ChordQuality, Interval[]> = {
     '': ['1', '3', '5'],
     m: ['1', 'b3', '5'],
     '7': ['1', '3', '5', 'b7'],
@@ -172,6 +168,7 @@ export function buildChord(
     madd9: ['1', 'b3', '5', '9'],
     maj9: ['1', '3', '5', '7', '9'],
     maj13: ['1', '3', '5', '7', '9', '13'],
+  'maj7#11': ['1', '3', '5', '7', '#11'],
     '6add9': ['1', '3', '5', '6', '9'],
     '6/9': ['1', '3', '5', '6', '9'],
     'm6/9': ['1', 'b3', '5', '6', '9'],
@@ -190,9 +187,17 @@ export function buildChord(
     m7b5b9: ['1', 'b3', 'b5', 'b7', 'b9'],
     m7b5b11: ['1', 'b3', 'b5', 'b7', '11'],
     m7b11: ['1', 'b3', '5', 'b7', '11'],
-  };
+};
 
-  const base = qualityIntervals[quality] || qualityIntervals[''];
+/**
+ * Construire un accord à partir de sa fondamentale et sa qualité
+ */
+export function buildChord(
+  root: NoteName,
+  quality: ChordQuality,
+  extensions?: Interval[]
+): NoteName[] {
+  const base = CHORD_QUALITY_INTERVALS[quality] || CHORD_QUALITY_INTERVALS[''];
   const allIntervals = [...base, ...(extensions || [])];
 
   return allIntervals.map((interval) => {
@@ -558,7 +563,7 @@ export function getChordVoicings(
  * Obtenir l'intervalle d'une note dans un accord
  * Mapping complet des demi-tons vers les intervalles
  */
-function getIntervalInChord(root: NoteName, note: NoteName, quality: ChordQuality): Interval {
+export function getIntervalInChord(root: NoteName, note: NoteName, quality: ChordQuality): Interval {
   const rootIndex = getNoteIndex(root);
   const noteIndex = getNoteIndex(note);
   const semitones = (noteIndex - rootIndex + 12) % 12;

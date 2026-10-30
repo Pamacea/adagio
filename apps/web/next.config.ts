@@ -1,5 +1,25 @@
 import type { NextConfig } from 'next';
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
+
+// Next ne lit que apps/web/.env ; le monorepo n'a qu'un .env, à la racine.
+// Les valeurs déjà présentes dans l'environnement (Vercel, CI) ne sont jamais écrasées,
+// et les entrées vides sont ignorées (le .env racine en contient).
+const rootEnvPath = path.join(__dirname, '../..', '.env');
+try {
+  for (const line of readFileSync(rootEnvPath, 'utf8').split(/\r?\n/)) {
+    const match = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/.exec(line);
+    if (!match) continue;
+    const key = match[1] ?? '';
+    const value = (match[2] ?? '').trim().replace(/^(['"])(.*)\1$/, '$2');
+    // Une valeur « $VAR » est une référence (pas d'expansion ici) : la laisser
+    // telle quelle produirait une URL de rewrite invalide.
+    if (!key || !value || key === 'NODE_ENV' || value.startsWith('$')) continue;
+    process.env[key] ??= value;
+  }
+} catch {
+  // Pas de .env racine (CI, Vercel) : l'environnement fait foi.
+}
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

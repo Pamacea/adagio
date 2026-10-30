@@ -22,8 +22,8 @@ export function ModeCircle({ modes, selectedMode, onSelect }: ModeCircleProps) {
     <div className="section-frame p-8">
       <div className="relative w-full max-w-md mx-auto aspect-square">
         {/* Outer circle */}
-        <div className="absolute inset-0 border-2 border-steel rounded-full" />
-        <div className="absolute inset-4 border border-toxic rounded-full" />
+        <div className="absolute inset-0 border-2 border-steelwarm rounded-full" />
+        <div className="absolute inset-4 border border-amber-400/40 rounded-full" />
 
         {/* Connecting lines - SVG au fond */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
@@ -53,7 +53,7 @@ export function ModeCircle({ modes, selectedMode, onSelect }: ModeCircleProps) {
 
         {/* Center display - avec fond pour masquer les lignes */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-          <div className="w-40 h-40 rounded-full bg-abyss border-2 border-steel flex items-center justify-center">
+          <div className="w-40 h-40 rounded-full bg-abyss border-2 border-steelwarm flex items-center justify-center">
             <div className="text-center">
               <p className="text-xs text-gray uppercase">Mode</p>
               <p className="text-2xl font-metal text-white uppercase mt-1">
@@ -82,8 +82,8 @@ export function ModeCircle({ modes, selectedMode, onSelect }: ModeCircleProps) {
               <div
                 className={`w-14 h-14 flex items-center justify-center border-2 rounded-full transition-all ${
                   isActive
-                    ? 'border-blood bg-toxic'
-                    : 'border-steel bg-blackness hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/20'
+                    : 'border-steelwarm bg-blackness hover:border-white'
                 }`}
               >
                 <span className="text-xs font-bold text-white uppercase">

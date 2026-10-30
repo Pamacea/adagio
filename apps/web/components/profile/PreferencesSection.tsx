@@ -81,12 +81,12 @@ export function PreferencesSection() {
           <h3 className="text-lg font-metal text-white uppercase">Préférences</h3>
           {/* Status indicators */}
           {!isOnline && (
-            <span className="px-2 py-0.5 text-xs font-bold uppercase bg-blood/20 text-blood border border-blood/30">
+            <span className="px-2 py-0.5 text-xs font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/40">
               Hors ligne
             </span>
           )}
           {isOnline && isUsingFallback && (
-            <span className="px-2 py-0.5 text-xs font-bold uppercase bg-amber-500/20 text-amber-500 border border-amber-500/30">
+            <span className="px-2 py-0.5 text-xs font-bold uppercase bg-amber-400/20 text-amber-400 border border-amber-400/30">
               Mode local
             </span>
           )}
@@ -97,8 +97,8 @@ export function PreferencesSection() {
               saveStatus === 'saving'
                 ? 'text-gray animate-pulse'
                 : saveStatus === 'saved'
-                  ? 'text-toxic'
-                  : 'text-blood'
+                  ? 'text-emerald-500'
+                  : 'text-rose-500'
             }`}
           >
             {saveStatus === 'saving'
@@ -119,7 +119,7 @@ export function PreferencesSection() {
           {localPreferences.map((pref) => (
             <div
               key={pref.id}
-              className="flex items-center justify-between py-3 border-b border-steel last:border-0"
+              className="flex items-center justify-between py-3 border-b border-steelwarm last:border-0"
             >
               <div>
                 <p className="text-sm text-white">{pref.label}</p>
@@ -130,10 +130,10 @@ export function PreferencesSection() {
                     key={option}
                     onClick={() => handlePreferenceChange(pref.id, option)}
                     disabled={isPending}
-                    className={`px-3 py-1 text-xs font-bold uppercase border-2 transition-all ${
+                    className={`px-3 py-1 text-xs font-bold uppercase border transition-colors ${
                       pref.value === option
-                        ? 'border-blood bg-toxic text-white shadow-[0_0_10px_rgba(255,0,0,0.3)]'
-                        : 'border-steel bg-abyss text-gray hover:border-white hover:bg-white/5'
+                        ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                        : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:bg-amber-400/5'
                     } disabled:opacity-50 disabled:cursor-not-allowed`}
                     aria-pressed={pref.value === option}
                   >
@@ -148,8 +148,8 @@ export function PreferencesSection() {
 
       {/* Offline mode notice */}
       {isOfflineMode && (
-        <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-          <p className="text-xs text-amber-500">
+        <div className="mt-4 p-3 bg-amber-400/10 border border-amber-400/30">
+          <p className="text-xs text-amber-400">
             <span className="font-bold">[ATTENTION]</span> Mode hors ligne : Les préférences sont
             sauvegardées localement et seront synchronisées à la reconnexion.
           </p>

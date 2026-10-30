@@ -103,15 +103,18 @@ export default function ProfilePage() {
       <main className="flex-1 px-4 py-24 mt-16">
         <div className="mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              PROFIL
+          <div className="mb-10">
+            <p className="text-xs uppercase tracking-widest text-gray">Compte</p>
+            <h1 className="mt-2 text-3xl font-metal uppercase tracking-tighter text-white sm:text-4xl">
+              Profil
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">Votre progression ADAGIO</p>
+            <p className="mt-2 text-sm uppercase tracking-widest text-gray">
+              Votre progression ADAGIO
+            </p>
           </div>
 
           {/* Profile Header Card */}
-          <div className="section-frame p-6 mb-8 border-2 border-blood">
+          <div className="panel p-6 mb-8 border-amber-400/60">
             <div className="flex flex-col md:flex-row items-center gap-6">
               {/* Avatar */}
               <div className="w-24 h-24 border-4 border-blood bg-toxic flex items-center justify-center">

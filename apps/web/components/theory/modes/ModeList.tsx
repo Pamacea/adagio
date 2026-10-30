@@ -25,17 +25,17 @@ export function ModeList({ modes, selectedMode, onSelect }: ModeListProps) {
           <button
             key={mode}
             onClick={() => onSelect(mode)}
-            className={`section-frame p-4 text-left transition-all hover:border-blood ${
-              isActive ? 'border-blood' : ''
+            className={`section-frame p-4 text-left transition-all hover:border-amber-400/50 ${
+              isActive ? 'border-amber-400 bg-amber-400/20' : ''
             }`}
           >
             <div className="flex items-start justify-between mb-2">
               <h3 className="text-lg font-metal text-white uppercase">{info.name}</h3>
               <div
-                className={`w-3 h-3 border-2 ${isActive ? 'border-blood bg-blood' : 'border-steel'}`}
+                className={`w-3 h-3 border-2 ${isActive ? 'border-amber-400 bg-amber-400' : 'border-steelwarm'}`}
               />
             </div>
-            <p className="text-xs text-blood font-bold uppercase mb-1">{info.character}</p>
+            <p className="text-xs text-amber-400 font-bold uppercase mb-1">{info.character}</p>
             <p className="text-sm text-gray">{info.sensation}</p>
           </button>
         );

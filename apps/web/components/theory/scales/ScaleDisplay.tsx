@@ -106,7 +106,7 @@ export function ScaleDisplay({
   }
 
   return (
-    <div className="section-frame p-6 mb-8 border-2 border-blood">
+    <div className="section-frame p-6 mb-8">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-2xl font-metal text-white uppercase">
@@ -117,14 +117,14 @@ export function ScaleDisplay({
         <div className="flex gap-2">
           {uniqueScaleNotes.map((note) => (
             <div key={note} className="text-center">
-              <span className="px-2 py-1 text-xs bg-toxic text-white">{displayNote(note)}</span>
+              <span className="px-2 py-1 text-xs bg-surface border border-steelwarm text-white">{displayNote(note)}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Formule d'intervalles avec notation musicale */}
-      <div className="mt-4 pt-4 border-t border-steel">
+      <div className="mt-4 pt-4 border-t border-steelwarm">
         <div className="flex flex-wrap items-center gap-4 mb-3">
           <span className="text-xs text-gray uppercase tracking-wider">FORMULE</span>
           <div className="flex gap-1">
@@ -133,16 +133,16 @@ export function ScaleDisplay({
                 key={i}
                 className={`px-2 py-1 text-sm font-bold border-2 ${
                   interval === '1'
-                    ? 'border-blood bg-toxic text-white'
+                    ? 'border-amber-400 bg-amber-400/20 text-amber-400'
                     : interval === '5'
-                      ? 'border-steel bg-circuit text-white'
+                      ? 'border-cyan-400 bg-cyan-400/20 text-cyan-400'
                       : ['b3', 'b7', 'bb6', 'bb7'].includes(interval)
-                        ? 'border-steel bg-void text-gray'
+                        ? 'border-rose-400 bg-rose-400/20 text-rose-400'
                         : ['3', '7', '#6'].includes(interval)
-                          ? 'border-blood bg-blackness text-toxic'
+                          ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400'
                           : ['4', '#4', 'b4', 'b5'].includes(interval)
-                            ? 'border-rust bg-blackness text-rust'
-                            : 'border-steel bg-blackness text-white'
+                            ? 'border-indigo-400 bg-indigo-400/20 text-indigo-400'
+                            : 'border-steelwarm bg-surface text-white'
                 }`}
               >
                 {formatInterval(interval)}
@@ -154,7 +154,7 @@ export function ScaleDisplay({
         {/* Pattern T-S */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray uppercase tracking-wider">STRUCTURE</span>
-          <span className="px-3 py-1 text-xs bg-blackness text-toxic border border-steel">
+          <span className="px-3 py-1 text-xs bg-surface text-white border border-steelwarm">
             {getTSPattern(scaleDef.intervals)}
             <span className="ml-2 text-gray">
               {' '}

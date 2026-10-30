@@ -35,29 +35,11 @@ export function FretboardChord({ chord }: { chord: string; width?: number; heigh
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
       <defs>
-        <linearGradient id="composeDiagramBg" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#1a1814" />
-          <stop offset="100%" stopColor="#0f0d0a" />
-        </linearGradient>
         <radialGradient id="composeNoteFill" cx="50%" cy="30%" r="60%">
           <stop offset="0%" stopColor="#2a2a2a" />
           <stop offset="100%" stopColor="#1a1a1a" />
         </radialGradient>
       </defs>
-
-      {/* Fond */}
-      <rect x="0" y="0" width={W} height={H} fill="#0a0908" rx="4" />
-      <rect x="3" y="3" width={W - 6} height={H - 6} fill="url(#composeDiagramBg)" rx="3" />
-      <rect
-        x="3"
-        y="3"
-        width={W - 6}
-        height={H - 6}
-        fill="none"
-        stroke="#333"
-        strokeWidth={1}
-        rx="3"
-      />
 
       {/* Nom de l'accord */}
       <text
@@ -287,6 +269,17 @@ export function getChordPositions(chordName: string): ({ fret: number; string: n
         { fret: 2, string: 5 },
       ];
     }
+    if (isHalfDiminished) {
+      // Am7b5: x0201x (A C Eb G) — testé avant isSeventh, « m7b5 » contenant « 7 »
+      return [
+        { fret: null, string: 0 },
+        { fret: 0, string: 1 },
+        { fret: 2, string: 2 },
+        { fret: 0, string: 3 },
+        { fret: 1, string: 4 },
+        { fret: null, string: 5 },
+      ];
+    }
     if (isSeventh) {
       // A7: x02020
       return [
@@ -298,7 +291,7 @@ export function getChordPositions(chordName: string): ({ fret: number; string: n
         { fret: 0, string: 5 },
       ];
     }
-    if (isDiminished || isHalfDiminished) {
+    if (isDiminished) {
       // Adim / Adim7: xx0232
       return [
         { fret: null, string: 0 },

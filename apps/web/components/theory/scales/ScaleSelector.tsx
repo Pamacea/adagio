@@ -64,8 +64,8 @@ export function ScaleSelector({
               onClick={() => onRootChange(note)}
               className={`py-2 text-sm font-bold border-2 transition-all ${
                 currentRoot === note
-                  ? 'border-blood bg-toxic text-white'
-                  : 'border-steel bg-abyss text-gray hover:border-white'
+                  ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                  : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
               }`}
             >
               {note}
@@ -93,8 +93,8 @@ export function ScaleSelector({
                       onClick={() => onScaleChange(scaleId)}
                       className={`text-xs px-3 py-2 border-2 transition-all ${
                         currentScale === scaleId
-                          ? 'border-blood bg-toxic text-white'
-                          : 'border-steel bg-abyss text-gray hover:border-white hover:text-white'
+                          ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                          : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:text-white'
                       }`}
                     >
                       {scaleDef.nameFr}
@@ -120,8 +120,8 @@ export function ScaleSelector({
                   onClick={() => onFretCountChange(f)}
                   className={`px-3 py-2 text-sm font-bold border-2 transition-all ${
                     fretCount === f
-                      ? 'border-blood bg-toxic text-white'
-                      : 'border-steel bg-abyss text-gray hover:border-white'
+                      ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                      : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                   }`}
                 >
                   {f}
@@ -139,8 +139,8 @@ export function ScaleSelector({
               onClick={() => onShowAllNotesChange(!showAllNotes)}
               className={`px-4 py-2 text-sm font-bold uppercase border-2 transition-all ${
                 showAllNotes
-                  ? 'border-steel bg-abyss text-gray'
-                  : 'border-blood bg-toxic text-white'
+                  ? 'border-steelwarm bg-surface text-gray'
+                  : 'border-amber-400 bg-amber-400/20 text-amber-400'
               }`}
             >
               {showAllNotes ? 'MODE SEUL' : 'TOUTES NOTES'}

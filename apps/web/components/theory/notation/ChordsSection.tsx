@@ -20,7 +20,7 @@ export function ChordsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {CHORD_DEFINITIONS.map((chord) => (
-            <div key={chord.name} className="border-2 border-steel bg-blackness p-4">
+            <div key={chord.name} className="border border-steelwarm bg-surface p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-2xl font-metal text-white">{chord.name}</span>
                 <span className="text-xs text-gray uppercase">{chord.fr}</span>
@@ -40,7 +40,7 @@ export function ChordsSection() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-steel">
+              <tr className="border-b border-steelwarm">
                 <th className="text-left p-3 text-gray uppercase">Accord</th>
                 <th className="text-left p-3 text-gray uppercase">Intervalle</th>
                 <th className="text-left p-3 text-gray uppercase">Formule</th>
@@ -48,7 +48,7 @@ export function ChordsSection() {
             </thead>
             <tbody>
               {CHORD_FORMULAS.map((formula, i) => (
-                <tr key={i} className="border-b border-steel">
+                <tr key={i} className="border-b border-steelwarm">
                   <td className="p-3 font-bold">{formula.name}</td>
                   <td className="p-3">{formula.intervals}</td>
                   <td className="p-3 text-gray">{formula.description}</td>

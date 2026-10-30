@@ -37,8 +37,8 @@ export function ModeSelector({
                 onClick={() => onRootChange(root)}
                 className={`px-2 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
                   selectedRoot === root
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                    : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                 }`}
               >
                 {noteFr[root] || root}
@@ -51,7 +51,7 @@ export function ModeSelector({
         <div className="ml-auto">
           <button
             onClick={onViewToggle}
-            className="px-4 py-2 text-sm font-bold uppercase border-2 border-steel bg-abyss text-gray hover:border-white transition-all"
+            className="px-4 py-2 text-sm font-bold uppercase border-2 border-steelwarm bg-surface text-gray hover:border-amber-400/50 transition-all"
           >
             {showCircle ? 'LISTE' : 'CERCLE'}
           </button>

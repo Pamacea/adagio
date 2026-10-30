@@ -8,7 +8,7 @@ import { forwardRef, useEffect, useRef, type ReactNode, type HTMLAttributes } fr
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/cn';
 
-const modalVariants = cva('rounded-2xl border shadow-guitar', {
+const modalVariants = cva('border shadow-guitar', {
   variants: {
     size: {
       sm: 'max-w-sm',

@@ -2,7 +2,7 @@
  * HelpButton - Bouton d'aide réutilisable
  *
  * Bouton '?' stylisé avec animations au hover
- * Design System Metal: abyss, blood, toxic, steel
+ * Charte Adagio : surface noire, filet steelwarm, accent ambre
  */
 
 import { forwardRef, type ButtonHTMLAttributes } from 'react';
@@ -10,7 +10,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@adagio/ui';
 
 const helpButtonVariants = cva(
-  'inline-flex items-center justify-center rounded-full font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-toxic focus-visible:ring-offset-2 focus-visible:ring-offset-abyss disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center font-bold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-abyss disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       size: {
@@ -20,9 +20,9 @@ const helpButtonVariants = cva(
       },
       variant: {
         default:
-          'bg-steel border-2 border-blood text-white hover:bg-blood hover:border-toxic hover:shadow-glow',
-        subtle: 'bg-blackness border border-steel text-gray hover:border-toxic hover:text-toxic',
-        accent: 'bg-toxic border-2 border-blood text-white hover:bg-blood hover:shadow-glow',
+          'bg-surface border border-steelwarm text-white hover:border-amber-400 hover:text-amber-400',
+        subtle: 'bg-surface border border-steelwarm text-gray hover:border-amber-400 hover:text-amber-400',
+        accent: 'bg-amber-400/20 border border-amber-400 text-amber-400 hover:bg-amber-400/30',
       },
     },
     defaultVariants: {
@@ -89,18 +89,9 @@ export const HelpButton = forwardRef<HTMLButtonElement, HelpButtonProps>(
         {...props}
       >
         {children || (
-          <svg
-            className="h-[0.6em] w-[0.6em]"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <span aria-hidden="true" className="leading-none">
+            ?
+          </span>
         )}
       </button>
     );

@@ -11,8 +11,10 @@
  * - CHORD_VARIATIONS: Variations d'accords par degré
  */
 
-import type { NoteName } from '@adagio/types';
+import type { NoteName, ChordQuality, Interval } from '@adagio/types';
 import { parseChord } from '../core/chord-ref';
+import { INTERVAL_SEMITONES } from '../core/Interval';
+import { CHORD_QUALITY_INTERVALS } from '../calculators/ChordCalculator';
 
 // ============================================================================
 // TYPES
@@ -513,9 +515,78 @@ export function getCagedVoicings(chord: string): ChordVoicing[] {
 export function getVariationsForDegree(
   degree: number,
   rootNote: string,
-  isMinorMode: boolean
+  isMinorMode: boolean,
+  /** Accord diatonique canonique du degré (porteur de la qualité réelle) */
+  diatonicChord: string = rootNote
 ): ChordVariation[] {
   const variations: ChordVariation[] = [];
+
+  // Qualité réelle du degré : les extensions sont dérivées de cette base,
+  // jamais d'un majeur implicite (ex. i de A mineur → Am7, pas Amaj7).
+  const baseQuality = parseChord(diatonicChord)?.quality ?? '';
+
+  const adaptSymbol = (symbol: string): string => {
+    if (!symbol.startsWith(rootNote)) return symbol;
+    const suffix = symbol.slice(rootNote.length);
+
+    if (baseQuality === 'm') {
+      switch (suffix) {
+        case 'maj7':
+          return rootNote + 'm7';
+        case 'maj9':
+          return rootNote + 'm9';
+        case 'maj13':
+          return rootNote + 'm13';
+        case 'add9':
+          return rootNote + 'madd9';
+        case '6':
+          return rootNote + 'm6';
+        case '6/9':
+          return rootNote + 'm6/9';
+        case 'maj7#11':
+          return rootNote + 'm7#11';
+        case '7':
+        case '9':
+        case '11':
+        case '13':
+        case '7alt':
+        case '7#11':
+        case '7b13':
+        case '7#9':
+        case '7b9':
+          return rootNote + 'm' + suffix;
+        default:
+          // Qualités déjà mineures (m, m7, m9, m11, m6, m7b5…)
+          return symbol;
+      }
+    }
+
+    if (baseQuality === 'dim') {
+      switch (suffix) {
+        case 'dim':
+        case 'dim7':
+        case 'm7b5':
+          return symbol;
+        case 'm11':
+        case 'm6':
+          return rootNote + 'dim7';
+        default:
+          return rootNote + 'm7b5';
+      }
+    }
+
+    return symbol;
+  };
+
+  const adaptName = (name: string): string => {
+    if (baseQuality !== 'm') return name;
+    if (name.startsWith('Maj')) return 'Min' + name.slice(3);
+    if (name === 'Add9') return 'Min Add9';
+    if (name === 'Sixte') return 'Min6';
+    if (name === '6/9') return 'Min6/9';
+    if (name.startsWith('Lydien')) return 'Min7#11';
+    return name;
+  };
 
   // I - Tonique (stabilité)
   if (degree === 0) {
@@ -523,7 +594,7 @@ export function getVariationsForDegree(
       {
         id: 'basic',
         name: 'Tonique',
-        symbol: rootNote,
+        symbol: diatonicChord,
         category: 'basic',
         description: 'Stabilité maximale',
         emotion: 'Repos',
@@ -602,16 +673,17 @@ export function getVariationsForDegree(
     variations.push(
       {
         id: 'basic',
-        name: 'Mineur',
-        symbol: rootNote + 'm',
+        name: isMinorMode ? 'Diminué' : 'Mineur',
+        symbol: diatonicChord,
         category: 'basic',
         description: 'Douceur préparatoire',
         emotion: 'Mouvement',
       },
       {
         id: 'm7',
-        name: 'Min7',
-        symbol: rootNote + 'm7',
+        // En mineur, le ii est demi-diminué (iiø7) : jamais un m7 à quinte juste.
+        name: isMinorMode ? 'Min7b5' : 'Min7',
+        symbol: rootNote + (isMinorMode ? 'm7b5' : 'm7'),
         category: 'extension',
         description: 'Jazz ii-V-I',
         emotion: 'Sophistiqué',
@@ -718,8 +790,8 @@ export function getVariationsForDegree(
     variations.push(
       {
         id: 'basic',
-        name: 'Majeur',
-        symbol: rootNote,
+        name: isMinorMode ? 'Mineur' : 'Majeur',
+        symbol: diatonicChord,
         category: 'basic',
         description: 'Aventure',
         emotion: 'Lumineux',
@@ -772,8 +844,8 @@ export function getVariationsForDegree(
     variations.push(
       {
         id: 'basic',
-        name: 'Majeur',
-        symbol: rootNote,
+        name: isMinorMode ? 'Mineur' : 'Majeur',
+        symbol: diatonicChord,
         category: 'basic',
         description: 'Tension vers I',
         emotion: 'Dynamique',
@@ -934,8 +1006,8 @@ export function getVariationsForDegree(
     variations.push(
       {
         id: 'basic',
-        name: 'Diminué',
-        symbol: rootNote + 'dim',
+        name: isMinorMode ? 'Majeur' : 'Diminué',
+        symbol: diatonicChord,
         category: 'basic',
         description: 'Tension dramatique',
         emotion: 'Instable',
@@ -969,7 +1041,17 @@ export function getVariationsForDegree(
     }
   }
 
-  return variations;
+  // Les substitutions choisissent volontairement une autre qualité :
+  // on n'adapte que les variations dérivées du degré.
+  return variations.map((variation) =>
+    variation.category === 'substitution'
+      ? variation
+      : {
+          ...variation,
+          symbol: adaptSymbol(variation.symbol),
+          name: adaptName(variation.name),
+        }
+  );
 }
 
 // ============================================================================
@@ -1492,28 +1574,18 @@ export function getChordNotes(chord: string): { notes: string[]; intervals: stri
 
   if (rootIndex === -1) return { notes: [root], intervals: ['1'] };
 
-  const intervalPatterns: Record<string, { semitones: number[]; names: string[] }> = {
-    '': { semitones: [0, 4, 7], names: ['1', '3', '5'] },
-    m: { semitones: [0, 3, 7], names: ['1', 'b3', '5'] },
-    dim: { semitones: [0, 3, 6], names: ['1', 'b3', 'b5'] },
-    dim7: { semitones: [0, 3, 6, 9], names: ['1', 'b3', 'b5', 'bb7'] },
-    '6': { semitones: [0, 4, 7, 9], names: ['1', '3', '5', '6'] },
-    '7': { semitones: [0, 4, 7, 10], names: ['1', '3', '5', 'b7'] },
-    maj7: { semitones: [0, 4, 7, 11], names: ['1', '3', '5', '7'] },
-    m7: { semitones: [0, 3, 7, 10], names: ['1', 'b3', '5', 'b7'] },
-    '9': { semitones: [0, 4, 7, 10, 14], names: ['1', '3', '5', 'b7', '9'] },
-    '11': { semitones: [0, 4, 7, 10, 14, 17], names: ['1', '3', '5', 'b7', '9', '11'] },
-    '13': { semitones: [0, 4, 7, 10, 14, 17, 21], names: ['1', '3', '5', 'b7', '9', '11', '13'] },
-    add9: { semitones: [0, 4, 7, 14], names: ['1', '3', '5', '9'] },
-  };
+  // Table unique (ChordCalculator) : plus aucune qualité ne retombe sur une triade majeure.
+  const intervals = (CHORD_QUALITY_INTERVALS[quality as ChordQuality] ??
+    CHORD_QUALITY_INTERVALS['']) as Interval[];
 
-  const pattern = intervalPatterns[quality] || intervalPatterns['']!;
-  const notes = pattern.semitones.map((i) => {
-    const noteIndex = (rootIndex + i) % 12;
-    return chromatic[noteIndex]!;
+  const notes = intervals.map((interval) => {
+    const noteIndex = (rootIndex + INTERVAL_SEMITONES[interval]) % 12;
+    // Orthographe : « b3 » se lit Sib (pas La#), « #11 » se lit en dièse.
+    const flats = interval.includes('b') || (!interval.includes('#') && useFlats);
+    return (flats ? FLAT_CHROMATIC : SHARP_CHROMATIC)[noteIndex]!;
   });
 
-  return { notes, intervals: pattern.names };
+  return { notes, intervals: [...intervals] };
 }
 
 /**
@@ -1574,3 +1646,53 @@ export const COMPOSE_PROGRESSIONS: ComposeProgression[] = [
     genre: ['Jazz', 'Bossa Nova'],
   },
 ];
+
+export const COMPOSE_PROGRESSIONS_MINOR: ComposeProgression[] = [
+  {
+    name: 'i-VI-III-VII',
+    degrees: ['i', 'VI', 'III', 'VII'],
+    description: 'La boucle pop mineure par excellence',
+    emotion: 'Mélancolique mais entraînant',
+    genre: ['Pop', 'Rock', 'EDM'],
+  },
+  {
+    name: 'i-iv-v-i',
+    degrees: ['i', 'iv', 'v', 'i'],
+    description: 'Cadence mineure naturelle, base du rock et du folk',
+    emotion: 'Sombre et direct',
+    genre: ['Rock', 'Folk', 'Blues'],
+  },
+  {
+    name: 'i-VI-VII',
+    degrees: ['i', 'VI', 'VII'],
+    description: 'Montée épique vers la tonique relative',
+    emotion: 'Intense et dramatique',
+    genre: ['Metal', 'Rock', 'Gothique'],
+  },
+  {
+    name: 'i-III-VII-VI',
+    degrees: ['i', 'III', 'VII', 'VI'],
+    description: 'Descente modale à forte couleur émotionnelle',
+    emotion: 'Nostalgique et ample',
+    genre: ['Pop Ballad', 'Rock', 'Metal'],
+  },
+  {
+    name: 'iv-v-i',
+    degrees: ['iv', 'v', 'i'],
+    description: 'Préparation puis résolution vers la tonique mineure',
+    emotion: 'Tension puis apaisement',
+    genre: ['Classique', 'Jazz', 'Folk'],
+  },
+  {
+    name: 'i-iv-VII-III',
+    degrees: ['i', 'iv', 'VII', 'III'],
+    description: 'Couleur modale sombre et ouverte',
+    emotion: 'Mystérieux et planant',
+    genre: ['Rock', 'Metal', 'Gothique'],
+  },
+];
+
+/** Progressions cohérentes avec le mode courant (degrés du tableau de numéraux associé). */
+export function getComposeProgressions(mode: KeyMode): ComposeProgression[] {
+  return mode === 'major' ? COMPOSE_PROGRESSIONS : COMPOSE_PROGRESSIONS_MINOR;
+}

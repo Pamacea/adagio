@@ -1,321 +1,365 @@
 /**
- * ChordDiagram - Guitar Chord Diagram Component (SVG)
+ * ChordDiagram - Diagramme d'accord de guitare (SVG), rendu identique à Concordia.
  *
- * Professional chord diagram with:
- * - Clean SVG rendering with inline styles
- * - Thick nut line
- * - Clear fret markers
- * - Professional finger dots
- * - Open/muted string indicators
- * - Fret numbers for moveable chords
+ * Convention unique : string 0 = mi grave (colonne de gauche),
+ * string 5 = mi aigu (colonne de droite). `fret` est absolu :
+ * -1 = étouffée, 0 = à vide, >= 1 = case.
+ *
+ * Géométrie et couleurs reprises de `concordia/src/lib/{geometry,render}` :
+ * fond #000000, cordes/frettes blanches, sillet épais, pastilles colorées par
+ * intervalle, indicateurs ○/×/R au-dessus du sillet.
  */
 
-import { type NoteName } from '@adagio/types';
 import { cn } from '../lib/cn';
 
 export interface ChordFingerPosition {
-  string: number; // 0-5 (0 = high E, 5 = low E)
-  fret: number; // 0 = open, -1 = muted, 1+ = fret number
-  finger?: number; // 1-4 for finger indication
+  string: number; // 0 = mi grave (gauche) … 5 = mi aigu (droite)
+  fret: number; // -1 = étouffée, 0 = à vide, 1+ = case absolue
+  finger?: number; // 1-4
+  note?: string;
+  interval?: string;
 }
 
 export interface ChordDiagramProps {
-  name: string; // Ex: "Cmaj7"
-  root?: NoteName;
+  name: string;
   positions: ChordFingerPosition[];
-  frets?: number; // Number of frets to display (default 4)
+  frets?: number; // Nombre de cases affichées (défaut 4)
   showFretNumbers?: boolean;
   showStringNames?: boolean;
-  compact?: boolean; // Compact mode for grids
-  /**
-   * Ordre visuel des cordes (de la gauche vers la droite) :
-   * - 'high-first' (défaut) : mi aigu à gauche — convention interne des positions
-   * - 'low-first' : mi grave à gauche — convention tab / diagrammes d'accords
-   */
-  stringOrder?: 'high-first' | 'low-first';
+  compact?: boolean;
   className?: string;
 }
 
-const STRING_NAMES = ['E', 'B', 'G', 'D', 'A', 'E'] as const; // High to low
-const LOW_FIRST_STRING_NAMES = [...STRING_NAMES].reverse() as (typeof STRING_NAMES)[number][];
+const STRINGS = 6;
 
-// SVG dimensions
-const WIDTH = 140;
-const HEIGHT = 160;
-const MARGIN_LEFT = 20;
-const MARGIN_TOP = 28;
-const _MARGIN_BOTTOM = 25;
-const STRING_SPACING = 20;
-const FRET_HEIGHT = 28;
+// --- Géométrie (concordia/src/lib/geometry/constants.ts) ---
+const OFFSET_X = 65;
+const STRING_GAP_MAX = 70;
+const STRING_GAP_BASE = 560;
+const STRING_GAP_MIN = 40;
+const FRET_GAP_MAX = 75;
+const MAX_BOARD = 640;
+const STRING_TAPER = 0.12;
+const TITLE_FIRST_CY = 45;
+const TITLE_TO_NUT = 34;
+const NUT_TO_BOARD = 25;
+const NUT_BAND = 46;
+const TITLE_SIZE_MAX = 24;
+const TITLE_SIZE_MIN = 16;
+const TITLE_LEAD_RATIO = 1.35;
+const TITLE_MARGIN = 24;
+const RESERVE = 35;
+const FRET_NUM_GAP = 40;
 
-// Colors matching the metal theme
-const COLORS = {
-  nut: '#8b1a1a',
-  fret: '#4a5568',
-  string: '#6b7280',
-  fingerFill: '#0a0f0a',
-  fingerStroke: '#ef4444',
-  fingerRootFill: '#ef4444',
-  openString: '#22c55e',
-  mutedString: '#ef4444',
-  text: '#9ca3af',
-  textLight: '#e0e0e0',
-  white: '#e0e0e0',
-  barre: 'rgba(255, 255, 255, 0.3)',
+// --- Tokens (concordia/src/lib/render/tokens.ts) ---
+const C_WHITE = '#ffffff';
+const C_ACCENT = '#b84a1a';
+const C_ROOT = '#8b1a1a';
+const BG = '#000000';
+const FONT_SANS = 'sans-serif';
+const DOT_R_BASE = 22;
+const OPEN_ROOT_R = 16;
+const FS_ROOT = 18;
+const FS_NOTE = 15;
+const FS_OPEN_ROOT_LABEL = 14;
+const FS_OPEN_IND = 24;
+const FS_NUT_LABEL = 16;
+const FS_FRET_NUM = 18;
+const STRING_NAMES = ['E', 'A', 'D', 'G', 'B', 'E'] as const;
+
+interface IntervalStyle {
+  label: string;
+  color: string;
+  text: string;
+}
+
+const UNKNOWN: IntervalStyle = { label: '?', color: '#6b7280', text: C_WHITE };
+
+/** Couleurs d'intervalles Concordia (lib/theory INTERVALS). */
+const INTERVALS: Record<string, IntervalStyle> = {
+  R: { label: 'R', color: '#8b1a1a', text: C_WHITE },
+  b2: { label: 'b2', color: '#f97316', text: C_WHITE },
+  '2': { label: '2', color: '#f97316', text: C_WHITE },
+  b3: { label: 'b3', color: '#22c55e', text: C_WHITE },
+  '3': { label: '3', color: '#22c55e', text: C_WHITE },
+  '4': { label: '4', color: '#ec4899', text: C_WHITE },
+  b5: { label: 'b5', color: '#0284c7', text: C_WHITE },
+  '5': { label: '5', color: '#38bdf8', text: '#000000' },
+  b6: { label: 'b6', color: '#a855f7', text: C_WHITE },
+  '6': { label: '6', color: '#a855f7', text: C_WHITE },
+  b7: { label: 'b7', color: '#eab308', text: '#000000' },
+  '7': { label: '7', color: '#eab308', text: '#000000' },
 };
+
+function intervalStyle(interval?: string): IntervalStyle {
+  if (!interval) return UNKNOWN;
+  const key = interval === '1' ? 'R' : interval;
+  return INTERVALS[key] ?? { ...UNKNOWN, label: key };
+}
+
+/** Espacement des cordes : se resserre quand le nombre de cases augmente. */
+const stringGapFor = (frets: number) =>
+  Math.max(STRING_GAP_MIN, Math.round(Math.min(STRING_GAP_MAX, STRING_GAP_BASE / Math.max(1, frets))));
+
+/** Écart entre cases : rétrécit quand la table dépasse MAX_BOARD. */
+const fretGapFor = (frets: number) =>
+  Math.max(30, Math.min(FRET_GAP_MAX, MAX_BOARD / Math.max(1, frets)));
+
+/** Taille de police du titre bornée à [16, 24] selon la largeur disponible. */
+function titleSizeFor(text: string, maxWidth: number): number {
+  const estimated = text.length * TITLE_SIZE_MAX * 0.6;
+  if (estimated <= maxWidth) return TITLE_SIZE_MAX;
+  return Math.max(TITLE_SIZE_MIN, Math.floor((maxWidth / estimated) * TITLE_SIZE_MAX));
+}
+
+/** Découpe un titre en lignes (estimation largeur, sans dépendre du DOM). */
+function wrapTitle(text: string, maxWidth: number, size: number): string[] {
+  if (!text) return [];
+  const maxChars = Math.max(1, Math.floor(maxWidth / (size * 0.6)));
+  const lines: string[] = [];
+  let current = '';
+  for (const word of text.split(/\s+/)) {
+    const trial = current ? `${current} ${word}` : word;
+    if (trial.length <= maxChars) {
+      current = trial;
+      continue;
+    }
+    if (current) lines.push(current);
+    current = word.slice(0, maxChars);
+  }
+  if (current) lines.push(current);
+  return lines;
+}
 
 export function ChordDiagram({
   name,
-  root: _root,
   positions,
   frets = 4,
   showFretNumbers = true,
-  showStringNames = true,
+  showStringNames = false,
   compact = false,
-  stringOrder = 'high-first',
   className,
 }: ChordDiagramProps) {
-  // Calculate starting fret
-  const validPositions = positions.filter((p) => p.fret > 0);
-  const startFret = validPositions.length > 0 ? Math.min(...validPositions.map((p) => p.fret)) : 1;
+  const pressed = positions.filter((p) => p.fret > 0);
+  // Case absolue de la première ligne affichée (bornée à 1).
+  const startFret = pressed.length > 0 ? Math.max(1, Math.min(...pressed.map((p) => p.fret))) : 1;
+  const maxRel = pressed.reduce((max, p) => Math.max(max, p.fret - startFret), 0);
+  const rows = Math.max(1, frets, maxRel + 1);
 
-  // Build position map
-  const _positionMap = new Map(positions.map((p) => [p.string, p]));
+  const gap = fretGapFor(rows);
+  const stringGap = stringGapFor(rows);
+  const scale = Math.min(1, gap / FRET_GAP_MAX);
+  const dotR = DOT_R_BASE * scale;
 
-  const hasMuted = positions.some((p) => p.fret === -1);
-  const hasOpen = positions.some((p) => p.fret === 0);
+  const width = 2 * OFFSET_X + 5 * stringGap;
+  const titleMaxWidth = width - TITLE_MARGIN;
+  const titleSize = name ? titleSizeFor(name, titleMaxWidth) : TITLE_SIZE_MAX;
+  const titleLead = titleSize * TITLE_LEAD_RATIO;
+  const titleLines = wrapTitle(name, titleMaxWidth, titleSize);
+  const titleBottom = titleLines.length
+    ? TITLE_FIRST_CY + (titleLines.length - 1) * titleLead + titleLead / 2
+    : 0;
+  const hasIndicators = positions.some((p) => p.fret <= 0);
+  const nutBand = hasIndicators || showStringNames ? NUT_BAND : 0;
+  const offsetY = titleBottom + (titleLines.length ? TITLE_TO_NUT : 0) + nutBand + NUT_TO_BOARD;
+  const nutZone = offsetY - NUT_TO_BOARD;
+  const nutLabelY = nutZone - 34;
+  const boardBottom = offsetY + rows * gap;
+  const height = boardBottom + RESERVE;
 
-  // Index visuel d'une corde (0 = colonne la plus à gauche)
-  const visualString = (s: number) => (stringOrder === 'low-first' ? 5 - s : s);
-  const displayedStringNames = stringOrder === 'low-first' ? LOW_FIRST_STRING_NAMES : STRING_NAMES;
+  const xFor = (string: number) => OFFSET_X + string * stringGap;
+  const yFor = (relFret: number) => offsetY + relFret * gap + gap / 2;
+
+  const playedCount = positions.filter((p) => p.fret >= 0).length;
+  const lastFret = startFret + rows - 1;
+  const ariaLabel = `${name ? `Accord ${name}` : "Diagramme d'accord"}, ${playedCount} cordes, cases ${startFret} à ${lastFret}`;
 
   return (
-    <div className={cn('inline-block', className)}>
-      {name && !compact && (
-        <div className="text-center text-sm font-bold mb-2" style={{ color: '#ecb605' }}>
-          {name}
-        </div>
-      )}
-
+    <div className={cn('block w-full', compact && 'max-w-[120px]', className)}>
       <svg
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        className={cn('drop-shadow-lg', compact ? 'w-20 h-28' : 'w-36 h-44')}
-        style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))' }}
+        viewBox={`0 0 ${width} ${height}`}
+        width={width}
+        height={height}
+        className="h-auto w-full"
+        style={{ maxWidth: '100%' }}
+        role="img"
+        aria-label={ariaLabel}
       >
-        {/* Fret numbers */}
-        {showFretNumbers && startFret > 1 && (
-          <g>
-            {Array.from({ length: frets }, (_, i) => (
-              <text
-                key={i}
-                x={8}
-                y={MARGIN_TOP + FRET_HEIGHT * i + FRET_HEIGHT / 2 + 4}
-                fill={COLORS.text}
-                fontSize={11}
-                fontWeight="600"
-                textAnchor="middle"
-              >
-                {startFret + i}
-              </text>
-            ))}
-          </g>
-        )}
+        <rect width="100%" height="100%" fill={BG} />
 
-        {/* String names */}
-        {showStringNames && !compact && (
-          <g>
-            {displayedStringNames.map((s, i) => (
-              <text
-                key={i}
-                x={MARGIN_LEFT + STRING_SPACING * i}
-                y={14}
-                fill={COLORS.text}
-                fontSize={11}
-                fontWeight="600"
-                textAnchor="middle"
-              >
-                {s}
-              </text>
-            ))}
-          </g>
-        )}
+        {/* Titre multi-lignes */}
+        {titleLines.map((line, i) => (
+          <text
+            key={`title-${i}`}
+            x={width / 2}
+            y={TITLE_FIRST_CY + i * titleLead}
+            fill={C_WHITE}
+            fontSize={titleSize}
+            fontWeight="bold"
+            fontFamily={FONT_SANS}
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            {line}
+          </text>
+        ))}
 
-        {/* Vertical string lines */}
-        <g>
-          {displayedStringNames.map((_, i) => (
-            <line
-              key={i}
-              x1={MARGIN_LEFT + STRING_SPACING * i}
-              y1={MARGIN_TOP - (hasOpen ? 10 : 0)}
-              x2={MARGIN_LEFT + STRING_SPACING * i}
-              y2={MARGIN_TOP + FRET_HEIGHT * frets}
-              stroke={COLORS.string}
-              strokeWidth={i === 0 || i === 5 ? 2 : 1.2}
-            />
+        {/* Notes des cordes à vide au-dessus des indicateurs */}
+        {showStringNames &&
+          STRING_NAMES.map((stringName, i) => (
+            <text
+              key={`nut-label-${i}`}
+              x={xFor(i)}
+              y={nutLabelY}
+              fill={C_ACCENT}
+              fontSize={FS_NUT_LABEL}
+              fontWeight="bold"
+              fontFamily={FONT_SANS}
+              textAnchor="middle"
+              dominantBaseline="central"
+            >
+              {stringName}
+            </text>
           ))}
-        </g>
 
-        {/* Horizontal fret lines */}
-        <g>
-          {Array.from({ length: frets + 1 }, (_, i) => {
-            const y = MARGIN_TOP + FRET_HEIGHT * i;
-            const isNut = i === 0 && startFret === 1;
-
-            return (
-              <line
-                key={i}
-                x1={MARGIN_LEFT}
-                y1={y}
-                x2={MARGIN_LEFT + STRING_SPACING * 5}
-                y2={y}
-                stroke={isNut ? COLORS.nut : COLORS.fret}
-                strokeWidth={isNut ? 4.5 : 1.8}
-              />
-            );
-          })}
-        </g>
-
-        {/* Finger dots */}
-        <g>
-          {positions.map((pos) => {
-            if (pos.fret <= 0) return null;
-
-            const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
-            const fretIndex = pos.fret - startFret;
-            const y = MARGIN_TOP + FRET_HEIGHT * fretIndex + FRET_HEIGHT / 2;
-
-            return (
-              <g key={`dot-${pos.string}-${pos.fret}`}>
-                {/* Outer circle */}
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={11}
-                  fill={COLORS.fingerFill}
-                  stroke={COLORS.fingerStroke}
-                  strokeWidth={2.2}
-                />
-                {/* Inner fill */}
-                <circle cx={x} cy={y} r={8} fill={COLORS.fingerRootFill} opacity={0.9} />
-                {/* Finger number */}
-                {pos.finger && (
+        {/* Indicateurs au sillet : R (racine à vide), ○ (corde ouverte), × (étouffée) */}
+        {positions.map((p) => {
+          if (p.fret > 0) return null;
+          const x = xFor(p.string);
+          if (p.fret === 0) {
+            if (p.interval === 'R' || p.interval === '1') {
+              return (
+                <g key={`nut-ind-${p.string}`}>
+                  <circle cx={x} cy={nutZone} r={OPEN_ROOT_R} fill={C_ROOT} />
                   <text
                     x={x}
-                    cy={y + 0.5}
-                    fill="#ffffff"
-                    fontSize={11}
-                    fontWeight="700"
+                    y={nutZone}
+                    fill={C_WHITE}
+                    fontSize={FS_OPEN_ROOT_LABEL}
+                    fontWeight="bold"
+                    fontFamily={FONT_SANS}
                     textAnchor="middle"
                     dominantBaseline="central"
                   >
-                    {pos.finger}
+                    R
                   </text>
-                )}
-              </g>
-            );
-          })}
-        </g>
-
-        {/* Open string indicators */}
-        {hasOpen && (
-          <g>
-            {positions.map((pos) => {
-              if (pos.fret !== 0) return null;
-              const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
-              const y = MARGIN_TOP - 13;
-
-              return (
-                <circle
-                  key={`open-${pos.string}`}
-                  cx={x}
-                  cy={y}
-                  r={5.5}
-                  fill="none"
-                  stroke={COLORS.openString}
-                  strokeWidth={2.2}
-                />
-              );
-            })}
-          </g>
-        )}
-
-        {/* Muted string indicators (X) */}
-        {hasMuted && (
-          <g>
-            {positions.map((pos) => {
-              if (pos.fret !== -1) return null;
-              const x = MARGIN_LEFT + STRING_SPACING * visualString(pos.string);
-              const y = MARGIN_TOP - 11;
-              const size = 6;
-
-              return (
-                <g key={`muted-${pos.string}`}>
-                  <line
-                    x1={x - size}
-                    y1={y - size}
-                    x2={x + size}
-                    y2={y + size}
-                    stroke={COLORS.mutedString}
-                    strokeWidth={2.5}
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1={x + size}
-                    y1={y - size}
-                    x2={x - size}
-                    y2={y + size}
-                    stroke={COLORS.mutedString}
-                    strokeWidth={2.5}
-                    strokeLinecap="round"
-                  />
                 </g>
               );
-            })}
-          </g>
-        )}
-
-        {/* Barre indicator */}
-        {positions.some((p) => p.finger === 1) &&
-          (() => {
-            const barrePositions = positions.filter((p) => p.finger === 1 && p.fret > 0);
-            if (barrePositions.length < 2) return null;
-
-            const visStrings = barrePositions.map((p) => visualString(p.string));
-            const minString = Math.min(...visStrings);
-            const maxString = Math.max(...visStrings);
-            const fret = barrePositions[0]?.fret ?? 0;
-
-            const x1 = MARGIN_LEFT + STRING_SPACING * minString;
-            const x2 = MARGIN_LEFT + STRING_SPACING * maxString;
-            const fretIndex = fret - startFret;
-            const y = MARGIN_TOP + FRET_HEIGHT * fretIndex + FRET_HEIGHT / 2;
-
+            }
             return (
-              <line
-                x1={x1}
-                y1={y}
-                x2={x2}
-                y2={y}
-                stroke={COLORS.barre}
-                strokeWidth={3}
-                strokeLinecap="round"
-              />
+              <text
+                key={`nut-ind-${p.string}`}
+                x={x}
+                y={nutZone}
+                fill={C_ACCENT}
+                fontSize={FS_OPEN_IND}
+                fontWeight="bold"
+                fontFamily={FONT_SANS}
+                textAnchor="middle"
+                dominantBaseline="central"
+              >
+                ○
+              </text>
             );
-          })()}
+          }
+          return (
+            <text
+              key={`nut-ind-${p.string}`}
+              x={x}
+              y={nutZone}
+              fill={C_ROOT}
+              fontSize={FS_OPEN_IND}
+              fontWeight="bold"
+              fontFamily={FONT_SANS}
+              textAnchor="middle"
+              dominantBaseline="central"
+            >
+              ×
+            </text>
+          );
+        })}
 
-        {/* Compact name overlay */}
-        {name && compact && (
+        {/* Cordes (corde 6 la plus épaisse, -12 % par corde) */}
+        {Array.from({ length: STRINGS }, (_, i) => (
+          <line
+            key={`string-${i}`}
+            x1={xFor(i)}
+            y1={offsetY}
+            x2={xFor(i)}
+            y2={boardBottom}
+            stroke={C_WHITE}
+            strokeWidth={Math.max(1, 4 * (1 - i * STRING_TAPER))}
+          />
+        ))}
+
+        {/* Frettes */}
+        {Array.from({ length: rows + 1 }, (_, i) => (
+          <line
+            key={`fret-${i}`}
+            x1={OFFSET_X}
+            y1={offsetY + i * gap}
+            x2={OFFSET_X + 5 * stringGap}
+            y2={offsetY + i * gap}
+            stroke={C_WHITE}
+            strokeWidth={4}
+          />
+        ))}
+
+        {/* Sillet : 16 px en première position, filet fin sinon */}
+        <line
+          x1={OFFSET_X}
+          y1={offsetY}
+          x2={OFFSET_X + 5 * stringGap}
+          y2={offsetY}
+          stroke={C_WHITE}
+          strokeWidth={startFret === 1 ? 16 : Math.max(2, 16 * 0.4)}
+        />
+
+        {/* Case de départ à gauche (jamais de boucle de numéros) */}
+        {showFretNumbers && startFret > 1 && (
           <text
-            x={WIDTH / 2}
-            y={HEIGHT - 6}
-            fill={COLORS.white}
-            fontSize={10}
-            fontWeight="600"
+            x={OFFSET_X - FRET_NUM_GAP}
+            y={yFor(0)}
+            fill={C_ACCENT}
+            fontSize={FS_FRET_NUM}
+            fontWeight="bold"
+            fontFamily={FONT_SANS}
             textAnchor="middle"
+            dominantBaseline="central"
           >
-            {name}
+            {startFret}fr
           </text>
         )}
+
+        {/* Pastilles : couleur + label d'intervalle */}
+        {pressed.map((p) => {
+          const rel = p.fret - startFret;
+          if (rel < 0 || rel >= rows) return null;
+          const x = xFor(p.string);
+          const y = yFor(rel);
+          const info = intervalStyle(p.interval);
+          const isRoot = p.interval === 'R' || p.interval === '1';
+          const label = p.interval ? info.label : p.finger ? String(p.finger) : '';
+          return (
+            <g key={`note-${p.string}-${p.fret}`}>
+              <circle cx={x} cy={y} r={dotR} fill={info.color} />
+              {label && (
+                <text
+                  x={x}
+                  y={y}
+                  fill={info.text}
+                  fontSize={(isRoot ? FS_ROOT : FS_NOTE) * scale}
+                  fontWeight="bold"
+                  fontFamily={FONT_SANS}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                >
+                  {label}
+                </text>
+              )}
+            </g>
+          );
+        })}
       </svg>
     </div>
   );

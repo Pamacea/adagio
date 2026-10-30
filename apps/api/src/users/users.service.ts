@@ -8,6 +8,7 @@ import { prisma } from '@adagio/database';
 import * as bcrypt from 'bcrypt';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
 const SALT_ROUNDS = 10;
 
@@ -370,22 +371,7 @@ export class UsersService {
     return preferences;
   }
 
-  async updatePreferences(
-    userId: string,
-    preferencesData: {
-      theme?: string;
-      notation?: string;
-      sound?: string;
-      showIntervals?: boolean;
-      showNotes?: boolean;
-      showDegrees?: boolean;
-      instrument?: string;
-      tuning?: string;
-      fretCount?: number;
-      volume?: number;
-      metronomeVolume?: number;
-    }
-  ) {
+  async updatePreferences(userId: string, preferencesData: UpdatePreferencesDto) {
     const preferences = await prisma.userPreferences.upsert({
       where: { userId },
       create: {
@@ -457,8 +443,11 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    // If user has password, verify it before deletion
-    if (user.password && password) {
+    // Ré-authentification obligatoire : un token volé ne doit pas suffire à supprimer le compte.
+    if (user.password) {
+      if (!password) {
+        throw new BadRequestException('Password is required to delete the account');
+      }
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         throw new ForbiddenException('Password is incorrect');

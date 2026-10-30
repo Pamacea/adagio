@@ -657,6 +657,14 @@ C'est la base physique de la consonance et dissonance!`,
 // ============================================================================
 
 /**
+ * Indique si une leçon possède un contenu pédagogique non vide
+ */
+export function hasLessonContent(id: string): boolean {
+  const lesson = LESSONS_CONTENT[id];
+  return Boolean(lesson && lesson.blocks.length > 0);
+}
+
+/**
  * Récupère une leçon par son ID
  */
 export function getLesson(id: string): Lesson | null {

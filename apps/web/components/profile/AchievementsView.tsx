@@ -33,12 +33,12 @@ export function AchievementsView() {
   // Categories avec labels et couleurs (utilise les types de @adagio/types)
   const CATEGORIES = useMemo(
     () => ({
-      progression: { label: 'Progression', color: 'text-toxic' },
-      discovery: { label: 'Decouverte', color: 'text-rust' },
-      practice: { label: 'Pratique', color: 'text-blood' },
-      mastery: { label: 'Maîtrise', color: 'text-toxic' },
-      social: { label: 'Social', color: 'text-rust' },
-      milestone: { label: 'Jalon', color: 'text-blood' },
+      progression: { label: 'Progression', color: 'text-amber-400' },
+      discovery: { label: 'Decouverte', color: 'text-cyan-400' },
+      practice: { label: 'Pratique', color: 'text-emerald-500' },
+      mastery: { label: 'Maîtrise', color: 'text-violet-400' },
+      social: { label: 'Social', color: 'text-blue-400' },
+      milestone: { label: 'Jalon', color: 'text-rose-400' },
     }),
     []
   );
@@ -46,14 +46,24 @@ export function AchievementsView() {
   // Rarete avec labels et couleurs
   const RARITIES = useMemo(
     () => ({
-      common: { label: 'Commun', color: 'text-gray', bg: 'bg-steel', border: 'border-gray' },
-      rare: { label: 'Rare', color: 'text-toxic', bg: 'bg-toxic', border: 'border-toxic' },
-      epic: { label: 'Epic', color: 'text-rust', bg: 'bg-rust', border: 'border-rust' },
+      common: { label: 'Commun', color: 'text-gray', bg: 'bg-gray/10', border: 'border-gray' },
+      rare: {
+        label: 'Rare',
+        color: 'text-emerald-500',
+        bg: 'bg-emerald-500/10',
+        border: 'border-emerald-500',
+      },
+      epic: {
+        label: 'Epic',
+        color: 'text-violet-400',
+        bg: 'bg-violet-400/10',
+        border: 'border-violet-400',
+      },
       legendary: {
         label: 'Legendaire',
-        color: 'text-blood',
-        bg: 'bg-blood',
-        border: 'border-blood',
+        color: 'text-amber-400',
+        bg: 'bg-amber-400/10',
+        border: 'border-amber-400',
       },
     }),
     []
@@ -119,9 +129,9 @@ export function AchievementsView() {
           <span className="text-sm text-gray uppercase">Progression Globale</span>
           <span className="text-sm text-white font-bold">{stats.completionPercentage}%</span>
         </div>
-        <div className="h-4 border-2 border-steel bg-blackness">
+        <div className="h-4 border border-steelwarm bg-surface">
           <div
-            className="h-full bg-toxic border-r border-blood transition-all duration-500"
+            className="h-full bg-amber-400 border-r border-amber-400 transition-all duration-500"
             style={{ width: `${stats.completionPercentage}%` }}
           />
         </div>
@@ -142,10 +152,10 @@ export function AchievementsView() {
               <button
                 key={key}
                 onClick={() => setSelectedCategory(selectedCategory === cat ? 'ALL' : cat)}
-                className={`p-3 border-2 text-center transition-all ${
+                className={`p-3 border text-center transition-all ${
                   selectedCategory === cat
-                    ? 'border-blood bg-toxic'
-                    : 'border-steel bg-blackness hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/15'
+                    : 'border-steelwarm bg-surface hover:border-amber-400/50'
                 }`}
               >
                 <div className={`${color} mb-1`}>{CATEGORY_ICONS[cat]}</div>
@@ -153,8 +163,8 @@ export function AchievementsView() {
                 <div className="text-xs text-gray">
                   {categoryStats.unlocked}/{categoryStats.total}
                 </div>
-                <div className="h-1 border border-steel bg-blackness mt-1">
-                  <div className="h-full bg-toxic" style={{ width: `${pct}%` }} />
+                <div className="h-1 border border-steelwarm bg-surface mt-1">
+                  <div className="h-full bg-amber-400" style={{ width: `${pct}%` }} />
                 </div>
               </button>
             );
@@ -175,10 +185,10 @@ export function AchievementsView() {
                   onClick={() =>
                     setSelectedRarity(rarity === 'ALL' ? 'ALL' : (rarity as AchievementRarity))
                   }
-                  className={`px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
+                  className={`px-3 py-1.5 text-xs font-bold uppercase border transition-all ${
                     selectedRarity === rarity
-                      ? 'border-blood bg-toxic text-white'
-                      : 'border-steel bg-abyss text-gray hover:border-white'
+                      ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                      : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                   }`}
                 >
                   {rarity === 'ALL' ? 'Toutes' : RARITIES[rarity as AchievementRarity].label}
@@ -193,30 +203,30 @@ export function AchievementsView() {
             <div className="flex gap-1">
               <button
                 onClick={() => setFilterUnlocked('all')}
-                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
+                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border transition-all ${
                   filterUnlocked === 'all'
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                    : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                 }`}
               >
                 Tout
               </button>
               <button
                 onClick={() => setFilterUnlocked('unlocked')}
-                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
+                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border transition-all ${
                   filterUnlocked === 'unlocked'
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                    : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                 }`}
               >
                 Deverouilles
               </button>
               <button
                 onClick={() => setFilterUnlocked('locked')}
-                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
+                className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border transition-all ${
                   filterUnlocked === 'locked'
-                    ? 'border-blood bg-toxic text-white'
-                    : 'border-steel bg-abyss text-gray hover:border-white'
+                    ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                    : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
                 }`}
               >
                 Verrouilles
@@ -232,7 +242,7 @@ export function AchievementsView() {
                 setSelectedRarity('ALL');
                 setFilterUnlocked('all');
               }}
-              className="w-full px-3 py-1.5 text-xs font-bold uppercase border-2 border-steel bg-abyss text-gray hover:border-white"
+              className="w-full px-3 py-1.5 text-xs font-bold uppercase border border-steelwarm bg-surface text-gray hover:border-amber-400/50"
             >
               Reset Filtres
             </button>
@@ -263,7 +273,7 @@ export function AchievementsView() {
                 <div className="flex items-start gap-3 mb-3">
                   {/* Icon */}
                   <div
-                    className={`w-12 h-12 flex items-center justify-center text-2xl border-2 ${achievement.unlocked ? rarity.bg + ' ' + rarity.border : 'border-steel bg-blackness'}`}
+                    className={`w-12 h-12 flex items-center justify-center text-2xl border ${achievement.unlocked ? rarity.bg + ' ' + rarity.border : 'border-steelwarm bg-surface'}`}
                   >
                     {achievement.unlocked ? (
                       <AchievementIcon name={achievement.icon} size={24} className="text-current" />
@@ -293,7 +303,7 @@ export function AchievementsView() {
                   {/* XP */}
                   <div className="text-right">
                     <div
-                      className={`text-sm font-bold ${achievement.unlocked ? 'text-toxic' : 'text-gray'}`}
+                      className={`text-sm font-bold ${achievement.unlocked ? 'text-amber-400' : 'text-gray'}`}
                     >
                       +{achievement.xp} XP
                     </div>
@@ -314,15 +324,15 @@ export function AchievementsView() {
                         {achievement.progress}/{achievement.maxProgress}
                       </span>
                     </div>
-                    <div className="h-2 border border-steel bg-blackness">
-                      <div className="h-full bg-toxic" style={{ width: `${progressPct}%` }} />
+                    <div className="h-2 border border-steelwarm bg-surface">
+                      <div className="h-full bg-amber-400" style={{ width: `${progressPct}%` }} />
                     </div>
                   </div>
                 )}
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-2 border-t border-steel">
-                  <div className={`text-xs ${achievement.unlocked ? 'text-toxic' : 'text-gray'}`}>
+                <div className="flex items-center justify-between pt-2 border-t border-steelwarm">
+                  <div className={`text-xs ${achievement.unlocked ? 'text-amber-400' : 'text-gray'}`}>
                     {achievement.unlocked
                       ? '✓ Deverouille'
                       : progressPct > 0
@@ -334,7 +344,7 @@ export function AchievementsView() {
                   {!achievement.unlocked && (
                     <Link
                       href="/lessons"
-                      className="px-3 py-1 text-xs font-bold uppercase border-2 border-steel bg-abyss text-gray hover:border-white"
+                      className="px-3 py-1 text-xs font-bold uppercase border border-steelwarm bg-surface text-gray hover:border-amber-400/50"
                     >
                       Continuer
                     </Link>

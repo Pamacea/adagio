@@ -97,21 +97,21 @@ export function AccountActions() {
         <div className="space-y-3">
           <button
             onClick={() => setShowPasswordModal(true)}
-            className="w-full px-4 py-3 text-left text-sm border-2 border-steel bg-blackness text-gray hover:border-white transition-all"
+            className="w-full px-4 py-3 text-left text-sm border border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:text-white transition-colors"
           >
             Changer le mot de passe
           </button>
           <button
             onClick={handleExport}
             disabled={exportData.isPending}
-            className="w-full px-4 py-3 text-left text-sm border-2 border-steel bg-blackness text-gray hover:border-white transition-all disabled:opacity-50"
+            className="w-full px-4 py-3 text-left text-sm border border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:text-white transition-colors disabled:opacity-50"
           >
             {exportData.isPending ? 'Export en cours...' : 'Exporter mes données'}
           </button>
           <button
             onClick={() => signOut.mutate()}
             disabled={signOut.isPending}
-            className="w-full px-4 py-3 text-left text-sm border-2 border-rust bg-blackness text-rust hover:border-white hover:text-white transition-all disabled:opacity-50"
+            className="w-full px-4 py-3 text-left text-sm border border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:text-white transition-colors disabled:opacity-50"
           >
             {signOut.isPending ? 'Déconnexion...' : 'Se déconnecter'}
           </button>
@@ -119,14 +119,14 @@ export function AccountActions() {
       </div>
 
       {/* Danger Zone */}
-      <div className="section-frame p-6 border-2 border-blood">
-        <h3 className="text-lg font-metal text-blood uppercase mb-4">Zone de Danger</h3>
+      <div className="section-frame p-6 border border-rose-500/40">
+        <h3 className="text-lg font-metal text-rose-500 uppercase mb-4">Zone de Danger</h3>
         <p className="text-sm text-gray mb-4">
           Cette action est irréversible. Toutes vos données seront définitivement supprimées.
         </p>
         <button
           onClick={() => setShowDeleteModal(true)}
-          className="px-6 py-2 text-sm font-bold uppercase border-2 border-blood bg-blackness text-blood hover:bg-blood hover:text-white transition-all"
+          className="px-6 py-2 text-sm font-bold uppercase border border-rose-500/60 bg-surface text-rose-500 hover:bg-rose-500/15 hover:text-rose-400 transition-colors"
         >
           SUPPRIMER MON COMPTE
         </button>
@@ -135,7 +135,7 @@ export function AccountActions() {
       {/* Password Change Modal */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="section-frame p-6 max-w-md w-full border-2 border-blood">
+          <div className="section-frame p-6 w-full border border-steelwarm" style={{ maxWidth: '28rem' }}>
             <h3 className="text-xl font-metal text-white uppercase mb-4">
               Changer le mot de passe
             </h3>
@@ -151,7 +151,7 @@ export function AccountActions() {
                   onChange={(e) =>
                     setPasswordForm({ ...passwordForm, currentPassword: e.target.value })
                   }
-                  className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
+                  className="w-full px-4 py-2 border border-steelwarm bg-surface text-white focus:border-amber-400 focus:outline-none"
                   required
                 />
               </div>
@@ -166,7 +166,7 @@ export function AccountActions() {
                   onChange={(e) =>
                     setPasswordForm({ ...passwordForm, newPassword: e.target.value })
                   }
-                  className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
+                  className="w-full px-4 py-2 border border-steelwarm bg-surface text-white focus:border-amber-400 focus:outline-none"
                   required
                 />
               </div>
@@ -181,18 +181,18 @@ export function AccountActions() {
                   onChange={(e) =>
                     setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })
                   }
-                  className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
+                  className="w-full px-4 py-2 border border-steelwarm bg-surface text-white focus:border-amber-400 focus:outline-none"
                   required
                 />
               </div>
 
-              {passwordError && <p className="text-sm text-blood">{passwordError}</p>}
+              {passwordError && <p className="text-sm text-rose-500">{passwordError}</p>}
 
               <div className="flex gap-2 pt-2">
                 <button
                   type="submit"
                   disabled={changePassword.isPending}
-                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border-2 border-blood bg-toxic text-white poly-left disabled:opacity-50"
+                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border border-amber-400 bg-amber-400/20 text-amber-400 poly-left disabled:opacity-50"
                 >
                   {changePassword.isPending ? 'Changement...' : 'CONFIRMER'}
                 </button>
@@ -203,7 +203,7 @@ export function AccountActions() {
                     setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
                     setPasswordError('');
                   }}
-                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border-2 border-steel bg-abyss text-gray poly-right"
+                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border border-steelwarm bg-surface text-gray poly-right"
                 >
                   ANNULER
                 </button>
@@ -216,8 +216,8 @@ export function AccountActions() {
       {/* Delete Account Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="section-frame p-6 max-w-md w-full border-2 border-blood">
-            <h3 className="text-xl font-metal text-blood uppercase mb-4">Supprimer le compte</h3>
+          <div className="section-frame p-6 w-full border border-steelwarm" style={{ maxWidth: '28rem' }}>
+            <h3 className="text-xl font-metal text-rose-500 uppercase mb-4">Supprimer le compte</h3>
 
             <p className="text-sm text-gray mb-4">
               Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
@@ -232,18 +232,18 @@ export function AccountActions() {
                   type="password"
                   value={deletePassword}
                   onChange={(e) => setDeletePassword(e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-steel bg-blackness text-white focus:border-blood focus:outline-none"
+                  className="w-full px-4 py-2 border border-steelwarm bg-surface text-white focus:border-amber-400 focus:outline-none"
                   required
                 />
               </div>
 
-              {deleteError && <p className="text-sm text-blood">{deleteError}</p>}
+              {deleteError && <p className="text-sm text-rose-500">{deleteError}</p>}
 
               <div className="flex gap-2 pt-2">
                 <button
                   type="submit"
                   disabled={deleteAccount.isPending}
-                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border-2 border-blood bg-blood text-white poly-left disabled:opacity-50"
+                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border border-rose-500 bg-rose-500 text-white poly-left disabled:opacity-50"
                 >
                   {deleteAccount.isPending ? 'Suppression...' : 'SUPPRIMER'}
                 </button>
@@ -254,7 +254,7 @@ export function AccountActions() {
                     setDeletePassword('');
                     setDeleteError('');
                   }}
-                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border-2 border-steel bg-abyss text-gray poly-right"
+                  className="flex-1 px-6 py-2 text-sm font-bold uppercase border border-steelwarm bg-surface text-gray poly-right"
                 >
                   ANNULER
                 </button>

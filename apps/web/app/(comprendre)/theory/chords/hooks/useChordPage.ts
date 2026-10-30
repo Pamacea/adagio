@@ -18,6 +18,7 @@ import {
   getChordTension,
   getChordVoicings,
   getDegreeNote,
+  getIntervalInChord,
   parseChord,
   CHROMATIC_SCALE,
   GUITAR_TUNING_DISPLAY,
@@ -138,11 +139,20 @@ export function useChordPage(): UseChordPageReturn {
     return getDegreeNote(root, selectedDegree as ChordDegree, tonality);
   }, [root, tonality, selectedDegree, selectedChord]);
 
-  // Qualité actuelle
+  // Qualités disponibles par catégorie (diatoniques du degré courant)
+  const diatonicQualities = useMemo(() => {
+    const degree = selectedDegree as DiatonicDegree;
+    return tonality === 'major'
+      ? MAJOR_DEGREE_QUALITIES[degree] || []
+      : MINOR_DEGREE_QUALITIES[degree] || [];
+  }, [tonality, selectedDegree]);
+
+  // Qualité actuelle : celle de l'accord sélectionné, sinon la qualité
+  // diatonique du degré (ex. VI en majeur = « m », jamais masquée en majeur).
   const currentQuality = useMemo(() => {
     if (selectedChord) return selectedChord.quality;
-    return '' as ChordQuality;
-  }, [selectedChord]);
+    return (diatonicQualities[0] ?? '') as ChordQuality;
+  }, [selectedChord, diatonicQualities]);
 
   // Notes de l'accord
   const chordNotes = useMemo(() => {
@@ -166,14 +176,6 @@ export function useChordPage(): UseChordPageReturn {
   const chordTension = useMemo(() => {
     return getChordTension(currentQuality);
   }, [currentQuality]);
-
-  // Qualités disponibles par catégorie
-  const diatonicQualities = useMemo(() => {
-    const degree = selectedDegree as DiatonicDegree;
-    return tonality === 'major'
-      ? MAJOR_DEGREE_QUALITIES[degree] || []
-      : MINOR_DEGREE_QUALITIES[degree] || [];
-  }, [tonality, selectedDegree]);
 
   const diatonicQualitySet = useMemo(() => new Set(diatonicQualities), [diatonicQualities]);
 
@@ -315,50 +317,6 @@ export function useChordPage(): UseChordPageReturn {
     const quality = (ref?.quality ?? '') as ChordQuality;
     const chordNotes = buildChord(chordRoot, quality);
 
-    // CORRIGÉ: Mapping intervalles complet
-    const getIntervalForNote = (note: NoteName): Interval | undefined => {
-      const intervals: Interval[] = [
-        '1',
-        'b2',
-        '2',
-        'b3',
-        '3',
-        '4',
-        '#4',
-        'b5',
-        '5',
-        '#5',
-        'b6',
-        'bb7',
-        'b7',
-        '7',
-      ];
-      const semitones: Record<string, number> = {
-        C: 0,
-        'C#': 1,
-        Db: 1,
-        D: 2,
-        'D#': 3,
-        Eb: 3,
-        E: 4,
-        F: 5,
-        'F#': 6,
-        Gb: 6,
-        G: 7,
-        'G#': 8,
-        Ab: 8,
-        A: 9,
-        'A#': 10,
-        Bb: 10,
-        B: 11,
-      };
-      const rootSemitone = semitones[chordRoot];
-      const noteSemitone = semitones[note];
-      if (rootSemitone === undefined || noteSemitone === undefined) return undefined;
-      const diff = (noteSemitone - rootSemitone + 12) % 12;
-      return intervals[diff];
-    };
-
     const positions: Array<{
       string: number;
       fret: number;
@@ -383,7 +341,7 @@ export function useChordPage(): UseChordPageReturn {
           fret: playedNote.fret,
           finger: playedNote.finger,
           note: playedNote.note,
-          interval: playedNote.interval || getIntervalForNote(playedNote.note),
+          interval: playedNote.interval || getIntervalInChord(chordRoot, playedNote.note, quality),
         });
       } else {
         const openNote = openNotes[diagramString];
@@ -393,7 +351,7 @@ export function useChordPage(): UseChordPageReturn {
             string: diagramString,
             fret: 0,
             note: openNote,
-            interval: getIntervalForNote(openNote),
+            interval: getIntervalInChord(chordRoot, openNote, quality),
           });
         } else {
           positions.push({ string: diagramString, fret: -1 });

@@ -27,8 +27,8 @@ export function NotationTabs({ selectedTab, onTabChange }: NotationTabsProps) {
           onClick={() => onTabChange(tab.id)}
           className={`px-4 py-2 text-sm font-bold uppercase border-2 transition-all ${
             selectedTab === tab.id
-              ? 'border-blood bg-toxic text-white'
-              : 'border-steel bg-abyss text-gray hover:border-white'
+              ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+              : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50'
           }`}
         >
           {tab.label}

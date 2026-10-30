@@ -21,7 +21,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Noir dominant - Metallica style
+        // Noir dominant - DA d'origine (v0.6.0)
         abyss: '#000000' /* Noir absolu */,
         void: '#010101' /* Noir profond */,
         blackness: '#020202' /* Noir pur */,
@@ -43,6 +43,28 @@ module.exports = {
         // Contraste
         white: '#e0e0e0' /* Blanc sale */,
         gray: '#666666' /* Gris moyen */,
+
+        // Accents remappés sur le sang : plus aucune teinte ambre
+        ember: '#8b1a1a',
+        gold: '#b84a1a',
+        // Fonds : tout reste sur le noir du site. `raised` ne sert qu'au survol.
+        surface: '#000000',
+        raised: '#0a0a0a',
+        steelwarm: '#2a2a2a',
+
+        // Refonte des pages intérieures : les classes amber-* héritées
+        // pointent désormais sur la gamme sang/rouille.
+        amber: {
+          200: '#d98a8a',
+          300: '#c25a5a',
+          400: '#8b1a1a',
+          500: '#7a1616',
+          600: '#6a1313',
+          700: '#5a1010',
+          800: '#4a0d0d',
+          900: '#3a0a0a',
+          950: '#2a0707',
+        },
 
         // Fretboard colors
         fretboard: {

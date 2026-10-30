@@ -4,6 +4,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -90,7 +91,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update current user preferences' })
-  async updatePreferences(@Request() req, @Body() preferencesData: Record<string, unknown>) {
+  async updatePreferences(@Request() req, @Body() preferencesData: UpdatePreferencesDto) {
     return this.usersService.updatePreferences(req.user.userId, preferencesData);
   }
 
@@ -114,7 +115,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete current user account' })
-  async deleteAccount(@Request() req, @Body() body: { password?: string }) {
+  // Express 5 laisse `body` undefined si la requête n'a pas de corps.
+  async deleteAccount(@Request() req, @Body() body: { password?: string } = {}) {
     return this.usersService.deleteAccount(req.user.userId, body.password);
   }
 

@@ -42,7 +42,7 @@ const axisGroupStyles: Record<string, string> = {
 
 export function ChordCard({
   name,
-  root,
+  root: _root,
   quality: _quality,
   positions,
   function: chordFunction,
@@ -93,7 +93,6 @@ export function ChordCard({
         {/* Chord diagram */}
         <ChordDiagram
           name=""
-          root={root}
           positions={positions}
           frets={4}
           showFretNumbers={false}

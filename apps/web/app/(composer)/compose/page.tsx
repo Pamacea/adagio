@@ -1,18 +1,17 @@
 /**
  * ADAGIO - Compose Page
- * Page de composition avancée — orchestrateur (état + sections modulaires)
+ * Page de composition avancée — une seule colonne de lecture.
  */
 
 'use client';
 
 import { useState } from 'react';
-import { FadeIn, MetalNav, MetalFooter } from '@/components';
+import { MetalNav, MetalFooter } from '@/components';
 import { useComposeState, useComposeAudio } from '@/features/theory';
 import {
   ScaleNotesDisplay,
   KeySelector,
   CircleDegreeSelector,
-  DegreeGrid,
   ChordDetailsPanel,
   ComposeProgressionsSection,
   ModesSection,
@@ -24,6 +23,8 @@ import {
   INTERVAL_SEMITONES,
   transposeNote,
   getChordNotes,
+  getParallelKey,
+  getRelativeKey,
   parseChord,
 } from '@adagio/theory';
 import type { ComposeProgression, KeyMode } from '@adagio/theory';
@@ -35,6 +36,12 @@ import type { Interval, NoteName } from '@adagio/types';
 
 /** Modes de la famille majeure (les autres sont mineurs) */
 const MAJOR_FAMILY = new Set<string>(['major', 'lydian', 'mixolydian']);
+
+const SECTIONS = [
+  { id: 'harmonie', label: 'Harmonie' },
+  { id: 'progressions', label: 'Progressions' },
+  { id: 'modes', label: 'Modes' },
+] as const;
 
 export default function ComposePage() {
   const {
@@ -65,6 +72,10 @@ export default function ComposePage() {
   /** Mode cliqué dans « Modes disponibles » */
   const [activeScaleId, setActiveScaleId] = useState<string>(keyMode);
 
+  /** Numéraux romains du mode courant — sert au lookup des degrés */
+  const numerals: readonly string[] =
+    keyMode === 'major' ? ROMAN_NUMERALS_MAJOR : ROMAN_NUMERALS_MINOR;
+
   // ---------------------------------------------------------------------------
   // Handlers — tonalité / mode
   // ---------------------------------------------------------------------------
@@ -86,21 +97,11 @@ export default function ComposePage() {
     resetVariations();
   };
 
-  const handleModulation = (key: string) => {
+  // Sélection d'un degré dans la tonalité courante (sélecteur unique : cercle)
+  const handleDegreeSelect = (degreeIndex: number) => {
     audio.stop();
     setPlayback(null);
-    setSelectedKey(key as NoteName);
-  };
-
-  // Cercle des degrés : modulation (change tonique + mode), réinitialise la sélection
-  const handleCircleDegree = (_degree: string, newKey: NoteName, newMode: KeyMode) => {
-    audio.stop();
-    setPlayback(null);
-    setActiveScaleId(newMode);
-    setSelectedKey(newKey);
-    setKeyMode(newMode);
-    setSelectedDegree(null);
-    resetVariations();
+    setSelectedDegree(degreeIndex);
   };
 
   // ---------------------------------------------------------------------------
@@ -120,9 +121,7 @@ export default function ComposePage() {
   /** Clic ▶ sur une progression : lecture séquentielle + highlight synchronisé */
   const handlePlayProgression = (prog: ComposeProgression, index: number) => {
     const sequence = prog.degrees.map((deg) => {
-      const degreeIndex = ROMAN_NUMERALS_MAJOR.indexOf(
-        deg as (typeof ROMAN_NUMERALS_MAJOR)[number]
-      );
+      const degreeIndex = numerals.indexOf(deg);
       const chord = degreeIndex >= 0 ? chords[degreeIndex] : undefined;
       return chord ? getChordNotes(chord).notes : [];
     });
@@ -172,114 +171,126 @@ export default function ComposePage() {
     audio.playScale(notes);
   };
 
-  const numerals = keyMode === 'major' ? ROMAN_NUMERALS_MAJOR : ROMAN_NUMERALS_MINOR;
-
   return (
-    <div className="min-h-screen flex flex-col bg-abyss">
+    <div className="min-h-screen flex flex-col">
       <MetalNav />
 
-      <main className="flex-1 px-4 py-24 mt-16">
-        <div className="w-3/4 mx-auto">
+      <main className="flex-1 px-6 pt-28 pb-24">
+        <div className="w-full mx-auto space-y-12" style={{ maxWidth: '68rem' }}>
           {/* Header */}
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl lg:text-4xl font-metal text-white tracking-tighter mb-2">
-              COMPOSE
+          <header className="space-y-3">
+            <h1 className="font-metal text-2xl uppercase tracking-tighter text-white sm:text-3xl">
+              Compose
             </h1>
-            <p className="text-xs text-gray uppercase tracking-widest">
-              Studio de composition harmonique
+            <p className="text-[15px] leading-relaxed text-gray">
+              Studio de composition harmonique.
             </p>
-          </div>
+            <nav aria-label="Sections de la page" className="flex gap-6 pt-1">
+              {SECTIONS.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="text-[13px] text-gray/70 hover:text-gold"
+                >
+                  {section.label}
+                </a>
+              ))}
+            </nav>
+          </header>
 
-          {/* Key selector */}
-          <FadeIn>
-            <KeySelector
-              selectedKey={selectedKey}
-              keyMode={keyMode}
-              onKeyChange={handleKeyChange}
-              onModeChange={handleModeChange}
-            />
-          </FadeIn>
-
-          {/* Scale notes display */}
-          <FadeIn>
+          {/* Tonalité + gamme */}
+          <section className="space-y-2">
+            <div className="panel p-3">
+              <KeySelector
+                selectedKey={selectedKey}
+                keyMode={keyMode}
+                onKeyChange={handleKeyChange}
+                onModeChange={handleModeChange}
+                diatonicChords={chords}
+              />
+            </div>
             <ScaleNotesDisplay
               scaleNotes={scaleNotes}
               keyMode={keyMode}
               selectedKey={selectedKey}
               onPlayScale={handlePlayScale}
             />
-          </FadeIn>
+          </section>
 
-          <FadeIn className="grid lg:grid-cols-2 gap-8">
-            {/* Left: Degrees */}
-            <div>
-              <div className="section-frame p-6 mb-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-lg font-metal text-white uppercase tracking-wider">
-                    Cercle des degrés
-                  </h2>
-                  <p className="text-xs text-gray uppercase tracking-wider">Cliquez pour moduler</p>
-                </div>
+          {/* Harmonie : cercle à gauche, détail à droite (empilé sur mobile) */}
+          <section id="harmonie" className="scroll-mt-28 space-y-3">
+            <div className="flex items-baseline justify-between gap-6">
+              <h2 className="field-label mb-0 text-gold">Cercle des degrés</h2>
+              <p className="text-[11px] text-gray">Cliquez pour sélectionner</p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start">
+              <div className="panel mx-auto w-full space-y-3 bg-surface p-3">
                 <CircleDegreeSelector
                   currentKey={selectedKey}
                   keyMode={keyMode}
-                  onDegreeClick={handleCircleDegree}
+                  selectedDegree={selectedDegree}
+                  onDegreeSelect={handleDegreeSelect}
                 />
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-1 text-[11px] text-gray">
+                  <span>
+                    Relative <span className="text-white">{getRelativeKey(selectedKey, keyMode)}</span>
+                  </span>
+                  <span>
+                    Parallèle{' '}
+                    <span className="text-white">{getParallelKey(selectedKey, keyMode)}</span>
+                  </span>
+                </div>
               </div>
-              <DegreeGrid
-                chords={chords}
-                numerals={numerals}
-                selectedDegree={selectedDegree}
-                selectedVariations={selectedVariations}
-                chordVariations={chordVariations}
-                scaleNotes={scaleNotes}
-                onDegreeClick={setSelectedDegree}
-                onModulation={handleModulation}
-              />
-            </div>
 
-            {/* Right: Selected chord details */}
-            <div>
-              <ChordDetailsPanel
-                selectedChord={effectiveChord}
-                selectedDegree={selectedDegree}
-                chordDetails={chordDetails}
-                chordVariations={chordVariations}
-                selectedVariations={selectedVariations}
-                selectedVariationDetails={selectedVariationDetails}
-                chordSubstitutions={chordSubstitutions}
-                numerals={numerals}
-                selectedKey={selectedKey}
-                keyMode={keyMode}
-                onVariationChange={setSelectedVariation}
-                onSubstitutionClick={handleSubstitution}
-                onPlayChord={handlePlayChord}
-              />
+              <div>
+                {selectedDegree === null ? (
+                  <p className="panel p-3 text-center text-[13px] text-gray">
+                    Choisis un degré…
+                  </p>
+                ) : (
+                  <ChordDetailsPanel
+                    selectedChord={effectiveChord}
+                    selectedDegree={selectedDegree}
+                    chordDetails={chordDetails}
+                    chordVariations={chordVariations}
+                    selectedVariations={selectedVariations}
+                    selectedVariationDetails={selectedVariationDetails}
+                    chordSubstitutions={chordSubstitutions}
+                    numerals={numerals}
+                    selectedKey={selectedKey}
+                    keyMode={keyMode}
+                    onVariationChange={setSelectedVariation}
+                    onSubstitutionClick={handleSubstitution}
+                    onPlayChord={handlePlayChord}
+                  />
+                )}
+              </div>
             </div>
-          </FadeIn>
+          </section>
 
-          {/* Common progressions */}
-          <FadeIn>
+          {/* Progressions classiques */}
+          <section id="progressions" className="scroll-mt-28">
             <ComposeProgressionsSection
               selectedKey={selectedKey}
               progressions={progressions}
+              numerals={numerals}
               onSelectDegree={setSelectedDegree}
               onPlayProgression={handlePlayProgression}
               playingIndex={playback?.index ?? null}
               activeStep={playback?.step ?? null}
             />
-          </FadeIn>
+          </section>
 
-          {/* Scale modes and substitutions */}
-          <FadeIn>
+          {/* Modes */}
+          <section id="modes" className="scroll-mt-28">
             <ModesSection
               selectedKey={selectedKey}
               keyMode={keyMode}
               activeScaleId={activeScaleId}
               onModeSelect={handleModeSelect}
-              onSubstitutionApply={handleSubstitution}
             />
-          </FadeIn>
+          </section>
         </div>
       </main>
 

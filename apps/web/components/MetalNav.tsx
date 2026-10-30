@@ -63,10 +63,10 @@ function PillarDropdown({
         </svg>
       </Link>
       {/* Dropdown */}
-      <div className="invisible absolute left-0 top-full z-50 min-w-48 border-2 border-steel bg-blackness opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+      <div className="invisible absolute left-0 top-full z-50 min-w-48 border border-steelwarm bg-surface opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
         <Link
           href={pillar.href}
-          className={`flex items-center gap-2 border-b border-steel px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-gray hover:bg-toxic hover:text-white ${isActivePath(pathname, pillar.href) ? 'text-white' : ''}`}
+          className={`flex items-center gap-2 border-b border-steelwarm px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-gray hover:bg-amber-400/10 hover:text-amber-400 ${isActivePath(pathname, pillar.href) ? 'text-white' : ''}`}
           onClick={onNavigate}
         >
           <pillar.icon size="sm" />
@@ -76,9 +76,9 @@ function PillarDropdown({
           <Link
             key={child.href}
             href={child.href}
-            className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-toxic hover:text-white ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-amber-400/10 hover:text-amber-400 ${
               isActivePath(pathname, child.href)
-                ? 'border-l-2 border-blood bg-abyss text-white'
+                ? 'border-l-2 border-amber-400 bg-surface text-amber-400'
                 : 'border-l-2 border-transparent text-gray'
             }`}
             onClick={onNavigate}
@@ -97,7 +97,7 @@ export function MetalNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b-2 border-steel bg-blackness">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-steelwarm bg-surface">
       <div className="flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link
@@ -105,7 +105,7 @@ export function MetalNav() {
           className="flex items-center gap-3 group"
           onClick={() => setMobileMenuOpen(false)}
         >
-          <div className="icon-box group-hover:border-blood transition-colors">
+          <div className="icon-box group-hover:border-amber-400/50 transition-colors">
             <Icons.Logo size="md" />
           </div>
           <div>
@@ -137,7 +137,7 @@ export function MetalNav() {
         {/* Mobile menu toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 border-2 border-steel bg-blackness hover:border-blood transition-colors"
+          className="lg:hidden p-2 border border-steelwarm bg-surface hover:border-amber-400/50 transition-colors"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <Icons.Close size="lg" /> : <Icons.Menu size="lg" />}
@@ -146,9 +146,9 @@ export function MetalNav() {
 
       {/* Mobile menu : regroupé par pilier */}
       {mobileMenuOpen && (
-        <div className="lg:hidden max-h-[70vh] overflow-y-auto border-t-2 border-steel bg-blackness">
+        <div className="lg:hidden max-h-[70vh] overflow-y-auto border-t border-steelwarm bg-surface">
           {PILLARS.map((pillar) => (
-            <div key={pillar.href} className="border-b border-steel">
+            <div key={pillar.href} className="border-b border-steelwarm">
               <Link
                 href={pillar.href}
                 className={`nav-link font-bold ${isActivePath(pathname, pillar.href) ? 'active' : ''}`}
@@ -158,7 +158,7 @@ export function MetalNav() {
                 {pillar.label}
               </Link>
               {pillar.children.length > 0 && (
-                <div className="pl-6 border-l-2 border-steel ml-4">
+                <div className="pl-6 border-l-2 border-steelwarm ml-4">
                   {pillar.children.map((child) => (
                     <Link
                       key={child.href}
@@ -207,7 +207,7 @@ export function LocalNav({ items, title }: LocalNavProps) {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <div className="border-b-2 border-steel bg-blackness">
+    <div className="border-b border-steelwarm bg-surface">
       <div className="px-4 py-2">
         <h2 className="text-xs text-gray font-mono tracking-widest uppercase mb-2">{title}</h2>
         <div className="flex flex-wrap gap-1">
@@ -217,8 +217,8 @@ export function LocalNav({ items, title }: LocalNavProps) {
               href={item.href}
               className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider border-2 transition-all ${
                 isActive(item.href)
-                  ? 'border-blood bg-toxic text-white'
-                  : 'border-steel bg-abyss text-gray hover:border-white hover:text-white'
+                  ? 'border-amber-400 bg-amber-400/20 text-amber-400'
+                  : 'border-steelwarm bg-surface text-gray hover:border-amber-400/50 hover:text-white'
               }`}
             >
               {item.label}

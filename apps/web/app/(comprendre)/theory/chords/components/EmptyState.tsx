@@ -19,7 +19,7 @@ export function EmptyState({ className }: EmptyStateProps) {
         <div className="text-center">
           <div className="flex justify-center mb-4 animate-pulse">
             <svg
-              className="w-16 h-16 text-gray/30"
+              className="w-16 h-16 text-white/20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -30,8 +30,8 @@ export function EmptyState({ className }: EmptyStateProps) {
               <circle cx="18" cy="16" r="3" />
             </svg>
           </div>
-          <h2 className="text-2xl font-metal text-white mb-2">Sélectionnez un accord</h2>
-          <p className="text-gray">Choisissez une tonique et un degré dans le menu</p>
+          <h2 className="mb-2 text-xl tracking-tight text-white">Sélectionnez un accord</h2>
+          <p className="text-sm text-muted">Choisissez une tonique et un degré dans le menu</p>
         </div>
       </div>
     </div>

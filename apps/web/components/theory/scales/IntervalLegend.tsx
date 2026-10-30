@@ -77,7 +77,7 @@ export function IntervalLegend() {
         <div key={interval} className="section-frame p-3">
           <div className="flex items-center gap-2 mb-1">
             <div
-              className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+              className="w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0"
               style={{ backgroundColor: INTERVAL_HEX_COLORS[interval] || '#444', color: 'white' }}
             >
               {formatInterval(interval)}

@@ -8,7 +8,7 @@ import { PILLARS, ACCOUNT_NAV } from '@/lib/navigation';
 
 export function MetalFooter() {
   return (
-    <footer className="border-t-2 border-steel bg-blackness w-full">
+    <footer className="border-t border-steelwarm bg-surface w-full">
       <div className="py-6 px-4 w-full">
         <div className="w-full">
           {/* Main content */}
@@ -26,7 +26,7 @@ export function MetalFooter() {
             {PILLARS.map((pillar) => (
               <div key={pillar.href}>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
-                  <Link href={pillar.href} className="hover:text-toxic transition-colors">
+                  <Link href={pillar.href} className="hover:text-amber-400 transition-colors">
                     {pillar.label.charAt(0) + pillar.label.slice(1).toLowerCase()}
                   </Link>
                 </h4>
@@ -62,7 +62,7 @@ export function MetalFooter() {
           </div>
 
           {/* Separator */}
-          <div className="border-t border-steel my-4"></div>
+          <div className="border-t border-steelwarm my-4"></div>
 
           {/* Bottom bar */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -82,7 +82,7 @@ export function MetalFooter() {
  */
 export function MetalFooterCompact() {
   return (
-    <footer className="border-t-2 border-steel bg-blackness w-full">
+    <footer className="border-t border-steelwarm bg-surface w-full">
       <div className="py-4 px-4 w-full">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 w-full">
           <p className="text-xs text-gray tracking-widest uppercase">

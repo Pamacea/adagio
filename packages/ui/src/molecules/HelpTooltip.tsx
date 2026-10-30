@@ -10,7 +10,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@adagio/ui';
 
 const tooltipVariants = cva(
-  'absolute z-50 rounded-xl border-2 px-3 py-2 text-sm shadow-guitar pointer-events-none transition-opacity duration-200',
+  'absolute z-50 border-2 px-3 py-2 text-sm shadow-guitar pointer-events-none transition-opacity duration-200',
   {
     variants: {
       variant: {

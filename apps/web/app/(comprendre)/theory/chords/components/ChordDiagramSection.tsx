@@ -1,15 +1,11 @@
 /**
- * ChordDiagramSection - Section containing the chord diagram and voicing selector
- *
- * Displays:
- * - Professional chord diagram
- * - Voicing selector (if multiple voicings available)
+ * ChordDiagramSection - Diagramme d'accord posé sur sa carte, + sélecteur de positions.
  */
 
 'use client';
 
-import type { ChordVoicing, NoteName, Interval } from '@adagio/types';
-import { ChordDiagram } from './ChordDiagram';
+import type { ChordVoicing } from '@adagio/types';
+import { ChordDiagram, cn, type ChordFingerPosition } from '@adagio/ui';
 import { VoicingSelector } from './VoicingSelector';
 
 export interface ChordDiagramSectionProps {
@@ -18,13 +14,7 @@ export interface ChordDiagramSectionProps {
   selectedVoicingIndex: number;
   allVoicings: ChordVoicing[];
   onVoicingSelect: (index: number) => void;
-  getFingeringFromVoicing: (voicing?: ChordVoicing) => Array<{
-    string: number;
-    fret: number;
-    finger?: number;
-    note?: NoteName;
-    interval?: Interval;
-  }>;
+  getFingeringFromVoicing: (voicing?: ChordVoicing) => ChordFingerPosition[];
   className?: string;
 }
 
@@ -38,33 +28,29 @@ export function ChordDiagramSection({
   className,
 }: ChordDiagramSectionProps) {
   return (
-    <div className={className}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Diagramme */}
-        <div className="lg:col-span-2 p-8 rounded-none border-2 border-steel/30 bg-gradient-to-br from-void via-blackness to-abyss">
-          <h3 className="text-base font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-none bg-toxic"></span>
-            Diagramme
-          </h3>
-          <div className="py-4">
+    <div className={cn('flex w-full flex-col items-center', className)}>
+      <div className="panel w-full overflow-hidden bg-raised" style={{ maxWidth: '520px' }}>
+        <div className="p-6 sm:p-8">
+          <h2 className="mb-5 text-center text-2xl font-metal tracking-tighter text-white">
+            {chordName}
+          </h2>
+          <div className="mx-auto" style={{ maxWidth: '300px' }}>
             <ChordDiagram
-              name={chordName}
+              name=""
+              frets={6}
               positions={getFingeringFromVoicing(selectedVoicing)}
-              position={selectedVoicingIndex + 1}
-              totalPositions={allVoicings.length}
-              className="w-full max-w-2xl mx-auto"
+              className="w-full"
             />
           </div>
         </div>
-
-        {/* Voicing Selector */}
-        <VoicingSelector
-          voicings={allVoicings}
-          selectedIndex={selectedVoicingIndex}
-          onSelect={onVoicingSelect}
-          className="p-6 rounded-none border-2 border-steel/30 bg-gradient-to-br from-void to-blackness"
-        />
       </div>
+
+      <VoicingSelector
+        voicings={allVoicings}
+        selectedIndex={selectedVoicingIndex}
+        onSelect={onVoicingSelect}
+        className="mt-4"
+      />
     </div>
   );
 }

@@ -7,8 +7,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { MetalNav, MetalFooter, MetalCard, StatCard, Icons } from '@/components';
+import { MetalNav, MetalFooter } from '@/components';
 import { useLessons } from '@/lib';
+import { hasLessonContent } from '@adagio/theory';
+import { LESSONS_DATA } from '@/lib/data';
 import Link from 'next/link';
 
 const CATEGORIES = [
@@ -23,19 +25,25 @@ const CATEGORIES = [
 
 const LEVELS = ['ALL', 'BEGINNER', 'INTERMEDIATE', 'ADVANCED'] as const;
 
-const LEVEL_COLORS: Record<string, string> = {
-  BEGINNER: 'text-toxic',
-  INTERMEDIATE: 'text-rust',
-  ADVANCED: 'text-blood',
+const LEVEL_LABELS: Record<string, string> = {
+  BEGINNER: 'Débutant',
+  INTERMEDIATE: 'Intermédiaire',
+  ADVANCED: 'Avancé',
 };
 
-const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  THEORY: <Icons.Modes size="sm" />,
-  FRETBOARD: <Icons.Fretboard size="sm" />,
-  CHORDS: <Icons.Chords size="sm" />,
-  NOTATION: <Icons.Notation size="sm" />,
-  PROGRESSIONS: <Icons.Compose size="sm" />,
-  COMPOSITION: <Icons.Compose size="sm" />,
+const CATEGORY_LABELS: Record<string, string> = {
+  THEORY: 'Théorie',
+  FRETBOARD: 'Manche',
+  CHORDS: 'Accords',
+  NOTATION: 'Notation',
+  PROGRESSIONS: 'Progressions',
+  COMPOSITION: 'Composition',
+};
+
+const LEVEL_BADGE: Record<string, string> = {
+  BEGINNER: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500',
+  INTERMEDIATE: 'border-amber-400/40 bg-amber-400/10 text-amber-400',
+  ADVANCED: 'border-rose-500/40 bg-rose-500/10 text-rose-500',
 };
 
 // Helpers pour les leçons avec le nouveau format de progress
@@ -58,33 +66,42 @@ export default function LessonsPage() {
   const [selectedLevel, setSelectedLevel] = useState<string>('ALL');
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
 
-  // Stats calculées depuis les données (API ou fallback)
-  const stats = useMemo(() => {
-    if (!lessons) return null;
+  // Ne garder que les leçons avec du contenu ; repli sur LESSONS_DATA filtré
+  // si l'API ne renvoie que des leçons sans contenu.
+  const lessonsWithContent = useMemo(() => {
+    const withContent = (lessons ?? []).filter((l) => hasLessonContent(l.slug || l.id));
+    return withContent.length > 0
+      ? withContent
+      : LESSONS_DATA.filter((l) => hasLessonContent(l.slug || l.id));
+  }, [lessons]);
 
-    const totalLessons = lessons.length;
-    const completedLessons = lessons.filter((l) => isLessonCompleted(l)).length;
-    const totalXP = lessons.filter((l) => isLessonCompleted(l)).reduce((sum, l) => sum + l.xp, 0);
-    const totalDuration = lessons
+  // Stats calculées depuis les données affichées
+  const stats = useMemo(() => {
+    const totalLessons = lessonsWithContent.length;
+    const completedLessons = lessonsWithContent.filter((l) => isLessonCompleted(l)).length;
+    const totalXP = lessonsWithContent
+      .filter((l) => isLessonCompleted(l))
+      .reduce((sum, l) => sum + l.xp, 0);
+    const totalDuration = lessonsWithContent
       .filter((l) => isLessonCompleted(l))
       .reduce((sum, l) => sum + l.duration, 0);
-    const inProgressLessons = lessons.filter((l) => l.progress?.status === 'in-progress').length;
+    const inProgressLessons = lessonsWithContent.filter(
+      (l) => l.progress?.status === 'in-progress'
+    ).length;
 
     return { totalLessons, completedLessons, totalXP, totalDuration, inProgressLessons };
-  }, [lessons]);
+  }, [lessonsWithContent]);
 
   // Filter lessons
   const filteredLessons = useMemo(() => {
-    if (!lessons) return [];
-
-    return lessons.filter((lesson) => {
+    return lessonsWithContent.filter((lesson) => {
       if (selectedCategory !== 'ALL' && lesson.category !== selectedCategory) return false;
       if (selectedLevel !== 'ALL' && lesson.level !== selectedLevel) return false;
       if (filterStatus === 'completed' && !isLessonCompleted(lesson)) return false;
       if (filterStatus === 'pending' && isLessonCompleted(lesson)) return false;
       return true;
     });
-  }, [lessons, selectedCategory, selectedLevel, filterStatus]);
+  }, [lessonsWithContent, selectedCategory, selectedLevel, filterStatus]);
 
   // Sort by progress (incomplete first, then by progress desc)
   const sortedLessons = useMemo(() => {
@@ -101,12 +118,9 @@ export default function LessonsPage() {
     return (
       <div className="min-h-screen flex flex-col bg-abyss">
         <MetalNav />
-        <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="section-frame p-12 text-center">
-              <Icons.Sessions size="lg" />
-              <p className="text-gray mt-4">Chargement des leçons...</p>
-            </div>
+        <main className="flex-1 px-6 pt-32 pb-24">
+          <div className="w-full mx-auto" style={{ maxWidth: '64rem' }}>
+            <p className="panel px-5 py-6 text-sm text-gray">Chargement des leçons…</p>
           </div>
         </main>
         <MetalFooter />
@@ -114,255 +128,182 @@ export default function LessonsPage() {
     );
   }
 
+  const globalProgress = Math.round((stats.completedLessons / stats.totalLessons) * 100);
+
   return (
     <div className="min-h-screen flex flex-col bg-abyss">
       <MetalNav />
 
-      <main className="flex-1 px-4 py-24 mt-16">
-        <div className="max-w-7xl mx-auto">
+      <main className="flex-1 px-6 pt-28 pb-24">
+        <div className="w-full mx-auto space-y-12" style={{ maxWidth: '64rem' }}>
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              LEÇONS
+          <header className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl font-metal uppercase tracking-tighter text-white">
+              Leçons
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Catalogue complet des cours
+            <p className="text-sm uppercase tracking-widest text-gray">
+              {stats.totalLessons} leçons avec contenu, du premier accord à la composition.
             </p>
-          </div>
+          </header>
 
           {/* Stats */}
-          {stats && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <StatCard
-                label="Leçons Completees"
-                value={`${stats.completedLessons}/${stats.totalLessons}`}
-                icon={<Icons.Check />}
-              />
-              <StatCard
-                label="En Cours"
-                value={stats.inProgressLessons.toString()}
-                icon={<Icons.Sessions />}
-              />
-              <StatCard label="XP Gagnees" value={`${stats.totalXP} XP`} icon={<Icons.Compose />} />
-              <StatCard
-                label="Temps de Pratique"
-                value={`${Math.floor(stats.totalDuration / 60)}h ${stats.totalDuration % 60}m`}
-                icon={<Icons.Stop />}
-              />
+          <section className="panel grid grid-cols-2 gap-x-8 gap-y-6 p-5 sm:grid-cols-4">
+            <div>
+              <p className="field-label">Terminées</p>
+              <p className="text-lg text-white">
+                {stats.completedLessons}/{stats.totalLessons}
+              </p>
             </div>
-          )}
+            <div>
+              <p className="field-label">En cours</p>
+              <p className="text-lg text-white">{stats.inProgressLessons}</p>
+            </div>
+            <div>
+              <p className="field-label">XP gagnées</p>
+              <p className="text-lg text-white">{stats.totalXP} XP</p>
+            </div>
+            <div>
+              <p className="field-label">Temps de pratique</p>
+              <p className="text-lg text-white">
+                {Math.floor(stats.totalDuration / 60)} h {stats.totalDuration % 60} min
+              </p>
+            </div>
+          </section>
 
           {/* Global progress */}
-          {stats && (
-            <div className="section-frame p-4 mb-8">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray uppercase">Progression Globale</span>
-                <span className="text-sm text-white font-bold">
-                  {Math.round((stats.completedLessons / stats.totalLessons) * 100)}%
-                </span>
-              </div>
-              <div className="h-4 border-2 border-steel bg-blackness">
-                <div
-                  className="h-full bg-toxic border-r border-blood transition-all duration-500"
-                  style={{ width: `${(stats.completedLessons / stats.totalLessons) * 100}%` }}
-                />
-              </div>
+          <section className="panel space-y-2 p-5">
+            <div className="flex items-baseline justify-between text-[13px]">
+              <span className="text-gray">Progression globale</span>
+              <span className="text-white">{globalProgress}%</span>
             </div>
-          )}
+            <div className="h-0.5 w-full bg-steelwarm">
+              <div className="h-full bg-amber-400" style={{ width: `${globalProgress}%` }} />
+            </div>
+          </section>
 
           {/* Filters */}
-          <div className="section-frame p-4 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Category */}
-              <div>
-                <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-                  Categorie
-                </label>
-                <div className="flex flex-wrap gap-1">
-                  {CATEGORIES.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all flex items-center gap-1 ${
-                        selectedCategory === cat
-                          ? 'border-blood bg-toxic text-white'
-                          : 'border-steel bg-abyss text-gray hover:border-white'
-                      }`}
-                    >
-                      {cat !== 'ALL' && CATEGORY_ICONS[cat]}
-                      {cat === 'ALL' ? 'Toutes' : cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Level */}
-              <div>
-                <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-                  Niveau
-                </label>
-                <div className="flex flex-wrap gap-1">
-                  {LEVELS.map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setSelectedLevel(level)}
-                      className={`px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                        selectedLevel === level
-                          ? 'border-blood bg-toxic text-white'
-                          : 'border-steel bg-abyss text-gray hover:border-white'
-                      }`}
-                    >
-                      {level === 'ALL' ? 'Tous' : level}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Status */}
-              <div>
-                <label className="text-xs text-gray uppercase tracking-wider block mb-2">
-                  Statut
-                </label>
-                <div className="flex gap-1">
+          <section className="panel space-y-5 p-5">
+            <div className="space-y-2">
+              <span className="field-label">Catégorie</span>
+              <div className="flex flex-wrap gap-2">
+                {CATEGORIES.map((cat) => (
                   <button
-                    onClick={() => setFilterStatus('all')}
-                    className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                      filterStatus === 'all'
-                        ? 'border-blood bg-toxic text-white'
-                        : 'border-steel bg-abyss text-gray hover:border-white'
-                    }`}
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    aria-pressed={selectedCategory === cat}
+                    className="control px-3"
                   >
-                    Tout
+                    {cat === 'ALL' ? 'Toutes' : CATEGORY_LABELS[cat] ?? cat}
                   </button>
-                  <button
-                    onClick={() => setFilterStatus('completed')}
-                    className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                      filterStatus === 'completed'
-                        ? 'border-blood bg-toxic text-white'
-                        : 'border-steel bg-abyss text-gray hover:border-white'
-                    }`}
-                  >
-                    Fait
-                  </button>
-                  <button
-                    onClick={() => setFilterStatus('pending')}
-                    className={`flex-1 px-3 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                      filterStatus === 'pending'
-                        ? 'border-blood bg-toxic text-white'
-                        : 'border-steel bg-abyss text-gray hover:border-white'
-                    }`}
-                  >
-                    A faire
-                  </button>
-                </div>
+                ))}
               </div>
             </div>
-          </div>
+
+            <div className="space-y-2">
+              <span className="field-label">Niveau</span>
+              <div className="flex flex-wrap gap-2">
+                {LEVELS.map((level) => (
+                  <button
+                    key={level}
+                    onClick={() => setSelectedLevel(level)}
+                    aria-pressed={selectedLevel === level}
+                    className="control px-3"
+                  >
+                    {level === 'ALL' ? 'Tous' : LEVEL_LABELS[level] ?? level}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <span className="field-label">Statut</span>
+              <div className="flex flex-wrap gap-2">
+                {(
+                  [
+                    ['all', 'Tout'],
+                    ['completed', 'Faites'],
+                    ['pending', 'À faire'],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    key={value}
+                    onClick={() => setFilterStatus(value)}
+                    aria-pressed={filterStatus === value}
+                    className="control px-3"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Lessons list */}
-          <div className="space-y-4">
-            {sortedLessons.map((lesson) => (
-              <Link key={lesson.id} href={`/lessons/${lesson.slug || lesson.id}`} className="block">
-                <MetalCard
-                  hover
-                  className={`${isLessonCompleted(lesson) ? 'border-toxic' : ''} ${lesson.progress?.status === 'in-progress' ? 'border-rust' : ''}`}
+          <section className="space-y-3">
+            {sortedLessons.map((lesson) => {
+              const completed = isLessonCompleted(lesson);
+              const inProgress = lesson.progress?.status === 'in-progress';
+
+              return (
+                <Link
+                  key={lesson.id}
+                  href={`/lessons/${lesson.slug || lesson.id}`}
+                  className="panel group flex flex-col gap-3 px-5 py-4 transition-colors hover:border-amber-400/50 hover:bg-raised sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
                 >
-                  <div className="p-4">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs text-gray uppercase tracking-wider flex items-center gap-1">
-                            {CATEGORY_ICONS[lesson.category]}
-                            {lesson.category}
-                          </span>
-                          <span
-                            className={`text-xs font-bold uppercase ${LEVEL_COLORS[lesson.level]}`}
-                          >
-                            {lesson.level}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-bold text-white">{lesson.title}</h3>
-                        <p className="text-sm text-gray mt-1">{lesson.description}</p>
+                  <div className="min-w-0 space-y-2">
+                    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-bold uppercase tracking-wider text-gray">
+                      <span>{CATEGORY_LABELS[lesson.category] ?? lesson.category}</span>
+                      <span aria-hidden className="text-steelwarm">
+                        ·
+                      </span>
+                      <span
+                        className={`inline-flex items-center justify-center rounded border px-3 py-0.5 text-[10px] ${
+                          LEVEL_BADGE[lesson.level] ?? 'border-steelwarm text-gray'
+                        }`}
+                      >
+                        {LEVEL_LABELS[lesson.level] ?? lesson.level}
+                      </span>
+                      <span aria-hidden className="text-steelwarm">
+                        ·
+                      </span>
+                      <span className="font-normal normal-case tracking-normal text-gray">
+                        {lesson.duration} min
+                      </span>
+                    </p>
+                    <h2 className="text-[17px] text-white transition-colors group-hover:text-ember">
+                      {lesson.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed text-gray">{lesson.description}</p>
+                    {!completed && (
+                      <div className="h-px w-24 bg-steelwarm">
+                        <div
+                          className="h-full bg-amber-400"
+                          style={{ width: `${getLessonProgressPercent(lesson)}%` }}
+                        />
                       </div>
-                      {isLessonCompleted(lesson) && (
-                        <div className="icon-box border-toxic ml-4">
-                          <Icons.Check size="sm" />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Topics */}
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {lesson.topics.slice(0, 4).map((topic, i) => (
-                        <span
-                          key={i}
-                          className="px-2 py-0.5 text-xs border border-steel bg-blackness text-gray"
-                        >
-                          {topic}
-                        </span>
-                      ))}
-                      {lesson.topics.length > 4 && (
-                        <span className="px-2 py-0.5 text-xs border border-steel bg-blackness text-gray">
-                          +{lesson.topics.length - 4}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Meta */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-gray flex items-center gap-1">
-                          <Icons.Stop size="sm" />
-                          {lesson.duration} min
-                        </span>
-                        <span className="text-xs text-rust font-bold">+{lesson.xp} XP</span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {/* Progress for incomplete lessons */}
-                        {!isLessonCompleted(lesson) && (
-                          <div className="w-24">
-                            <div className="h-2 border border-steel bg-blackness">
-                              <div
-                                className="h-full bg-toxic"
-                                style={{ width: `${getLessonProgressPercent(lesson)}%` }}
-                              />
-                            </div>
-                          </div>
-                        )}
-
-                        {/* CTA */}
-                        <span
-                          className={`px-4 py-1.5 text-xs font-bold uppercase border-2 transition-all ${
-                            isLessonCompleted(lesson)
-                              ? 'border-toxic bg-toxic text-white'
-                              : lesson.progress?.status === 'in-progress'
-                                ? 'border-steel bg-void text-gray'
-                                : 'border-blood bg-blackness text-white'
-                          }`}
-                        >
-                          {isLessonCompleted(lesson)
-                            ? 'REFAIRE'
-                            : lesson.progress?.status === 'in-progress'
-                              ? 'CONTINUER'
-                              : 'COMMENCER'}
-                        </span>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                </MetalCard>
-              </Link>
-            ))}
-          </div>
 
-          {/* Empty state */}
-          {sortedLessons.length === 0 && (
-            <div className="section-frame p-12 text-center">
-              <Icons.Modes size="lg" />
-              <p className="text-gray mt-4">Aucune leçon ne correspond à vos filtres.</p>
-            </div>
-          )}
+                  <div className="flex shrink-0 items-baseline gap-4 text-[12px] text-gray">
+                    <span>+{lesson.xp} XP</span>
+                    <span
+                      className={`transition-colors ${
+                        completed ? 'text-gray' : 'text-gray group-hover:text-ember'
+                      }`}
+                    >
+                      {completed ? 'Terminée' : inProgress ? 'Continuer' : 'Commencer'} →
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+
+            {sortedLessons.length === 0 && (
+              <p className="panel px-5 py-12 text-center text-sm text-gray">
+                Aucune leçon ne correspond à ces filtres.
+              </p>
+            )}
+          </section>
         </div>
       </main>
 

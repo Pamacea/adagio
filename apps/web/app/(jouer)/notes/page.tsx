@@ -54,11 +54,11 @@ export default function NotesPage() {
 
       {/* Hero Section */}
       <div className="pt-[64px]">
-        <div className="border-b border-steel/30 bg-gradient-to-r from-blood/20 via-void to-toxic/20">
-          <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="border-b border-steelwarm">
+          <div className="mx-auto px-4 py-8" style={{ maxWidth: "80rem" }}>
             <div className="flex items-center gap-3 mb-2">
               <svg
-                className="w-8 h-8 text-toxic"
+                className="w-8 h-8 text-amber-400"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -72,7 +72,7 @@ export default function NotesPage() {
                 <HelpButton topicId="notes.cheatsheet" useModal size="md" variant="subtle" />
               </HelpTooltip>
             </div>
-            <p className="text-gray text-sm md:text-base max-w-2xl">
+            <p className="text-gray text-sm md:text-base" style={{ maxWidth: "42rem" }}>
               Référence rapide pour guitaristes: gammes, accords, manche, et choix de gammes. Tout
               ce que vous devez savoir, en un coup d'œil.
             </p>
@@ -89,7 +89,7 @@ export default function NotesPage() {
       </div>
 
       {/* Contenu principal */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
+      <main className="flex-1 mx-auto w-full px-4 py-8" style={{ maxWidth: "80rem" }}>
         {/* Message si aucun résultat */}
         {filteredSections.length === 0 ? (
           <div className="text-center py-16">

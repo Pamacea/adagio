@@ -23,30 +23,36 @@ interface SheetTableProps {
   section: SheetSection;
   /** Si une cellule vaut « cf. », la transformer en lien vers cette page */
   cfHref?: string;
+  /** Masque le titre quand la page le rend déjà dans sa propre section. */
+  hideTitle?: boolean;
+  /** Libellé lu par les lecteurs d'écran (caption du tableau). */
+  caption?: string;
 }
 
-export function SheetTable({ section, cfHref }: SheetTableProps) {
+export function SheetTable({ section, cfHref, hideTitle, caption }: SheetTableProps) {
   const { title, headers, rows } = section;
   if (rows.length === 0) return null;
 
   const hasHeaders = headers.some((h) => h.trim() !== '');
+  const formattedTitle = formatSheetCell(title ?? '');
+  const tableLabel = caption ?? formattedTitle;
 
   return (
-    <div className="mb-8">
-      {title && (
-        <h2 className="text-xl font-metal text-white uppercase tracking-tight mb-3">
-          {formatSheetCell(title)}
-        </h2>
+    <div className="mb-8 last:mb-0">
+      {title && !hideTitle && (
+        <h2 className="mb-3 text-lg font-semibold text-white">{formattedTitle}</h2>
       )}
-      <div className="overflow-x-auto border-2 border-steel/30 bg-blackness/80">
+      <div className="w-full min-w-0 overflow-x-auto">
         <table className="w-full text-left text-sm">
+          {tableLabel && <caption className="sr-only">{tableLabel}</caption>}
           {hasHeaders && (
             <thead>
-              <tr className="border-b-2 border-steel/30 bg-abyss">
+              <tr className="hairline">
                 {headers.map((h, i) => (
                   <th
                     key={i}
-                    className="px-3 py-2 text-xs font-semibold text-gray uppercase tracking-widest whitespace-nowrap"
+                    scope="col"
+                    className="px-3 py-3 text-[11px] font-bold uppercase tracking-widest text-rust whitespace-normal break-words"
                   >
                     {formatSheetCell(h)}
                   </th>
@@ -56,15 +62,20 @@ export function SheetTable({ section, cfHref }: SheetTableProps) {
           )}
           <tbody>
             {rows.map((row, ri) => (
-              <tr key={ri} className="border-b border-steel/20 last:border-b-0 even:bg-abyss/40">
+              <tr key={ri} className="hairline last:border-b-0">
                 {row.map((cell, ci) => {
                   const formatted = formatSheetCell(cell);
                   return (
-                    <td key={ci} className="px-3 py-2 text-gray-300 align-top">
+                    <td
+                      key={ci}
+                      className={`px-3 py-3 align-top text-gray whitespace-normal break-words ${
+                        ci === 0 ? 'font-medium text-white' : ''
+                      }`}
+                    >
                       {cfHref && formatted === 'cf.' ? (
                         <Link
                           href={cfHref}
-                          className="text-toxic hover:underline uppercase tracking-widest text-xs"
+                          className="font-semibold text-ember underline decoration-blood underline-offset-4 hover:text-white"
                         >
                           cf. → voir
                         </Link>

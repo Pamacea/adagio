@@ -7,26 +7,31 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { MetalNav, MetalFooter, MetalCard, Icons } from '@/components';
+import { useParams, useRouter, notFound } from 'next/navigation';
+import { MetalNav, MetalFooter, Icons } from '@/components';
 import { LessonRenderer, DemoEvent } from '@/components/lessons';
-import { getLesson, getAllLessonsMetadata } from '@adagio/theory';
-import { LESSONS_DATA } from '@/lib/data';
+import { getLesson, getAllLessonsMetadata, hasLessonContent } from '@adagio/theory';
 import Link from 'next/link';
 
-// Niveau colors
-const LEVEL_COLORS: Record<string, string> = {
-  BEGINNER: 'text-toxic',
-  INTERMEDIATE: 'text-rust',
-  ADVANCED: 'text-blood',
+const LEVEL_LABELS: Record<string, string> = {
+  BEGINNER: 'Débutant',
+  INTERMEDIATE: 'Intermédiaire',
+  ADVANCED: 'Avancé',
 };
 
-// Catégorie colors
-const _CATEGORY_COLORS: Record<string, string> = {
-  THEORY: 'text-toxic',
-  TECHNIQUE: 'text-rust',
-  EAR_TRAINING: 'text-purple',
-  COMPOSITION: 'text-blue',
+const CATEGORY_LABELS: Record<string, string> = {
+  THEORY: 'Théorie',
+  FRETBOARD: 'Manche',
+  CHORDS: 'Accords',
+  NOTATION: 'Notation',
+  PROGRESSIONS: 'Progressions',
+  COMPOSITION: 'Composition',
+};
+
+const LEVEL_BADGE: Record<string, string> = {
+  BEGINNER: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500',
+  INTERMEDIATE: 'border-amber-400/40 bg-amber-400/10 text-amber-400',
+  ADVANCED: 'border-rose-500/40 bg-rose-500/10 text-rose-500',
 };
 
 export default function LessonDetailPage() {
@@ -34,16 +39,10 @@ export default function LessonDetailPage() {
   const router = useRouter();
   const lessonId = params.id as string;
 
-  // Récupérer la leçon (contenu interactif d'abord, fallback sur données statiques)
+  // Récupérer la leçon (contenu interactif uniquement)
   const lesson = useMemo(() => {
     return getLesson(lessonId);
   }, [lessonId]);
-
-  // Fallback: données statiques si pas de contenu interactif
-  const staticLesson = useMemo(() => {
-    if (lesson) return null;
-    return LESSONS_DATA.find((l) => l.slug === lessonId || l.id === lessonId) || null;
-  }, [lessonId, lesson]);
 
   // Toutes les leçons pour les suggestions
   const allLessons = useMemo(() => {
@@ -91,137 +90,9 @@ export default function LessonDetailPage() {
     router.push('/lessons');
   };
 
-  // Leçon non trouvée (ni interactive ni statique)
-  if (!lesson && !staticLesson) {
-    return (
-      <div className="min-h-screen flex flex-col bg-abyss">
-        <MetalNav />
-        <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl font-metal text-white mb-4">LEÇON NON TROUVÉE</h1>
-            <p className="text-gray mb-8">Cette leçon n&apos;existe pas ou a été déplacée.</p>
-            <Link
-              href="/lessons"
-              className="px-6 py-3 border-2 border-blood bg-toxic text-white font-bold uppercase inline-block"
-            >
-              Retour aux Leçons
-            </Link>
-          </div>
-        </main>
-        <MetalFooter />
-      </div>
-    );
-  }
-
-  // Leçon statique (sans contenu interactif)
-  if (!lesson && staticLesson) {
-    const related = LESSONS_DATA.filter(
-      (l) => l.slug !== lessonId && l.category === staticLesson.category
-    ).slice(0, 3);
-
-    return (
-      <div className="min-h-screen flex flex-col bg-abyss">
-        <MetalNav />
-        <main className="flex-1 px-4 py-24 mt-16">
-          <div className="max-w-4xl mx-auto">
-            <Link
-              href="/lessons"
-              className="inline-flex items-center gap-2 text-gray hover:text-white mb-6 transition-colors"
-            >
-              <Icons.ArrowLeft size="sm" />
-              Retour aux Leçons
-            </Link>
-
-            {/* Header */}
-            <MetalCard className="mb-8">
-              <div className="p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className={`px-3 py-1 text-xs font-bold uppercase border-2 ${
-                      staticLesson.level === 'BEGINNER'
-                        ? 'border-toxic text-toxic'
-                        : staticLesson.level === 'INTERMEDIATE'
-                          ? 'border-rust text-rust'
-                          : 'border-blood text-blood'
-                    }`}
-                  >
-                    {staticLesson.level}
-                  </span>
-                  <span className="px-3 py-1 text-xs font-bold uppercase border-2 border-steel text-gray">
-                    {staticLesson.category}
-                  </span>
-                  <span className="text-xs text-gray">{staticLesson.duration} min</span>
-                  <span className="text-xs text-toxic">{staticLesson.xp} XP</span>
-                </div>
-                <h1 className="text-3xl font-metal text-white mb-4">{staticLesson.title}</h1>
-                {staticLesson.description && (
-                  <p className="text-gray text-lg">{staticLesson.description}</p>
-                )}
-              </div>
-            </MetalCard>
-
-            {/* Topics */}
-            {staticLesson.topics && staticLesson.topics.length > 0 && (
-              <MetalCard className="mb-8">
-                <div className="p-6">
-                  <h2 className="text-xl font-metal text-white uppercase mb-4 flex items-center gap-2">
-                    <span className="w-1 h-6 bg-toxic" />
-                    Sujets abordés
-                  </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {staticLesson.topics.map((topic, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-2 p-3 border border-steel/30 bg-void/30"
-                      >
-                        <span className="w-2 h-2 bg-toxic" />
-                        <span className="text-sm text-gray">{topic}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </MetalCard>
-            )}
-
-            {/* Coming soon */}
-            <MetalCard className="mb-8">
-              <div className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-steel flex items-center justify-center">
-                  <Icons.Compose size="md" className="text-gray" />
-                </div>
-                <h2 className="text-xl font-metal text-white mb-2">Contenu en préparation</h2>
-                <p className="text-gray text-sm">
-                  Le contenu interactif de cette leçon sera bientôt disponible avec des démos, quiz
-                  et exercices.
-                </p>
-              </div>
-            </MetalCard>
-
-            {/* Related */}
-            {related.length > 0 && (
-              <div>
-                <h2 className="text-xl font-metal text-white uppercase mb-4">Leçons Similaires</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {related.map((r) => (
-                    <Link
-                      key={r.id}
-                      href={`/lessons/${r.slug || r.id}`}
-                      className="border-2 border-steel bg-abyss p-4 hover:border-white transition-all"
-                    >
-                      <p className="text-sm font-bold text-white mb-1">{r.title}</p>
-                      <p className="text-xs text-gray">
-                        {r.level} - {r.duration} min
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </main>
-        <MetalFooter />
-      </div>
-    );
+  // Leçon sans contenu pédagogique : masquée aux utilisateurs
+  if (!hasLessonContent(lessonId)) {
+    notFound();
   }
 
   const { metadata, blocks } = lesson!;
@@ -237,133 +108,131 @@ export default function LessonDetailPage() {
     <div className="min-h-screen flex flex-col bg-abyss">
       <MetalNav />
 
-      <main className="flex-1 px-4 py-24 mt-16">
-        <div className="max-w-4xl mx-auto">
-          {/* Back button */}
+      <main className="flex-1 px-6 pt-28 pb-24">
+        <div className="w-full mx-auto space-y-12" style={{ maxWidth: '56rem' }}>
+          {/* Retour */}
           <Link
             href="/lessons"
-            className="inline-flex items-center gap-2 text-gray hover:text-white mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-[13px] text-gray transition-colors hover:text-ember"
           >
             <Icons.ArrowLeft size="sm" />
-            <span className="text-sm uppercase">Retour aux Leçons</span>
+            Retour aux leçons
           </Link>
 
           {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-gray uppercase tracking-wider">
-                    {metadata.category}
-                  </span>
-                  <span className={`text-xs font-bold uppercase ${LEVEL_COLORS[metadata.level]}`}>
-                    {metadata.level}
-                  </span>
-                </div>
-                <h1 className="text-3xl lg:text-4xl font-metal text-white tracking-tighter">
-                  {metadata.title}
-                </h1>
-              </div>
-              {isComplete && (
-                <div className="icon-box border-toxic">
-                  <Icons.Check size="sm" />
-                </div>
-              )}
-            </div>
-            <p className="text-gray">{metadata.description}</p>
-
-            {/* Meta */}
-            <div className="flex items-center gap-6 mt-4">
-              <span className="text-sm text-gray flex items-center gap-2">
-                <Icons.Stop size="sm" />
+          <header className="space-y-3">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-bold uppercase tracking-wider text-gray">
+              <span>{CATEGORY_LABELS[metadata.category] ?? metadata.category}</span>
+              <span aria-hidden className="text-steelwarm">
+                ·
+              </span>
+              <span
+                className={`inline-flex items-center justify-center rounded border px-3 py-0.5 text-[10px] ${
+                  LEVEL_BADGE[metadata.level] ?? 'border-steelwarm text-gray'
+                }`}
+              >
+                {LEVEL_LABELS[metadata.level] ?? metadata.level}
+              </span>
+              <span aria-hidden className="text-steelwarm">
+                ·
+              </span>
+              <span className="font-normal normal-case tracking-normal text-gray">
                 {metadata.duration}
               </span>
-              <span className="text-sm text-rust font-bold">+{metadata.xp} XP</span>
+              <span aria-hidden className="text-steelwarm">
+                ·
+              </span>
+              <span className="font-normal normal-case tracking-normal text-gray">
+                +{metadata.xp} XP
+              </span>
               {progress > 0 && !isComplete && (
-                <span className="text-sm text-toxic">{progress}% complété</span>
+                <>
+                  <span aria-hidden className="text-steelwarm">
+                    ·
+                  </span>
+                  <span className="font-normal normal-case tracking-normal text-gray">
+                    {progress}% complété
+                  </span>
+                </>
+              )}
+            </p>
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <h1 className="text-3xl sm:text-4xl font-metal uppercase tracking-tighter text-white">
+                {metadata.title}
+              </h1>
+              {isComplete && (
+                <span className="inline-flex shrink-0 items-center justify-center border border-emerald-500/40 bg-emerald-500/10 px-3 py-0.5 text-[11px] uppercase tracking-widest text-emerald-500">
+                  Terminée
+                </span>
               )}
             </div>
+            <p className="text-sm leading-relaxed text-gray">{metadata.description}</p>
+          </header>
 
-            {/* Progress bar */}
-            <div className="mt-4">
-              <div className="h-2 border-2 border-steel bg-blackness">
-                <div
-                  className="h-full bg-toxic border-r border-blood transition-all duration-500"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
+          {/* Progression */}
+          <div className="space-y-2">
+            <div className="flex items-baseline justify-between text-[13px]">
+              <span className="text-gray">Progression</span>
+              <span className="text-white">{progress}%</span>
+            </div>
+            <div className="h-0.5 w-full bg-steelwarm">
+              <div className="h-full bg-amber-400" style={{ width: `${progress}%` }} />
             </div>
           </div>
 
-          {/* Topics tags */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {metadata.topics.map((topic, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 text-xs border border-steel bg-blackness text-gray"
-              >
-                {topic}
-              </span>
-            ))}
-          </div>
+          {/* Topics */}
+          {metadata.topics.length > 0 && (
+            <p className="text-[13px] text-gray">{metadata.topics.join(' · ')}</p>
+          )}
 
           {/* Navigation par blocs */}
-          <div className="flex items-center justify-between mb-6">
-            <span className="text-sm text-gray uppercase">
-              Contenu ({totalBlocks} section{totalBlocks > 1 ? 's' : ''})
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[13px] text-gray">
+              Contenu · {totalBlocks} section{totalBlocks > 1 ? 's' : ''}
             </span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               {blocks.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentBlockIndex(i)}
-                  className={`w-3 h-3 rounded-sm transition-all ${
+                  aria-label={`Bloc ${i + 1}`}
+                  className={`h-1.5 w-1.5 rounded-full transition-colors ${
                     i === currentBlockIndex
-                      ? 'bg-toxic border border-blood'
+                      ? 'bg-amber-400'
                       : i < currentBlockIndex || completedBlocks.has(i)
-                        ? 'bg-steel'
-                        : 'bg-abyss border border-steel'
+                        ? 'bg-amber-400/40'
+                        : 'bg-steelwarm'
                   }`}
-                  title={`Bloc ${i + 1}`}
                 />
               ))}
             </div>
           </div>
 
-          {/* Content */}
-          <MetalCard className="mb-8">
-            <div className="p-6">
-              {/* Afficher tous les blocs ou seulement le courant */}
-              <LessonRenderer
-                lesson={lesson!}
-                onBlockComplete={handleBlockComplete}
-                onDemoEvent={handleDemoEvent}
-              />
-            </div>
-          </MetalCard>
+          {/* Contenu */}
+          <LessonRenderer
+            lesson={lesson!}
+            onBlockComplete={handleBlockComplete}
+            onDemoEvent={handleDemoEvent}
+          />
 
           {/* Navigation */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <button
               onClick={handlePreviousBlock}
               disabled={currentBlockIndex === 0}
-              className={`px-6 py-3 text-sm font-bold uppercase border-2 transition-all flex items-center gap-2 ${
-                currentBlockIndex === 0
-                  ? 'border-steel bg-blackness text-gray opacity-50 cursor-not-allowed'
-                  : 'border-steel bg-abyss text-gray hover:border-white'
-              }`}
+              className="control px-3 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Icons.ArrowLeft size="sm" />
               Précédent
             </button>
 
-            <span className="text-sm text-gray">
+            <span className="text-[13px] text-gray">
               {currentBlockIndex + 1} / {totalBlocks}
             </span>
 
             <button
               onClick={currentBlockIndex < totalBlocks - 1 ? handleNextBlock : handleComplete}
-              className="px-6 py-3 text-sm font-bold uppercase border-2 border-blood bg-toxic text-white transition-all flex items-center gap-2 poly-right"
+              className="control px-3"
             >
               {currentBlockIndex < totalBlocks - 1 ? (
                 <>
@@ -379,28 +248,25 @@ export default function LessonDetailPage() {
             </button>
           </div>
 
-          {/* Related lessons */}
+          {/* Leçons similaires */}
           {relatedLessons.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-xl font-metal text-white uppercase mb-6">Leçons Similaires</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4 pt-4">
+              <h2 className="text-sm font-metal uppercase tracking-tighter text-white">
+                Leçons similaires
+              </h2>
+              <div className="space-y-2">
                 {relatedLessons.map((relatedLesson) => (
                   <Link
                     key={relatedLesson.id}
                     href={`/lessons/${relatedLesson.id}`}
-                    className="border-2 border-steel bg-abyss p-4 hover:border-white transition-all"
+                    className="panel group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3 transition-colors hover:border-amber-400/50 hover:bg-raised"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="icon-box border-steel">
-                        <Icons.Modes size="sm" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-bold text-white">{relatedLesson.title}</h3>
-                        <p className="text-xs text-gray">
-                          {relatedLesson.duration} • +{relatedLesson.xp} XP
-                        </p>
-                      </div>
-                    </div>
+                    <span className="text-[15px] text-white transition-colors group-hover:text-ember">
+                      {relatedLesson.title}
+                    </span>
+                    <span className="shrink-0 text-[12px] text-gray">
+                      {relatedLesson.duration} · +{relatedLesson.xp} XP
+                    </span>
                   </Link>
                 ))}
               </div>

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
 import { BetterAuthModule } from './better-auth';
 import { TheoryModule } from './theory/theory.module';
@@ -17,7 +18,8 @@ import { ProfileModule } from './profile/profile.module';
     // Configuration
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.local', '.env'],
+      // Le .env racine est la source unique du monorepo (l'API tourne depuis apps/api).
+      envFilePath: ['.env.local', '.env', '../../.env'],
     }),
 
     // Rate limiting
@@ -42,5 +44,7 @@ import { ProfileModule } from './profile/profile.module';
     AchievementsModule,
     ProfileModule,
   ],
+  // Sans APP_GUARD, ThrottlerModule ne protège rien.
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

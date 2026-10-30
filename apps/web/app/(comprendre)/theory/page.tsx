@@ -94,11 +94,12 @@ export default function TheoryPage() {
       <main className="flex-1 px-4 py-24 mt-16">
         <div className="mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              COMPRENDRE
+          <div className="mb-10">
+            <p className="text-xs uppercase tracking-widest text-gray">Théorie</p>
+            <h1 className="mt-2 text-3xl font-metal uppercase tracking-tighter text-white sm:text-4xl">
+              Comprendre
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
+            <p className="mt-2 text-sm uppercase tracking-widest text-gray">
               Les fondements de l&apos;harmonie
             </p>
           </div>
@@ -109,9 +110,9 @@ export default function TheoryPage() {
               <Link
                 key={section.href}
                 href={section.href}
-                className="section-frame p-6 group hover:border-blood transition-all"
+                className="panel p-6 group transition-colors hover:border-amber-400/50"
               >
-                <div className="icon-box mb-4 group-hover:border-blood transition-colors">
+                <div className="icon-box mb-4 border-steelwarm group-hover:border-amber-400/50 transition-colors">
                   <section.icon size="md" />
                 </div>
                 <h2 className="text-xl font-metal text-white uppercase tracking-tighter mb-2">
@@ -122,7 +123,7 @@ export default function TheoryPage() {
                   {section.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs border border-steel bg-blackness text-gray"
+                      className="px-2 py-0.5 text-xs border border-steelwarm text-gray"
                     >
                       {tag}
                     </span>
@@ -134,9 +135,9 @@ export default function TheoryPage() {
             {/* CTA Composer (sortie du pilier) */}
             <Link
               href="/compose"
-              className="section-frame p-6 group border-blood hover:bg-blood/10 transition-all"
+              className="panel p-6 group border-amber-400/60 transition-colors hover:bg-amber-400/10"
             >
-              <div className="icon-box mb-4 border-blood">
+              <div className="icon-box mb-4 border-amber-400/60 text-amber-400">
                 <Icons.Compose size="md" />
               </div>
               <h2 className="text-xl font-metal text-white uppercase tracking-tighter mb-2">
@@ -146,21 +147,21 @@ export default function TheoryPage() {
                 Explorez ces concepts dans le studio de composition : degrés, substitutions et
                 progressions en temps réel.
               </p>
-              <span className="text-xs font-bold uppercase text-blood group-hover:text-white transition-colors">
+              <span className="text-xs font-bold uppercase text-amber-400 transition-colors">
                 Ouvrir Compose →
               </span>
             </Link>
           </div>
 
           {/* Concepts clés */}
-          <div className="section-frame p-6">
+          <div className="panel p-6">
             <h2 className="text-lg font-metal text-white uppercase tracking-wider mb-4">
               Concepts clés
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {CONCEPTS.map((concept) => (
-                <div key={concept.q} className="border-2 border-steel bg-blackness p-4">
-                  <p className="text-sm font-bold text-toxic uppercase mb-2">{concept.q}</p>
+                <div key={concept.q} className="border border-steelwarm p-4">
+                  <p className="text-sm font-bold text-gold uppercase mb-2">{concept.q}</p>
                   <p className="text-xs text-gray">{concept.a}</p>
                 </div>
               ))}

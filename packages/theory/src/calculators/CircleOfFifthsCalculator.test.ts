@@ -136,12 +136,12 @@ describe('CircleOfFifthsCalculator', () => {
 
   describe('getRelativeMinor', () => {
     const testCases: [NoteName, NoteName][] = [
-      ['C', 'Eb'], // Based on circle of fifths implementation
-      ['G', 'Bb'],
-      ['D', 'F'],
-      ['A', 'C'],
-      ['E', 'G'],
-      ['B', 'D'],
+      ['C', 'A'],
+      ['G', 'E'],
+      ['D', 'B'],
+      ['A', 'F#'],
+      ['E', 'C#'],
+      ['B', 'G#'],
     ];
 
     testCases.forEach(([majorKey, expectedMinor]) => {
@@ -151,13 +151,13 @@ describe('CircleOfFifthsCalculator', () => {
       });
     });
 
-    it('should be 9 steps forward in circle of fifths', () => {
+    it('should be 3 steps forward in circle of fifths', () => {
       const circle = getCircleOfFifths('C');
       const cIndex = circle.circle.findIndex((item) => item.note === 'C');
-      const ebIndex = circle.circle.findIndex((item) => item.note === 'Eb');
+      const aIndex = circle.circle.findIndex((item) => item.note === 'A');
 
-      // Eb should be 9 steps ahead in circle
-      expect((ebIndex - cIndex + 12) % 12).toBe(9);
+      // A should be 3 steps ahead in circle
+      expect((aIndex - cIndex + 12) % 12).toBe(3);
     });
 
     it('should throw error for invalid note', () => {
@@ -167,12 +167,12 @@ describe('CircleOfFifthsCalculator', () => {
 
   describe('getRelativeMajor', () => {
     const testCases: [NoteName, NoteName][] = [
-      ['Eb', 'C'], // Based on circle of fifths implementation
-      ['Bb', 'G'],
-      ['F', 'D'],
-      ['C', 'A'],
-      ['G', 'E'],
-      ['D', 'B'],
+      ['A', 'C'],
+      ['E', 'G'],
+      ['B', 'D'],
+      ['F#', 'A'],
+      ['C', 'Eb'],
+      ['D', 'F'],
     ];
 
     testCases.forEach(([minorKey, expectedMajor]) => {
@@ -190,13 +190,13 @@ describe('CircleOfFifthsCalculator', () => {
       expect(backToMajor).toBe(majorKey);
     });
 
-    it('should be 3 steps forward in circle of fifths', () => {
-      const circle = getCircleOfFifths('Eb');
-      const ebIndex = circle.circle.findIndex((item) => item.note === 'Eb');
+    it('should be 9 steps forward in circle of fifths', () => {
+      const circle = getCircleOfFifths('C');
       const cIndex = circle.circle.findIndex((item) => item.note === 'C');
+      const ebIndex = circle.circle.findIndex((item) => item.note === 'Eb');
 
-      // C should be 3 steps ahead in circle
-      expect((cIndex - ebIndex + 12) % 12).toBe(3);
+      // Eb should be 9 steps ahead in circle
+      expect((ebIndex - cIndex + 12) % 12).toBe(9);
     });
 
     it('should throw error for invalid note', () => {

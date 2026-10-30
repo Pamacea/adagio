@@ -30,6 +30,19 @@ export interface HelpModalProps {
   onTopicChange?: (topicId: string) => void;
 }
 
+/** Rend le gras markdown (**mot**) des contenus texte, sans parser complet. */
+function renderBold(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
+    part.startsWith('**') && part.endsWith('**') ? (
+      <strong key={index} className="font-bold text-white">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      part
+    )
+  );
+}
+
 export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }: HelpModalProps) {
   const [activeTab, setActiveTab] = useState<'content' | 'related'>('content');
 
@@ -44,7 +57,7 @@ export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }
             onClick={() => setActiveTab('content')}
             className={`px-4 py-2 text-sm font-bold uppercase transition-all ${
               activeTab === 'content'
-                ? 'text-toxic border-b-2 border-toxic'
+                ? 'text-blood border-b-2 border-blood'
                 : 'text-gray hover:text-white'
             }`}
           >
@@ -54,7 +67,7 @@ export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }
             onClick={() => setActiveTab('related')}
             className={`px-4 py-2 text-sm font-bold uppercase transition-all ${
               activeTab === 'related'
-                ? 'text-toxic border-b-2 border-toxic'
+                ? 'text-blood border-b-2 border-blood'
                 : 'text-gray hover:text-white'
             }`}
           >
@@ -68,7 +81,7 @@ export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }
         <div className="prose prose-invert prose-sm max-w-none">
           {topic.short && <p className="text-blood font-bold mb-4">{topic.short}</p>}
           {typeof topic.content === 'string' ? (
-            <p className="text-gray whitespace-pre-line">{topic.content}</p>
+            <p className="text-gray whitespace-pre-line">{renderBold(topic.content)}</p>
           ) : (
             topic.content
           )}
@@ -85,10 +98,10 @@ export function HelpModal({ isOpen, onClose, topic, size = 'lg', onTopicChange }
                 onTopicChange?.(related.id);
                 setActiveTab('content');
               }}
-              className="w-full p-3 border-2 border-steel bg-blackness hover:border-toxic hover:border-toxic/50 transition-all text-left"
+              className="w-full p-3 border-2 border-steel bg-blackness hover:border-blood hover:border-blood/50 transition-all text-left"
             >
               <div className="flex items-center gap-2">
-                <span className="text-toxic">→</span>
+                <span className="text-blood">→</span>
                 <span className="text-white font-bold">{related.title}</span>
               </div>
             </button>

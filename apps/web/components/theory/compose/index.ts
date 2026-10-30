@@ -6,23 +6,8 @@
 export { CircleDegreeSelector } from './CircleDegreeSelector';
 export type { CircleDegreeSelectorProps } from './CircleDegreeSelector';
 
-export { ComposeControls } from './ComposeControls';
-export type { ComposeControlsProps } from './ComposeControls';
-
 export { ScaleNotesDisplay } from './ScaleNotesDisplay';
 export type { ScaleNotesDisplayProps } from './ScaleNotesDisplay';
-
-export { ChordDetails } from './ChordDetails';
-export type { ChordDetailsProps } from './ChordDetails';
-
-export { ChordBuilder } from './ChordBuilder';
-export type { ChordBuilderProps } from './ChordBuilder';
-
-export { SubstitutionsPanel } from './SubstitutionsPanel';
-export type { SubstitutionsPanelProps } from './SubstitutionsPanel';
-
-export { ProgressionSuggestions } from './ProgressionSuggestions';
-export type { ProgressionSuggestionsProps } from './ProgressionSuggestions';
 
 export { FretboardChord, getChordPositions, getContrastColor } from './FretboardChord';
 
@@ -31,9 +16,6 @@ export type { ConcordiaChordBoxProps } from './ConcordiaChordBox';
 
 export { KeySelector } from './KeySelector';
 export type { KeySelectorProps } from './KeySelector';
-
-export { DegreeGrid } from './DegreeGrid';
-export type { DegreeGridProps } from './DegreeGrid';
 
 export { ChordDetailsPanel } from './ChordDetailsPanel';
 export type { ChordDetailsPanelProps } from './ChordDetailsPanel';

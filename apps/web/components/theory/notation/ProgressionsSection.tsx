@@ -20,7 +20,7 @@ export function ProgressionsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {CHORD_PROGRESSIONS.map((prog, i) => (
-            <div key={i} className="border-2 border-steel bg-blackness p-4">
+            <div key={i} className="border border-steelwarm bg-surface p-4">
               <div className="flex items-start justify-between mb-3">
                 <h3 className="text-lg font-metal text-white">{prog.name}</h3>
                 <span className="text-xs text-gray uppercase">{prog.key}</span>
@@ -29,7 +29,7 @@ export function ProgressionsSection() {
 
               <div className="flex gap-1 mb-3">
                 {prog.chords.map((chord, j) => (
-                  <div key={j} className="flex-1 text-center p-2 border border-steel bg-void">
+                  <div key={j} className="flex-1 text-center p-2 border border-steelwarm bg-surface">
                     <p className="text-sm font-bold text-white">{chord}</p>
                     <p className="text-xs text-gray">{prog.degrees[j]}</p>
                   </div>
@@ -139,7 +139,7 @@ export function ProgressionsSection() {
             return (
               <div key={deg} className="text-center">
                 <div
-                  className={`aspect-square border-2 ${isMinor ? 'border-gray' : 'border-steel'} bg-blackness flex items-center justify-center`}
+                  className={`aspect-square border ${isMinor ? 'border-gray' : 'border-steelwarm'} bg-surface flex items-center justify-center`}
                 >
                   <span className={`text-xl font-metal ${isMinor ? 'text-gray' : 'text-white'}`}>
                     {isMinor ? ROMAN_DEGREES_MINOR[i] : deg}

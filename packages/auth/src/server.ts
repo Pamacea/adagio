@@ -38,11 +38,16 @@ export const auth = betterAuth({
     requireEmailVerification: false, // Set to true in production
     sendVerificationEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
       // TODO: Implement email sending logic (e.g., Resend, SendGrid)
-      console.log('Verification email:', { email: user.email, url });
+      // L'URL porte un token à usage unique : jamais journalisée en production.
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Verification email:', { email: user.email, url });
+      }
     },
     sendResetPasswordEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
       // TODO: Implement email sending logic
-      console.log('Reset password email:', { email: user.email, url });
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Reset password email:', { email: user.email, url });
+      }
     },
   },
 

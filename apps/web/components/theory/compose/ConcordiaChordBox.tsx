@@ -19,7 +19,7 @@ export interface ConcordiaChordBoxProps {
 }
 
 const NAV_BUTTON =
-  'w-8 h-8 border-2 border-steel text-gray font-bold hover:border-blood hover:text-white transition-colors flex items-center justify-center';
+  'flex items-center justify-center px-2.5 text-[13px] text-gray/70 hover:text-rust';
 
 export function ConcordiaChordBox({ chord, className }: ConcordiaChordBoxProps) {
   const { shapes, index, setIndex, shape } = useConcordiaChord(chord);
@@ -32,12 +32,7 @@ export function ConcordiaChordBox({ chord, className }: ConcordiaChordBoxProps) 
 
   return (
     <div className={`flex flex-col items-center gap-3 ${className ?? ''}`}>
-      <ChordDiagram
-        name={shape.diagram.name}
-        positions={shape.positions}
-        frets={shape.frets}
-        stringOrder="low-first"
-      />
+      <ChordDiagram name={shape.diagram.name} positions={shape.positions} frets={shape.frets} />
 
       {count > 1 && (
         <div className="flex items-center gap-4">
@@ -49,7 +44,7 @@ export function ConcordiaChordBox({ chord, className }: ConcordiaChordBoxProps) 
           >
             ◀
           </button>
-          <span className="text-xs text-gray font-mono tracking-wider">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-gray/70">
             Forme {index + 1}/{count}
           </span>
           <button

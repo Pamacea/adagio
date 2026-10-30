@@ -1,18 +1,27 @@
 /**
  * ADAGIO - Rythme Page (Drive)
- * Subdivisions, sensations et grooves — Sheet [MUSIC] Guitar, onglet Drive
+ * Métronome, subdivisions et grooves — Sheet [MUSIC] Guitar, onglet Drive
  */
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { getSheetTab } from '@adagio/theory';
 import { MetalNav, MetalFooter } from '@/components';
 import { SheetTabTables } from '@/components/theory/sheet/SheetTable';
+import { TheorySection } from '@/components/theory/sheet/TheorySection';
+import { Metronome } from '@/components/theory/metronome/Metronome';
 
 export const metadata: Metadata = {
   title: 'Rythme',
   description:
     'Subdivisions rythmiques : noire, croches, triolets, doubles croches, sextolets — leur sensation et leur comptage.',
 };
+
+const ANCHORS = [
+  { href: '#metronome', label: 'Métronome' },
+  { href: '#drive', label: 'Drive' },
+  { href: '#astuces', label: 'Astuces' },
+];
 
 const ASTUCES = [
   {
@@ -36,48 +45,86 @@ export default function RythmePage() {
   const tab = getSheetTab('drive');
 
   return (
-    <div className="min-h-screen flex flex-col bg-abyss text-white">
+    <div className="min-h-screen flex flex-col bg-abyss text-white font-sans">
       <MetalNav />
 
-      <main className="flex-1 py-12 mt-12 w-full px-4">
-        <div className="mx-auto">
+      <main className="flex-1 py-14 mt-12 w-full px-5 sm:px-6">
+        <div className="mx-auto" style={{ maxWidth: '64rem' }}>
           {/* Header */}
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              RYTHME
+          <header className="mb-16">
+            <p className="text-xs uppercase tracking-widest text-gray">Jouer · Rythme</p>
+            <h1 className="mt-2 text-3xl font-metal uppercase tracking-tighter text-white sm:text-4xl">
+              Rythme &amp; Groove
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
-              Drive — subdivisions, sensation, comptage
+            <p className="mt-2 text-sm uppercase tracking-widest text-gray">
+              Subdivisions, sensation, comptage
             </p>
-          </div>
-
-          {/* Tableau issu du Sheet */}
-          <SheetTabTables sections={tab.sections} />
-
-          {/* Astuces */}
-          <div className="grid gap-4 md:grid-cols-3">
-            {ASTUCES.map((a) => (
-              <div key={a.titre} className="border-2 border-steel/30 bg-blackness/80 p-5">
-                <h2 className="text-sm font-metal text-toxic uppercase tracking-tight mb-2">
-                  {a.titre}
-                </h2>
-                <p className="text-sm text-gray-300 leading-relaxed">{a.texte}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Renvoi vers le rythme harmonique */}
-          <div className="border-2 border-steel/30 bg-blackness/80 p-6 mt-8">
-            <p className="text-sm text-gray-300">
-              La vitesse des accords dans une progression (rythme harmonique) se travaille à part —
-              c’est le sujet de la page Harmonie.
+            <p className="mt-4 text-sm leading-relaxed text-gray" style={{ maxWidth: '46rem' }}>
+              Le tempo se travaille lentement avant de se lâcher : un métronome pour poser la
+              pulsation, les subdivisions du Sheet pour choisir la sensation, et quelques astuces
+              pour que la main suive sans y penser.
             </p>
-            <a
-              href="/theory/harmonie"
-              className="inline-block mt-3 text-toxic text-xs uppercase tracking-widest hover:underline"
+
+            <nav aria-label="Sections de la page" className="mt-8 flex flex-wrap gap-2">
+              {ANCHORS.map((anchor) => (
+                <a key={anchor.href} href={anchor.href} className="control">
+                  {anchor.label}
+                </a>
+              ))}
+            </nav>
+          </header>
+
+          <div className="space-y-16">
+            {/* 01. Métronome */}
+            <TheorySection
+              id="metronome"
+              index="01"
+              title="Métronome"
+              intro="Règle le tempo, la signature et la subdivision, puis démarre : les clics sont accentués sur le premier temps."
             >
-              → Harmonie
-            </a>
+              <Metronome />
+            </TheorySection>
+
+            {/* 02. Drive */}
+            <TheorySection
+              id="drive"
+              index="02"
+              title="Drive — subdivisions"
+              intro="Pour chaque division, la sensation qu'elle produit et le comptage à voix haute qui la pose."
+            >
+              <SheetTabTables sections={tab.sections} />
+            </TheorySection>
+
+            {/* 03. Astuces */}
+            <TheorySection
+              id="astuces"
+              index="03"
+              title="Astuces"
+              intro="Trois repères pour passer de la pulsation au groove."
+            >
+              <div className="grid gap-8 md:grid-cols-3">
+                {ASTUCES.map((astuce) => (
+                  <article key={astuce.titre} className="border-t border-steelwarm pt-5">
+                    <h3 className="text-sm font-semibold text-white">{astuce.titre}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-gray">{astuce.texte}</p>
+                  </article>
+                ))}
+              </div>
+            </TheorySection>
+
+            {/* Renvoi vers Harmonie */}
+            <section className="flex flex-col gap-4 border-t border-steelwarm pt-8 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm leading-relaxed text-gray">
+                La vitesse des accords dans une progression (rythme harmonique) se travaille à part
+                — c’est le sujet de la page Harmonie.
+              </p>
+              <Link
+                href="/theory/harmonie"
+                className="shrink-0 text-sm font-medium text-white transition-colors hover:text-ember"
+              >
+                Harmonie →
+              </Link>
+            </section>
           </div>
         </div>
       </main>

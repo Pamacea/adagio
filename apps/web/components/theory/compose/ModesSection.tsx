@@ -1,6 +1,5 @@
 /**
- * ModesSection — modes disponibles + SubstitutionsPanel
- * (dominantes secondaires, emprunt modal, tonalités parallèles).
+ * ModesSection — modes disponibles pour la tonalité courante.
  */
 
 'use client';
@@ -9,7 +8,6 @@ import { HelpButton, HelpTooltip } from '@/components/HelpProvider';
 import { COMPOSE_SCALE_TYPES } from '@adagio/theory';
 import type { KeyMode } from '@adagio/theory';
 import type { NoteName } from '@adagio/types';
-import { SubstitutionsPanel } from './SubstitutionsPanel';
 
 export interface ModesSectionProps {
   selectedKey: NoteName;
@@ -17,7 +15,6 @@ export interface ModesSectionProps {
   /** Mode actuellement sélectionné (highlight) */
   activeScaleId?: string;
   onModeSelect?: (scaleId: string) => void;
-  onSubstitutionApply?: (chord: string) => void;
 }
 
 export function ModesSection({
@@ -25,15 +22,14 @@ export function ModesSection({
   keyMode,
   activeScaleId,
   onModeSelect,
-  onSubstitutionApply,
 }: ModesSectionProps) {
   return (
-    <div className="mt-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-metal text-white uppercase tracking-wider">
-          Modes & Substitutions de {selectedKey} {keyMode === 'major' ? 'Majeur' : 'Mineur'}
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-6">
+        <h2 className="field-label mb-0 text-gold">
+          Modes & substitutions de {selectedKey} {keyMode === 'major' ? 'Majeur' : 'Mineur'}
         </h2>
-        <div className="flex gap-2">
+        <div className="flex shrink-0 gap-2">
           <HelpTooltip topicId="scales.modes">
             <HelpButton topicId="scales.modes" useModal size="md" variant="subtle" />
           </HelpTooltip>
@@ -42,52 +38,37 @@ export function ModesSection({
           </HelpTooltip>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Available scales */}
-        <div className="section-frame p-4">
-          <h3 className="text-sm text-gray uppercase tracking-wider mb-3">Modes disponibles</h3>
-          <div className="space-y-2">
-            {COMPOSE_SCALE_TYPES.map((scaleDef) => {
-              const isCompatible =
-                scaleDef.id === keyMode || scaleDef.id === 'dorian' || scaleDef.id === 'mixolydian';
+      <div>
+        <p className="field-label mb-0 text-gold">Modes disponibles</p>
+        <div className="mt-2">
+          {COMPOSE_SCALE_TYPES.map((scaleDef) => {
+            const isActive = activeScaleId === scaleDef.id;
 
-              return (
-                <button
-                  key={scaleDef.id}
-                  onClick={() => onModeSelect?.(scaleDef.id)}
-                  aria-pressed={activeScaleId === scaleDef.id}
-                  className={`w-full p-3 border-2 bg-blackness hover:border-blood transition-all text-left ${
-                    activeScaleId === scaleDef.id ? 'border-blood' : 'border-steel'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p
-                        className={`text-sm font-bold ${
-                          activeScaleId === scaleDef.id ? 'text-blood' : 'text-white'
-                        }`}
-                      >
-                        {scaleDef.nameFr}
-                      </p>
-                      <p className="text-xs text-gray">{scaleDef.intervals.join(' - ')}</p>
-                    </div>
-                    <span className={`text-xs px-2 py-1 ${isCompatible ? 'bg-toxic' : 'bg-void'}`}>
-                      {scaleDef.intervals.join('')}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray mt-1">{scaleDef.description}</p>
-                </button>
-              );
-            })}
-          </div>
+            return (
+              <button
+                key={scaleDef.id}
+                onClick={() => onModeSelect?.(scaleDef.id)}
+                aria-pressed={isActive}
+                className={`flex w-full items-baseline justify-between gap-4 border-t border-steelwarm px-2.5 py-2.5 text-left transition-colors hover:bg-raised/60 ${
+                  isActive ? 'bg-amber-400/20' : ''
+                }`}
+              >
+                <span className="min-w-0">
+                  <span className="text-[13px] text-white">{scaleDef.nameFr}</span>
+                  <span className="ml-3 text-[11px] text-gray/70">
+                    {scaleDef.intervals.join(' – ')}
+                  </span>
+                  <span className="mt-1 block text-[11px] text-gray">
+                    {scaleDef.description}
+                  </span>
+                </span>
+                <span className="shrink-0 text-[10px] text-gray/70">
+                  {scaleDef.intervals.join('')}
+                </span>
+              </button>
+            );
+          })}
         </div>
-
-        {/* Substitutions harmoniques */}
-        <SubstitutionsPanel
-          root={selectedKey}
-          tonality={keyMode}
-          onSubstitutionApply={onSubstitutionApply}
-        />
       </div>
     </div>
   );

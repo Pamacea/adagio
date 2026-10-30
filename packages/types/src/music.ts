@@ -95,6 +95,7 @@ export type ChordQuality =
   | '7'
   | 'm7'
   | 'maj7'
+  | 'maj7#11'
   | 'dim'
   | 'dim7'
   | 'm7b5'
@@ -583,6 +584,7 @@ export const ChordQualitySchema = z.enum([
   'm7b5b9',
   'm7b5b11',
   'm7b11',
+  'maj7#11',
 ]);
 
 export const NoteSchema = z.object({

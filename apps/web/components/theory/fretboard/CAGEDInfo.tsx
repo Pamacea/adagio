@@ -13,7 +13,7 @@ interface CAGEDInfoProps {
 
 export function CAGEDInfo({ className = '' }: CAGEDInfoProps) {
   return (
-    <div className={`mt-8 section-frame p-6 ${className}`}>
+    <div className={`mt-8 panel p-4 ${className}`}>
       <h3 className="text-lg font-metal text-white uppercase tracking-wider mb-4">
         Formes de Positions
       </h3>
@@ -25,7 +25,7 @@ export function CAGEDInfo({ className = '' }: CAGEDInfoProps) {
         {CAGED_FORMS.map((form) => (
           <div
             key={form}
-            className="px-4 py-2 border-2 border-steel bg-blackness text-sm text-gray font-bold"
+            className="px-4 py-2 border border-steelwarm bg-surface text-sm text-gray font-bold"
           >
             {form}
           </div>

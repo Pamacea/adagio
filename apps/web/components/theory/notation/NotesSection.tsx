@@ -25,7 +25,7 @@ export function NotesSection() {
         <div className="grid grid-cols-7 gap-2 mb-6">
           {FRENCH_SCALE_NOTES.map((note, i) => (
             <div key={note} className="text-center">
-              <div className="aspect-square border-2 border-steel bg-blackness flex items-center justify-center mb-2">
+              <div className="aspect-square border border-steelwarm bg-surface flex items-center justify-center mb-2">
                 <span className="text-2xl font-metal text-white">{note}</span>
               </div>
               <p className="text-xs text-gray uppercase">{ENGLISH_NOTES[i]}</p>
@@ -33,7 +33,7 @@ export function NotesSection() {
           ))}
         </div>
 
-        <div className="border-2 border-steel bg-blackness p-4">
+        <div className="border border-steelwarm bg-surface p-4">
           <p className="text-xs text-gray uppercase mb-2">Histoire</p>
           <p className="text-sm text-gray">
             Au XIe siècle, Guido d&apos;Arezzo a créé ce système mnémotechnique en utilisant la
@@ -232,7 +232,7 @@ export function NotesSection() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {noteFigures.map((note) => (
-            <div key={note.name} className="border-2 border-steel bg-blackness p-4 text-center">
+            <div key={note.name} className="border border-steelwarm bg-surface p-4 text-center">
               <div className="flex items-center justify-center h-16 mb-2">{note.symbol}</div>
               <p className="text-sm font-bold text-white">{note.name}</p>
               <p className="text-xs text-gray">{note.value}</p>

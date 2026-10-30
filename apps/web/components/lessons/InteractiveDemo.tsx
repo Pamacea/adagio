@@ -11,7 +11,7 @@ import type { NoteName, ModeName } from '@adagio/types';
 import { FretboardDisplay } from '@/components/theory/fretboard/FretboardDisplay';
 import { CircleOfFifths } from '@/components/theory/circle/CircleOfFifths';
 import { ModeCircle } from '@/components/theory/modes/ModeCircle';
-import type { DemoBlock } from '@adagio/theory';
+import { getMajorChords, getMinorChords, type DemoBlock } from '@adagio/theory';
 
 // ============================================================================
 // TYPES
@@ -51,7 +51,13 @@ export function InteractiveDemo({ block, onEvent }: InteractiveDemoProps) {
   const [selectedMode, setSelectedMode] = useState<ModeName>(
     (config.modes?.selectedMode as ModeName) || 'dorian'
   );
-  const [selectedKey, setSelectedKey] = useState(config.circle?.selectedKey || 'C');
+  const [selectedKey, setSelectedKey] = useState<string>(config.circle?.selectedKey || 'C');
+  // Mêmes règles que les pages Théorie : accords diatoniques recalculés à chaque tonique.
+  const circleMinor = selectedKey.endsWith('m');
+  const circleRoot = circleMinor ? selectedKey.slice(0, -1) : selectedKey;
+  const circleChords = circleMinor
+    ? getMinorChords(circleRoot as NoteName)
+    : getMajorChords(circleRoot as NoteName);
 
   // Rendu selon le type de composant
   const renderComponent = () => {
@@ -74,8 +80,7 @@ export function InteractiveDemo({ block, onEvent }: InteractiveDemoProps) {
               setSelectedKey(key);
               onEvent?.({ type: 'key_change', key });
             }}
-            diatonicChords={config.circle.diatonicChords}
-            isMinor={config.circle.isMinor ?? false}
+            diatonicChords={circleChords}
           />
         ) : null;
 

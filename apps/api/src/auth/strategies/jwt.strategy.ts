@@ -14,7 +14,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'adagio-secret-change-in-production',
+      // Pas de fallback : un secret en dur rendrait tous les tokens falsifiables.
+      secretOrKey: configService.getOrThrow<string>('JWT_SECRET'),
     });
   }
 

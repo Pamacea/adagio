@@ -40,13 +40,14 @@ export default function ExtensionsPage() {
       <MetalNav />
 
       <main className="flex-1 py-12 mt-12 w-full px-4">
-        <div className="mx-auto">
+        <div className="mx-auto" style={{ maxWidth: '64rem' }}>
           {/* Header */}
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl lg:text-5xl font-metal text-white tracking-tighter mb-2">
-              EXTENSIONS
+          <div className="mb-10">
+            <p className="text-xs uppercase tracking-widest text-gray">Théorie · Extensions</p>
+            <h1 className="mt-2 text-3xl font-metal uppercase tracking-tighter text-white sm:text-4xl">
+              Extensions
             </h1>
-            <p className="text-gray text-sm uppercase tracking-widest">
+            <p className="mt-2 text-sm uppercase tracking-widest text-gray">
               Gamme composée — 9è, 11è, 13è et compagnie
             </p>
           </div>
@@ -54,11 +55,11 @@ export default function ExtensionsPage() {
           {/* Principes */}
           <div className="grid gap-4 md:grid-cols-3 mb-8">
             {PRINCIPES.map((p) => (
-              <div key={p.titre} className="border-2 border-steel/30 bg-blackness/80 p-5">
-                <h2 className="text-sm font-metal text-toxic uppercase tracking-tight mb-2">
+              <div key={p.titre} className="panel p-5">
+                <h2 className="text-sm font-metal text-amber-400 uppercase tracking-tight mb-2">
                   {p.titre}
                 </h2>
-                <p className="text-sm text-gray-300 leading-relaxed">{p.texte}</p>
+                <p className="text-sm text-gray leading-relaxed">{p.texte}</p>
               </div>
             ))}
           </div>
@@ -67,15 +68,12 @@ export default function ExtensionsPage() {
           <SheetTabTables sections={tab.sections} />
 
           {/* Lien vers les accords étendus */}
-          <div className="border-2 border-steel/30 bg-blackness/80 p-6 mt-4">
-            <p className="text-sm text-gray-300">
+          <div className="panel p-6 mt-4">
+            <p className="text-sm text-gray">
               Pour voir ces extensions construites sur chaque fondamentale, direction la
               bibliothèque d’accords — les voicings incluent déjà les tensions.
             </p>
-            <a
-              href="/theory/chords"
-              className="inline-block mt-3 text-toxic text-xs uppercase tracking-widest hover:underline"
-            >
+            <a href="/theory/chords" className="control mt-4">
               → Bibliothèque d’accords
             </a>
           </div>

@@ -3,7 +3,7 @@
 // ============================================================================
 
 import type { NoteName } from '@adagio/types';
-import { ENHARMONIC_EQUIVALENTS } from '../data/circle';
+import { ENHARMONIC_EQUIVALENTS, MAJOR_FROM_MINOR, MINOR_MAP } from '../data/circle';
 
 // Circle of fifths order
 const CIRCLE_OF_FIFTHS: NoteName[] = [
@@ -89,20 +89,42 @@ export function getPerfectFourth(note: NoteName): NoteName {
  * Get relative minor of a major key
  */
 export function getRelativeMinor(majorKey: NoteName): NoteName {
+  const relative = MINOR_MAP[majorKey];
+  if (relative) return relative.replace(/m$/, '') as NoteName;
+
   const index = CIRCLE_OF_FIFTHS.indexOf(majorKey);
   if (index === -1) throw new Error(`Invalid note: ${majorKey}`);
-  // Minor is 3 semitones below major
-  return getNoteAtIndex((index + 9) % 12);
+  // Minor sits 3 steps forward in the circle of fifths
+  return getNoteAtIndex((index + 3) % 12);
 }
 
 /**
  * Get relative major of a minor key
  */
 export function getRelativeMajor(minorKey: NoteName): NoteName {
+  const relative = MAJOR_FROM_MINOR[`${minorKey}m`];
+  if (relative) return relative as NoteName;
+
   const index = CIRCLE_OF_FIFTHS.indexOf(minorKey);
   if (index === -1) throw new Error(`Invalid note: ${minorKey}`);
-  // Major is 3 semitones above minor
-  return getNoteAtIndex((index + 3) % 12);
+  // Major sits 9 steps forward in the circle of fifths
+  return getNoteAtIndex((index + 9) % 12);
+}
+
+/**
+ * Relative key chord for a given mode:
+ * major → its relative minor (C → Am, A → F#m)
+ * minor → its relative major (Am → C)
+ */
+export function getRelativeKey(key: NoteName, mode: 'major' | 'minor'): string {
+  return mode === 'major' ? `${getRelativeMinor(key)}m` : getRelativeMajor(key);
+}
+
+/**
+ * Parallel key chord: same tonic, opposite quality (A majeur → Am, Am → A)
+ */
+export function getParallelKey(key: NoteName, mode: 'major' | 'minor'): string {
+  return mode === 'major' ? `${key}m` : key;
 }
 
 /**

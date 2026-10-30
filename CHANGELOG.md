@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.7.0] - 2026-10-30
+
+### Correctifs
+
+- **Audio Compose** : le `PolySynth` est relié à la destination Tone (`.toDestination()`) — les boutons « Écouter » (accord, gamme, progressions) produisent enfin du son
+- **Notes d'accords** : `getChordNotes` dérive de `CHORD_QUALITY_INTERVALS` (ChordCalculator) au lieu d'une table locale de 12 qualités — m7b5, m9, m11, m6, maj9, maj7#11… ne retombent plus sur une triade majeure
+- **Diagrammes** : `m7b5` est testé avant `isSeventh` et reçoit sa propre forme (`x0201x`)
+- **Mineur** : le degré ii propose `m7b5` au lieu de `m7`
+- **Enharmonie** : les intervalles altérés sont épelés en bémols (`Gm` → Sol Sib Ré, `C7` → Do Mi Sol Sib)
+- **Compose** : changer de variation annule l'accord manuel qui masquait le nouveau choix
+
+### Sécurité
+
+- `JWT_SECRET` obligatoire (`getOrThrow`) — suppression du secret de repli en dur
+- `ThrottlerGuard` enregistré globalement (`APP_GUARD`) ; `ThrottlerModule.forRoot` dupliqué retiré d'`AuthModule`
+- `PATCH /users/me/preferences` : DTO `UpdatePreferencesDto` — fin du mass-assignment (`userId`, `totalXP`, `level`)
+- `DELETE /users/me` : mot de passe exigé pour les comptes qui en possèdent un
+- Journalisation : corps des requêtes d'auth et URLs à token de vérification/reset masqués en production
+- `.env` retiré du suivi Git (modèle conservé : `.env.example`)
+
+### Performance
+
+- `AuthProvider` retiré du layout : plus de `GET /api/auth/get-session` sur chaque chargement alors qu'aucun composant n'utilise `useAuth`
+
+---
+
 ## [0.5.0] - 2026-10-11
 
 ### P1 — Purification des liens musicaux (`@adagio/theory`)

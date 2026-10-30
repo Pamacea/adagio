@@ -26,19 +26,19 @@ const RARITY_STYLES = {
     glow: '',
   },
   rare: {
-    border: 'border-toxic',
-    bg: 'bg-toxic/20',
-    glow: 'shadow-toxic',
+    border: 'border-emerald-500',
+    bg: 'bg-emerald-500/10',
+    glow: '',
   },
   epic: {
-    border: 'border-rust',
-    bg: 'bg-rust/20',
-    glow: 'shadow-rust',
+    border: 'border-violet-400',
+    bg: 'bg-violet-400/10',
+    glow: '',
   },
   legendary: {
-    border: 'border-blood',
-    bg: 'bg-blood/20',
-    glow: 'shadow-blood',
+    border: 'border-amber-400',
+    bg: 'bg-amber-400/10',
+    glow: '',
   },
 };
 
@@ -83,7 +83,7 @@ export function AchievementBadge({
       <div
         className={`
           ${sizeStyle.container} ${rarityStyle.border} ${rarityStyle.bg}
-          border-2 flex items-center justify-center
+          border flex items-center justify-center
           ${unlocked ? rarityStyle.glow : 'opacity-50 grayscale'}
           transition-all duration-300
         `}
@@ -112,7 +112,7 @@ export function AchievementBadge({
         <div className="text-center">
           <div className={`${sizeStyle.text} font-bold text-white uppercase`}>{title}</div>
           {description && size === 'lg' && (
-            <div className="text-xs text-gray max-w-[150px]">{description}</div>
+            <div className="text-xs text-gray" style={{ maxWidth: '150px' }}>{description}</div>
           )}
         </div>
       )}
@@ -126,15 +126,15 @@ export function AchievementBadge({
               {progress}/{maxProgress}
             </span>
           </div>
-          <div className="h-1.5 border border-steel bg-blackness w-full">
-            <div className="h-full bg-toxic" style={{ width: `${progressPercentage}%` }} />
+          <div className="h-1.5 border border-steelwarm bg-surface w-full">
+            <div className="h-full bg-amber-400" style={{ width: `${progressPercentage}%` }} />
           </div>
         </div>
       )}
 
       {/* Unlocked indicator */}
       {unlocked && (
-        <div className="flex items-center gap-1 text-xs text-toxic">
+        <div className="flex items-center gap-1 text-xs text-amber-400">
           <Icons.Check size="sm" />
           <span>Deverouille</span>
         </div>
@@ -210,7 +210,7 @@ export function AchievementCompact({
       onClick={onClick}
       className={`
         flex items-center gap-2 px-3 py-1.5 border-2 transition-all
-        ${unlocked ? 'border-toxic bg-toxic/10 hover:bg-toxic/20' : 'border-steel bg-blackness opacity-50'}
+        ${unlocked ? 'border-amber-400 bg-amber-400/10 hover:bg-amber-400/20' : 'border-steelwarm bg-surface opacity-50'}
       `}
     >
       <span className="text-lg">

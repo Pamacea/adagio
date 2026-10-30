@@ -5,8 +5,6 @@
 
 'use client';
 
-import { DEGREE_COLORS } from './CircleOfFifths';
-
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -25,20 +23,15 @@ export interface RelativeKeyProps {
 // ============================================================================
 
 export function RelativeKey({ relativeKey, isMinor = false, majorKey = 'C' }: RelativeKeyProps) {
-  // Couleur dynamique basée sur le type
-  const color = isMinor ? DEGREE_COLORS[0] : DEGREE_COLORS[5];
-
   return (
-    <div className="section-frame p-6 text-center">
-      <p className="text-xs text-gray uppercase mb-2">Relative {isMinor ? 'Majeure' : 'Mineure'}</p>
-      <p className="text-3xl font-metal text-white" style={{ color }}>
-        {relativeKey}
-      </p>
-      <p className="text-sm text-gray mt-2">
+    <section className="panel p-5">
+      <p className="field-label">Tonalité relative {isMinor ? 'majeure' : 'mineure'}</p>
+      <p className="font-metal text-2xl tracking-tighter text-white">{relativeKey}</p>
+      <p className="mt-2 text-sm leading-relaxed text-gray">
         {isMinor
-          ? `Partage les mêmes notes que ${majorKey} Majeur`
-          : `Partage les mêmes notes que ${relativeKey} Mineur`}
+          ? `Mêmes notes que ${majorKey} majeur`
+          : `Mêmes notes que ${relativeKey} (mineur)`}
       </p>
-    </div>
+    </section>
   );
 }

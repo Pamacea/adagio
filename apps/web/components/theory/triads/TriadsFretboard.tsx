@@ -61,7 +61,7 @@ export function TriadsFretboard({ fretboardNotes, fretCount, displayNote }: Tria
     if (note.isTriadNote) {
       return { bg: '#010101', border: '#2a2a2a', text: '#e0e0e0' }; // triade notes
     }
-    return { bg: '#0d0d15', border: '#f59e0b', text: '#f59e0b' }; // extensions
+    return { bg: '#000000', border: '#b84a1a', text: '#b84a1a' }; // extensions
   }
 
   return (
@@ -238,7 +238,7 @@ export function TriadsFretboard({ fretboardNotes, fretCount, displayNote }: Tria
                     x={x}
                     y={y - Math.floor(noteRadius * 0.65)}
                     textAnchor="middle"
-                    fill={noteData.isExtension ? '#f59e0b' : '#666666'}
+                    fill={noteData.isExtension ? '#b84a1a' : '#666666'}
                     fontSize={Math.max(6, Math.floor(noteRadius * 0.45))}
                   >
                     {formatInterval(noteData.interval)}
@@ -261,7 +261,7 @@ export function TriadsFretboard({ fretboardNotes, fretCount, displayNote }: Tria
           <span>Triade</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-[#0d0d15] border-2 border-[#f59e0b]"></span>
+          <span className="w-3 h-3 rounded-full bg-[#000000] border-2 border-[#b84a1a]"></span>
           <span>Extension</span>
         </div>
       </div>
